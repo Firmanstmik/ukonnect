@@ -215,27 +215,87 @@ const FloatingIcon = ({ icon, x, y, delay, label }: { icon: React.ReactNode; x: 
     </motion.div>
 );
 
-const DATA_ROWS = 9;
+// CRM-style dataset rows: y position (%) and bar width (%)
+const DATASET_ROWS = [
+    { y: 10, width: 60 },
+    { y: 16, width: 88 },
+    { y: 22, width: 42 },
+    { y: 28, width: 75 },
+    { y: 36, width: 52 },
+    { y: 42, width: 85 },
+    { y: 50, width: 38 },
+    { y: 58, width: 72 },
+    { y: 64, width: 48 },
+    { y: 72, width: 82 },
+    { y: 78, width: 58 },
+    { y: 85, width: 44 },
+];
+
+// Which rows highlight for each scan step
+const STEP_HIGHLIGHT_ROWS: Record<number, number[]> = {
+    1: [1, 2],
+    2: [3, 4],
+    3: [8, 9],
+    4: [10, 11],
+};
+
+const ROW_HIGHLIGHT_DELAY = 800;
+const ROW_HIGHLIGHT_DURATION = 600;
+
+const DatasetRow = ({ y, width, highlighted }: { y: number; width: number; highlighted: boolean }) => (
+    <div
+        className="absolute flex items-center gap-2.5 pointer-events-none"
+        style={{ top: `${y}%`, left: '8%', right: '8%' }}
+    >
+        <div
+            className="absolute -inset-y-1.5 -inset-x-2 rounded-md transition-opacity duration-200"
+            style={{
+                background: 'linear-gradient(90deg, rgba(86,0,227,0.08), rgba(86,0,227,0.03), transparent)',
+                opacity: highlighted ? 1 : 0,
+            }}
+        />
+        <div
+            className="w-[6px] h-[6px] rounded-full flex-shrink-0 relative z-10 transition-all duration-200"
+            style={{
+                backgroundColor: highlighted ? '#5600e3' : '#c4c5cc',
+                transform: highlighted ? 'scale(1.4)' : 'scale(1)',
+            }}
+        />
+        <div
+            className="h-[3px] rounded-full relative z-10 transition-all duration-200"
+            style={{
+                width: `${width}%`,
+                backgroundColor: highlighted ? '#7c3aed' : '#d0d1d6',
+                opacity: highlighted ? 0.6 : 0.35,
+            }}
+        />
+    </div>
+);
 
 export const MarketingAuditScanner = () => {
     const [step, setStep] = useState(0);
     const [visiblePins, setVisiblePins] = useState<number[]>([]);
+    const [highlightedRows, setHighlightedRows] = useState<number[]>([]);
     const [isHovered, setIsHovered] = useState(false);
 
     const runCycle = useCallback(() => {
-        // Reset
         setStep(0);
         setVisiblePins([]);
+        setHighlightedRows([]);
 
         const timers: ReturnType<typeof setTimeout>[] = [];
         let elapsed = INITIAL_DELAY;
 
         for (let i = 1; i <= 4; i++) {
             const moveAt = elapsed;
+            const highlightAt = elapsed + ROW_HIGHLIGHT_DELAY;
+            const unhighlightAt = highlightAt + ROW_HIGHLIGHT_DURATION;
             const pinAt = elapsed + PIN_DROP_AFTER_ARRIVE;
 
             timers.push(
                 setTimeout(() => setStep(i), moveAt),
+                setTimeout(() => setHighlightedRows(STEP_HIGHLIGHT_ROWS[i] || []), highlightAt),
+                setTimeout(() => setHighlightedRows([]), unhighlightAt),
                 setTimeout(() => setVisiblePins(prev => [...prev, i - 1]), pinAt),
             );
 
@@ -289,19 +349,15 @@ export const MarketingAuditScanner = () => {
                 transition={{ duration: 0.25, ease: 'easeOut' }}
                 style={{ transformStyle: 'preserve-3d' }}
             >
-                {/* Data grid lines */}
-                <div className="absolute inset-5 sm:inset-6 flex flex-col justify-between">
-                    {[...Array(DATA_ROWS)].map((_, i) => (
-                        <div
-                            key={i}
-                            className="h-[3px] rounded-full"
-                            style={{
-                                background: 'linear-gradient(90deg, transparent 0%, #c4c5cc 8%, #c4c5cc 92%, transparent 100%)',
-                                opacity: i % 3 === 0 ? 0.6 : 0.35,
-                            }}
-                        />
-                    ))}
-                </div>
+                {/* Dataset rows */}
+                {DATASET_ROWS.map((row, i) => (
+                    <DatasetRow
+                        key={i}
+                        y={row.y}
+                        width={row.width}
+                        highlighted={highlightedRows.includes(i)}
+                    />
+                ))}
 
                 {/* Radar pulse rings that follow reticle */}
                 <RadarPulse x={reticlePos.x} y={reticlePos.y} />

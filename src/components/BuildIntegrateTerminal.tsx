@@ -221,7 +221,7 @@ export const BuildIntegrateTerminal = () => {
 
     return (
         <div
-            className="w-full h-full flex flex-col"
+            className="w-full h-full min-h-0 flex flex-col"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
@@ -236,7 +236,7 @@ export const BuildIntegrateTerminal = () => {
             {/* Terminal body */}
             <div
                 ref={scrollRef}
-                className="flex-1 px-5 py-4 overflow-hidden font-mono text-[12px] leading-[1.8] relative"
+                className="flex-1 min-h-0 px-5 py-4 overflow-hidden font-mono text-[12px] leading-[1.8] relative"
                 style={{
                     filter: isHovered ? 'brightness(1.03)' : 'brightness(1)',
                     transition: 'filter 0.3s ease',
