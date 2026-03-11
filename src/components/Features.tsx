@@ -1,6 +1,7 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 import { BrainCircuit, Edit3, Target, TrendingUp, Crosshair, Activity, Zap } from 'lucide-react';
+import { AILeadGenerationEngine } from './AILeadGenerationEngine';
 
 const TABS = ['Marketing', 'AI Systems', 'Web Development'] as const;
 const DEFAULT_TAB = 1; // AI Systems active by default
@@ -196,7 +197,7 @@ const TAB_CARDS: Record<string, { title: string; description: string; illustrati
         { title: 'Lead Generation Strategy', description: 'Targeting, messaging, and positioning that attract the right customers.', illustration: <IllStrategy /> },
     ],
     'AI Systems': [
-        { title: 'AI Lead Generation', description: 'AI-powered campaigns that continuously generate high-intent leads through Meta, Google, and performance-driven targeting.', illustration: <IllBrainOrbit /> },
+        { title: 'AI Lead Generation', description: 'AI-powered campaigns that continuously generate high-intent leads through Meta, Google, and performance-driven targeting.', illustration: <AILeadGenerationEngine /> },
         { title: 'AI Sales Automation', description: 'AI agents that qualify leads, handle follow-ups, and book meetings so your sales team focuses on closing.', illustration: <IllChat /> },
         { title: 'AI Marketing Automation', description: 'Automated email sequences, ad optimization, and content workflows that nurture prospects and increase conversions.', illustration: <IllEditor /> },
         { title: 'AI Integrations & Workflows', description: 'Connect your CRM, ads, messaging, and analytics tools into one unified AI-powered system.', illustration: <IllBarChart /> },
