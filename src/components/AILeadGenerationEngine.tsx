@@ -9,80 +9,40 @@ import googleIcon from '../assets/google ukonnect.svg';
 
 const NODE_STYLE = 'w-[54px] h-[54px] bg-[#ecedf1] rounded-2xl shadow-[0_4px_8px_rgba(0,0,0,0.12),0_-2px_4px_rgba(255,255,255,0.9),0_1px_1px_rgba(255,255,255,0.8)] flex items-center justify-center';
 
+const BUS_X = 42;
+const BUS_TOP_Y = 8;
+const BUS_BOT_Y = 92;
 const CENTER_X = 63;
 const CENTER_Y = 50;
 
-const SOURCES: { label: string; x: number; y: number; icon: string; pathType: 'corner-down' | 'straight' | 'corner-up' }[] = [
-    { label: 'Meta Ads',    x: 15, y: 20, icon: 'meta',       pathType: 'corner-down' },
-    { label: 'Google Ads',  x: 15, y: 40, icon: 'googleAds',  pathType: 'straight' },
-    { label: 'WordPress',   x: 15, y: 60, icon: 'wordpress',  pathType: 'straight' },
-    { label: 'Google',      x: 15, y: 80, icon: 'google',     pathType: 'corner-up' },
+const SOURCES: { label: string; x: number; y: number; icon: string }[] = [
+    { label: 'Meta Ads',   x: 15, y: 8,  icon: 'meta' },
+    { label: 'Google Ads', x: 15, y: 33, icon: 'googleAds' },
+    { label: 'Website',    x: 15, y: 67, icon: 'wordpress' },
+    { label: 'SEO',        x: 15, y: 92, icon: 'google' },
 ];
-
-const bezAt = (t: number, p0: number, p1: number, p2: number) =>
-    (1 - t) * (1 - t) * p0 + 2 * (1 - t) * t * p1 + t * t * p2;
-
-const T_VALUES = Array.from({ length: 11 }, (_, i) => i / 10);
 
 const DURATIONS = [2.4, 2.8, 2.6, 3.0];
 
+const mkPts = (x1: number, y1: number, x2: number, y2: number, n: number) =>
+    Array.from({ length: n }, (_, i) => ({
+        x: x1 + (x2 - x1) * (i / (n - 1)),
+        y: y1 + (y2 - y1) * (i / (n - 1)),
+    }));
+
+// Each dot travels: source → horizontal to bus → vertical along bus to center → horizontal to AI
 const CONNECTIONS = SOURCES.map((node) => {
-    let pathD: string;
-    let cx: number[];
-    let cy: number[];
+    const seg1 = mkPts(node.x, node.y, BUS_X, node.y, 5);        // horizontal to bus
+    const seg2 = mkPts(BUS_X, node.y, BUS_X, CENTER_Y, 5);       // vertical along bus
+    const seg3 = mkPts(BUS_X, CENTER_Y, CENTER_X, CENTER_Y, 5);  // horizontal to AI
 
-    if (node.pathType === 'corner-down') {
-        // Meta Ads: horizontal → down → horizontal → horizontal to AI
-        const corner1X = 40;
-        const corner1Y = node.y;
-        const corner2X = 40;
-        const corner2Y = 38;
-        const corner3X = 48;
-        const corner3Y = 38;
-        pathD = `M ${node.x} ${node.y} L ${corner1X} ${corner1Y} L ${corner2X} ${corner2Y} L ${corner3X} ${corner3Y} L ${CENTER_X} ${CENTER_Y}`;
+    const allPts = [...seg1.slice(0, -1), ...seg2.slice(0, -1), ...seg3];
 
-        // Sample points along straight segments
-        const seg1 = T_VALUES.slice(0, 3).map(t => ({ x: node.x + (corner1X - node.x) * t, y: node.y }));
-        const seg2 = T_VALUES.slice(0, 2).map(t => ({ x: corner1X, y: corner1Y + (corner2Y - corner1Y) * t }));
-        const seg3 = T_VALUES.slice(0, 2).map(t => ({ x: corner2X + (corner3X - corner2X) * t, y: corner2Y }));
-        const seg4 = T_VALUES.slice(0, 4).map(t => ({ x: corner3X + (CENTER_X - corner3X) * t, y: corner3Y + (CENTER_Y - corner3Y) * t }));
-        const allPoints = [...seg1, ...seg2, ...seg3, ...seg4];
-        cx = allPoints.map(p => p.x);
-        cy = allPoints.map(p => p.y);
-    } else if (node.pathType === 'corner-up') {
-        // Google: horizontal → up → horizontal → horizontal to AI
-        const corner1X = 40;
-        const corner1Y = node.y;
-        const corner2X = 40;
-        const corner2Y = 62;
-        const corner3X = 48;
-        const corner3Y = 62;
-        pathD = `M ${node.x} ${node.y} L ${corner1X} ${corner1Y} L ${corner2X} ${corner2Y} L ${corner3X} ${corner3Y} L ${CENTER_X} ${CENTER_Y}`;
-
-        const seg1 = T_VALUES.slice(0, 3).map(t => ({ x: node.x + (corner1X - node.x) * t, y: node.y }));
-        const seg2 = T_VALUES.slice(0, 2).map(t => ({ x: corner1X, y: corner1Y + (corner2Y - corner1Y) * t }));
-        const seg3 = T_VALUES.slice(0, 2).map(t => ({ x: corner2X + (corner3X - corner2X) * t, y: corner2Y }));
-        const seg4 = T_VALUES.slice(0, 4).map(t => ({ x: corner3X + (CENTER_X - corner3X) * t, y: corner3Y + (CENTER_Y - corner3Y) * t }));
-        const allPoints = [...seg1, ...seg2, ...seg3, ...seg4];
-        cx = allPoints.map(p => p.x);
-        cy = allPoints.map(p => p.y);
-    } else {
-        // Middle nodes: horizontal → slight vertical → horizontal to AI
-        const corner1X = 42;
-        const corner1Y = node.y;
-        const corner2X = 42;
-        const corner2Y = 50;
-        pathD = `M ${node.x} ${node.y} L ${corner1X} ${corner1Y} L ${corner2X} ${corner2Y} L ${CENTER_X} ${CENTER_Y}`;
-
-        const seg1 = T_VALUES.slice(0, 3).map(t => ({ x: node.x + (corner1X - node.x) * t, y: node.y }));
-        const seg2 = T_VALUES.slice(0, 3).map(t => ({ x: corner1X, y: corner1Y + (corner2Y - corner1Y) * t }));
-        const seg3 = T_VALUES.slice(0, 5).map(t => ({ x: corner2X + (CENTER_X - corner2X) * t, y: corner2Y }));
-        const allPoints = [...seg1, ...seg2, ...seg3];
-        cx = allPoints.map(p => p.x);
-        cy = allPoints.map(p => p.y);
-    }
-
-    return { pathD, cx, cy };
+    return {
+        pathD: `M ${node.x} ${node.y} L ${BUS_X} ${node.y}`,
+        cx: allPts.map(p => p.x),
+        cy: allPts.map(p => p.y),
+    };
 });
 
 const SignalDot = ({ cxValues, cyValues, duration, delay, isHovered }: {
@@ -181,21 +141,46 @@ export const AILeadGenerationEngine = () => {
                 viewBox="0 0 100 100"
                 preserveAspectRatio="none"
             >
+                {/* Vertical bus line */}
+                <motion.line
+                    x1={BUS_X} y1={BUS_TOP_Y} x2={BUS_X} y2={BUS_BOT_Y}
+                    stroke="#CBD5E1"
+                    strokeWidth="0.7"
+                    strokeLinecap="round"
+                    vectorEffect="non-scaling-stroke"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 0.45 }}
+                    transition={{ duration: 0.6, delay: 0.1 }}
+                />
+
+                {/* Bus center → AI node */}
+                <motion.line
+                    x1={BUS_X} y1={CENTER_Y} x2={CENTER_X} y2={CENTER_Y}
+                    stroke="#CBD5E1"
+                    strokeWidth="0.7"
+                    strokeLinecap="round"
+                    vectorEffect="non-scaling-stroke"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 0.45 }}
+                    transition={{ duration: 0.6, delay: 0.5 }}
+                />
+
+                {/* Per-source horizontal lines to bus */}
                 {CONNECTIONS.map((conn, i) => (
                     <React.Fragment key={SOURCES[i].label}>
-                        {/* Connection line */}
                         <motion.path
                             d={conn.pathD}
                             stroke="#CBD5E1"
                             strokeWidth="0.7"
                             strokeLinecap="round"
+                            vectorEffect="non-scaling-stroke"
                             fill="none"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 0.45 }}
                             transition={{ duration: 0.6, delay: 0.2 + i * 0.08 }}
                         />
 
-                        {/* Signal dot */}
+                        {/* Signal dot travels source → bus → AI */}
                         <SignalDot
                             cxValues={conn.cx}
                             cyValues={conn.cy}

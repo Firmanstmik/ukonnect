@@ -6,7 +6,7 @@ import { LaunchOptimizeEngine } from './LaunchOptimizeEngine';
 
 export const Process = () => {
     return (
-        <section className="py-[60px] md:py-[80px] lg:py-[120px] max-w-[1300px] mx-auto px-6">
+        <section id="process" className="py-[60px] md:py-[80px] lg:py-[120px] max-w-[1300px] mx-auto px-6">
             <div className="text-center max-w-2xl mx-auto mb-16 md:mb-24">
                 <p className="text-primary font-semibold tracking-wide uppercase text-sm mb-3">How It Works</p>
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-6">How We Build Your AI System</h2>

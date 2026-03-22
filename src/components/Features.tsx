@@ -315,7 +315,7 @@ export const Features = () => {
     }, [pw, stripX]);
 
     return (
-        <section id="services" className="py-[60px] md:py-[80px] lg:py-[120px] max-w-[1300px] mx-auto px-6 bg-slate-50/50 rounded-[3rem]">
+        <section id="system-modules" className="py-[60px] md:py-[80px] lg:py-[120px] max-w-[1300px] mx-auto px-6 bg-slate-50/50 rounded-[3rem]">
             {/* Header */}
             <div className="text-center max-w-2xl mx-auto mb-12">
                 <p className="text-primary font-semibold tracking-wide uppercase text-sm mb-3">System Modules</p>

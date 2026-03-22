@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 export const About = () => {
     return (
-        <section className="py-[60px] md:py-[80px] lg:py-[120px] max-w-[1300px] mx-auto px-6 text-center">
+        <section id="about" className="py-[60px] md:py-[80px] lg:py-[120px] max-w-[1300px] mx-auto px-6 text-center">
             <div className="max-w-3xl mx-auto flex flex-col items-center">
                 <p className="text-primary font-semibold tracking-wide uppercase text-sm mb-3">About</p>
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-8">Who We Are</h2>
