@@ -32,7 +32,6 @@ export const Footer = () => {
                     <div className="flex flex-col gap-4">
                         <h4 className="font-semibold text-slate-900 mb-2">Product</h4>
                         <a href="#" className="text-sm text-slate-500 hover:text-primary transition-colors">Services</a>
-                        <a href="#" className="text-sm text-slate-500 hover:text-primary transition-colors">Pricing</a>
                         <a href="#" className="text-sm text-slate-500 hover:text-primary transition-colors">Integrations</a>
                         <a href="#" className="text-sm text-slate-500 hover:text-primary transition-colors">Case Studies</a>
                     </div>

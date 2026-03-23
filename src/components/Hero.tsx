@@ -23,7 +23,7 @@ const logos = [
 
 export const Hero = () => {
     return (
-        <section className="relative pt-56 pb-[60px] md:pb-[80px] lg:pb-[120px] px-6 flex flex-col items-center text-center overflow-hidden">
+        <section className="relative isolate pt-56 pb-[60px] md:pb-[80px] lg:pb-[120px] px-6 flex flex-col items-center text-center overflow-hidden">
             {/* Animated background */}
             <HeroBackground />
 

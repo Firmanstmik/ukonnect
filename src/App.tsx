@@ -5,7 +5,6 @@ import { Process } from './components/Process';
 import { Features } from './components/Features';
 import { Benefits } from './components/Benefits';
 import { About } from './components/About';
-import { Pricing } from './components/Pricing';
 import { Testimonials } from './components/Testimonials';
 import { FAQ } from './components/FAQ';
 import { CTA } from './components/CTA';
@@ -21,7 +20,6 @@ function App() {
         <Features />
         <Benefits />
         <About />
-        <Pricing />
         <Testimonials />
         <FAQ />
         <CTA />

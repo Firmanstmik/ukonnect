@@ -306,9 +306,9 @@ export const Features = () => {
     }, [pw, stripX]);
 
     return (
-        <section id="system-modules" className="py-[60px] md:py-[80px] lg:py-[120px] max-w-[1300px] mx-auto px-6 bg-slate-50/50 rounded-[3rem]">
+        <section id="system-modules" className="py-[60px] md:py-[80px] lg:py-[80px] max-w-[1300px] mx-auto px-6 bg-slate-50/50 rounded-[3rem]">
             {/* Header */}
-            <div className="text-center max-w-2xl mx-auto mb-12">
+            <div className="text-center max-w-2xl mx-auto mb-8">
                 <p className="text-primary font-semibold tracking-wide uppercase text-sm mb-3">System Modules</p>
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-6">Your AI Growth System</h2>
                 <p className="text-slate-500 text-lg">
@@ -317,7 +317,7 @@ export const Features = () => {
             </div>
 
             {/* Segmented tabs — static labels with sliding pill */}
-            <div className="flex justify-center mb-12 md:mb-16">
+            <div className="flex justify-center mb-8 md:mb-10">
                 <motion.div
                     ref={tabBarRef}
                     className="relative inline-grid grid-cols-3 bg-[#e2e3e8] rounded-xl p-1.5 select-none cursor-grab active:cursor-grabbing"
@@ -363,19 +363,19 @@ export const Features = () => {
                     {TABS.map((tab) => (
                         <div
                             key={tab}
-                            className="shrink-0 grid md:grid-cols-2 gap-8 px-10 pt-8 pb-12"
+                            className="shrink-0 grid md:grid-cols-2 gap-5 px-10 pt-4 pb-8"
                             style={{ width: `${PANEL_PCT}%` }}
                         >
                             {TAB_CARDS[tab].map((card, j) => (
                                 <div
                                     key={j}
-                                    className="bg-[#ecedf1] rounded-3xl p-8 md:p-10 shadow-[0_4px_8px_rgba(0,0,0,0.12),0_-2px_4px_rgba(255,255,255,0.9),0_1px_1px_rgba(255,255,255,0.8)] flex flex-col group overflow-hidden"
+                                    className="bg-[#ecedf1] rounded-3xl p-6 md:p-7 shadow-[0_4px_8px_rgba(0,0,0,0.12),0_-2px_4px_rgba(255,255,255,0.9),0_1px_1px_rgba(255,255,255,0.8)] flex flex-col group overflow-hidden"
                                 >
-                                    <div className="flex-1 min-h-[240px] bg-[#e2e3e8] rounded-2xl mb-8 flex items-center justify-center p-8 relative overflow-hidden">
+                                    <div className="flex-1 min-h-[180px] bg-[#e2e3e8] rounded-2xl mb-5 flex items-center justify-center p-5 relative overflow-hidden">
                                         {card.illustration}
                                     </div>
-                                    <h3 className="text-2xl font-bold text-slate-900 mb-3">{card.title}</h3>
-                                    <p className="text-slate-500 leading-relaxed">{card.description}</p>
+                                    <h3 className="text-xl font-bold text-slate-900 mb-2">{card.title}</h3>
+                                    <p className="text-slate-500 text-sm leading-relaxed">{card.description}</p>
                                 </div>
                             ))}
                         </div>
