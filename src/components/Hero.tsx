@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Star } from 'lucide-react';
+import { HeroBackground } from './HeroBackground';
 
 // Framer Icon SVG Component
 const FramerIcon = () => (
@@ -23,8 +24,8 @@ const logos = [
 export const Hero = () => {
     return (
         <section className="relative pt-56 pb-[60px] md:pb-[80px] lg:pb-[120px] px-6 flex flex-col items-center text-center overflow-hidden">
-            {/* Background elements */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#5600e3]/5 rounded-full blur-[100px] -z-10" />
+            {/* Animated background */}
+            <HeroBackground />
 
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
