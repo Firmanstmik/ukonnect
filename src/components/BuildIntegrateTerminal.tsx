@@ -330,10 +330,7 @@ export const BuildIntegrateTerminal = () => {
                                         initial={{ opacity: 0, y: 5 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: -5 }}
-                                        transition={{
-                                            enter: { duration: 0.2 },
-                                            exit: { duration: 0.15 },
-                                        }}
+                                        transition={{ duration: 0.2 }}
                                     >
                                         {ROTATING_PLACEHOLDERS[placeholderIndex]}
                                     </motion.span>
@@ -341,7 +338,7 @@ export const BuildIntegrateTerminal = () => {
                                 <motion.span
                                     className="inline-block w-[1px] h-[12px] ml-[2px] bg-slate-400"
                                     animate={{ opacity: [1, 0, 1] }}
-                                    transition={{ repeat: Infinity, duration: 0.8, ease: 'steps(2)' }}
+                                    transition={{ repeat: Infinity, duration: 0.8 }}
                                 />
                             </div>
                         )}

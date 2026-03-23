@@ -104,7 +104,7 @@ export const AISalesChat = () => {
     const convIdxRef = useRef(0);
     const msgIdRef   = useRef(0);
     const mountedRef = useRef(true);
-    const timerRef   = useRef<ReturnType<typeof setTimeout>>();
+    const timerRef   = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
     useEffect(() => {
         mountedRef.current = true;
