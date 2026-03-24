@@ -624,11 +624,14 @@ const ILL_SPEED_DOTS = Array.from({ length: ILL_SPEED_N }, (_, i) => {
 });
 
 const IllSpeed = () => {
-    const dotRefs      = useRef<(SVGCircleElement | null)[]>([]);
-    const burstScale   = useMotionValue(1);
-    const burstOpacity = useMotionValue(0);
-    const svgScale     = useMotionValue(1);
-    const centerScale  = useMotionValue(1);
+    const dotRefs     = useRef<(SVGCircleElement | null)[]>([]);
+    const svgScale    = useMotionValue(1);
+    const centerScale = useMotionValue(1);
+    // 4 burst rings: fast → slow
+    const b1s = useMotionValue(1), b1o = useMotionValue(0);
+    const b2s = useMotionValue(1), b2o = useMotionValue(0);
+    const b3s = useMotionValue(1), b3o = useMotionValue(0);
+    const b4s = useMotionValue(1), b4o = useMotionValue(0);
 
     useEffect(() => {
         let alive = true;
@@ -640,56 +643,89 @@ const IllSpeed = () => {
             el.style.filter = active ? 'drop-shadow(0 0 2.5px rgba(86,0,227,0.6))' : 'none';
         };
 
+        const fireRing = (
+            s: ReturnType<typeof useMotionValue<number>>,
+            o: ReturnType<typeof useMotionValue<number>>,
+            dur: number,
+            startOpc: number,
+        ) => {
+            s.set(1); o.set(startOpc);
+            animate(s, 3.2, { duration: dur, ease: [0.08, 0.72, 0.28, 1] as any });
+            animate(o, 0,   { duration: dur, ease: [0.4, 0, 1, 0.6] as any });
+        };
+
         const run = async () => {
             while (alive) {
                 /* reset */
                 for (let i = 0; i < ILL_SPEED_N; i++) setDot(i, false);
-                burstOpacity.set(0); burstScale.set(1);
-                svgScale.set(1);    centerScale.set(1);
+                svgScale.set(1); centerScale.set(1);
+                b1o.set(0); b2o.set(0); b3o.set(0); b4o.set(0);
                 await new Promise<void>(r => setTimeout(r, 100));
                 if (!alive) return;
 
-                /* Phase 1 — sequential dot activation (~2.2s) */
+                /* Phase 1 — sequential dot activation */
                 for (let i = 0; i < ILL_SPEED_N; i++) {
                     if (!alive) return;
                     setDot(i, true);
-                    await new Promise<void>(r => setTimeout(r, 85));
+                    await new Promise<void>(r => setTimeout(r, 78));
                 }
                 if (!alive) return;
 
-                /* Phase 2 — hold fully lit (~0.75s) */
-                await new Promise<void>(r => setTimeout(r, 750));
+                /* Phase 2 — hold fully lit */
+                await new Promise<void>(r => setTimeout(r, 680));
                 if (!alive) return;
 
-                /* Phase 3 — energy build-up (~0.4s) */
+                /* Phase 3 — energy build-up */
                 animate(centerScale, [1, 1.1, 1.05], { duration: 0.38, times: [0, 0.5, 1] });
-                await animate(svgScale, 1.04, { duration: 0.35, ease: 'easeOut' });
+                await animate(svgScale, 1.04, { duration: 0.32, ease: 'easeOut' });
                 if (!alive) return;
 
-                /* Phase 4 — burst (~0.7s) */
-                animate(svgScale, 1, { duration: 0.12 });
-                animate(centerScale, 1, { duration: 0.12 });
-                burstOpacity.set(0.65);
-                animate(burstScale, 1.72, { duration: 0.68, ease: [0.12, 0.8, 0.32, 1] as any });
-                await animate(burstOpacity, 0, { duration: 0.68, ease: 'easeOut' });
+                /* Phase 4 — multi-wave burst (fast → slow, filling the card) */
+                animate(svgScale, 1, { duration: 0.1 });
+                animate(centerScale, 1, { duration: 0.1 });
+
+                fireRing(b1s, b1o, 0.42, 0.70);                // ring 1 — fastest, brightest
+                await new Promise<void>(r => setTimeout(r, 110));
+                fireRing(b2s, b2o, 0.62, 0.52);                // ring 2
+                await new Promise<void>(r => setTimeout(r, 180));
+                fireRing(b3s, b3o, 0.88, 0.36);                // ring 3
+                await new Promise<void>(r => setTimeout(r, 260));
+                fireRing(b4s, b4o, 1.20, 0.20);                // ring 4 — slowest, faintest
+                await new Promise<void>(r => setTimeout(r, 1280)); // wait for last ring
                 if (!alive) return;
 
-                /* Phase 5 — reset dots (quick stagger) */
+                /* Phase 5 — reset dots */
                 for (let i = 0; i < ILL_SPEED_N; i++) {
                     if (!alive) return;
                     setDot(i, false);
-                    await new Promise<void>(r => setTimeout(r, 18));
+                    await new Promise<void>(r => setTimeout(r, 16));
                 }
-                await new Promise<void>(r => setTimeout(r, 300));
+                await new Promise<void>(r => setTimeout(r, 280));
             }
         };
 
         run();
         return () => { alive = false; };
-    }, [burstOpacity, burstScale, centerScale, svgScale]);
+    }, [b1o, b1s, b2o, b2s, b3o, b3s, b4o, b4s, centerScale, svgScale]);
+
+    // Ring style: centered in the card container, expands outward
+    const ringBase: React.CSSProperties = {
+        position: 'absolute',
+        width: '160px', height: '160px',
+        left: '50%', top: '50%',
+        marginLeft: '-80px', marginTop: '-80px',
+        borderRadius: '50%',
+        pointerEvents: 'none',
+    };
 
     return (
         <>
+            {/* Burst rings — expand to fill the full card */}
+            <motion.div style={{ ...ringBase, border: '1.5px solid rgba(86,0,227,0.7)', scale: b1s, opacity: b1o }} />
+            <motion.div style={{ ...ringBase, border: '1px solid rgba(86,0,227,0.55)',   scale: b2s, opacity: b2o }} />
+            <motion.div style={{ ...ringBase, border: '1px solid rgba(86,0,227,0.40)',   scale: b3s, opacity: b3o }} />
+            <motion.div style={{ ...ringBase, border: '1px solid rgba(86,0,227,0.25)',   scale: b4s, opacity: b4o }} />
+
             <motion.div
                 className="w-16 h-16 bg-white rounded-2xl border border-slate-200 shadow-sm flex items-center justify-center z-10"
                 style={{ scale: centerScale }}
@@ -710,14 +746,6 @@ const IllSpeed = () => {
                         style={{ fill: '#e2e8f0', transition: 'fill 0.12s ease-out, filter 0.12s ease-out' }}
                     />
                 ))}
-                {/* Burst ring — expands and fades on release */}
-                <motion.circle
-                    cx="50" cy="50" r="42"
-                    stroke="rgba(86,0,227,0.55)"
-                    strokeWidth="1.5"
-                    fill="none"
-                    style={{ scale: burstScale, opacity: burstOpacity, transformOrigin: '50px 50px' }}
-                />
             </motion.svg>
         </>
     );
