@@ -617,17 +617,111 @@ const IllTracking = () => (
     </div>
 );
 
-const IllSpeed = () => (
-    <>
-        <div className="w-16 h-16 bg-white rounded-2xl border border-slate-200 shadow-sm flex items-center justify-center z-10">
-            <Zap className="w-8 h-8 text-primary" />
-        </div>
-        <svg className="absolute w-40 h-40" viewBox="0 0 100 100" fill="none">
-            <circle cx="50" cy="50" r="42" stroke="#e2e8f0" strokeWidth="4" strokeDasharray="6 4" />
-            <circle cx="50" cy="50" r="42" stroke="#5600e3" strokeWidth="4" strokeDasharray="6 4" strokeDashoffset="60" opacity="0.3" />
-        </svg>
-    </>
-);
+const ILL_SPEED_N = 26;
+const ILL_SPEED_DOTS = Array.from({ length: ILL_SPEED_N }, (_, i) => {
+    const a = (i / ILL_SPEED_N) * 2 * Math.PI - Math.PI / 2;
+    return { x: 50 + 42 * Math.cos(a), y: 50 + 42 * Math.sin(a) };
+});
+
+const IllSpeed = () => {
+    const dotRefs      = useRef<(SVGCircleElement | null)[]>([]);
+    const burstScale   = useMotionValue(1);
+    const burstOpacity = useMotionValue(0);
+    const svgScale     = useMotionValue(1);
+    const centerScale  = useMotionValue(1);
+
+    useEffect(() => {
+        let alive = true;
+
+        const setDot = (i: number, active: boolean) => {
+            const el = dotRefs.current[i];
+            if (!el) return;
+            el.style.fill   = active ? '#5600e3' : '#e2e8f0';
+            el.style.filter = active ? 'drop-shadow(0 0 2.5px rgba(86,0,227,0.6))' : 'none';
+        };
+
+        const run = async () => {
+            while (alive) {
+                /* reset */
+                for (let i = 0; i < ILL_SPEED_N; i++) setDot(i, false);
+                burstOpacity.set(0); burstScale.set(1);
+                svgScale.set(1);    centerScale.set(1);
+                await new Promise<void>(r => setTimeout(r, 100));
+                if (!alive) return;
+
+                /* Phase 1 — sequential dot activation (~2.2s) */
+                for (let i = 0; i < ILL_SPEED_N; i++) {
+                    if (!alive) return;
+                    setDot(i, true);
+                    await new Promise<void>(r => setTimeout(r, 85));
+                }
+                if (!alive) return;
+
+                /* Phase 2 — hold fully lit (~0.75s) */
+                await new Promise<void>(r => setTimeout(r, 750));
+                if (!alive) return;
+
+                /* Phase 3 — energy build-up (~0.4s) */
+                animate(centerScale, [1, 1.1, 1.05], { duration: 0.38, times: [0, 0.5, 1] });
+                await animate(svgScale, 1.04, { duration: 0.35, ease: 'easeOut' });
+                if (!alive) return;
+
+                /* Phase 4 — burst (~0.7s) */
+                animate(svgScale, 1, { duration: 0.12 });
+                animate(centerScale, 1, { duration: 0.12 });
+                burstOpacity.set(0.65);
+                animate(burstScale, 1.72, { duration: 0.68, ease: [0.12, 0.8, 0.32, 1] as any });
+                await animate(burstOpacity, 0, { duration: 0.68, ease: 'easeOut' });
+                if (!alive) return;
+
+                /* Phase 5 — reset dots (quick stagger) */
+                for (let i = 0; i < ILL_SPEED_N; i++) {
+                    if (!alive) return;
+                    setDot(i, false);
+                    await new Promise<void>(r => setTimeout(r, 18));
+                }
+                await new Promise<void>(r => setTimeout(r, 300));
+            }
+        };
+
+        run();
+        return () => { alive = false; };
+    }, [burstOpacity, burstScale, centerScale, svgScale]);
+
+    return (
+        <>
+            <motion.div
+                className="w-16 h-16 bg-white rounded-2xl border border-slate-200 shadow-sm flex items-center justify-center z-10"
+                style={{ scale: centerScale }}
+            >
+                <Zap className="w-8 h-8 text-primary" />
+            </motion.div>
+            <motion.svg
+                className="absolute w-40 h-40"
+                viewBox="0 0 100 100"
+                fill="none"
+                style={{ scale: svgScale }}
+            >
+                {ILL_SPEED_DOTS.map((d, i) => (
+                    <circle
+                        key={i}
+                        ref={el => { dotRefs.current[i] = el; }}
+                        cx={d.x} cy={d.y} r="2.8"
+                        style={{ fill: '#e2e8f0', transition: 'fill 0.12s ease-out, filter 0.12s ease-out' }}
+                    />
+                ))}
+                {/* Burst ring — expands and fades on release */}
+                <motion.circle
+                    cx="50" cy="50" r="42"
+                    stroke="rgba(86,0,227,0.55)"
+                    strokeWidth="1.5"
+                    fill="none"
+                    style={{ scale: burstScale, opacity: burstOpacity, transformOrigin: '50px 50px' }}
+                />
+            </motion.svg>
+        </>
+    );
+};
 
 /* ── Tab card data ───────────────────────────────────────── */
 
