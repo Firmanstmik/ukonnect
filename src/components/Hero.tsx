@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Star } from 'lucide-react';
 import { HeroBackground } from './HeroBackground';
+import { useLanguage } from '../i18n/LanguageContext';
 
 // Framer Icon SVG Component
 const FramerIcon = () => (
@@ -22,6 +23,7 @@ const logos = [
 ];
 
 export const Hero = () => {
+    const { t } = useLanguage();
     return (
         <section className="relative isolate pt-56 pb-[60px] md:pb-[80px] lg:pb-[120px] px-6 flex flex-col items-center text-center overflow-hidden">
             {/* Animated background */}
@@ -34,7 +36,7 @@ export const Hero = () => {
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-slate-200 shadow-sm text-[13px] font-medium text-slate-600 mb-8 bg-white/50 backdrop-blur-sm"
             >
                 <FramerIcon />
-                <span>AI-Powered Growth Systems</span>
+                <span>{t('hero.badge')}</span>
             </motion.div>
 
             <motion.h1
@@ -43,7 +45,7 @@ export const Hero = () => {
                 transition={{ duration: 0.5, delay: 0.1 }}
                 className="text-[44px] md:text-5xl lg:text-[64px] font-bold leading-[1.15] tracking-tight text-slate-900 mb-6 max-w-[1100px]"
             >
-                AI Marketing That Generate Leads and <span className="text-[#5600e3]">Grow Your Business</span>
+                {t('hero.headingPre')} <span className="text-[#5600e3]">{t('hero.headingHighlight')}</span>
             </motion.h1>
 
             <motion.p
@@ -52,7 +54,7 @@ export const Hero = () => {
                 transition={{ duration: 0.5, delay: 0.2 }}
                 className="text-[15px] md:text-base text-slate-500 mb-10 max-w-2xl mx-auto leading-relaxed"
             >
-                We build AI-powered marketing and sales automations that connect your tools, qualify leads, and close deals on autopilot.
+                {t('hero.sub')}
             </motion.p>
 
             <motion.div
@@ -62,7 +64,7 @@ export const Hero = () => {
                 className="flex flex-col items-center gap-8"
             >
                 <button className="px-8 py-3 bg-[#5600e3] hover:bg-[#4500b6] text-white rounded-full text-[15px] font-medium transition-all shadow-sm shadow-[#5600e3]/20 hover:-translate-y-0.5 hover:shadow-md">
-                    See plans
+                    {t('hero.cta')}
                 </button>
 
                 {/* Reviews Pill */}
@@ -78,7 +80,7 @@ export const Hero = () => {
                         <div className="flex items-center text-[#5600e3] gap-0.5 mb-0.5">
                             {[...Array(5)].map((_, i) => <Star key={i} className="w-3.5 h-3.5 fill-current" />)}
                         </div>
-                        <span className="text-[12px] text-slate-600 font-medium">Trusted by <span className="text-[#5600e3]">4000+ companies</span></span>
+                        <span className="text-[12px] text-slate-600 font-medium">{t('hero.trustedBy')} <span className="text-[#5600e3]">{t('hero.trustedCount')}</span></span>
                     </div>
                 </div>
             </motion.div>

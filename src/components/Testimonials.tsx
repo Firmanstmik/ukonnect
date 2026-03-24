@@ -1,42 +1,31 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Star } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageContext';
+import type { TranslationKey } from '../i18n/translations';
 
-const testimonials = [
-    {
-        name: "Sarah Mitchell",
-        title: "Head of Marketing at TechFlow",
-        image: "https://i.pravatar.cc/100?img=5",
-        body: "Ukonnect automated our entire lead nurturing pipeline. We now generate 3x more qualified leads with half the manual work."
-    },
-    {
-        name: "David Brown",
-        title: "CEO at NextGen Solutions",
-        image: "https://i.pravatar.cc/100?img=11",
-        body: "Within two months our sales pipeline was fully automated. The AI follow-up system alone increased our close rate by 40%."
-    },
-    {
-        name: "Emily Carter",
-        title: "Growth Lead at DataSync",
-        image: "https://i.pravatar.cc/100?img=9",
-        body: "The AI integrations connected all our tools seamlessly. Our marketing team saves 20+ hours a week on repetitive tasks."
-    },
-    {
-        name: "Michael Chang",
-        title: "VP of Sales at RetailCorp",
-        image: "https://i.pravatar.cc/100?img=12",
-        body: "Our cost per lead dropped by 60% after implementing Ukonnect. The AI lead scoring is incredibly accurate."
-    }
+const TESTIMONIAL_META = [
+    { name: "Sarah Mitchell", title: "Head of Marketing at TechFlow", image: "https://i.pravatar.cc/100?img=5" },
+    { name: "David Brown", title: "CEO at NextGen Solutions", image: "https://i.pravatar.cc/100?img=11" },
+    { name: "Emily Carter", title: "Growth Lead at DataSync", image: "https://i.pravatar.cc/100?img=9" },
+    { name: "Michael Chang", title: "VP of Sales at RetailCorp", image: "https://i.pravatar.cc/100?img=12" },
 ];
 
 export const Testimonials = () => {
+    const { t } = useLanguage();
+
+    const testimonials = TESTIMONIAL_META.map((meta, i) => ({
+        ...meta,
+        body: t(`testimonials.${i}.body` as TranslationKey),
+    }));
+
     return (
         <section className="py-[60px] md:py-[80px] lg:py-[120px] max-w-[1300px] mx-auto px-6">
             <div className="text-center max-w-2xl mx-auto mb-16 md:mb-24">
-                <p className="text-primary font-semibold tracking-wide uppercase text-sm mb-3">Testimonials</p>
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-6">Results From Real Teams</h2>
+                <p className="text-primary font-semibold tracking-wide uppercase text-sm mb-3">{t('testimonials.label')}</p>
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-6">{t('testimonials.heading')}</h2>
                 <p className="text-slate-500 text-lg">
-                    How companies use Ukonnect to automate growth and close more deals.
+                    {t('testimonials.sub')}
                 </p>
             </div>
 

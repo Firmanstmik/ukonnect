@@ -1,47 +1,34 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle2 } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageContext';
+import type { TranslationKey } from '../i18n/translations';
 
-const plans = [
-    {
-        name: "Growth",
-        price: "$49",
-        description: "For teams starting with AI automation.",
-        features: [
-            "AI Lead Capture Workflows",
-            "CRM & Email Integration",
-            "Automated Follow-up Sequences",
-            "Lead Scoring & Qualification",
-            "Performance Dashboard",
-            "Dedicated Account Manager"
-        ]
-    },
-    {
-        name: "Scale",
-        price: "$99",
-        description: "Full AI growth engine for your team.",
-        features: [
-            "Everything in Growth",
-            "AI Sales Agents & Chatbots",
-            "Multi-Channel Ad Automation",
-            "Custom AI Workflow Builder",
-            "Advanced Revenue Analytics",
-            "Priority Support & SLA"
-        ],
-        highlight: true
-    }
-];
+const PLAN_PRICES = ['$49', '$99'];
+const PLAN_FEATURE_COUNT = 6;
 
 export const Pricing = () => {
+    const { t } = useLanguage();
+
+    const plans = [0, 1].map((pi) => ({
+        name: t(`pricing.plan${pi}.name` as TranslationKey),
+        price: PLAN_PRICES[pi],
+        description: t(`pricing.plan${pi}.desc` as TranslationKey),
+        features: Array.from({ length: PLAN_FEATURE_COUNT }, (_, fi) =>
+            t(`pricing.plan${pi}.f${fi}` as TranslationKey)
+        ),
+        highlight: pi === 1,
+    }));
+
     return (
         <section className="py-[60px] md:py-[80px] lg:py-[120px] max-w-[1300px] mx-auto px-6">
             <div className="text-center max-w-2xl mx-auto mb-16 md:mb-24">
-                <p className="text-primary font-semibold tracking-wide uppercase text-sm mb-3">Pricing</p>
+                <p className="text-primary font-semibold tracking-wide uppercase text-sm mb-3">{t('pricing.label')}</p>
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
-                    Plans That <span className="text-primary">Drive Revenue</span>
+                    {t('pricing.headingPre')} <span className="text-primary">{t('pricing.headingHighlight')}</span>
                 </h2>
                 <p className="text-slate-500 text-lg">
-                    Choose the AI automation package that fits your growth stage.
+                    {t('pricing.sub')}
                 </p>
             </div>
 
@@ -59,7 +46,7 @@ export const Pricing = () => {
                         <h3 className="text-lg font-bold text-slate-900 mb-2">{plan.name}</h3>
                         <div className="flex items-baseline gap-1 mb-2">
                             <span className="text-4xl lg:text-5xl font-bold text-primary">{plan.price}</span>
-                            <span className="text-slate-500 font-medium">/mo</span>
+                            <span className="text-slate-500 font-medium">{t('pricing.mo')}</span>
                         </div>
                         <p className="text-slate-500 text-sm mb-8 pb-8 border-b border-slate-100">{plan.description}</p>
 
@@ -76,7 +63,7 @@ export const Pricing = () => {
                                 ? 'bg-primary text-white shadow-md shadow-primary/20 hover:bg-primary-hover hover:-translate-y-0.5'
                                 : 'bg-slate-50 text-slate-900 border border-slate-200 hover:bg-slate-100 hover:-translate-y-0.5'
                             }`}>
-                            Get Started
+                            {t('pricing.cta')}
                         </button>
                     </motion.div>
                 ))}

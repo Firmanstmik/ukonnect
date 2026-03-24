@@ -5,6 +5,8 @@ import { AILeadGenerationEngine } from './AILeadGenerationEngine';
 import { AISalesChat } from './AISalesChat';
 import { AIMarketingAutomation } from './AIMarketingAutomation';
 import { AIWorkflowSync } from './AIWorkflowSync';
+import { useLanguage } from '../i18n/LanguageContext';
+import type { TranslationKey } from '../i18n/translations';
 
 const TABS = ['Marketing', 'AI Systems', 'Web Development'] as const;
 const DEFAULT_TAB = 1; // AI Systems active by default
@@ -751,27 +753,12 @@ const IllSpeed = () => {
     );
 };
 
-/* ── Tab card data ───────────────────────────────────────── */
+/* ── Tab card illustrations (static, no translations needed) ── */
 
-const TAB_CARDS: Record<string, { title: string; description: string; illustration: React.ReactNode }[]> = {
-    'Marketing': [
-        { title: 'Paid Advertising', description: 'Performance campaigns on Meta and Google that generate high-intent leads.', illustration: <IllTarget /> },
-        { title: 'Conversion Funnels', description: 'High-converting funnels designed to turn traffic into qualified opportunities.', illustration: <IllFunnel /> },
-        { title: 'Performance Optimization', description: 'Continuous testing and AI-driven optimization to improve cost per lead and ROI.', illustration: <IllTrend /> },
-        { title: 'Lead Generation Strategy', description: 'Targeting, messaging, and positioning that attract the right customers.', illustration: <IllStrategy /> },
-    ],
-    'AI Systems': [
-        { title: 'AI Lead Generation', description: 'AI-powered campaigns that continuously generate high-intent leads through Meta, Google, and performance-driven targeting.', illustration: <AILeadGenerationEngine /> },
-        { title: 'AI Sales Automation', description: 'AI agents that qualify leads, handle follow-ups, and book meetings so your sales team focuses on closing.', illustration: <AISalesChat /> },
-        { title: 'AI Marketing Automation', description: 'Automated email sequences, ad optimization, and content workflows that nurture prospects and increase conversions.', illustration: <AIMarketingAutomation /> },
-        { title: 'AI Integrations & Workflows', description: 'Connect your CRM, ads, messaging, and analytics tools into one unified AI-powered system.', illustration: <AIWorkflowSync /> },
-    ],
-    'Web Development': [
-        { title: 'Conversion Websites', description: 'Websites designed specifically to convert visitors into leads.', illustration: <IllBrowser /> },
-        { title: 'Landing Pages', description: 'High-performance landing pages optimized for paid traffic.', illustration: <IllLandingPage /> },
-        { title: 'Tracking & Analytics Setup', description: 'Proper tracking infrastructure for ads, conversions, and attribution.', illustration: <IllTracking /> },
-        { title: 'Performance Optimization', description: 'Fast, lightweight websites optimized for speed and SEO.', illustration: <IllSpeed /> },
-    ],
+const TAB_ILLUSTRATIONS: Record<string, React.ReactNode[]> = {
+    'Marketing': [<IllTarget />, <IllFunnel />, <IllTrend />, <IllStrategy />],
+    'AI Systems': [<AILeadGenerationEngine />, <AISalesChat />, <AIMarketingAutomation />, <AIWorkflowSync />],
+    'Web Development': [<IllBrowser />, <IllLandingPage />, <IllTracking />, <IllSpeed />],
 };
 
 /* ── Constants ───────────────────────────────────────────── */
@@ -780,7 +767,9 @@ const PANEL_PCT = 100 / TABS.length; // 33.333…%
 
 /* ── Component ───────────────────────────────────────────── */
 
+
 export const Features = () => {
+    const { t } = useLanguage();
     const [activeTab, setActiveTab] = useState(DEFAULT_TAB);
     const containerRef = useRef<HTMLDivElement>(null);
     const tabBarRef = useRef<HTMLDivElement>(null);
@@ -882,10 +871,10 @@ export const Features = () => {
         <section id="system-modules" className="py-[60px] md:py-[80px] lg:py-[80px] max-w-[1300px] mx-auto px-6 bg-slate-50/50 rounded-[3rem]">
             {/* Header */}
             <div className="text-center max-w-2xl mx-auto mb-8">
-                <p className="text-primary font-semibold tracking-wide uppercase text-sm mb-3">System Modules</p>
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-6">Your AI Growth System</h2>
+                <p className="text-primary font-semibold tracking-wide uppercase text-sm mb-3">{t('features.label')}</p>
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-6">{t('features.heading')}</h2>
                 <p className="text-slate-500 text-lg">
-                    Four systems that automate and optimize your marketing and sales pipeline.
+                    {t('features.sub')}
                 </p>
             </div>
 
@@ -907,17 +896,20 @@ export const Features = () => {
                         }}
                     />
                     {/* Static text labels */}
-                    {TABS.map((tab, i) => (
-                        <button
-                            key={tab}
-                            onClick={() => goToTab(i)}
-                            className={`relative z-10 px-5 md:px-7 py-2.5 rounded-lg text-sm font-medium transition-colors duration-150 ${
-                                pillTab === i ? 'text-slate-900' : 'text-slate-400 hover:text-slate-600'
-                            }`}
-                        >
-                            {tab}
-                        </button>
-                    ))}
+                    {TABS.map((tab, i) => {
+                        const labelKey = (['features.tab.marketing', 'features.tab.ai', 'features.tab.web'] as const)[i];
+                        return (
+                            <button
+                                key={tab}
+                                onClick={() => goToTab(i)}
+                                className={`relative z-10 px-5 md:px-7 py-2.5 rounded-lg text-sm font-medium transition-colors duration-150 ${
+                                    pillTab === i ? 'text-slate-900' : 'text-slate-400 hover:text-slate-600'
+                                }`}
+                            >
+                                {t(labelKey)}
+                            </button>
+                        );
+                    })}
                 </motion.div>
             </div>
 
@@ -933,26 +925,30 @@ export const Features = () => {
                         touchAction: 'pan-y',
                     }}
                 >
-                    {TABS.map((tab) => (
-                        <div
-                            key={tab}
-                            className="shrink-0 grid md:grid-cols-2 gap-5 px-10 pt-4 pb-8"
-                            style={{ width: `${PANEL_PCT}%` }}
-                        >
-                            {TAB_CARDS[tab].map((card, j) => (
-                                <div
-                                    key={j}
-                                    className="bg-[#ecedf1] rounded-3xl p-6 md:p-7 shadow-[0_4px_8px_rgba(0,0,0,0.12),0_-2px_4px_rgba(255,255,255,0.9),0_1px_1px_rgba(255,255,255,0.8)] flex flex-col group overflow-hidden"
-                                >
-                                    <div className="flex-1 min-h-[180px] bg-[#e2e3e8] rounded-2xl mb-5 flex items-center justify-center p-5 relative overflow-hidden">
-                                        {card.illustration}
+                    {TABS.map((tab, ti) => {
+                        const ns = (['marketing', 'ai', 'web'] as const)[ti];
+                        const illustrations = TAB_ILLUSTRATIONS[tab];
+                        return (
+                            <div
+                                key={tab}
+                                className="shrink-0 grid md:grid-cols-2 gap-5 px-10 pt-4 pb-8"
+                                style={{ width: `${PANEL_PCT}%` }}
+                            >
+                                {illustrations.map((illustration, j) => (
+                                    <div
+                                        key={j}
+                                        className="bg-[#ecedf1] rounded-3xl p-6 md:p-7 shadow-[0_4px_8px_rgba(0,0,0,0.12),0_-2px_4px_rgba(255,255,255,0.9),0_1px_1px_rgba(255,255,255,0.8)] flex flex-col group overflow-hidden"
+                                    >
+                                        <div className="flex-1 min-h-[180px] bg-[#e2e3e8] rounded-2xl mb-5 flex items-center justify-center p-5 relative overflow-hidden">
+                                            {illustration}
+                                        </div>
+                                        <h3 className="text-xl font-bold text-slate-900 mb-2">{t(`features.${ns}.${j}.title` as TranslationKey)}</h3>
+                                        <p className="text-slate-500 text-sm leading-relaxed">{t(`features.${ns}.${j}.desc` as TranslationKey)}</p>
                                     </div>
-                                    <h3 className="text-xl font-bold text-slate-900 mb-2">{card.title}</h3>
-                                    <p className="text-slate-500 text-sm leading-relaxed">{card.description}</p>
-                                </div>
-                            ))}
-                        </div>
-                    ))}
+                                ))}
+                            </div>
+                        );
+                    })}
                 </motion.div>
             </div>
         </section>

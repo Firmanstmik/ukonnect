@@ -2,48 +2,34 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Workflow, PiggyBank, ShieldCheck, Activity, RefreshCw, Handshake } from 'lucide-react';
 import { CardBackground } from './CardBackground';
+import { useLanguage } from '../i18n/LanguageContext';
+import type { TranslationKey } from '../i18n/translations';
 
-const benefits = [
-    {
-        icon: <Workflow className="w-6 h-6" />,
-        title: "Pipeline on Autopilot",
-        description: "Automate lead capture, nurturing, and follow-ups so your pipeline grows without manual effort."
-    },
-    {
-        icon: <PiggyBank className="w-6 h-6" />,
-        title: "Lower Cost Per Lead",
-        description: "Reduce acquisition costs by automating repetitive marketing and sales tasks that drain your budget."
-    },
-    {
-        icon: <ShieldCheck className="w-6 h-6" />,
-        title: "Higher Conversion Rates",
-        description: "AI-qualified leads and personalized follow-ups mean more prospects convert into paying customers."
-    },
-    {
-        icon: <Activity className="w-6 h-6" />,
-        title: "Real-time Performance Data",
-        description: "Track lead flow, conversion rates, and campaign ROI with live dashboards across all channels."
-    },
-    {
-        icon: <RefreshCw className="w-6 h-6" />,
-        title: "All Tools Connected",
-        description: "Sync your CRM, email platform, ad accounts, and messaging tools into one seamless system."
-    },
-    {
-        icon: <Handshake className="w-6 h-6" />,
-        title: "Done-For-You Setup",
-        description: "Our team builds, configures, and optimizes your AI systems so you see results without technical complexity."
-    }
+const benefitIcons = [
+    <Workflow className="w-6 h-6" />,
+    <PiggyBank className="w-6 h-6" />,
+    <ShieldCheck className="w-6 h-6" />,
+    <Activity className="w-6 h-6" />,
+    <RefreshCw className="w-6 h-6" />,
+    <Handshake className="w-6 h-6" />,
 ];
 
 export const Benefits = () => {
+    const { t } = useLanguage();
+
+    const benefits = benefitIcons.map((icon, i) => ({
+        icon,
+        title: t(`benefits.${i}.title` as TranslationKey),
+        description: t(`benefits.${i}.desc` as TranslationKey),
+    }));
+
     return (
         <section className="py-[60px] md:py-[80px] lg:py-[120px] max-w-[1300px] mx-auto px-6">
             <div className="text-center max-w-2xl mx-auto mb-16 md:mb-24">
-                <p className="text-primary font-semibold tracking-wide uppercase text-sm mb-3">Benefits</p>
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-6">Why Companies Choose Ukonnect</h2>
+                <p className="text-primary font-semibold tracking-wide uppercase text-sm mb-3">{t('benefits.label')}</p>
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-6">{t('benefits.heading')}</h2>
                 <p className="text-slate-500 text-lg">
-                    Revenue-focused AI systems, not generic automation tools.
+                    {t('benefits.sub')}
                 </p>
             </div>
 

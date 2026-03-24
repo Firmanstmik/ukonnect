@@ -3,15 +3,18 @@ import { motion } from 'framer-motion';
 import { MarketingAuditScanner } from './MarketingAuditScanner';
 import { BuildIntegrateTerminal } from './BuildIntegrateTerminal';
 import { LaunchOptimizeEngine } from './LaunchOptimizeEngine';
+import { useLanguage } from '../i18n/LanguageContext';
 
 export const Process = () => {
+    const { t } = useLanguage();
+
     return (
         <section id="process" className="py-[60px] md:py-[80px] lg:py-[120px] max-w-[1300px] mx-auto px-6">
             <div className="text-center max-w-2xl mx-auto mb-16 md:mb-24">
-                <p className="text-primary font-semibold tracking-wide uppercase text-sm mb-3">How It Works</p>
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-6">How We Build Your AI System</h2>
+                <p className="text-primary font-semibold tracking-wide uppercase text-sm mb-3">{t('process.label')}</p>
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-6">{t('process.heading')}</h2>
                 <p className="text-slate-500 text-lg">
-                    From audit to live automation in three straightforward steps.
+                    {t('process.sub')}
                 </p>
             </div>
 
@@ -29,11 +32,9 @@ export const Process = () => {
                     </div>
                     <div className="w-full md:w-1/2">
                         <h3 className="text-6xl font-bold text-primary/20 mb-4 tracking-tighter">01</h3>
-                        <h4 className="text-2xl font-bold text-slate-900 mb-3">Marketing & Sales Audit</h4>
+                        <h4 className="text-2xl font-bold text-slate-900 mb-3">{t('process.step1.title')}</h4>
                         <p className="text-slate-500 leading-relaxed max-w-md">
-                            We map your current marketing and sales stack,
-                            identify automation gaps in your lead pipeline,
-                            and design an AI system tailored to your revenue goals.
+                            {t('process.step1.desc')}
                         </p>
                     </div>
                 </motion.div>
@@ -51,9 +52,9 @@ export const Process = () => {
                     </div>
                     <div className="w-full md:w-1/2">
                         <h3 className="text-6xl font-bold text-primary/20 mb-4 tracking-tighter">02</h3>
-                        <h4 className="text-2xl font-bold text-slate-900 mb-3">Build & Integrate</h4>
+                        <h4 className="text-2xl font-bold text-slate-900 mb-3">{t('process.step2.title')}</h4>
                         <p className="text-slate-500 leading-relaxed max-w-md">
-                            We connect your marketing stack and build AI systems that improve sales, campaigns, automate workflows, and increase conversions.
+                            {t('process.step2.desc')}
                         </p>
                     </div>
                 </motion.div>
@@ -71,10 +72,9 @@ export const Process = () => {
                     </div>
                     <div className="w-full md:w-1/2">
                         <h3 className="text-6xl font-bold text-primary/20 mb-4 tracking-tighter">03</h3>
-                        <h4 className="text-2xl font-bold text-slate-900 mb-3">Launch & Optimize</h4>
+                        <h4 className="text-2xl font-bold text-slate-900 mb-3">{t('process.step3.title')}</h4>
                         <p className="text-slate-500 leading-relaxed max-w-md">
-                            Go live with a fully automated growth engine. Your AI systems
-                            generate leads, nurture prospects, and drive revenue on autopilot.
+                            {t('process.step3.desc')}
                         </p>
                     </div>
                 </motion.div>

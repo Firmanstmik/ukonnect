@@ -1,40 +1,27 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageContext';
+import type { TranslationKey } from '../i18n/translations';
 
-const faqs = [
-    {
-        question: "What exactly does Ukonnect do?",
-        answer: "We build AI-powered marketing and sales automation systems. We connect your CRM, email, ads, and messaging tools into intelligent workflows that generate leads, qualify them, and move them through your pipeline automatically."
-    },
-    {
-        question: "How long does it take to go live?",
-        answer: "Most clients have their first AI automations running within 2 to 4 weeks, depending on the number of tools and workflows being integrated."
-    },
-    {
-        question: "Does it work with the tools we already use?",
-        answer: "Yes. We integrate with all major CRMs, email platforms, ad networks, and messaging tools including HubSpot, Salesforce, Mailchimp, Google Ads, Meta, and more."
-    },
-    {
-        question: "Do we need technical expertise to use this?",
-        answer: "Not at all. We handle the entire setup, integration, and optimization. Your team just uses the dashboards and reaps the results."
-    },
-    {
-        question: "What kind of results can we expect?",
-        answer: "Clients typically see a 30-50% increase in qualified leads and significantly lower cost per acquisition within the first 3 months of going live."
-    }
-];
+const FAQ_COUNT = 5;
 
 export const FAQ = () => {
     const [openIndex, setOpenIndex] = useState<number | null>(0);
+    const { t } = useLanguage();
+
+    const faqs = Array.from({ length: FAQ_COUNT }, (_, i) => ({
+        question: t(`faq.${i}.q` as TranslationKey),
+        answer: t(`faq.${i}.a` as TranslationKey),
+    }));
 
     return (
         <section className="py-[60px] md:py-[80px] lg:py-[120px] max-w-[800px] mx-auto px-6">
             <div className="text-center mb-16">
-                <p className="text-primary font-semibold tracking-wide uppercase text-sm mb-3">FAQ</p>
-                <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">Your Questions, Answered</h2>
+                <p className="text-primary font-semibold tracking-wide uppercase text-sm mb-3">{t('faq.label')}</p>
+                <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">{t('faq.heading')}</h2>
                 <p className="text-slate-500 text-lg">
-                    Everything you need to know about our AI automation systems.
+                    {t('faq.sub')}
                 </p>
             </div>
 

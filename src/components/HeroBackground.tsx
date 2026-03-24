@@ -198,8 +198,14 @@ export const HeroBackground: React.FC = () => {
             }
 
             /* ── Smooth magnetic node positions ─────────── */
+            /* On mobile, stretch nodes horizontally by 30% (centered) so the
+               graph breathes more on narrow viewports */
+            const isMobile = W < 768;
+            const xStretch = isMobile ? 1.30 : 1;
+            const xShift   = isMobile ? W * 0.15 : 0;
+
             const screenPos: [number, number][] = NP.map((p, i) => {
-                const bx = p[0] * W + ox;
+                const bx = p[0] * W * xStretch - xShift + ox;
                 const by = p[1] * H + oy;
                 const dx = csx - bx;
                 const dy = csy - by;
