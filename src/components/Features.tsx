@@ -168,13 +168,14 @@ const WhatsAppIcon = () => (
     </svg>
 );
 
-const DOCK_APPS = [
+type DockApp = { icon: React.ReactNode; bg: string; onClick?: () => void; isBrowser?: boolean };
+const DOCK_APPS: DockApp[] = [
     { icon: <WhatsAppIcon />, bg: 'linear-gradient(145deg,#25d366,#128c7e)', onClick: () => window.open('https://wa.me/31853331000', '_blank') },
     { icon: <Mail     size={14} />, bg: 'linear-gradient(145deg,#64d2ff,#2c7be5)', onClick: () => window.open('mailto:info@ukonnect.nl') },
     { icon: <Globe    size={14} />, bg: 'linear-gradient(145deg,#34aadc,#0a84ff)', isBrowser: true },
     { icon: <Music    size={14} />, bg: 'linear-gradient(145deg,#ff6b81,#fc3c58)', onClick: () => window.open('https://open.spotify.com', '_blank') },
     { icon: <Settings size={13} />, bg: 'linear-gradient(145deg,#aeaeb2,#636366)' },
-] as const;
+];
 
 const IllBrowser = () => {
     const [showing,   setShowing]   = useState(true);
