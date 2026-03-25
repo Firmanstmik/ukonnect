@@ -4,7 +4,7 @@ import { Workflow, PiggyBank, ShieldCheck, Activity, RefreshCw, Handshake } from
 import { CardBackground } from './CardBackground';
 import { useLanguage } from '../i18n/LanguageContext';
 import type { TranslationKey } from '../i18n/translations';
-import teamPhoto from '../assets/Ukonnect team.webp';
+import teamPhoto from '../assets/Ukonnect Team Portugal.webp';
 
 const benefitIcons = [
     <Workflow className="w-6 h-6" />,

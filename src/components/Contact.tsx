@@ -5,7 +5,7 @@ import { useLanguage } from '../i18n/LanguageContext';
 import Cal, { getCalApi } from '@calcom/embed-react';
 import emailjs from '@emailjs/browser';
 
-import teamPhoto from '../assets/Ukonnect team.webp';
+import teamPhoto from '../assets/Ukonnect Team Portugal.webp';
 import googleAdsIcon from '../assets/Ukonnect Google Ads.webp';
 import googleIcon from '../assets/google ukonnect.svg';
 import wordpressIcon from '../assets/Wordpress.webp';

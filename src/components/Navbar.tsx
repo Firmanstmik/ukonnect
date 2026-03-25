@@ -107,7 +107,7 @@ export const Navbar = () => {
     const navItems = [
         { labelKey: 'nav.howItWorks' as const, id: 'process', href: null },
         { labelKey: 'nav.services' as const, id: 'system-modules', href: null },
-        { labelKey: 'nav.about' as const, id: 'about', href: null },
+        { labelKey: 'nav.about' as const, id: null, href: '/about' },
         { labelKey: 'nav.contact' as const, id: null, href: '/contact' },
     ];
 
