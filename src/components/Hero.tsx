@@ -1,30 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Star } from 'lucide-react';
 import { HeroBackground } from './HeroBackground';
 import { useLanguage } from '../i18n/LanguageContext';
+import { ContactFormModal } from './ContactFormModal';
 
-// Framer Icon SVG Component
-const FramerIcon = () => (
-    <svg width="14" height="14" viewBox="0 0 14 21" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-slate-700 w-3.5 h-3.5">
-        <path d="M0 0H14V7H7L0 0Z" fill="currentColor" />
-        <path d="M0 7H14V14H7L0 7Z" fill="currentColor" />
-        <path d="M7 14V21L0 14H7Z" fill="currentColor" />
-    </svg>
+import logo2WheelShop from '../assets/Partners/2WHEEL-SHOP.png';
+import logoDutchBroker from '../assets/Partners/DUTCHBROKER.png';
+import logoHuurwoningen from '../assets/Partners/HUURWONINGEN.png';
+import logoJuzaBouw from '../assets/Partners/JUZA BOUW.png';
+import logoMijnVogelwering from '../assets/Partners/MIJN VOGELWERING.png';
+import logoOhMyGemmer from '../assets/Partners/OHMYGEMMER.png';
+import logoPararius from '../assets/Partners/PARARIUS HUURWONINGEN.png';
+import logoRemax from '../assets/Partners/REMAX.png';
+import logoSbsKlus from '../assets/Partners/SBS KLUS.png';
+import logoWjbVermeulen from '../assets/Partners/WJB VERMEULEN.png';
+import logoZekerVastgoed from '../assets/Partners/ZEKERVASTGOED.png';
+
+const BadgeIcon = () => (
+    <img src="/favicon.png" alt="Ukonnect" className="w-4 h-4 object-contain" />
 );
 
-// Placeholder logos for scrolling animation
-const logos = [
-    <div key="1" className="flex items-center gap-2 text-slate-400 font-bold text-xl grayscale opacity-70"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2" /></svg> LOGOIPSUM</div>,
-    <div key="2" className="flex items-center gap-2 text-slate-400 font-bold text-xl grayscale opacity-70"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg> LOGO</div>,
-    <div key="3" className="flex items-center gap-2 text-slate-400 font-bold text-xl grayscale opacity-70"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2" /></svg> LOGOIPSUM</div>,
-    <div key="4" className="flex items-center gap-2 text-slate-400 font-bold text-xl grayscale opacity-70"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20" /><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" /></svg> LOGO</div>,
-    <div key="5" className="flex items-center gap-2 text-slate-400 font-bold text-xl grayscale opacity-70"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2" /><line x1="3" x2="21" y1="9" y2="9" /><line x1="9" x2="9" y1="21" y2="9" /></svg> LOGOIPSUM</div>,
+const partnerLogos = [
+    { src: logo2WheelShop, alt: '2Wheel Shop' },         // long
+    { src: logoRemax, alt: 'RE/MAX' },                   // short
+    { src: logoPararius, alt: 'Pararius Huurwoningen' }, // long
+    { src: logoSbsKlus, alt: 'SBS Klus' },               // short
+    { src: logoMijnVogelwering, alt: 'Mijn Vogelwering' }, // long
+    { src: logoWjbVermeulen, alt: 'WJB Vermeulen' },     // short
+    { src: logoDutchBroker, alt: 'DutchBroker' },        // medium
+    { src: logoZekerVastgoed, alt: 'Zeker Vastgoed' },   // short
+    { src: logoHuurwoningen, alt: 'Huurwoningen' },      // medium
+    { src: logoJuzaBouw, alt: 'Juza Bouw' },             // medium
+    { src: logoOhMyGemmer, alt: 'Oh My Gemmer' },        // medium
 ];
 
 export const Hero = () => {
     const { t } = useLanguage();
+    const [modalOpen, setModalOpen] = useState(false);
     return (
+        <>
         <section className="relative isolate pt-56 pb-[60px] md:pb-[80px] lg:pb-[120px] px-6 flex flex-col items-center text-center overflow-hidden">
             {/* Animated background */}
             <HeroBackground />
@@ -35,7 +50,7 @@ export const Hero = () => {
                 transition={{ duration: 0.5 }}
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-slate-200 shadow-sm text-[13px] font-medium text-slate-600 mb-8 bg-white/50 backdrop-blur-sm"
             >
-                <FramerIcon />
+                <BadgeIcon />
                 <span>{t('hero.badge')}</span>
             </motion.div>
 
@@ -63,7 +78,9 @@ export const Hero = () => {
                 transition={{ duration: 0.5, delay: 0.3 }}
                 className="flex flex-col items-center gap-8"
             >
-                <button className="px-8 py-3 bg-[#5600e3] hover:bg-[#4500b6] text-white rounded-full text-[15px] font-medium transition-all shadow-sm shadow-[#5600e3]/20 hover:-translate-y-0.5 hover:shadow-md">
+                <button
+                    onClick={() => setModalOpen(true)}
+                    className="px-8 py-3 bg-[#5600e3] hover:bg-[#4500b6] text-white rounded-full text-[15px] font-medium transition-all shadow-sm shadow-[#5600e3]/20 hover:-translate-y-0.5 hover:shadow-md">
                     {t('hero.cta')}
                 </button>
 
@@ -92,20 +109,26 @@ export const Hero = () => {
                 className="mt-28 w-full max-w-[1300px] overflow-hidden"
                 style={{ maskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)', WebkitMaskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)' }}
             >
-                {/* Auto-scrolling logo track */}
+                {/* Auto-scrolling logo track — 2 copies for seamless -50% loop */}
                 <motion.div
-                    animate={{ x: [0, -1000] }}
+                    animate={{ x: ['0%', '-50%'] }}
                     transition={{ repeat: Infinity, duration: 30, ease: 'linear' }}
                     className="flex w-max gap-16 md:gap-24 items-center"
                 >
-                    {/* Double the logos to create seamless infinite loop */}
-                    {[...logos, ...logos, ...logos].map((logo, idx) => (
+                    {[...partnerLogos, ...partnerLogos].map((logo, idx) => (
                         <div key={idx} className="flex-shrink-0">
-                            {logo}
+                            <img
+                                src={logo.src}
+                                alt={logo.alt}
+                                className="h-8 md:h-10 w-auto max-w-[130px] object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 cursor-pointer"
+                            />
                         </div>
                     ))}
                 </motion.div>
             </motion.div>
         </section>
+
+        <ContactFormModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
+        </>
     );
 };

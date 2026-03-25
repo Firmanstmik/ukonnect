@@ -4,7 +4,6 @@ import { Hero } from './components/Hero';
 import { Process } from './components/Process';
 import { Features } from './components/Features';
 import { Benefits } from './components/Benefits';
-import { About } from './components/About';
 import { Testimonials } from './components/Testimonials';
 import { FAQ } from './components/FAQ';
 import { CTA } from './components/CTA';
@@ -19,7 +18,6 @@ function App() {
         <Process />
         <Features />
         <Benefits />
-        <About />
         <Testimonials />
         <FAQ />
         <CTA />

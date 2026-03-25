@@ -14,12 +14,12 @@ const translations = {
     'hero.headingPre': 'Marketing com IA que Gera Leads e',
     'hero.headingHighlight': 'Faz Crescer o Seu Negócio',
     'hero.sub': 'Construímos automações de marketing e vendas com IA que conectam as suas ferramentas, qualificam leads e fecham negócios no piloto automático.',
-    'hero.cta': 'Ver planos',
+    'hero.cta': 'Pronto para crescer?',
     'hero.trustedBy': 'Utilizado por',
-    'hero.trustedCount': '4000+ empresas',
+    'hero.trustedCount': '178 empresas',
 
     // ── Features ──
-    'features.label': 'Módulos do Sistema',
+    'features.label': 'Os nossos serviços',
     'features.heading': 'O Seu Sistema de Crescimento com IA',
     'features.sub': 'Quatro sistemas que automatizam e otimizam o seu pipeline de marketing e vendas.',
     'features.tab.marketing': 'Marketing',
@@ -72,7 +72,7 @@ const translations = {
 
     // ── Process ──
     'process.label': 'Como Funciona',
-    'process.heading': 'Como Construímos o Seu Sistema de IA',
+    'process.heading': 'Como Construímos o Seu Sistema de Marketing com IA',
     'process.sub': 'Da auditoria à automação em três passos simples.',
     'process.step1.title': 'Auditoria de Marketing e Vendas',
     'process.step1.desc': 'Mapeamos o seu stack atual de marketing e vendas, identificamos lacunas de automação no seu pipeline de leads e desenhamos um sistema de IA adaptado aos seus objetivos de receita.',
@@ -107,12 +107,14 @@ const translations = {
 
     // ── Testimonials ──
     'testimonials.label': 'Testemunhos',
-    'testimonials.heading': 'Resultados de Equipas Reais',
+    'testimonials.heading': 'Resultados dos nossos parceiros',
     'testimonials.sub': 'Como as empresas usam a Ukonnect para automatizar o crescimento e fechar mais negócios.',
-    'testimonials.0.body': 'A Ukonnect automatizou todo o nosso pipeline de nutrição de leads. Agora geramos 3x mais leads qualificados com metade do trabalho manual.',
-    'testimonials.1.body': 'Em dois meses o nosso pipeline de vendas estava totalmente automatizado. O sistema de follow-up com IA por si só aumentou a nossa taxa de fecho em 40%.',
-    'testimonials.2.body': 'As integrações com IA conectaram todas as nossas ferramentas de forma perfeita. A nossa equipa de marketing poupa mais de 20 horas por semana em tarefas repetitivas.',
-    'testimonials.3.body': 'O nosso custo por lead caiu 60% após implementar a Ukonnect. A pontuação de leads com IA é incrivelmente precisa.',
+    'testimonials.0.body': 'Estamos muito satisfeitos com o nosso novo website e o serviço prestado. Tudo parece profissional, funciona rapidamente e a comunicação foi excelente — os compromissos foram cumpridos e o resultado superou as nossas expectativas.',
+    'testimonials.1.body': 'Colaboramos com a Ukonnect há mais de um ano e estamos muito satisfeitos. A resposta é sempre rápida e somos mantidos informados sobre os nossos leads e campanhas. Uma ótima empresa para trabalhar.',
+    'testimonials.2.body': 'Através da geração de leads, a Ukonnect voltou a encher a nossa agenda com reuniões. Estamos extremamente satisfeitos e recomendamos vivamente a Ukonnect como parceiro de geração de leads B2B.',
+    'testimonials.3.body': 'Ótima colaboração — a orientação, aconselhamento e serviço são notavelmente bons. Mesmo após meses de trabalho conjunto, a nossa opinião não mudou. Simplesmente o melhor parceiro!',
+    'testimonials.4.body': 'A equipa é incrivelmente profissional e pensa sempre em soluções adaptadas às nossas necessidades. Os prazos foram sempre cumpridos e a comunicação foi fluida ao longo de todo o processo.',
+    'testimonials.5.body': 'Ótima empresa — mandei construir o meu website aqui e fazemos geração de leads juntos. A comunicação é sempre rápida e as alterações são sempre tratadas sem demora. Altamente recomendado!',
 
     // ── FAQ ──
     'faq.label': 'FAQ',
@@ -133,7 +135,7 @@ const translations = {
     'about.label': 'Sobre',
     'about.heading': 'Quem Somos',
     'about.body': 'Construímos sistemas de crescimento com IA que conectam as suas ferramentas de marketing e vendas em fluxos de trabalho automatizados. Menos trabalho manual, mais leads qualificados e um pipeline de vendas que funciona em grande parte no piloto automático.',
-    'about.cta': 'Saber Mais',
+    'about.cta': 'Sobre nós',
 
     // ── CTA ──
     'cta.headingPre': 'Pronto para',
@@ -202,16 +204,16 @@ const translations = {
     'nav.cta': 'Start growing',
 
     // ── Hero ──
-    'hero.badge': 'AI-Powered Growth Systems',
+    'hero.badge': 'AI Marketing Growth Systems',
     'hero.headingPre': 'AI Marketing That Generate Leads and',
     'hero.headingHighlight': 'Grow Your Business',
     'hero.sub': 'We build AI-powered marketing and sales automations that connect your tools, qualify leads, and close deals on autopilot.',
-    'hero.cta': 'See plans',
+    'hero.cta': 'Ready to grow?',
     'hero.trustedBy': 'Trusted by',
-    'hero.trustedCount': '4000+ companies',
+    'hero.trustedCount': '178 companies',
 
     // ── Features ──
-    'features.label': 'System Modules',
+    'features.label': 'Our services',
     'features.heading': 'Your AI Growth System',
     'features.sub': 'Four systems that automate and optimize your marketing and sales pipeline.',
     'features.tab.marketing': 'Marketing',
@@ -261,7 +263,7 @@ const translations = {
 
     // ── Process ──
     'process.label': 'How It Works',
-    'process.heading': 'How We Build Your AI System',
+    'process.heading': 'How We Build Your AI Marketing System',
     'process.sub': 'From audit to live automation in three straightforward steps.',
     'process.step1.title': 'Marketing & Sales Audit',
     'process.step1.desc': 'We map your current marketing and sales stack, identify automation gaps in your lead pipeline, and design an AI system tailored to your revenue goals.',
@@ -296,12 +298,14 @@ const translations = {
 
     // ── Testimonials ──
     'testimonials.label': 'Testimonials',
-    'testimonials.heading': 'Results From Real Teams',
+    'testimonials.heading': 'Results from partners',
     'testimonials.sub': 'How companies use Ukonnect to automate growth and close more deals.',
-    'testimonials.0.body': 'Ukonnect automated our entire lead nurturing pipeline. We now generate 3x more qualified leads with half the manual work.',
-    'testimonials.1.body': 'Within two months our sales pipeline was fully automated. The AI follow-up system alone increased our close rate by 40%.',
-    'testimonials.2.body': 'The AI integrations connected all our tools seamlessly. Our marketing team saves 20+ hours a week on repetitive tasks.',
-    'testimonials.3.body': 'Our cost per lead dropped by 60% after implementing Ukonnect. The AI lead scoring is incredibly accurate.',
+    'testimonials.0.body': 'We are very satisfied with our new website and the service provided. Everything looks professional, works quickly, and communication was excellent — agreements were kept and the result exceeded our expectations.',
+    'testimonials.1.body': 'We have been working with Ukonnect for over a year and are more than satisfied. The response is always fast and we are kept well-informed about our leads and ad campaigns. A great company to work with.',
+    'testimonials.2.body': 'Through lead generation, Ukonnect filled our calendar with appointments again. We are extremely satisfied and highly recommend Ukonnect as a lead generation partner for B2B service providers.',
+    'testimonials.3.body': 'Great collaboration — the guidance, advice, and service are remarkably good. Even after months of working together, our view has not changed. Simply the best partner to work with!',
+    'testimonials.4.body': 'The team is incredibly professional and always thinks in solutions tailored to our specific needs. Deadlines were consistently met and communication was smooth throughout the entire process.',
+    'testimonials.5.body': 'Top company — I had my website built here and we are doing lead generation together. Communication is always fast and changes are always picked up quickly. Highly recommended!',
 
     // ── FAQ ──
     'faq.label': 'FAQ',
@@ -322,7 +326,7 @@ const translations = {
     'about.label': 'About',
     'about.heading': 'Who We Are',
     'about.body': 'We build AI-powered growth systems that connect your marketing and sales tools into automated workflows. Less manual work, more qualified leads, and a sales pipeline that runs largely on autopilot.',
-    'about.cta': 'Learn More',
+    'about.cta': 'About us',
 
     // ── CTA ──
     'cta.headingPre': 'Ready to',
@@ -395,12 +399,12 @@ const translations = {
     'hero.headingPre': 'AI-marketing die Leads Genereert en',
     'hero.headingHighlight': 'Uw Bedrijf Laat Groeien',
     'hero.sub': 'Wij bouwen AI-aangedreven marketing- en verkoopautomatiseringen die uw tools verbinden, leads kwalificeren en deals sluiten op de automatische piloot.',
-    'hero.cta': 'Bekijk plannen',
+    'hero.cta': 'Klaar om te groeien?',
     'hero.trustedBy': 'Vertrouwd door',
-    'hero.trustedCount': '4000+ bedrijven',
+    'hero.trustedCount': '178 bedrijven',
 
     // ── Features ──
-    'features.label': 'Systeemmodules',
+    'features.label': 'Onze diensten',
     'features.heading': 'Uw AI-groeisysteem',
     'features.sub': 'Vier systemen die uw marketing- en verkooppijplijn automatiseren en optimaliseren.',
     'features.tab.marketing': 'Marketing',
@@ -450,7 +454,7 @@ const translations = {
 
     // ── Process ──
     'process.label': 'Hoe Het Werkt',
-    'process.heading': 'Hoe Wij Uw AI-systeem Bouwen',
+    'process.heading': 'Hoe Wij Uw AI-Marketingsysteem Bouwen',
     'process.sub': 'Van audit tot live automatisering in drie eenvoudige stappen.',
     'process.step1.title': 'Marketing & Verkoop Audit',
     'process.step1.desc': 'Wij brengen uw huidige marketing- en verkoopstack in kaart, identificeren automatiseringslacunes in uw leadpijplijn en ontwerpen een AI-systeem op maat van uw omzetdoelstellingen.',
@@ -485,12 +489,14 @@ const translations = {
 
     // ── Testimonials ──
     'testimonials.label': 'Getuigenissen',
-    'testimonials.heading': 'Resultaten van Echte Teams',
+    'testimonials.heading': 'Resultaten van onze partners',
     'testimonials.sub': 'Hoe bedrijven Ukonnect gebruiken om groei te automatiseren en meer deals te sluiten.',
-    'testimonials.0.body': 'Ukonnect automatiseerde onze volledige lead nurturing pijplijn. We genereren nu 3x meer gekwalificeerde leads met de helft van het handmatige werk.',
-    'testimonials.1.body': 'Binnen twee maanden was onze verkooppijplijn volledig geautomatiseerd. Het AI follow-up systeem alleen al verhoogde onze sluitingspercentage met 40%.',
-    'testimonials.2.body': 'De AI-integraties verbonden al onze tools naadloos. Ons marketingteam bespaart meer dan 20 uur per week aan repetitieve taken.',
-    'testimonials.3.body': 'Onze kosten per lead daalden met 60% na implementatie van Ukonnect. De AI lead scoring is ongelooflijk nauwkeurig.',
+    'testimonials.0.body': 'Wij zijn ontzettend tevreden over de vernieuwde website en de service. Alles ziet er professioneel uit, werkt snel en de communicatie verliep uitstekend. Afspraken werden nagekomen en het eindresultaat overtrof onze verwachtingen.',
+    'testimonials.1.body': 'Wij werken al een jaar samen met Ukonnect en zijn meer dan tevreden. Met name de snelle respons en we worden goed op de hoogte gehouden van de leads en ads campagnes. Een fijn bedrijf om mee samen te werken.',
+    'testimonials.2.body': 'Door middel van leadgeneratie zorgde Ukonnect voor afspraken in onze agenda. Wij zijn uitermate tevreden en raden Ukonnect zeker aan als leadgeneratie bureau voor zakelijke dienstverleners.',
+    'testimonials.3.body': 'Fijn samenwerken! De begeleiding, advies en service is opmerkelijk goed. Ook na intensieve samenwerking de afgelopen maanden is ons beeld niet veranderd. De beste partij om mee samen te werken!',
+    'testimonials.4.body': 'Het team is ontzettend professioneel en denkt altijd mee in oplossingen afgestemd op onze behoeften. Deadlines werden altijd nagekomen en de communicatie verliep soepel gedurende het hele traject.',
+    'testimonials.5.body': 'Top bedrijf! Ik heb hier mijn website laten bouwen en we doen momenteel leadgeneratie samen. Communicatie is altijd snel en wijzigingen worden altijd direct opgepakt. Zeker aan te raden!',
 
     // ── FAQ ──
     'faq.label': 'FAQ',
@@ -511,7 +517,7 @@ const translations = {
     'about.label': 'Over Ons',
     'about.heading': 'Wie Wij Zijn',
     'about.body': 'Wij bouwen AI-aangedreven groeisystemen die uw marketing- en verkooptools verbinden in geautomatiseerde workflows. Minder handmatig werk, meer gekwalificeerde leads en een verkooppijplijn die grotendeels op de automatische piloot werkt.',
-    'about.cta': 'Meer Informatie',
+    'about.cta': 'Over ons',
 
     // ── CTA ──
     'cta.headingPre': 'Klaar om',

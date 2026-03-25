@@ -172,7 +172,7 @@ const WhatsAppIcon = () => (
 
 type DockApp = { icon: React.ReactNode; bg: string; onClick?: () => void; isBrowser?: boolean };
 const DOCK_APPS: DockApp[] = [
-    { icon: <WhatsAppIcon />, bg: 'linear-gradient(145deg,#25d366,#128c7e)', onClick: () => window.open('https://wa.me/31853331000', '_blank') },
+    { icon: <WhatsAppIcon />, bg: 'linear-gradient(145deg,#25d366,#128c7e)', onClick: () => window.open('https://wa.me/351927497086', '_blank') },
     { icon: <Mail     size={14} />, bg: 'linear-gradient(145deg,#64d2ff,#2c7be5)', onClick: () => window.open('mailto:info@ukonnect.nl') },
     { icon: <Globe    size={14} />, bg: 'linear-gradient(145deg,#34aadc,#0a84ff)', isBrowser: true },
     { icon: <Music    size={14} />, bg: 'linear-gradient(145deg,#ff6b81,#fc3c58)', onClick: () => window.open('https://open.spotify.com', '_blank') },
@@ -868,7 +868,7 @@ export const Features = () => {
     }, [pw, stripX]);
 
     return (
-        <section id="system-modules" className="py-[60px] md:py-[80px] lg:py-[80px] max-w-[1300px] mx-auto px-6 bg-slate-50/50 rounded-[3rem]">
+        <section id="system-modules" className="py-[60px] md:py-[80px] lg:py-[80px] max-w-[1300px] mx-auto px-6 bg-slate-50/50 rounded-[3rem] overflow-hidden">
             {/* Header */}
             <div className="text-center max-w-2xl mx-auto mb-8">
                 <p className="text-primary font-semibold tracking-wide uppercase text-sm mb-3">{t('features.label')}</p>

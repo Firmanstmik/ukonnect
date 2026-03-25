@@ -156,7 +156,7 @@ export const Contact = () => {
                         <motion.div {...fadeUp(0)} className="relative rounded-[2.5rem] overflow-hidden flex-1" style={{ minHeight: '280px' }}>
                             <iframe
                                 title="Ukonnect office location"
-                                src="https://maps.google.com/maps?q=52.3695,5.2156&t=&z=11&ie=UTF8&iwloc=&output=embed&scrollwheel=1"
+                                src="https://maps.google.com/maps?q=Rua+Almirante+Reis+2,+2950-270+Palmela,+Portugal&t=&z=15&ie=UTF8&iwloc=&output=embed"
                                 className="absolute inset-0 w-full h-full border-0"
                                 loading="lazy"
                                 referrerPolicy="no-referrer-when-downgrade"
@@ -164,7 +164,7 @@ export const Contact = () => {
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent pointer-events-none" />
                             <div className="absolute bottom-0 left-0 right-0 p-6 z-10">
                                 <div className="grid grid-cols-3 gap-3">
-                                    <motion.a href="https://wa.me/310853331000" target="_blank" rel="noopener noreferrer"
+                                    <motion.a href="https://wa.me/351927497086" target="_blank" rel="noopener noreferrer"
                                         whileHover={{ scale: 1.06, backgroundColor: 'rgba(37,211,102,0.25)' }} whileTap={{ scale: 0.94 }}
                                         transition={{ type: 'spring', stiffness: 400, damping: 20 }}
                                         className="flex flex-col items-center gap-1.5 bg-white/10 backdrop-blur-md rounded-2xl px-3 py-3 text-center border border-white/20 cursor-pointer">
@@ -180,7 +180,7 @@ export const Contact = () => {
                                         <Mail className="w-5 h-5 text-white" />
                                         <p className="text-white font-bold text-xs">{t('contact.email')}</p>
                                     </motion.a>
-                                    <motion.a href="tel:+310853331000"
+                                    <motion.a href="tel:+351927497086"
                                         whileHover={{ scale: 1.06, backgroundColor: 'rgba(255,255,255,0.2)' }} whileTap={{ scale: 0.94 }}
                                         transition={{ type: 'spring', stiffness: 400, damping: 20 }}
                                         className="flex flex-col items-center gap-1.5 bg-white/10 backdrop-blur-md rounded-2xl px-3 py-3 text-center border border-white/20 cursor-pointer">

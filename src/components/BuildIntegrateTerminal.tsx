@@ -58,7 +58,7 @@ const ROTATING_PLACEHOLDERS = [
     'Can AI connect our CRM and WhatsApp?',
 ];
 
-const WHATSAPP_NUMBER = '31853331000';
+const WHATSAPP_NUMBER = '351927497086';
 
 export const BuildIntegrateTerminal = () => {
     const [lines, setLines] = useState<{ text: string; type: string; complete: boolean }[]>([]);
