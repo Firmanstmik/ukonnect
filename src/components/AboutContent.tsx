@@ -49,11 +49,11 @@ function AnimatedCounter({ to, suffix = '' }: { to: number; suffix?: string }) {
 // ── Team members ───────────────────────────────────────────────────────────
 const TEAM_MEMBERS = [
     { name: 'Marco',   roleKey: 'aboutPage.role.leadDev' as TranslationKey,            img: teamMarco   },
-    { name: 'Paul',    roleKey: 'aboutPage.role.leadGen' as TranslationKey,            img: teamPaul    },
     { name: 'Sander',  roleKey: 'aboutPage.role.coo' as TranslationKey,                img: teamSander  },
-    { name: 'Kirsten', roleKey: 'aboutPage.role.cmo' as TranslationKey,                img: teamKirsten },
     { name: 'Tanisha', roleKey: 'aboutPage.role.contentStrategist' as TranslationKey,  img: teamTanisha },
+    { name: 'Kirsten', roleKey: 'aboutPage.role.cmo' as TranslationKey,                img: teamKirsten },
     { name: 'Bram',    roleKey: 'aboutPage.role.headAI' as TranslationKey,             img: teamBram    },
+    { name: 'Paul',    roleKey: 'aboutPage.role.leadGen' as TranslationKey,            img: teamPaul    },
     { name: 'Gino',    roleKey: 'aboutPage.role.marketingStrategist' as TranslationKey, img: teamGino   },
     { name: 'Afifah',  roleKey: 'aboutPage.role.growthSpecialist' as TranslationKey,   img: teamAfifah  },
     { name: 'Edmerd',  roleKey: 'aboutPage.role.accountManager' as TranslationKey,     img: teamEdmerd  },
