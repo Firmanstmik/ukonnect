@@ -143,8 +143,8 @@ const translations = {
     // ── About Page ──
     'aboutPage.heroLabel': 'A Nossa Equipa',
     'aboutPage.heroHeadingPre': 'A Equipa por Trás do',
-    'aboutPage.heroHeadingHighlight': 'Seu Crescimento com IA',
-    'aboutPage.heroSub': 'Somos uma agência de marketing com IA focada em resultados. Combinamos expertise em marketing digital com sistemas de IA de última geração para transformar o crescimento dos nossos parceiros.',
+    'aboutPage.heroHeadingHighlight': 'Seu Crescimento',
+    'aboutPage.heroSub': 'Somos uma agência de marketing com IA focada em resultados. A nossa equipa combina uma profunda expertise em marketing digital com sistemas de IA de última geração, aliados à experiência prática no setor imobiliário, para transformar o crescimento dos nossos parceiros.',
     'aboutPage.missionLabel': 'Missão',
     'aboutPage.missionHeading': 'Automatizar o Marketing. Acelerar o Crescimento.',
     'aboutPage.missionBody': 'Construímos sistemas de automação de marketing e vendas com IA que eliminam o trabalho manual e maximizam o ROI. Cada sistema é desenhado para gerar leads de qualidade, nutrir prospects e converter clientes no piloto automático.',
@@ -381,8 +381,8 @@ const translations = {
     // ── About Page ──
     'aboutPage.heroLabel': 'Our Team',
     'aboutPage.heroHeadingPre': 'The Team Behind',
-    'aboutPage.heroHeadingHighlight': 'Your AI Growth',
-    'aboutPage.heroSub': 'We are an AI marketing agency built for results. Our team combines deep digital marketing expertise with next-generation AI systems to transform the growth of our partners.',
+    'aboutPage.heroHeadingHighlight': 'Your Growth',
+    'aboutPage.heroSub': 'We are an AI marketing agency built for results. Our team combines deep digital marketing expertise with next-generation AI systems, combined with hands-on experience in real estate, to transform the growth of our partners.',
     'aboutPage.missionLabel': 'Mission',
     'aboutPage.missionHeading': 'Automate Marketing. Accelerate Growth.',
     'aboutPage.missionBody': 'We build AI-powered marketing and sales automation systems that eliminate manual work and maximise ROI. Every system is designed to generate quality leads, nurture prospects, and convert customers on autopilot.',
@@ -619,8 +619,8 @@ const translations = {
     // ── About Page ──
     'aboutPage.heroLabel': 'Ons Team',
     'aboutPage.heroHeadingPre': 'Het Team Achter',
-    'aboutPage.heroHeadingHighlight': 'Uw AI-Groei',
-    'aboutPage.heroSub': 'Wij zijn een AI-marketingbureau gebouwd voor resultaten. Ons team combineert diepgaande digitale marketingexpertise met next-gen AI-systemen om de groei van onze partners te transformeren.',
+    'aboutPage.heroHeadingHighlight': 'Uw Groei',
+    'aboutPage.heroSub': 'Wij zijn een AI-marketingbureau gebouwd voor resultaten. Ons team combineert diepgaande digitale marketingexpertise met next-gen AI-systemen in combinatie met praktijkervaring in de makelaardij om de groei van onze partners te transformeren.',
     'aboutPage.missionLabel': 'Missie',
     'aboutPage.missionHeading': 'Marketing Automatiseren. Groei Versnellen.',
     'aboutPage.missionBody': 'Wij bouwen AI-aangedreven marketing- en verkoopautomatiseringssystemen die handmatig werk elimineren en ROI maximaliseren. Elk systeem is ontworpen om kwaliteitsleads te genereren, prospects te koesteren en klanten op de automatische piloot te converteren.',
