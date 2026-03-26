@@ -332,6 +332,7 @@ export const AboutContent = () => {
                                     src={member.img}
                                     alt={member.name}
                                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                    loading="lazy"
                                 />
                                 {/* Hover gradient overlay */}
                                 <div className="absolute inset-0 bg-gradient-to-t from-[#5600e3]/0 group-hover:from-[#5600e3]/15 to-transparent transition-all duration-500" />
@@ -384,6 +385,7 @@ export const AboutContent = () => {
                             src={cultureLargeLeft}
                             alt="Ukonnect team"
                             className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 min-h-[300px] md:min-h-0"
+                            loading="lazy"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     </motion.div>
@@ -401,6 +403,7 @@ export const AboutContent = () => {
                                 src={cultureBentoUpper}
                                 alt="Team on call"
                                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                                loading="lazy"
                             />
                         </motion.div>
                         <motion.div
@@ -414,6 +417,7 @@ export const AboutContent = () => {
                                 src={cultureBentoLower}
                                 alt="Strategy session"
                                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                                loading="lazy"
                             />
                         </motion.div>
                     </div>
@@ -438,6 +442,7 @@ export const AboutContent = () => {
                                 src={photo.src}
                                 alt={photo.alt}
                                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                                loading="lazy"
                             />
                         </motion.div>
                     ))}
@@ -461,6 +466,7 @@ export const AboutContent = () => {
                                 src={photo.src}
                                 alt={photo.alt}
                                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                                loading="lazy"
                             />
                         </motion.div>
                     ))}

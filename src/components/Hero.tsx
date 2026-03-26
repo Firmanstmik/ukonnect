@@ -89,7 +89,7 @@ export const Hero = () => {
                     <div className="flex -space-x-2.5">
                         {[1, 2, 3, 4].map((i) => (
                             <div key={i} className="w-[30px] h-[30px] rounded-full border-2 border-white bg-slate-200 overflow-hidden shadow-sm">
-                                <img src={`https://i.pravatar.cc/100?img=${i + 40}`} alt="avatar" className="w-full h-full object-cover" />
+                                <img src={`https://i.pravatar.cc/100?img=${i + 40}`} alt="avatar" className="w-full h-full object-cover" loading="lazy" />
                             </div>
                         ))}
                     </div>
@@ -121,6 +121,7 @@ export const Hero = () => {
                                 src={logo.src}
                                 alt={logo.alt}
                                 className="h-8 md:h-10 w-auto max-w-[130px] object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 cursor-pointer"
+                                loading="lazy"
                             />
                         </div>
                     ))}

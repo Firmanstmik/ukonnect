@@ -85,6 +85,7 @@ export const Benefits = () => {
                         src={teamPhoto}
                         alt="Ukonnect team"
                         className="w-full h-full object-cover object-top"
+                        loading="lazy"
                     />
                 </div>
             </motion.div>
