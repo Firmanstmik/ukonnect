@@ -5,6 +5,24 @@ import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../i18n/LanguageContext';
 import type { TranslationKey } from '../i18n/translations';
 import teamPhoto from '../assets/Ukonnect Team Portugal.webp';
+import cultureLargeLeft      from '../assets/Culture/Large left.jpg';
+import cultureBentoUpper     from '../assets/Culture/Top bento row (upper).jpg';
+import cultureBentoLower     from '../assets/Culture/Top bento row (lower).jpg';
+import cultureBottomLeft     from '../assets/Culture/bottom row (left).jpg';
+import cultureBottomCenter   from '../assets/Culture/bottom row (center).jpg';
+import cultureBottomRight    from '../assets/Culture/bottom row (right).jpg';
+import cultureExtraLeft      from '../assets/Culture/New bottom (left).jpg';
+import cultureExtraRight     from '../assets/Culture/new bottom (right).jpg';
+import teamRaffy   from '../assets/Team/Raffy.webp';
+import teamKirsten from '../assets/Team/Kirsten.webp';
+import teamSander  from '../assets/Team/Sander.webp';
+import teamMarco   from '../assets/Team/Marco.webp';
+import teamTanisha from '../assets/Team/Tanisha.webp';
+import teamBram    from '../assets/Team/Bram.webp';
+import teamGino    from '../assets/Team/Gino.webp';
+import teamAfifah  from '../assets/Team/Afifah.webp';
+import teamPaul    from '../assets/Team/Paul.webp';
+import teamEdmerd  from '../assets/Team/Edmerd.webp';
 
 // ── Animated number counter ────────────────────────────────────────────────
 function AnimatedCounter({ to, suffix = '' }: { to: number; suffix?: string }) {
@@ -30,15 +48,16 @@ function AnimatedCounter({ to, suffix = '' }: { to: number; suffix?: string }) {
 
 // ── Team members ───────────────────────────────────────────────────────────
 const TEAM_MEMBERS = [
-    { name: 'Raffy Martina', roleKey: 'aboutPage.role.ceo' as TranslationKey,    img: 'https://picsum.photos/seed/tm-ceo/400/400' },
-    { name: 'Jordan van Dijk', roleKey: 'aboutPage.role.coo' as TranslationKey,  img: 'https://picsum.photos/seed/tm-coo/400/400' },
-    { name: 'Sara Mendes',     roleKey: 'aboutPage.role.cmo' as TranslationKey,   img: 'https://picsum.photos/seed/tm-cmo/400/400' },
-    { name: 'Daan Verhagen',   roleKey: 'aboutPage.role.headAI' as TranslationKey, img: 'https://picsum.photos/seed/tm-ai/400/400' },
-    { name: 'Lucas Fontaine',  roleKey: 'aboutPage.role.leadDev' as TranslationKey, img: 'https://picsum.photos/seed/tm-dev/400/400' },
-    { name: 'Emma de Wit',     roleKey: 'aboutPage.role.marketingStrategist' as TranslationKey, img: 'https://picsum.photos/seed/tm-strat/400/400' },
-    { name: 'Liam Okafor',    roleKey: 'aboutPage.role.leadGen' as TranslationKey, img: 'https://picsum.photos/seed/tm-lead/400/400' },
-    { name: 'Nina Petrov',    roleKey: 'aboutPage.role.contentStrategist' as TranslationKey, img: 'https://picsum.photos/seed/tm-content/400/400' },
-    { name: 'Olivier Maas',   roleKey: 'aboutPage.role.accountManager' as TranslationKey, img: 'https://picsum.photos/seed/tm-am/400/400' },
+    { name: 'Marco',   roleKey: 'aboutPage.role.leadDev' as TranslationKey,            img: teamMarco   },
+    { name: 'Paul',    roleKey: 'aboutPage.role.leadGen' as TranslationKey,            img: teamPaul    },
+    { name: 'Sander',  roleKey: 'aboutPage.role.coo' as TranslationKey,                img: teamSander  },
+    { name: 'Kirsten', roleKey: 'aboutPage.role.cmo' as TranslationKey,                img: teamKirsten },
+    { name: 'Tanisha', roleKey: 'aboutPage.role.contentStrategist' as TranslationKey,  img: teamTanisha },
+    { name: 'Bram',    roleKey: 'aboutPage.role.headAI' as TranslationKey,             img: teamBram    },
+    { name: 'Gino',    roleKey: 'aboutPage.role.marketingStrategist' as TranslationKey, img: teamGino   },
+    { name: 'Afifah',  roleKey: 'aboutPage.role.growthSpecialist' as TranslationKey,   img: teamAfifah  },
+    { name: 'Edmerd',  roleKey: 'aboutPage.role.accountManager' as TranslationKey,     img: teamEdmerd  },
+    { name: 'Raffy',   roleKey: 'aboutPage.role.ceo' as TranslationKey,                img: teamRaffy   },
 ];
 
 // ── Value icons ────────────────────────────────────────────────────────────
@@ -55,12 +74,6 @@ const TICKER_ITEMS = [
     'Client-Obsessed', 'AI Automation', 'Fast Execution', 'Web Development',
 ];
 
-// ── Gallery photos ─────────────────────────────────────────────────────────
-const GALLERY_BOTTOM = [
-    { seed: 'office-laugh', label: 'Team culture' },
-    { seed: 'office-present', label: 'Strategy sessions' },
-    { seed: 'office-laptop', label: 'Deep work' },
-];
 
 export const AboutContent = () => {
     const { t } = useLanguage();
@@ -368,7 +381,7 @@ export const AboutContent = () => {
                         className="col-span-12 md:col-span-7 rounded-[2rem] overflow-hidden group relative"
                     >
                         <img
-                            src={teamPhoto}
+                            src={cultureLargeLeft}
                             alt="Ukonnect team"
                             className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 min-h-[300px] md:min-h-0"
                         />
@@ -385,7 +398,7 @@ export const AboutContent = () => {
                             className="flex-1 rounded-[2rem] overflow-hidden group relative min-h-[180px]"
                         >
                             <img
-                                src="https://picsum.photos/seed/office-call-team/700/400"
+                                src={cultureBentoUpper}
                                 alt="Team on call"
                                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                             />
@@ -398,7 +411,7 @@ export const AboutContent = () => {
                             className="flex-1 rounded-[2rem] overflow-hidden group relative min-h-[180px]"
                         >
                             <img
-                                src="https://picsum.photos/seed/office-strategy/700/400"
+                                src={cultureBentoLower}
                                 alt="Strategy session"
                                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                             />
@@ -408,9 +421,13 @@ export const AboutContent = () => {
 
                 {/* Bottom row: 3 equal photos */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
-                    {GALLERY_BOTTOM.map((photo, i) => (
+                    {[
+                        { src: cultureBottomLeft,   alt: 'Team culture' },
+                        { src: cultureBottomCenter, alt: 'Strategy sessions' },
+                        { src: cultureBottomRight,  alt: 'Deep work' },
+                    ].map((photo, i) => (
                         <motion.div
-                            key={photo.seed}
+                            key={photo.alt}
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
@@ -418,8 +435,31 @@ export const AboutContent = () => {
                             className="aspect-[4/3] rounded-[2rem] overflow-hidden group relative"
                         >
                             <img
-                                src={`https://picsum.photos/seed/${photo.seed}/600/450`}
-                                alt={photo.label}
+                                src={photo.src}
+                                alt={photo.alt}
+                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                            />
+                        </motion.div>
+                    ))}
+                </div>
+
+                {/* Extra row: 2 wide photos */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                    {[
+                        { src: cultureExtraLeft,  alt: 'Working together' },
+                        { src: cultureExtraRight, alt: 'Team discussion' },
+                    ].map((photo, i) => (
+                        <motion.div
+                            key={photo.alt}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: i * 0.1, duration: 0.5 }}
+                            className="aspect-video rounded-[2rem] overflow-hidden group relative"
+                        >
+                            <img
+                                src={photo.src}
+                                alt={photo.alt}
                                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                             />
                         </motion.div>
