@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Workflow, PiggyBank, ShieldCheck, Activity, RefreshCw, Handshake } from 'lucide-react';
 import { CardBackground } from './CardBackground';
@@ -71,12 +72,12 @@ export const Benefits = () => {
                     <p className="text-lg md:text-xl text-slate-600 leading-relaxed font-medium">
                         {t('about.body')}
                     </p>
-                    <a
-                        href="/contact"
+                    <Link
+                        to="/about"
                         className="px-8 py-3 bg-primary hover:bg-primary-hover text-white rounded-full font-semibold transition-all shadow-md shadow-primary/20 hover:shadow-lg hover:-translate-y-0.5 inline-block"
                     >
                         {t('about.cta')}
-                    </a>
+                    </Link>
                 </div>
 
                 {/* Right: team photo */}

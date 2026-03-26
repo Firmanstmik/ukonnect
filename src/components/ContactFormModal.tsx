@@ -1,8 +1,7 @@
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Calendar, ArrowRight, Phone, Globe, ChevronLeft, Loader2, X } from 'lucide-react';
-import { useState, useEffect } from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
-import Cal, { getCalApi } from '@calcom/embed-react';
 import emailjs from '@emailjs/browser';
 
 import googleAdsIcon from '../assets/Ukonnect Google Ads.webp';
@@ -50,6 +49,7 @@ export const ContactFormModal = ({ isOpen, onClose }: Props) => {
     const [direction, setDirection] = useState(1);
     const [sending, setSending] = useState(false);
     const [sendError, setSendError] = useState<string | null>(null);
+    const [CalComponent, setCalComponent] = useState<React.ComponentType<any> | null>(null);
 
     const goTo = (v: 'form' | 'calendar' | 'success', dir: number) => {
         setDirection(dir);
@@ -88,15 +88,18 @@ export const ContactFormModal = ({ isOpen, onClose }: Props) => {
 
     useEffect(() => {
         if (!isOpen) return;
-        getCalApi().then((cal) => {
-            cal('ui', {
-                theme: 'light',
-                styles: { branding: { brandColor: '#5600e3' } },
-                hideEventTypeDetails: false,
-            });
-            cal('on', {
-                action: 'bookingSuccessful',
-                callback: () => goTo('success', 1),
+        import('@calcom/embed-react').then(({ default: Cal, getCalApi }) => {
+            setCalComponent(() => Cal);
+            getCalApi().then((cal) => {
+                cal('ui', {
+                    theme: 'light',
+                    styles: { branding: { brandColor: '#5600e3' } },
+                    hideEventTypeDetails: false,
+                });
+                cal('on', {
+                    action: 'bookingSuccessful',
+                    callback: () => goTo('success', 1),
+                });
             });
         });
     }, [isOpen]);
@@ -147,9 +150,9 @@ export const ContactFormModal = ({ isOpen, onClose }: Props) => {
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
                         transition={{ type: 'spring', stiffness: 300, damping: 28 }}
-                        className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
+                        className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 pointer-events-none"
                     >
-                        <div className="relative w-full max-w-lg bg-white border border-slate-200 rounded-[2.5rem] shadow-2xl overflow-hidden pointer-events-auto">
+                        <div className="relative w-full sm:max-w-lg bg-white border border-slate-200 rounded-t-[2rem] sm:rounded-[2.5rem] shadow-2xl overflow-y-auto max-h-[92dvh] sm:max-h-none sm:overflow-hidden pointer-events-auto">
 
                             {/* Close button */}
                             <button
@@ -164,7 +167,7 @@ export const ContactFormModal = ({ isOpen, onClose }: Props) => {
                                 {/* ── Success ── */}
                                 {view === 'success' && (
                                     <motion.div key="success" custom={direction} variants={slideVariants} initial="enter" animate="center" exit="exit"
-                                        className="p-12 text-center flex flex-col items-center justify-center min-h-[480px]">
+                                        className="p-8 sm:p-12 text-center flex flex-col items-center justify-center min-h-[320px] sm:min-h-[480px]">
                                         <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}
                                             transition={{ type: 'spring', stiffness: 300, damping: 20, delay: 0.1 }}
                                             className="w-20 h-20 rounded-full bg-[#5600e3]/10 flex items-center justify-center mb-7">
@@ -182,8 +185,8 @@ export const ContactFormModal = ({ isOpen, onClose }: Props) => {
                                 {/* ── Calendar ── */}
                                 {view === 'calendar' && (
                                     <motion.div key="calendar" custom={direction} variants={slideVariants} initial="enter" animate="center" exit="exit"
-                                        className="flex flex-col min-h-[480px]">
-                                        <div className="flex items-center gap-3 px-8 pt-8 pb-4">
+                                        className="flex flex-col min-h-[420px] sm:min-h-[480px]">
+                                        <div className="flex items-center gap-3 px-5 sm:px-8 pt-6 sm:pt-8 pb-4">
                                             <motion.button
                                                 onClick={() => goTo('form', -1)}
                                                 whileHover={{ scale: 1.08, backgroundColor: 'rgba(86,0,227,0.08)' }}
@@ -197,12 +200,14 @@ export const ContactFormModal = ({ isOpen, onClose }: Props) => {
                                                 <p className="text-sm font-semibold text-slate-900">{t('contact.cal.pick')}</p>
                                             </div>
                                         </div>
-                                        <div className="flex-1 min-h-[420px]">
-                                            <Cal
-                                                calLink={`${CAL_USERNAME}/${CAL_EVENT_SLUG}`}
-                                                style={{ width: '100%', height: '100%', minHeight: '420px', overflow: 'scroll' }}
-                                                config={{}}
-                                            />
+                                        <div className="flex-1 min-h-[360px] sm:min-h-[420px]">
+                                            {CalComponent && (
+                                                <CalComponent
+                                                    calLink={`${CAL_USERNAME}/${CAL_EVENT_SLUG}`}
+                                                    style={{ width: '100%', height: '100%', minHeight: '360px', overflow: 'scroll' }}
+                                                    config={{}}
+                                                />
+                                            )}
                                         </div>
                                     </motion.div>
                                 )}
@@ -211,7 +216,7 @@ export const ContactFormModal = ({ isOpen, onClose }: Props) => {
                                 {view === 'form' && (
                                     <motion.form key="form" custom={direction} variants={slideVariants} initial="enter" animate="center" exit="exit"
                                         onSubmit={handleSubmit}
-                                        className="p-8 flex flex-col gap-5">
+                                        className="p-5 sm:p-8 flex flex-col gap-4 sm:gap-5">
                                         <div className="grid sm:grid-cols-2 gap-4">
                                             <div className="flex flex-col gap-1.5">
                                                 <label className="text-sm font-medium text-slate-700">{t('contact.form.name')}</label>

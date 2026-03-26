@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { lazy, Suspense, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../i18n/LanguageContext';
 
+const ContactFormModal = lazy(() => import('./ContactFormModal').then(m => ({ default: m.ContactFormModal })));
+
 export const CTA = () => {
     const { t } = useLanguage();
+    const [modalOpen, setModalOpen] = useState(false);
 
     return (
         <section className="py-[60px] md:py-[80px] lg:py-[100px] px-6 max-w-[1300px] mx-auto">
@@ -20,6 +23,7 @@ export const CTA = () => {
                         {t('cta.sub')}
                     </p>
                     <motion.button
+                        onClick={() => setModalOpen(true)}
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         className="px-10 py-5 bg-primary hover:bg-primary-hover text-white rounded-full font-semibold transition-all shadow-xl shadow-primary/30"
@@ -28,6 +32,10 @@ export const CTA = () => {
                     </motion.button>
                 </div>
             </div>
+
+            <Suspense fallback={null}>
+                <ContactFormModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
+            </Suspense>
         </section>
     );
 };

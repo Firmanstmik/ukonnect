@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Zap, Eye, Heart, Rocket, ArrowRight } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../i18n/LanguageContext';
+
 import type { TranslationKey } from '../i18n/translations';
 import teamPhoto from '../assets/Ukonnect Team Portugal.webp';
 import cultureLargeLeft      from '../assets/Culture/Large left.jpg';
@@ -23,6 +23,8 @@ import teamGino    from '../assets/Team/Gino.webp';
 import teamAfifah  from '../assets/Team/Afifah.webp';
 import teamPaul    from '../assets/Team/Paul.webp';
 import teamEdmerd  from '../assets/Team/Edmerd.webp';
+
+const ContactFormModal = lazy(() => import('./ContactFormModal').then(m => ({ default: m.ContactFormModal })));
 
 // ── Animated number counter ────────────────────────────────────────────────
 function AnimatedCounter({ to, suffix = '' }: { to: number; suffix?: string }) {
@@ -77,13 +79,13 @@ const TICKER_ITEMS = [
 
 export const AboutContent = () => {
     const { t } = useLanguage();
-    const navigate = useNavigate();
+    const [modalOpen, setModalOpen] = useState(false);
 
     const STATS = [
         { value: 178, suffix: '',  labelKey: 'aboutPage.stat0.label' as TranslationKey },
-        { value: 500, suffix: '+', labelKey: 'aboutPage.stat1.label' as TranslationKey },
+        { value: 492, suffix: '',  labelKey: 'aboutPage.stat1.label' as TranslationKey },
         { value: 98,  suffix: '%', labelKey: 'aboutPage.stat2.label' as TranslationKey },
-        { value: 3,   suffix: '+', labelKey: 'aboutPage.stat3.label' as TranslationKey },
+        { value: 8,   suffix: '+', labelKey: 'aboutPage.stat3.label' as TranslationKey },
     ];
 
     return (
@@ -156,7 +158,7 @@ export const AboutContent = () => {
                                 className="flex flex-wrap items-center gap-4"
                             >
                                 <button
-                                    onClick={() => navigate('/contact')}
+                                    onClick={() => setModalOpen(true)}
                                     className="px-8 py-3.5 bg-[#5600e3] hover:bg-[#4500b6] text-white rounded-full font-semibold transition-all shadow-md shadow-[#5600e3]/25 hover:shadow-lg hover:-translate-y-0.5 flex items-center gap-2 text-[15px]"
                                 >
                                     {t('aboutPage.ctaButton')}
@@ -568,7 +570,7 @@ export const AboutContent = () => {
                             viewport={{ once: true }}
                             transition={{ delay: 0.2 }}
                             whileHover={{ y: -2, scale: 1.02 }}
-                            onClick={() => navigate('/contact')}
+                            onClick={() => setModalOpen(true)}
                             className="inline-flex items-center gap-2.5 px-10 py-4 bg-white text-[#5600e3] rounded-full font-bold text-[15px] hover:bg-white/92 transition-all shadow-xl shadow-slate-900/20"
                         >
                             {t('aboutPage.ctaButton')}
@@ -577,6 +579,10 @@ export const AboutContent = () => {
                     </div>
                 </motion.div>
             </section>
+
+            <Suspense fallback={null}>
+                <ContactFormModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
+            </Suspense>
         </>
     );
 };

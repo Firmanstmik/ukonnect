@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React, { lazy, Suspense, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Star } from 'lucide-react';
 import { HeroBackground } from './HeroBackground';
 import { useLanguage } from '../i18n/LanguageContext';
-import { ContactFormModal } from './ContactFormModal';
-
 import logo2WheelShop from '../assets/Partners/2WHEEL-SHOP.png';
 import logoDutchBroker from '../assets/Partners/DUTCHBROKER.png';
 import logoHuurwoningen from '../assets/Partners/HUURWONINGEN.png';
@@ -16,6 +14,10 @@ import logoRemax from '../assets/Partners/REMAX.png';
 import logoSbsKlus from '../assets/Partners/SBS KLUS.png';
 import logoWjbVermeulen from '../assets/Partners/WJB VERMEULEN.png';
 import logoZekerVastgoed from '../assets/Partners/ZEKERVASTGOED.png';
+
+const ContactFormModal = lazy(() =>
+    import('./ContactFormModal').then(m => ({ default: m.ContactFormModal }))
+);
 
 const BadgeIcon = () => (
     <img src="/favicon.png" alt="Ukonnect" className="w-4 h-4 object-contain" />
@@ -129,7 +131,9 @@ export const Hero = () => {
             </motion.div>
         </section>
 
-        <ContactFormModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
+        <Suspense fallback={null}>
+            <ContactFormModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
+        </Suspense>
         </>
     );
 };
