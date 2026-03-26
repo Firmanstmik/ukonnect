@@ -216,7 +216,7 @@ export const ContactFormModal = ({ isOpen, onClose }: Props) => {
                                 {view === 'form' && (
                                     <motion.form key="form" custom={direction} variants={slideVariants} initial="enter" animate="center" exit="exit"
                                         onSubmit={handleSubmit}
-                                        className="p-5 sm:p-8 flex flex-col gap-4 sm:gap-5">
+                                        className="p-5 pt-14 sm:pt-8 sm:p-8 flex flex-col gap-4 sm:gap-5">
                                         <div className="grid sm:grid-cols-2 gap-4">
                                             <div className="flex flex-col gap-1.5">
                                                 <label className="text-sm font-medium text-slate-700">{t('contact.form.name')}</label>
