@@ -10,9 +10,9 @@ const ContactFormModal = lazy(() =>
 );
 
 const LANGUAGES: { code: Language; flag: string; label: string }[] = [
+    { code: 'nl', flag: '🇳🇱', label: 'NL' },
     { code: 'pt', flag: '🇵🇹', label: 'PT' },
     { code: 'en', flag: '🇬🇧', label: 'EN' },
-    { code: 'nl', flag: '🇳🇱', label: 'NL' },
 ];
 
 const LanguageSwitcher = ({ mobile = false }: { mobile?: boolean }) => {
@@ -67,18 +67,13 @@ const LanguageSwitcher = ({ mobile = false }: { mobile?: boolean }) => {
                         <button
                             key={l.code}
                             onClick={() => { setLang(l.code); setOpen(false); }}
-                            className={`w-full flex items-center gap-2.5 px-4 py-2.5 text-xl transition-colors text-left ${
+                            className={`w-full flex items-center px-4 py-2.5 text-xl transition-colors text-left ${
                                 lang === l.code
                                     ? 'bg-[#5600e3]/8'
                                     : 'hover:bg-white/60'
                             }`}
                         >
                             <span className="leading-none">{l.flag}</span>
-                            {lang === l.code && (
-                                <svg className="w-3.5 h-3.5 text-[#5600e3] ml-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                                </svg>
-                            )}
                         </button>
                     ))}
                 </div>
@@ -92,16 +87,18 @@ export const Navbar = () => {
     const [modalOpen, setModalOpen] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
-    const { t } = useLanguage();
+    const { t, lang } = useLanguage();
 
     useEffect(() => {
         setMenuOpen(false);
     }, [location.pathname]);
 
+    const homePath = `/${lang}`;
+
     const scrollTo = (id: string) => {
         setMenuOpen(false);
-        if (location.pathname !== '/') {
-            navigate('/');
+        if (location.pathname !== homePath) {
+            navigate(homePath);
             setTimeout(() => {
                 document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
             }, 100);
@@ -113,8 +110,8 @@ export const Navbar = () => {
     const navItems = [
         { labelKey: 'nav.howItWorks' as const, id: 'process', href: null },
         { labelKey: 'nav.services' as const, id: 'system-modules', href: null },
-        { labelKey: 'nav.about' as const, id: null, href: '/about' },
-        { labelKey: 'nav.contact' as const, id: null, href: '/contact' },
+        { labelKey: 'nav.about' as const, id: null, href: `/${lang}/about` },
+        { labelKey: 'nav.contact' as const, id: null, href: `/${lang}/contact` },
     ];
 
     return (
@@ -127,10 +124,10 @@ export const Navbar = () => {
                     <div
                         className="flex-1 flex items-center cursor-pointer"
                         onClick={() => {
-                            if (location.pathname === '/') {
+                            if (location.pathname === homePath) {
                                 window.scrollTo({ top: 0, behavior: 'smooth' });
                             } else {
-                                navigate('/');
+                                navigate(homePath);
                             }
                         }}
                     >

@@ -62,7 +62,7 @@ export const Hero = () => {
                 transition={{ duration: 0.5, delay: 0.1 }}
                 className="text-[44px] md:text-5xl lg:text-[64px] font-bold leading-[1.15] tracking-tight text-slate-900 mb-6 max-w-[1100px]"
             >
-                {t('hero.headingPre')} <span className="text-[#5600e3]">{t('hero.headingHighlight')}</span>
+                {t('hero.headingPre')}<br />{t('hero.headingMid')}<span className="text-[#5600e3]">{t('hero.headingHighlight')}</span>
             </motion.h1>
 
             <motion.p

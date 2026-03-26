@@ -17,7 +17,7 @@ const benefitIcons = [
 ];
 
 export const Benefits = () => {
-    const { t } = useLanguage();
+    const { t, lang } = useLanguage();
 
     const benefits = benefitIcons.map((icon, i) => ({
         icon,
@@ -29,7 +29,9 @@ export const Benefits = () => {
         <section className="py-[60px] md:py-[80px] lg:py-[120px] max-w-[1300px] mx-auto px-6">
             <div className="text-center max-w-2xl mx-auto mb-16 md:mb-24">
                 <p className="text-primary font-semibold tracking-wide uppercase text-sm mb-3">{t('benefits.label')}</p>
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-6">{t('benefits.heading')}</h2>
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
+                    {t('benefits.headingPre')}<span className="text-[#5600e3]">{t('benefits.headingHighlight')}</span>{t('benefits.headingPost')}
+                </h2>
                 <p className="text-slate-500 text-lg">
                     {t('benefits.sub')}
                 </p>
@@ -69,11 +71,11 @@ export const Benefits = () => {
                 <div className="flex flex-col items-start gap-6">
                     <p className="text-primary font-semibold tracking-wide uppercase text-sm">{t('about.label')}</p>
                     <h2 className="text-3xl md:text-4xl font-bold text-slate-900 leading-tight">{t('about.heading')}</h2>
-                    <p className="text-lg md:text-xl text-slate-600 leading-relaxed font-medium">
+                    <p className="text-lg md:text-xl text-slate-600 leading-relaxed font-medium whitespace-pre-line">
                         {t('about.body')}
                     </p>
                     <Link
-                        to="/about"
+                        to={`/${lang}/about`}
                         className="px-8 py-3 bg-primary hover:bg-primary-hover text-white rounded-full font-semibold transition-all shadow-md shadow-primary/20 hover:shadow-lg hover:-translate-y-0.5 inline-block"
                     >
                         {t('about.cta')}
