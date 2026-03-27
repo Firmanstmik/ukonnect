@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, Calendar, ArrowRight, Phone, Globe, ChevronLeft, Loader2, X } from 'lucide-react';
+import { Mail, Calendar, ArrowRight, Phone, Globe, ChevronLeft, Loader2, X, Target } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
 import emailjs from '@emailjs/browser';
 
@@ -9,8 +9,6 @@ import googleIcon from '../assets/google ukonnect.svg';
 import wordpressIcon from '../assets/Wordpress.webp';
 import ukonnectIcon from '../assets/Ukonnect Marketing icon.webp';
 import metaIcon from '../assets/meta.webp';
-import contentIcon from '../assets/content.png';
-
 const CAL_USERNAME = 'ukonnect';
 const CAL_EVENT_SLUG = 'strategiegesprek';
 
@@ -18,13 +16,13 @@ const EMAILJS_SERVICE_ID = 'service_ecmrpa5';
 const EMAILJS_TEMPLATE_ID = 'template_2ce63ql';
 const EMAILJS_PUBLIC_KEY = 'sItgs7yAONr4cjriF';
 
-const SERVICES = [
+const SERVICES: { label: string; icon?: string; IconComp?: React.ComponentType<{ className?: string }> }[] = [
+    { label: 'Leadgen', IconComp: Target },
     { label: 'Google Ads', icon: googleAdsIcon },
     { label: 'SEO', icon: googleIcon },
     { label: 'Webdesign', icon: wordpressIcon },
     { label: 'AI & SEO AI', icon: ukonnectIcon },
     { label: 'Social Media', icon: metaIcon },
-    { label: 'Content', icon: contentIcon },
 ];
 
 const INPUT_CLS =
@@ -44,7 +42,7 @@ interface Props {
 export const ContactFormModal = ({ isOpen, onClose }: Props) => {
     const { t } = useLanguage();
     const [form, setForm] = useState({ name: '', email: '', company: '', phone: '', website: '' });
-    const [selected, setSelected] = useState<string[]>([]);
+    const [selected, setSelected] = useState<string[]>(['Leadgen']);
     const [view, setView] = useState<'form' | 'calendar' | 'success'>('form');
     const [direction, setDirection] = useState(1);
     const [sending, setSending] = useState(false);
@@ -108,7 +106,7 @@ export const ContactFormModal = ({ isOpen, onClose }: Props) => {
     useEffect(() => {
         if (isOpen) {
             setForm({ name: '', email: '', company: '', phone: '', website: '' });
-            setSelected([]);
+            setSelected(['Leadgen']);
             setView('form');
             setDirection(1);
             setSendError(null);
@@ -157,9 +155,9 @@ export const ContactFormModal = ({ isOpen, onClose }: Props) => {
                             {/* Close button */}
                             <button
                                 onClick={onClose}
-                                className="absolute top-5 right-5 z-10 w-9 h-9 flex items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-700 transition-colors"
+                                className="absolute top-5 right-5 z-10 w-11 h-11 flex items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-700 transition-colors sm:top-6 sm:right-6"
                             >
-                                <X className="w-4 h-4" />
+                                <X className="w-5 h-5" />
                             </button>
 
                             <AnimatePresence mode="wait" custom={direction}>
@@ -216,7 +214,7 @@ export const ContactFormModal = ({ isOpen, onClose }: Props) => {
                                 {view === 'form' && (
                                     <motion.form key="form" custom={direction} variants={slideVariants} initial="enter" animate="center" exit="exit"
                                         onSubmit={handleSubmit}
-                                        className="p-5 pt-14 sm:pt-8 sm:p-8 flex flex-col gap-4 sm:gap-5">
+                                        className="p-5 pt-20 sm:p-8 sm:pt-20 flex flex-col gap-4 sm:gap-5">
                                         <div className="grid sm:grid-cols-2 gap-4">
                                             <div className="flex flex-col gap-1.5">
                                                 <label className="text-sm font-medium text-slate-700">{t('contact.form.name')}</label>
@@ -231,24 +229,24 @@ export const ContactFormModal = ({ isOpen, onClose }: Props) => {
                                         </div>
                                         <div className="grid sm:grid-cols-2 gap-4">
                                             <div className="flex flex-col gap-1.5">
-                                                <label className="text-sm font-medium text-slate-700">{t('contact.form.company')} <span className="text-slate-400 font-normal">{t('contact.form.optional')}</span></label>
-                                                <input type="text" placeholder="Acme Inc." value={form.company}
+                                                <label className="text-sm font-medium text-slate-700">{t('contact.form.company')}</label>
+                                                <input required type="text" placeholder="Acme Inc." value={form.company}
                                                     onChange={e => setForm(s => ({ ...s, company: e.target.value }))} className={INPUT_CLS} />
                                             </div>
                                             <div className="flex flex-col gap-1.5">
-                                                <label className="text-sm font-medium text-slate-700">{t('contact.form.phone')} <span className="text-slate-400 font-normal">{t('contact.form.optional')}</span></label>
+                                                <label className="text-sm font-medium text-slate-700">{t('contact.form.phone')}</label>
                                                 <div className="relative">
                                                     <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
-                                                    <input type="tel" placeholder="+1 555 000 0000" value={form.phone}
+                                                    <input required type="tel" placeholder="+1 555 000 0000" value={form.phone}
                                                         onChange={e => setForm(s => ({ ...s, phone: e.target.value }))} className={INPUT_CLS + ' pl-10'} />
                                                 </div>
                                             </div>
                                         </div>
                                         <div className="flex flex-col gap-1.5">
-                                            <label className="text-sm font-medium text-slate-700">{t('contact.form.website')} <span className="text-slate-400 font-normal">{t('contact.form.optional')}</span></label>
+                                            <label className="text-sm font-medium text-slate-700">{t('contact.form.website')}</label>
                                             <div className="relative">
                                                 <Globe className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
-                                                <input type="url" placeholder="https://yoursite.com" value={form.website}
+                                                <input required type="url" placeholder="https://yoursite.com" value={form.website}
                                                     onChange={e => setForm(s => ({ ...s, website: e.target.value }))}
                                                     onBlur={e => {
                                                         const v = e.target.value.trim();
@@ -262,7 +260,7 @@ export const ContactFormModal = ({ isOpen, onClose }: Props) => {
                                         <div className="flex flex-col gap-3">
                                             <label className="text-sm font-medium text-slate-700">{t('contact.form.services')}</label>
                                             <div className="grid grid-cols-3 gap-3">
-                                                {SERVICES.map(({ label, icon }) => {
+                                                {SERVICES.map(({ label, icon, IconComp }) => {
                                                     const isSelected = selected.includes(label);
                                                     return (
                                                         <motion.button key={label} type="button" onClick={() => toggle(label)} whileTap={{ scale: 0.94 }}
@@ -270,7 +268,9 @@ export const ContactFormModal = ({ isOpen, onClose }: Props) => {
                                                                 ${isSelected
                                                                     ? 'bg-[#5600e3] border-[#5600e3] text-white shadow-lg shadow-[#5600e3]/30 scale-[1.02]'
                                                                     : 'bg-[#ecedf1] border-slate-200 text-slate-600 shadow-[inset_0_2px_4px_rgba(0,0,0,0.06)] hover:border-[#5600e3]/40 hover:text-slate-900'}`}>
-                                                            <img src={icon} alt={label} className="w-8 h-8 object-contain" />
+                                                            {IconComp
+                                                                ? <IconComp className={`w-8 h-8 ${isSelected ? 'text-white' : 'text-[#5600e3]'}`} />
+                                                                : <img src={icon} alt={label} className="w-8 h-8 object-contain" />}
                                                             <span className="leading-tight text-center font-bold text-xs">{label}</span>
                                                             {isSelected && (
                                                                 <motion.div layoutId={`modal-check-${label}`} initial={{ scale: 0 }} animate={{ scale: 1 }}

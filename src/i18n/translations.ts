@@ -26,7 +26,7 @@ const translations = {
     'features.sub': 'Quatro sistemas que automatizam e otimizam o seu pipeline de marketing e vendas.',
     'features.tab.marketing': 'Marketing',
     'features.tab.ai': 'Sistemas de IA',
-    'features.tab.web': 'Desenvolvimento Web',
+    'features.tab.web': 'Desenv. Web',
     // Marketing cards
     'features.marketing.0.title': 'Publicidade Paga',
     'features.marketing.0.desc': 'Campanhas de performance no Meta e Google que geram leads de alta intenção.',
@@ -205,8 +205,8 @@ const translations = {
     'contact.teamLabel': 'A equipa',
     'contact.teamTitle': 'As pessoas por trás do seu crescimento',
     'contact.available': 'Disponível agora',
-    'contact.form.name': 'Nome completo',
-    'contact.form.email': 'Email profissional',
+    'contact.form.name': 'Nome',
+    'contact.form.email': 'E-mail',
     'contact.form.company': 'Empresa',
     'contact.form.phone': 'Telefone',
     'contact.form.website': 'Website',
@@ -228,7 +228,7 @@ const translations = {
 
     // ── Footer ──
     'footer.brand': 'Sistemas de automação de marketing e vendas com IA que impulsionam receita no piloto automático.',
-    'footer.product': 'Produto',
+    'footer.product': 'Serviços',
     'footer.productMarketing': 'Marketing',
     'footer.productAdvertising': 'Publicidade',
     'footer.productAISystems': 'Sistemas de IA',
@@ -466,8 +466,8 @@ const translations = {
     'contact.teamLabel': 'The team',
     'contact.teamTitle': 'The people behind your growth',
     'contact.available': 'Available now',
-    'contact.form.name': 'Full name',
-    'contact.form.email': 'Work email',
+    'contact.form.name': 'Name',
+    'contact.form.email': 'E-mail',
     'contact.form.company': 'Company',
     'contact.form.phone': 'Phone',
     'contact.form.website': 'Website',
@@ -489,7 +489,7 @@ const translations = {
 
     // ── Footer ──
     'footer.brand': 'AI-powered marketing and sales automation systems that drive revenue on autopilot.',
-    'footer.product': 'Product',
+    'footer.product': 'Services',
     'footer.productMarketing': 'Marketing',
     'footer.productAdvertising': 'Advertising',
     'footer.productAISystems': 'AI Systems',
@@ -540,7 +540,7 @@ const translations = {
     'hero.headingPre': 'Makelaars: No Cure, No Pay.',
     'hero.headingMid': '',
     'hero.headingHighlight': 'No Bullshit',
-    'hero.sub': 'Wij bouwen AI-gedreven marketing- en verkoopsystemen die gekwalificeerde leads genereren en ze omzetten in deals voor jouw vastgoedonderneming.',
+    'hero.sub': 'Wij bouwen AI-gedreven marketing- en sales systemen die gekwalificeerde leads genereren en ze omzetten in deals voor jouw vastgoedonderneming.',
     'hero.cta': 'Klaar om te groeien?',
     'hero.trustedBy': 'Vertrouwd door',
     'hero.trustedCount': '178 bedrijven',
@@ -727,8 +727,8 @@ const translations = {
     'contact.teamLabel': 'Het team',
     'contact.teamTitle': 'De mensen achter uw groei',
     'contact.available': 'Nu beschikbaar',
-    'contact.form.name': 'Volledige naam',
-    'contact.form.email': 'Zakelijk e-mailadres',
+    'contact.form.name': 'Naam',
+    'contact.form.email': 'E-mail',
     'contact.form.company': 'Bedrijf',
     'contact.form.phone': 'Telefoon',
     'contact.form.website': 'Website',
@@ -750,7 +750,7 @@ const translations = {
 
     // ── Footer ──
     'footer.brand': 'AI-aangedreven marketing- en verkoopautomatiseringssystemen die omzet genereren op de automatische piloot.',
-    'footer.product': 'Product',
+    'footer.product': 'Diensten',
     'footer.productMarketing': 'Marketing',
     'footer.productAdvertising': 'Adverteren',
     'footer.productAISystems': 'AI Systemen',
