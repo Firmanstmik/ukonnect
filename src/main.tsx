@@ -6,8 +6,11 @@ import App from './App.tsx'
 import { LanguageProvider, VALID_LANGS } from './i18n/LanguageContext.tsx'
 import type { Language } from './i18n/translations.ts'
 
-const ContactPage = lazy(() => import('./pages/ContactPage.tsx'))
-const AboutPage   = lazy(() => import('./pages/AboutPage.tsx'))
+const ContactPage  = lazy(() => import('./pages/ContactPage.tsx'))
+const AboutPage    = lazy(() => import('./pages/AboutPage.tsx'))
+const CareersPage  = lazy(() => import('./pages/CareersPage.tsx'))
+const PrivacyPage  = lazy(() => import('./pages/PrivacyPage.tsx'))
+const TermsPage    = lazy(() => import('./pages/TermsPage.tsx'))
 
 const LangRedirect = () => {
     const browserLang = navigator.language.slice(0, 2).toLowerCase();
@@ -27,6 +30,9 @@ createRoot(document.getElementById('root')!).render(
                         <Route index element={<App />} />
                         <Route path="about" element={<AboutPage />} />
                         <Route path="contact" element={<ContactPage />} />
+                        <Route path="careers" element={<CareersPage />} />
+                        <Route path="privacy" element={<PrivacyPage />} />
+                        <Route path="terms" element={<TermsPage />} />
                     </Route>
                 </Routes>
             </Suspense>

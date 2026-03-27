@@ -50,8 +50,8 @@ function AnimatedCounter({ to, suffix = '' }: { to: number; suffix?: string }) {
 
 // ── Team members ───────────────────────────────────────────────────────────
 const TEAM_MEMBERS = [
-    { name: 'Marco',   roleKey: 'aboutPage.role.leadDev' as TranslationKey,            img: teamMarco   },
     { name: 'Sander',  roleKey: 'aboutPage.role.coo' as TranslationKey,                img: teamSander  },
+    { name: 'Marco',   roleKey: 'aboutPage.role.leadDev' as TranslationKey,            img: teamMarco   },
     { name: 'Tanisha', roleKey: 'aboutPage.role.contentStrategist' as TranslationKey,  img: teamTanisha },
     { name: 'Kirsten', roleKey: 'aboutPage.role.cmo' as TranslationKey,                img: teamKirsten },
     { name: 'Bram',    roleKey: 'aboutPage.role.headAI' as TranslationKey,             img: teamBram    },
@@ -59,7 +59,7 @@ const TEAM_MEMBERS = [
     { name: 'Gino',    roleKey: 'aboutPage.role.marketingStrategist' as TranslationKey, img: teamGino   },
     { name: 'Afifah',  roleKey: 'aboutPage.role.growthSpecialist' as TranslationKey,   img: teamAfifah  },
     { name: 'Edmerd',  roleKey: 'aboutPage.role.accountManager' as TranslationKey,     img: teamEdmerd  },
-    { name: 'Raffy',   roleKey: 'aboutPage.role.ceo' as TranslationKey,                img: teamRaffy   },
+    { name: 'Raffy',   roleKey: 'aboutPage.role.teamHead' as TranslationKey,           img: teamRaffy   },
 ];
 
 // ── Value icons ────────────────────────────────────────────────────────────

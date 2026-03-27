@@ -8,7 +8,7 @@ export const About = () => {
         <section id="about" className="py-[60px] md:py-[80px] lg:py-[120px] max-w-[1300px] mx-auto px-6 text-center">
             <div className="max-w-3xl mx-auto flex flex-col items-center">
                 <p className="text-primary font-semibold tracking-wide uppercase text-sm mb-3">{t('about.label')}</p>
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-8">{t('about.heading')}</h2>
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-8">{t('about.headingPre')}<span className="text-[#5600e3]">x</span>{t('about.headingPost')}</h2>
 
                 <p className="text-xl md:text-2xl text-slate-600 leading-relaxed mb-10 font-medium">
                     {t('about.body')}

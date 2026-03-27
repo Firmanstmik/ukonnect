@@ -70,7 +70,7 @@ export const Benefits = () => {
                 {/* Left: text + CTA */}
                 <div className="flex flex-col items-start gap-6">
                     <p className="text-primary font-semibold tracking-wide uppercase text-sm">{t('about.label')}</p>
-                    <h2 className="text-3xl md:text-4xl font-bold text-slate-900 leading-tight">{t('about.heading')}</h2>
+                    <h2 className="text-3xl md:text-4xl font-bold text-slate-900 leading-tight">{t('about.headingPre')}<span className="text-[#5600e3]">x</span>{t('about.headingPost')}</h2>
                     <p className="text-lg md:text-xl text-slate-600 leading-relaxed font-medium whitespace-pre-line">
                         {t('about.body')}
                     </p>

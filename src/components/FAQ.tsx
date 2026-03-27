@@ -16,7 +16,7 @@ export const FAQ = () => {
     }));
 
     return (
-        <section className="py-[60px] md:py-[80px] lg:py-[120px] max-w-[800px] mx-auto px-6">
+        <section id="faq" className="py-[60px] md:py-[80px] lg:py-[120px] max-w-[800px] mx-auto px-6">
             <div className="text-center mb-16">
                 <p className="text-primary font-semibold tracking-wide uppercase text-sm mb-3">{t('faq.label')}</p>
                 <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">{t('faq.heading')}</h2>

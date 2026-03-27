@@ -38,7 +38,7 @@ const partnerLogos = [
 ];
 
 export const Hero = () => {
-    const { t } = useLanguage();
+    const { t, lang } = useLanguage();
     const [modalOpen, setModalOpen] = useState(false);
     return (
         <>
@@ -60,7 +60,7 @@ export const Hero = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="text-[44px] md:text-5xl lg:text-[64px] font-bold leading-[1.15] tracking-tight text-slate-900 mb-6 max-w-[1100px]"
+                className={`${lang === 'pt' ? 'text-[40px]' : 'text-[44px]'} md:text-5xl lg:text-[64px] font-bold leading-[1.15] tracking-tight text-slate-900 mb-6 max-w-[1100px]`}
             >
                 {t('hero.headingPre')}<br />{t('hero.headingMid')}<span className="text-[#5600e3]">{t('hero.headingHighlight')}</span>
             </motion.h1>

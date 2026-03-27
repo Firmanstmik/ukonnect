@@ -11,8 +11,9 @@ const translations = {
 
     // ── Hero ──
     'hero.badge': 'Infraestrutura de Crescimento Imobiliário',
-    'hero.headingPre': 'Sistemas de Crescimento com IA',
-    'hero.headingMid': 'para ',
+    'hero.badgeMobile': 'Infraestrutura de Crescimento Imobiliário',
+    'hero.headingPre': 'Sistemas de Crescimento com',
+    'hero.headingMid': 'IA para ',
     'hero.headingHighlight': 'Agências Imobiliárias',
     'hero.sub': 'Construímos sistemas de marketing e vendas com IA que geram leads qualificados e os convertem em negócios para o seu negócio imobiliário.',
     'hero.cta': 'Pronto para crescer?',
@@ -75,7 +76,7 @@ const translations = {
 
     // ── Process ──
     'process.label': 'Como Funciona',
-    'process.heading': 'Como Construímos o Seu Sistema de Marketing com IA',
+    'process.heading': 'Como Fazemos Crescer a Sua Agência Imobiliária',
     'process.sub': 'Da auditoria à automação em três passos simples.',
     'process.step1.title': 'Auditoria de Marketing IA & Geração de Leads',
     'process.step1.desc': 'Analisamos o seu funil completo de marketing e vendas, identificamos oportunidades de automação e desenvolvemos um sistema de IA à medida. Sem leads partilhados, mas sim um sistema de geração de leads próprio e escalável, combinado com um processo de seguimento eficaz que converte leads em contratos.',
@@ -136,8 +137,10 @@ const translations = {
 
     // ── About ──
     'about.label': 'Sobre',
-    'about.heading': 'Quem Somos',
-    'about.body': 'Construímos sistemas de crescimento com IA que ligam as suas ferramentas de marketing e vendas em fluxos de trabalho automatizados — menos trabalho manual, mais leads qualificados.\n\nCom experiência no setor imobiliário e em IA, marketing e automação, sabemos o que é preciso para crescer. A Ukonnect é para quem quer escalar com mais receita e menos esforço.',
+    'about.heading': 'Imobiliário x AI Experts',
+    'about.headingPre': 'Imobiliário ',
+    'about.headingPost': ' AI Experts',
+    'about.body': 'Construímos sistemas de crescimento com IA que ligam as suas ferramentas de marketing e vendas num fluxo de trabalho automatizado e simplificado. Reduzindo o trabalho manual enquanto aumentamos os leads qualificados e o volume de negócios.\n\nCom experiência prática no setor imobiliário e profunda expertise em IA, marketing e automação, compreendemos o que é necessário para escalar negócios imobiliários. A Ukonnect foi criada para equipas ambiciosas que pretendem aumentar a receita minimizando o esforço operacional.',
     'about.cta': 'Sobre nós',
 
     // ── About Page ──
@@ -149,15 +152,15 @@ const translations = {
     'aboutPage.missionHeading': 'Automatizar o Marketing. Acelerar o Crescimento.',
     'aboutPage.missionBody': 'Construímos sistemas de automação de marketing e vendas com IA que eliminam o trabalho manual e maximizam o ROI. Cada sistema é desenhado para gerar leads de qualidade, nutrir prospects e converter clientes no piloto automático.',
     'aboutPage.visionLabel': 'Visão',
-    'aboutPage.visionHeading': 'O Futuro do Marketing é com IA',
-    'aboutPage.visionBody': 'Acreditamos que todas as empresas merecem acesso a sistemas de marketing com IA de alta performance. A nossa visão é tornar a automação avançada acessível, eficaz e escalável para empresas de todos os tamanhos.',
+    'aboutPage.visionHeading': 'O Futuro do Crescimento Imobiliário É a IA',
+    'aboutPage.visionBody': 'Acreditamos que cada negócio imobiliário deve operar com sistemas inteligentes e automatizados que geram um fluxo constante de negócios. A nossa visão é equipar os profissionais do setor imobiliário com infraestrutura de IA escalável que gera leads, simplifica operações e maximiza receitas.',
     'aboutPage.stat0.label': 'Empresas parceiras',
     'aboutPage.stat1.label': 'Campanhas lançadas',
     'aboutPage.stat2.label': 'Taxa de retenção',
     'aboutPage.stat3.label': 'Anos de experiência',
     'aboutPage.teamLabel': 'A Equipa',
     'aboutPage.teamHeading': 'As Pessoas que Fazem Acontecer',
-    'aboutPage.teamSub': 'Uma equipa multidisciplinar de especialistas em marketing, IA e tecnologia unidos por uma missão: o seu crescimento.',
+    'aboutPage.teamSub': 'Uma equipa multidisciplinar de especialistas em marketing, IA e tecnologia, agentes imobiliários e especialistas do setor. Unidos por uma missão: o seu crescimento.',
     'aboutPage.galleryLabel': 'Cultura',
     'aboutPage.galleryHeading': 'Um dia na Ukonnect',
     'aboutPage.valuesLabel': 'Os Nossos Valores',
@@ -183,6 +186,7 @@ const translations = {
     'aboutPage.role.contentStrategist': 'Advertising Specialist',
     'aboutPage.role.accountManager': 'Web Developer',
     'aboutPage.role.growthSpecialist': 'Content Specialist',
+    'aboutPage.role.teamHead': 'Team Head Holanda',
 
     // ── CTA ──
     'cta.headingPre': 'Pronto para',
@@ -225,21 +229,40 @@ const translations = {
     // ── Footer ──
     'footer.brand': 'Sistemas de automação de marketing e vendas com IA que impulsionam receita no piloto automático.',
     'footer.product': 'Produto',
-    'footer.productServices': 'Serviços',
-    'footer.productIntegrations': 'Integrações',
-    'footer.productCaseStudies': 'Casos de Estudo',
+    'footer.productMarketing': 'Marketing',
+    'footer.productAdvertising': 'Publicidade',
+    'footer.productAISystems': 'Sistemas de IA',
+    'footer.productWebDev': 'Desenvolvimento Web',
     'footer.company': 'Empresa',
     'footer.companyAbout': 'Sobre Nós',
     'footer.companyCareers': 'Carreiras',
-    'footer.companyBlog': 'Blog',
     'footer.companyContact': 'Contacto',
     'footer.legal': 'Legal',
     'footer.legalPrivacy': 'Política de Privacidade',
     'footer.legalTerms': 'Termos de Serviço',
-    'footer.legalSecurity': 'Segurança',
     'footer.copyright': '© 2026 Ukonnect. Todos os direitos reservados.',
     'footer.helpCenter': 'Centro de Ajuda',
     'footer.bookCall': 'Agendar chamada',
+
+    // ── Careers ──
+    'careers.heroLabel': 'Carreiras',
+    'careers.heroHeading': 'Junte-se à Nossa Equipa',
+    'careers.heroSub': 'Estamos a construir o futuro do imobiliário com IA. Faça parte desta missão.',
+    'careers.openings': 'Posições em Aberto',
+    'careers.applyNow': 'Candidatar-se',
+    'careers.fullTime': 'Tempo Inteiro',
+    'careers.remote': 'Remoto',
+    'careers.moreInfo': 'Mais informações',
+    'careers.applyEmail': 'Enviar candidatura',
+    'careers.closeInfo': 'Fechar',
+
+    // ── Privacy ──
+    'privacy.label': 'Legal',
+    'privacy.heading': 'Política de Privacidade',
+
+    // ── Terms ──
+    'terms.label': 'Legal',
+    'terms.heading': 'Termos de Serviço',
   },
 
   en: {
@@ -252,6 +275,7 @@ const translations = {
 
     // ── Hero ──
     'hero.badge': 'Real Estate Growth Infrastructure',
+    'hero.badgeMobile': 'Real Estate Growth Infrastructure',
     'hero.headingPre': 'AI-Powered Growth Systems',
     'hero.headingMid': 'for ',
     'hero.headingHighlight': 'Real Estate Agencies',
@@ -313,7 +337,7 @@ const translations = {
 
     // ── Process ──
     'process.label': 'How It Works',
-    'process.heading': 'How We Build Your AI Marketing System',
+    'process.heading': 'How We Grow Your Real Estate Agency',
     'process.sub': 'From audit to live automation in three straightforward steps.',
     'process.step1.title': 'AI Marketing Audit & Lead Generation',
     'process.step1.desc': 'We analyse your complete marketing and sales funnel, identify automation opportunities, and develop a tailored AI system. No shared leads — instead, your own scalable lead generation system combined with an effective follow-up process that converts leads into instructions.',
@@ -374,8 +398,10 @@ const translations = {
 
     // ── About ──
     'about.label': 'About',
-    'about.heading': 'Who We Are',
-    'about.body': 'We build AI-powered growth systems that connect your marketing and sales tools into automated workflows. Less manual work, more qualified leads, and a sales pipeline that runs largely on autopilot.\n\nWith experience in real estate and in AI, marketing and automation, we know exactly what it takes to grow real estate businesses. Ukonnect is for ambitious parties who want to scale — with more revenue and less effort.',
+    'about.heading': 'Real Estate x AI Experts',
+    'about.headingPre': 'Real Estate ',
+    'about.headingPost': ' AI Experts',
+    'about.body': 'We build AI-powered growth systems that connect your marketing and sales tools into one streamlined, automated workflow. Reducing manual work while increasing qualified leads and deal flow.\n\nWith hands-on experience in real estate and deep expertise in AI, marketing and automation, we understand what it takes to scale property businesses. Ukonnect is built for ambitious teams aiming to grow revenue while minimizing operational effort.',
     'about.cta': 'About us',
 
     // ── About Page ──
@@ -387,15 +413,15 @@ const translations = {
     'aboutPage.missionHeading': 'Automate Marketing. Accelerate Growth.',
     'aboutPage.missionBody': 'We build AI-powered marketing and sales automation systems that eliminate manual work and maximise ROI. Every system is designed to generate quality leads, nurture prospects, and convert customers on autopilot.',
     'aboutPage.visionLabel': 'Vision',
-    'aboutPage.visionHeading': 'The Future of Marketing Is AI',
-    'aboutPage.visionBody': 'We believe every business deserves access to high-performance AI marketing systems. Our vision is to make advanced automation accessible, effective, and scalable for companies of all sizes.',
+    'aboutPage.visionHeading': 'The Future of Real Estate Growth Is AI',
+    'aboutPage.visionBody': 'We believe every real estate business should operate on intelligent, automated systems that drive consistent deal flow. Our vision is to equip property professionals with scalable AI infrastructure that generates leads, streamlines operations, and maximizes revenue.',
     'aboutPage.stat0.label': 'Partner companies',
     'aboutPage.stat1.label': 'Campaigns launched',
     'aboutPage.stat2.label': 'Client retention',
     'aboutPage.stat3.label': 'Years of experience',
     'aboutPage.teamLabel': 'The Team',
     'aboutPage.teamHeading': 'The People Making It Happen',
-    'aboutPage.teamSub': 'A multidisciplinary team of marketing, AI, and tech specialists united by one mission: your growth.',
+    'aboutPage.teamSub': 'A multidisciplinary team of marketing, AI, and tech specialists, real estate agents and property specialists. United by one mission: your growth.',
     'aboutPage.galleryLabel': 'Culture',
     'aboutPage.galleryHeading': 'A day at Ukonnect',
     'aboutPage.valuesLabel': 'Our Values',
@@ -421,6 +447,7 @@ const translations = {
     'aboutPage.role.contentStrategist': 'Advertising Specialist',
     'aboutPage.role.accountManager': 'Web Developer',
     'aboutPage.role.growthSpecialist': 'Content Specialist',
+    'aboutPage.role.teamHead': 'Team Head Netherlands',
 
     // ── CTA ──
     'cta.headingPre': 'Ready to',
@@ -463,21 +490,40 @@ const translations = {
     // ── Footer ──
     'footer.brand': 'AI-powered marketing and sales automation systems that drive revenue on autopilot.',
     'footer.product': 'Product',
-    'footer.productServices': 'Services',
-    'footer.productIntegrations': 'Integrations',
-    'footer.productCaseStudies': 'Case Studies',
+    'footer.productMarketing': 'Marketing',
+    'footer.productAdvertising': 'Advertising',
+    'footer.productAISystems': 'AI Systems',
+    'footer.productWebDev': 'Web Development',
     'footer.company': 'Company',
     'footer.companyAbout': 'About Us',
     'footer.companyCareers': 'Careers',
-    'footer.companyBlog': 'Blog',
     'footer.companyContact': 'Contact',
     'footer.legal': 'Legal',
     'footer.legalPrivacy': 'Privacy Policy',
     'footer.legalTerms': 'Terms of Service',
-    'footer.legalSecurity': 'Security',
     'footer.copyright': '© 2026 Ukonnect. All rights reserved.',
     'footer.helpCenter': 'Help Center',
     'footer.bookCall': 'Book a call',
+
+    // ── Careers ──
+    'careers.heroLabel': 'Careers',
+    'careers.heroHeading': 'Join Our Team',
+    'careers.heroSub': "We're building the future of real estate with AI. Be part of the mission.",
+    'careers.openings': 'Open Positions',
+    'careers.applyNow': 'Apply Now',
+    'careers.fullTime': 'Full-time',
+    'careers.remote': 'Remote',
+    'careers.moreInfo': 'More information',
+    'careers.applyEmail': 'Apply via email',
+    'careers.closeInfo': 'Close',
+
+    // ── Privacy ──
+    'privacy.label': 'Legal',
+    'privacy.heading': 'Privacy Policy',
+
+    // ── Terms ──
+    'terms.label': 'Legal',
+    'terms.heading': 'Terms of Service',
   },
 
   nl: {
@@ -489,7 +535,8 @@ const translations = {
     'nav.cta': 'Begin met groeien',
 
     // ── Hero ──
-    'hero.badge': 'Vastgoed Groei Infrastructuur',
+    'hero.badge': 'AI Leadgeneratie voor vastgoed professionals',
+    'hero.badgeMobile': 'AI Leadgeneratie voor vastgoed professionals',
     'hero.headingPre': 'Makelaars: No Cure, No Pay.',
     'hero.headingMid': '',
     'hero.headingHighlight': 'No Bullshit',
@@ -503,8 +550,8 @@ const translations = {
     'features.heading': 'Uw AI-groeisysteem',
     'features.sub': 'Vier systemen die uw marketing- en verkooppijplijn als makelaar kan automatiseren en optimaliseren.',
     'features.tab.marketing': 'Marketing',
-    'features.tab.ai': 'AI-systemen',
-    'features.tab.web': 'Webontwikkeling',
+    'features.tab.ai': 'AI systemen',
+    'features.tab.web': 'Web ontwikkeling',
     'features.marketing.0.title': 'Betaalde Advertenties',
     'features.marketing.0.desc': 'Prestatiecampagnes op Meta en Google die leads met hoge intentie genereren.',
     'features.marketing.1.title': 'Conversiefunnels',
@@ -515,7 +562,7 @@ const translations = {
     'features.marketing.3.desc': 'Targeting, messaging en positionering die de juiste klanten aantrekken.',
     'features.ai.0.title': 'AI Leadgeneratie',
     'features.ai.0.desc': 'AI-gestuurde campagnes die continu leads met hoge intentie genereren via Meta, Google en prestatiegericht targeting.',
-    'features.ai.1.title': 'AI Verkoopautomatisering',
+    'features.ai.1.title': 'AI Sales Automatisering',
     'features.ai.1.desc': 'AI-agents die leads kwalificeren, follow-ups afhandelen en vergaderingen boeken zodat uw salesteam zich op sluiten kan focussen.',
     'features.ai.2.title': 'AI Marketingautomatisering',
     'features.ai.2.desc': 'Geautomatiseerde e-mailreeksen, advertentieoptimalisatie en contentworkflows die prospects koesteren en conversies verhogen.',
@@ -551,7 +598,7 @@ const translations = {
 
     // ── Process ──
     'process.label': 'Hoe Het Werkt',
-    'process.heading': 'Hoe wij jouw AI Marketingsysteem bouwen',
+    'process.heading': 'Hoe Wij Uw Vastgoedbedrijf Laten Groeien',
     'process.sub': 'Van audit tot live automatiseringen en AI leadgeneratie in drie stappen.',
     'process.step1.title': 'Marketing audit & Leadgeneratie',
     'process.step1.desc': 'Wij analyseren uw volledige marketing- en salesfunnel, identificeren automatiseringskansen en ontwikkelen een AI-systeem op maat. Geen losse leads, maar een eigen, schaalbaar leadgeneratiesysteem, gecombineerd met een effectief opvolgproces dat leads omzet in opdrachten.',
@@ -612,8 +659,10 @@ const translations = {
 
     // ── About ──
     'about.label': 'Over Ons',
-    'about.heading': 'Wie Wij Zijn',
-    'about.body': 'Wij bouwen AI-aangedreven groeisystemen die uw marketing- en verkooptools verbinden in geautomatiseerde workflows. Minder handmatig werk, meer gekwalificeerde leads en een verkooppijplijn die grotendeels op de automatische piloot werkt.\n\nMet ervaring in de makelaardij én in AI, marketing en automatisering weten wij precies wat nodig is om vastgoedbedrijven te laten groeien. Ukonnect is er voor ambitieuze partijen die willen opschalen, met meer omzet en minder werk.',
+    'about.heading': 'Vastgoed x AI Experts',
+    'about.headingPre': 'Vastgoed ',
+    'about.headingPost': ' AI Experts',
+    'about.body': 'Wij bouwen AI-aangedreven groeisystemen die uw marketing- en verkooptools verbinden in één gestroomlijnde, geautomatiseerde workflow. Minder handmatig werk, meer gekwalificeerde leads en een hogere dealflow.\n\nMet praktijkervaring in de vastgoedsector en diepgaande expertise in AI, marketing en automatisering begrijpen wij wat nodig is om vastgoedbedrijven te laten groeien. Ukonnect is gebouwd voor ambitieuze teams die hun omzet willen verhogen en tegelijkertijd de operationele inspanning willen minimaliseren.',
     'about.cta': 'Over ons',
 
     // ── About Page ──
@@ -625,15 +674,15 @@ const translations = {
     'aboutPage.missionHeading': 'Marketing Automatiseren. Groei Versnellen.',
     'aboutPage.missionBody': 'Wij bouwen AI-aangedreven marketing- en verkoopautomatiseringssystemen die handmatig werk elimineren en ROI maximaliseren. Elk systeem is ontworpen om kwaliteitsleads te genereren, prospects te koesteren en klanten op de automatische piloot te converteren.',
     'aboutPage.visionLabel': 'Visie',
-    'aboutPage.visionHeading': 'De Toekomst van Marketing Is AI',
-    'aboutPage.visionBody': 'Wij geloven dat elk bedrijf toegang verdient tot hoogwaardige AI-marketingsystemen. Onze visie is om geavanceerde automatisering toegankelijk, effectief en schaalbaar te maken voor bedrijven van elke omvang.',
+    'aboutPage.visionHeading': 'De Toekomst van Vastgoedgroei Is AI',
+    'aboutPage.visionBody': 'Wij geloven dat elk vastgoedbedrijf moet werken met intelligente, geautomatiseerde systemen die zorgen voor een constante stroom aan deals. Onze visie is om vastgoedprofessionals te uitrusten met schaalbare AI-infrastructuur die leads genereert, processen stroomlijnt en omzet maximaliseert.',
     'aboutPage.stat0.label': 'Partnerbedrijven',
     'aboutPage.stat1.label': 'Campagnes gelanceerd',
     'aboutPage.stat2.label': 'Klantbehoud',
     'aboutPage.stat3.label': 'Jaar ervaring',
     'aboutPage.teamLabel': 'Het Team',
     'aboutPage.teamHeading': 'De Mensen Die Het Waarmaken',
-    'aboutPage.teamSub': 'Een multidisciplinair team van marketing-, AI- en techspecialisten, verenigd door één missie: uw groei.',
+    'aboutPage.teamSub': 'Een multidisciplinair team van marketing-, AI- en techspecialisten, makelaars en vastgoedspecialisten. Verenigd door één missie: uw groei.',
     'aboutPage.galleryLabel': 'Cultuur',
     'aboutPage.galleryHeading': 'Een dag bij Ukonnect',
     'aboutPage.valuesLabel': 'Onze Waarden',
@@ -659,6 +708,7 @@ const translations = {
     'aboutPage.role.contentStrategist': 'Advertising Specialist',
     'aboutPage.role.accountManager': 'Web Developer',
     'aboutPage.role.growthSpecialist': 'Content Specialist',
+    'aboutPage.role.teamHead': 'Team Head Nederland',
 
     // ── CTA ──
     'cta.headingPre': 'Klaar om',
@@ -701,21 +751,40 @@ const translations = {
     // ── Footer ──
     'footer.brand': 'AI-aangedreven marketing- en verkoopautomatiseringssystemen die omzet genereren op de automatische piloot.',
     'footer.product': 'Product',
-    'footer.productServices': 'Diensten',
-    'footer.productIntegrations': 'Integraties',
-    'footer.productCaseStudies': 'Casestudies',
+    'footer.productMarketing': 'Marketing',
+    'footer.productAdvertising': 'Adverteren',
+    'footer.productAISystems': 'AI Systemen',
+    'footer.productWebDev': 'Web ontwikkeling',
     'footer.company': 'Bedrijf',
     'footer.companyAbout': 'Over Ons',
     'footer.companyCareers': 'Vacatures',
-    'footer.companyBlog': 'Blog',
     'footer.companyContact': 'Contact',
     'footer.legal': 'Juridisch',
     'footer.legalPrivacy': 'Privacybeleid',
     'footer.legalTerms': 'Servicevoorwaarden',
-    'footer.legalSecurity': 'Beveiliging',
     'footer.copyright': '© 2026 Ukonnect. Alle rechten voorbehouden.',
     'footer.helpCenter': 'Helpcentrum',
     'footer.bookCall': 'Gesprek inplannen',
+
+    // ── Careers ──
+    'careers.heroLabel': 'Vacatures',
+    'careers.heroHeading': 'Word Onderdeel van Ons Team',
+    'careers.heroSub': 'Wij bouwen de toekomst van vastgoed met AI. Doe mee.',
+    'careers.openings': 'Openstaande Vacatures',
+    'careers.applyNow': 'Solliciteer Nu',
+    'careers.fullTime': 'Fulltime',
+    'careers.remote': 'Remote',
+    'careers.moreInfo': 'Meer informatie',
+    'careers.applyEmail': 'Solliciteer via e-mail',
+    'careers.closeInfo': 'Sluiten',
+
+    // ── Privacy ──
+    'privacy.label': 'Legal',
+    'privacy.heading': 'Privacybeleid',
+
+    // ── Terms ──
+    'terms.label': 'Legal',
+    'terms.heading': 'Servicevoorwaarden',
   },
 } as const;
 

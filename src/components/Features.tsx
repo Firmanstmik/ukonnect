@@ -1,4 +1,5 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { motion, useMotionValue, useTransform, animate, AnimatePresence } from 'framer-motion';
 import { BrainCircuit, Edit3, Target, TrendingUp, Crosshair, Zap, Globe, Mail, Music, Settings } from 'lucide-react';
 import { AILeadGenerationEngine } from './AILeadGenerationEngine';
@@ -796,6 +797,16 @@ export const Features = () => {
         setActiveTab(i);
         animate(stripX, -i * PANEL_PCT, { type: 'spring', stiffness: 300, damping: 30 });
     }, [stripX]);
+
+    // Deep-link: ?tab=0|1|2
+    const [searchParams] = useSearchParams();
+    useEffect(() => {
+        const tab = searchParams.get('tab');
+        if (tab !== null) {
+            const idx = parseInt(tab, 10);
+            if (!isNaN(idx) && idx >= 0 && idx < TABS.length) goToTab(idx);
+        }
+    }, [searchParams, goToTab]);
 
     // Elastic resistance at edges
     const clampX = useCallback((val: number) => {
