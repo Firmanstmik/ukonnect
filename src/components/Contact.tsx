@@ -29,7 +29,7 @@ const fadeUp = (delay = 0) => ({
 });
 
 const SERVICES: { label: string; icon?: string; IconComp?: React.ComponentType<{ className?: string }> }[] = [
-    { label: 'Leadgen', IconComp: Target },
+    { label: 'AI Leadgen', IconComp: Target },
     { label: 'Google Ads', icon: googleAdsIcon },
     { label: 'SEO', icon: googleIcon },
     { label: 'Webdesign', icon: wordpressIcon },
@@ -59,7 +59,7 @@ export const Contact = () => {
         { value: STAT_VALUES[2], label: t('contact.stat2') },
     ];
     const [form, setForm] = useState({ name: '', email: '', company: '', phone: '', website: '' });
-    const [selected, setSelected] = useState<string[]>(['Leadgen']);
+    const [selected, setSelected] = useState<string[]>(['AI Leadgen']);
     const [view, setView] = useState<'form' | 'calendar' | 'success'>('form');
     const [direction, setDirection] = useState(1);
     const [sending, setSending] = useState(false);

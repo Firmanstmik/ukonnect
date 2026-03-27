@@ -17,7 +17,7 @@ const EMAILJS_TEMPLATE_ID = 'template_2ce63ql';
 const EMAILJS_PUBLIC_KEY = 'sItgs7yAONr4cjriF';
 
 const SERVICES: { label: string; icon?: string; IconComp?: React.ComponentType<{ className?: string }> }[] = [
-    { label: 'Leadgen', IconComp: Target },
+    { label: 'AI Leadgen', IconComp: Target },
     { label: 'Google Ads', icon: googleAdsIcon },
     { label: 'SEO', icon: googleIcon },
     { label: 'Webdesign', icon: wordpressIcon },
@@ -42,7 +42,7 @@ interface Props {
 export const ContactFormModal = ({ isOpen, onClose }: Props) => {
     const { t } = useLanguage();
     const [form, setForm] = useState({ name: '', email: '', company: '', phone: '', website: '' });
-    const [selected, setSelected] = useState<string[]>(['Leadgen']);
+    const [selected, setSelected] = useState<string[]>(['AI Leadgen']);
     const [view, setView] = useState<'form' | 'calendar' | 'success'>('form');
     const [direction, setDirection] = useState(1);
     const [sending, setSending] = useState(false);
@@ -106,7 +106,7 @@ export const ContactFormModal = ({ isOpen, onClose }: Props) => {
     useEffect(() => {
         if (isOpen) {
             setForm({ name: '', email: '', company: '', phone: '', website: '' });
-            setSelected(['Leadgen']);
+            setSelected(['AI Leadgen']);
             setView('form');
             setDirection(1);
             setSendError(null);

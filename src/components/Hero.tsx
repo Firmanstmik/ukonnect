@@ -3,15 +3,10 @@ import { motion } from 'framer-motion';
 import { Star } from 'lucide-react';
 import { HeroBackground } from './HeroBackground';
 import { useLanguage } from '../i18n/LanguageContext';
-import logo2WheelShop from '../assets/Partners/2WHEEL-SHOP.png';
 import logoDutchBroker from '../assets/Partners/DUTCHBROKER.png';
 import logoHuurwoningen from '../assets/Partners/HUURWONINGEN.png';
-import logoJuzaBouw from '../assets/Partners/JUZA BOUW.png';
-import logoMijnVogelwering from '../assets/Partners/MIJN VOGELWERING.png';
-import logoOhMyGemmer from '../assets/Partners/OHMYGEMMER.png';
 import logoPararius from '../assets/Partners/PARARIUS HUURWONINGEN.png';
 import logoRemax from '../assets/Partners/REMAX.png';
-import logoSbsKlus from '../assets/Partners/SBS KLUS.png';
 import logoWjbVermeulen from '../assets/Partners/WJB VERMEULEN.png';
 import logoZekerVastgoed from '../assets/Partners/ZEKERVASTGOED.png';
 
@@ -24,17 +19,12 @@ const BadgeIcon = () => (
 );
 
 const partnerLogos = [
-    { src: logo2WheelShop, alt: '2Wheel Shop' },         // long
-    { src: logoRemax, alt: 'RE/MAX' },                   // short
-    { src: logoPararius, alt: 'Pararius Huurwoningen' }, // long
-    { src: logoSbsKlus, alt: 'SBS Klus' },               // short
-    { src: logoMijnVogelwering, alt: 'Mijn Vogelwering' }, // long
-    { src: logoWjbVermeulen, alt: 'WJB Vermeulen' },     // short
-    { src: logoDutchBroker, alt: 'DutchBroker' },        // medium
-    { src: logoZekerVastgoed, alt: 'Zeker Vastgoed' },   // short
-    { src: logoHuurwoningen, alt: 'Huurwoningen' },      // medium
-    { src: logoJuzaBouw, alt: 'Juza Bouw' },             // medium
-    { src: logoOhMyGemmer, alt: 'Oh My Gemmer' },        // medium
+    { src: logoRemax, alt: 'RE/MAX' },
+    { src: logoPararius, alt: 'Pararius Huurwoningen' },
+    { src: logoWjbVermeulen, alt: 'WJB Vermeulen' },
+    { src: logoDutchBroker, alt: 'DutchBroker' },
+    { src: logoZekerVastgoed, alt: 'Zeker Vastgoed' },
+    { src: logoHuurwoningen, alt: 'Huurwoningen' },
 ];
 
 export const Hero = () => {
