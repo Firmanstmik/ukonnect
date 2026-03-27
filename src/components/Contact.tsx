@@ -166,7 +166,7 @@ export const Contact = () => {
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent pointer-events-none" />
                             <div className="absolute bottom-0 left-0 right-0 p-6 z-10">
                                 <div className="grid grid-cols-3 gap-3">
-                                    <motion.a href="https://wa.me/351927497086" target="_blank" rel="noopener noreferrer"
+                                    <motion.a href={lang === 'pt' ? 'https://wa.me/351927497086' : 'https://wa.me/31853331000'} target="_blank" rel="noopener noreferrer"
                                         whileHover={{ scale: 1.06, backgroundColor: 'rgba(37,211,102,0.25)' }} whileTap={{ scale: 0.94 }}
                                         transition={{ type: 'spring', stiffness: 400, damping: 20 }}
                                         className="flex flex-col items-center gap-1.5 bg-white/10 backdrop-blur-md rounded-2xl px-3 py-3 text-center border border-white/20 cursor-pointer">
@@ -182,7 +182,7 @@ export const Contact = () => {
                                         <Mail className="w-5 h-5 text-white" />
                                         <p className="text-white font-bold text-xs">{t('contact.email')}</p>
                                     </motion.a>
-                                    <motion.a href="tel:+351927497086"
+                                    <motion.a href={lang === 'pt' ? 'tel:+351927497086' : 'tel:+31853331000'}
                                         whileHover={{ scale: 1.06, backgroundColor: 'rgba(255,255,255,0.2)' }} whileTap={{ scale: 0.94 }}
                                         transition={{ type: 'spring', stiffness: 400, damping: 20 }}
                                         className="flex flex-col items-center gap-1.5 bg-white/10 backdrop-blur-md rounded-2xl px-3 py-3 text-center border border-white/20 cursor-pointer">
