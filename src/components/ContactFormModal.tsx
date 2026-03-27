@@ -7,7 +7,7 @@ import emailjs from '@emailjs/browser';
 import googleAdsIcon from '../assets/Ukonnect Google Ads.webp';
 import googleIcon from '../assets/google ukonnect.svg';
 import wordpressIcon from '../assets/Wordpress.webp';
-import ukonnectIcon from '../assets/Ukonnect Marketing icon.webp';
+import aiIcon from '../assets/AI.webp';
 import metaIcon from '../assets/meta.webp';
 const CAL_USERNAME = 'ukonnect';
 const CAL_EVENT_SLUG = 'strategiegesprek';
@@ -21,7 +21,7 @@ const SERVICES: { label: string; icon?: string; IconComp?: React.ComponentType<{
     { label: 'Google Ads', icon: googleAdsIcon },
     { label: 'SEO', icon: googleIcon },
     { label: 'Webdesign', icon: wordpressIcon },
-    { label: 'AI & SEO AI', icon: ukonnectIcon },
+    { label: 'SEO AI', icon: aiIcon },
     { label: 'Social Media', icon: metaIcon },
 ];
 
@@ -269,8 +269,8 @@ export const ContactFormModal = ({ isOpen, onClose }: Props) => {
                                                                     ? 'bg-[#5600e3] border-[#5600e3] text-white shadow-lg shadow-[#5600e3]/30 scale-[1.02]'
                                                                     : 'bg-[#ecedf1] border-slate-200 text-slate-600 shadow-[inset_0_2px_4px_rgba(0,0,0,0.06)] hover:border-[#5600e3]/40 hover:text-slate-900'}`}>
                                                             {IconComp
-                                                                ? <IconComp className={`w-8 h-8 ${isSelected ? 'text-white' : 'text-[#5600e3]'}`} />
-                                                                : <img src={icon} alt={label} className="w-8 h-8 object-contain" />}
+                                                                ? <IconComp className={`w-8 h-8 ${isSelected ? 'text-[#5ce1e6]' : 'text-[#5600e3]'}`} />
+                                                                : <img src={icon} alt={label} className={`w-8 h-8 object-contain${label === 'SEO AI' && isSelected ? ' drop-shadow-[0_0_8px_rgba(255,255,255,0.9)] brightness-150' : ''}`} />}
                                                             <span className="leading-tight text-center font-bold text-xs">{label}</span>
                                                             {isSelected && (
                                                                 <motion.div layoutId={`modal-check-${label}`} initial={{ scale: 0 }} animate={{ scale: 1 }}

@@ -1,18 +1,17 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, Calendar, ArrowRight, Phone, Globe, ChevronLeft, Loader2 } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { Mail, Calendar, ArrowRight, Phone, Globe, ChevronLeft, Loader2, Target } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
 import Cal, { getCalApi } from '@calcom/embed-react';
 import emailjs from '@emailjs/browser';
 
 import teamPhoto from '../assets/Ukonnect Team Portugal.webp';
+import officePhoto from '../assets/Ukonnect Marketing.webp';
 import googleAdsIcon from '../assets/Ukonnect Google Ads.webp';
 import googleIcon from '../assets/google ukonnect.svg';
 import wordpressIcon from '../assets/Wordpress.webp';
-import ukonnectIcon from '../assets/Ukonnect Marketing icon.webp';
+import aiIcon from '../assets/AI.webp';
 import metaIcon from '../assets/meta.webp';
-import contentIcon from '../assets/content.png';
-
 // ── Cal.com ──
 const CAL_USERNAME = 'ukonnect';
 const CAL_EVENT_SLUG = 'strategiegesprek';
@@ -29,13 +28,13 @@ const fadeUp = (delay = 0) => ({
     transition: { duration: 0.55, delay },
 });
 
-const SERVICES = [
+const SERVICES: { label: string; icon?: string; IconComp?: React.ComponentType<{ className?: string }> }[] = [
+    { label: 'Leadgen', IconComp: Target },
     { label: 'Google Ads', icon: googleAdsIcon },
     { label: 'SEO', icon: googleIcon },
     { label: 'Webdesign', icon: wordpressIcon },
-    { label: 'AI & SEO AI', icon: ukonnectIcon },
+    { label: 'SEO AI', icon: aiIcon },
     { label: 'Social Media', icon: metaIcon },
-    { label: 'Content', icon: contentIcon },
 ];
 
 const STAT_VALUES = ['4,000+', '500+', '98%'];
@@ -50,14 +49,17 @@ const slideVariants = {
 };
 
 export const Contact = () => {
-    const { t } = useLanguage();
+    const { t, lang } = useLanguage();
+    const mapSrc = lang === 'pt'
+        ? 'https://maps.google.com/maps?q=Rua+Almirante+Reis+2,+2950-270+Palmela,+Portugal&t=&z=15&ie=UTF8&iwloc=&output=embed'
+        : 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d40000!2d5.2585316!3d52.4064411!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c61784ef713eff%3A0xdfb5fa9f5b017ac8!2sMAC%C2%B3PARK%20Creative%20Campus!5e0!3m2!1sen!2snl!4v1';
     const STATS = [
         { value: STAT_VALUES[0], label: t('contact.stat0') },
         { value: STAT_VALUES[1], label: t('contact.stat1') },
         { value: STAT_VALUES[2], label: t('contact.stat2') },
     ];
     const [form, setForm] = useState({ name: '', email: '', company: '', phone: '', website: '' });
-    const [selected, setSelected] = useState<string[]>([]);
+    const [selected, setSelected] = useState<string[]>(['Leadgen']);
     const [view, setView] = useState<'form' | 'calendar' | 'success'>('form');
     const [direction, setDirection] = useState(1);
     const [sending, setSending] = useState(false);
@@ -156,7 +158,7 @@ export const Contact = () => {
                         <motion.div {...fadeUp(0)} className="relative rounded-[2.5rem] overflow-hidden flex-1" style={{ minHeight: '280px' }}>
                             <iframe
                                 title="Ukonnect office location"
-                                src="https://maps.google.com/maps?q=Rua+Almirante+Reis+2,+2950-270+Palmela,+Portugal&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                                src={mapSrc}
                                 className="absolute inset-0 w-full h-full border-0"
                                 loading="lazy"
                                 referrerPolicy="no-referrer-when-downgrade"
@@ -191,11 +193,11 @@ export const Contact = () => {
                             </div>
                         </motion.div>
 
-                        {/* Team photo card */}
+                        {/* Office / team photo card */}
                         <motion.div {...fadeUp(0.08)} className="relative rounded-[2.5rem] overflow-hidden flex-1" style={{ minHeight: '280px' }}>
                             <img
-                                src={teamPhoto}
-                                alt="The Ukonnect team"
+                                src={lang === 'pt' ? teamPhoto : officePhoto}
+                                alt={lang === 'pt' ? 'The Ukonnect team' : 'Ukonnect office at MAC³PARK Almere'}
                                 className="absolute inset-0 w-full h-full object-cover object-top"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-slate-900/10 to-transparent pointer-events-none" />
@@ -322,7 +324,7 @@ export const Contact = () => {
                                     <div className="flex flex-col gap-3">
                                         <label className="text-sm font-medium text-slate-700">{t('contact.form.services')}</label>
                                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                                            {SERVICES.map(({ label, icon }) => {
+                                            {SERVICES.map(({ label, icon, IconComp }) => {
                                                 const isSelected = selected.includes(label);
                                                 return (
                                                     <motion.button key={label} type="button" onClick={() => toggle(label)} whileTap={{ scale: 0.94 }}
@@ -330,7 +332,9 @@ export const Contact = () => {
                                                             ${isSelected
                                                                 ? 'bg-[#5600e3] border-[#5600e3] text-white shadow-lg shadow-[#5600e3]/30 scale-[1.02]'
                                                                 : 'bg-[#ecedf1] border-slate-200 text-slate-600 shadow-[inset_0_2px_4px_rgba(0,0,0,0.06)] hover:border-[#5600e3]/40 hover:text-slate-900'}`}>
-                                                        <img src={icon} alt={label} className="w-9 h-9 object-contain" />
+                                                        {IconComp
+                                                            ? <IconComp className={`w-9 h-9 ${isSelected ? 'text-[#5ce1e6]' : 'text-[#5600e3]'}`} />
+                                                            : <img src={icon} alt={label} className={`w-9 h-9 object-contain${label === 'SEO AI' && isSelected ? ' drop-shadow-[0_0_8px_rgba(255,255,255,0.9)] brightness-150' : ''}`} />}
                                                         <span className="leading-tight text-center font-bold">{label}</span>
                                                         {isSelected && (
                                                             <motion.div layoutId={`check-${label}`} initial={{ scale: 0 }} animate={{ scale: 1 }}
