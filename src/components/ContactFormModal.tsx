@@ -144,10 +144,10 @@ export const ContactFormModal = ({ isOpen, onClose }: Props) => {
                     {/* Modal card */}
                     <motion.div
                         key="modal"
-                        initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                        transition={{ type: 'spring', stiffness: 300, damping: 28 }}
+                        initial={{ y: '100%' }}
+                        animate={{ y: 0 }}
+                        exit={{ y: '100%' }}
+                        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                         className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 pointer-events-none"
                     >
                         <div className="relative w-full sm:max-w-lg bg-white border border-slate-200 rounded-t-[2rem] sm:rounded-[2.5rem] shadow-2xl overflow-y-auto max-h-[92dvh] sm:max-h-none sm:overflow-hidden pointer-events-auto">
@@ -155,9 +155,9 @@ export const ContactFormModal = ({ isOpen, onClose }: Props) => {
                             {/* Close button */}
                             <button
                                 onClick={onClose}
-                                className="absolute top-5 right-5 z-10 w-11 h-11 flex items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-700 transition-colors sm:top-6 sm:right-6"
+                                className="absolute top-4 right-4 z-10 w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 text-slate-400 hover:text-slate-600 transition-colors sm:top-5 sm:right-5"
                             >
-                                <X className="w-5 h-5" />
+                                <X className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                             </button>
 
                             <AnimatePresence mode="wait" custom={direction}>
@@ -214,7 +214,7 @@ export const ContactFormModal = ({ isOpen, onClose }: Props) => {
                                 {view === 'form' && (
                                     <motion.form key="form" custom={direction} variants={slideVariants} initial="enter" animate="center" exit="exit"
                                         onSubmit={handleSubmit}
-                                        className="p-5 pt-20 sm:p-8 sm:pt-20 flex flex-col gap-4 sm:gap-5">
+                                        className="p-5 pt-16 sm:p-8 sm:pt-20 flex flex-col gap-4 sm:gap-5">
                                         <div className="grid sm:grid-cols-2 gap-4">
                                             <div className="flex flex-col gap-1.5">
                                                 <label className="text-sm font-medium text-slate-700">{t('contact.form.name')}</label>
