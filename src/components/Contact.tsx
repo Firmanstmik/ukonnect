@@ -52,6 +52,8 @@ export const Contact = () => {
     const { t, lang } = useLanguage();
     const mapSrc = lang === 'pt'
         ? 'https://maps.google.com/maps?q=Rua+Almirante+Reis+2,+2950-270+Palmela,+Portugal&t=&z=15&ie=UTF8&iwloc=&output=embed'
+        : lang === 'id'
+        ? 'https://maps.google.com/maps?q=Jalan+Prof.+Moh.+Yamin+No.7,+Renon,+East+Denpasar,+Denpasar+City,+Bali+80226&t=&z=11&ie=UTF8&iwloc=&output=embed'
         : 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d40000!2d5.2585316!3d52.4064411!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c61784ef713eff%3A0xdfb5fa9f5b017ac8!2sMAC%C2%B3PARK%20Creative%20Campus!5e0!3m2!1sen!2snl!4v1';
     const STATS = [
         { value: STAT_VALUES[0], label: t('contact.stat0') },

@@ -23,6 +23,7 @@ import teamGino    from '../assets/Team/Gino.webp';
 import teamAfifah  from '../assets/Team/Afifah.webp';
 import teamPaul    from '../assets/Team/Paul.webp';
 import teamEdmerd  from '../assets/Team/Edmerd.webp';
+import teamWidhi   from '../assets/Team/Widhi.webp';
 
 const ContactFormModal = lazy(() => import('./ContactFormModal').then(m => ({ default: m.ContactFormModal })));
 
@@ -50,16 +51,17 @@ function AnimatedCounter({ to, suffix = '' }: { to: number; suffix?: string }) {
 
 // ── Team members ───────────────────────────────────────────────────────────
 const TEAM_MEMBERS = [
-    { name: 'Sander',  roleKey: 'aboutPage.role.coo' as TranslationKey,                img: teamSander  },
-    { name: 'Marco',   roleKey: 'aboutPage.role.leadDev' as TranslationKey,            img: teamMarco   },
-    { name: 'Tanisha', roleKey: 'aboutPage.role.contentStrategist' as TranslationKey,  img: teamTanisha },
-    { name: 'Kirsten', roleKey: 'aboutPage.role.cmo' as TranslationKey,                img: teamKirsten },
-    { name: 'Bram',    roleKey: 'aboutPage.role.headAI' as TranslationKey,             img: teamBram    },
-    { name: 'Paul',    roleKey: 'aboutPage.role.leadGen' as TranslationKey,            img: teamPaul    },
-    { name: 'Gino',    roleKey: 'aboutPage.role.marketingStrategist' as TranslationKey, img: teamGino   },
-    { name: 'Afifah',  roleKey: 'aboutPage.role.growthSpecialist' as TranslationKey,   img: teamAfifah  },
-    { name: 'Edmerd',  roleKey: 'aboutPage.role.accountManager' as TranslationKey,     img: teamEdmerd  },
-    { name: 'Raffy',   roleKey: 'aboutPage.role.teamHead' as TranslationKey,           img: teamRaffy   },
+    { name: 'Sander',  roleKey: 'aboutPage.role.coo' as TranslationKey,                img: teamSander,  quoteKey: 'aboutPage.quote.sander'  as TranslationKey },
+    { name: 'Marco',   roleKey: 'aboutPage.role.leadDev' as TranslationKey,            img: teamMarco,   quoteKey: 'aboutPage.quote.marco'   as TranslationKey },
+    { name: 'Tanisha', roleKey: 'aboutPage.role.contentStrategist' as TranslationKey,  img: teamTanisha, quoteKey: 'aboutPage.quote.tanisha' as TranslationKey },
+    { name: 'Kirsten', roleKey: 'aboutPage.role.cmo' as TranslationKey,                img: teamKirsten, quoteKey: 'aboutPage.quote.kirsten' as TranslationKey },
+    { name: 'Bram',    roleKey: 'aboutPage.role.headAI' as TranslationKey,             img: teamBram,    quoteKey: 'aboutPage.quote.bram'    as TranslationKey },
+    { name: 'Paul',    roleKey: 'aboutPage.role.leadGen' as TranslationKey,            img: teamPaul,    quoteKey: 'aboutPage.quote.paul'    as TranslationKey },
+    { name: 'Widhi',   roleKey: 'aboutPage.role.fullStackEngineer' as TranslationKey,  img: teamWidhi,   quoteKey: 'aboutPage.quote.widhi'   as TranslationKey },
+    { name: 'Afifah',  roleKey: 'aboutPage.role.growthSpecialist' as TranslationKey,   img: teamAfifah,  quoteKey: 'aboutPage.quote.afifah'  as TranslationKey },
+    { name: 'Edmerd',  roleKey: 'aboutPage.role.accountManager' as TranslationKey,     img: teamEdmerd,  quoteKey: 'aboutPage.quote.edmerd'  as TranslationKey },
+    { name: 'Gino',    roleKey: 'aboutPage.role.frontEndDeveloper' as TranslationKey,  img: teamGino,    quoteKey: 'aboutPage.quote.gino'    as TranslationKey },
+    { name: 'Raffy',   roleKey: 'aboutPage.role.teamHead' as TranslationKey,           img: teamRaffy,   quoteKey: 'aboutPage.quote.raffy'   as TranslationKey },
 ];
 
 // ── Value icons ────────────────────────────────────────────────────────────
@@ -78,7 +80,14 @@ const TICKER_ITEMS = [
 
 
 export const AboutContent = () => {
-    const { t } = useLanguage();
+    const { t, lang } = useLanguage();
+
+    const teamMembers = lang === 'id'
+        ? [
+            { ...TEAM_MEMBERS.find(m => m.name === 'Widhi')!, roleKey: 'aboutPage.role.teamHeadIndonesia' as TranslationKey },
+            ...TEAM_MEMBERS.filter(m => m.name !== 'Widhi'),
+          ]
+        : TEAM_MEMBERS;
     const [modalOpen, setModalOpen] = useState(false);
 
     const STATS = [
@@ -318,7 +327,7 @@ export const AboutContent = () => {
                 </div>
 
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-5 md:gap-6">
-                    {TEAM_MEMBERS.map((member, i) => (
+                    {teamMembers.map((member, i) => (
                         <motion.div
                             key={member.name}
                             initial={{ opacity: 0, y: 28 }}
@@ -329,7 +338,7 @@ export const AboutContent = () => {
                             className="group relative bg-white rounded-[1.5rem] border border-slate-200 shadow-sm overflow-hidden cursor-default transition-shadow hover:shadow-xl hover:shadow-slate-200/60"
                         >
                             {/* Photo */}
-                            <div className="aspect-square overflow-hidden bg-slate-100">
+                            <div className="relative aspect-square overflow-hidden bg-slate-100">
                                 <img
                                     src={member.img}
                                     alt={member.name}
@@ -338,6 +347,13 @@ export const AboutContent = () => {
                                 />
                                 {/* Hover gradient overlay */}
                                 <div className="absolute inset-0 bg-gradient-to-t from-[#5600e3]/0 group-hover:from-[#5600e3]/15 to-transparent transition-all duration-500" />
+                                {/* Quote overlay — slides up from bottom on hover */}
+                                {member.quoteKey && (
+                                    <div className="absolute inset-0 bg-white/55 backdrop-blur-md translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out flex flex-col items-center justify-center p-6 gap-3">
+                                        <span className="text-[#5600e3]/30 text-7xl font-serif leading-none select-none">"</span>
+                                        <p className="text-slate-700 text-sm leading-relaxed italic text-center">{t(member.quoteKey)}</p>
+                                    </div>
+                                )}
                             </div>
 
                             {/* Info */}

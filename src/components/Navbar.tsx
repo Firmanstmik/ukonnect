@@ -13,6 +13,7 @@ const LANGUAGES: { code: Language; flag: string; label: string }[] = [
     { code: 'nl', flag: '🇳🇱', label: 'NL' },
     { code: 'pt', flag: '🇵🇹', label: 'PT' },
     { code: 'en', flag: '🇬🇧', label: 'EN' },
+    { code: 'id', flag: '🇮🇩', label: 'ID' },
 ];
 
 const LanguageSwitcher = ({ mobile = false }: { mobile?: boolean }) => {

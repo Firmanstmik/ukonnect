@@ -2,7 +2,7 @@ import { createContext, useContext } from 'react';
 import { Outlet, useParams, useNavigate, useLocation } from 'react-router-dom';
 import { type Language, type TranslationKey, getTranslation } from './translations';
 
-export const VALID_LANGS: Language[] = ['en', 'pt', 'nl'];
+export const VALID_LANGS: Language[] = ['en', 'pt', 'nl', 'id'];
 
 interface LanguageContextValue {
     lang: Language;
