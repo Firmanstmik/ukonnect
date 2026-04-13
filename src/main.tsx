@@ -23,7 +23,7 @@ const LangRedirect = () => {
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
         <BrowserRouter>
-            <Suspense fallback={null}>
+            <Suspense fallback={<div style={{ minHeight: '100vh', background: '#ecedf1' }} />}>
                 <Routes>
                     <Route path="/" element={<LangRedirect />} />
                     <Route path="/:lang" element={<LanguageProvider />}>
