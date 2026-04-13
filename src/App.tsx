@@ -27,7 +27,7 @@ function App() {
       <Navbar />
       <main>
         <Hero />
-        <Suspense fallback={null}>
+        <Suspense fallback={<div className="bg-[#ecedf1]" style={{ minHeight: '200vh' }} />}>
           <Process />
           <Features />
           <Benefits />
@@ -36,7 +36,7 @@ function App() {
           <CTA />
         </Suspense>
       </main>
-      <Suspense fallback={null}>
+      <Suspense fallback={<div className="bg-[#ecedf1]" style={{ minHeight: '12rem' }} />}>
         <Footer />
       </Suspense>
     </div>
