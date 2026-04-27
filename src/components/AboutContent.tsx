@@ -59,7 +59,7 @@ const TEAM_MEMBERS = [
     { name: 'Bram',    roleKey: 'aboutPage.role.headAI' as TranslationKey,             img: teamBram,    quoteKey: 'aboutPage.quote.bram'    as TranslationKey },
     { name: 'Rima',    roleKey: 'aboutPage.role.contentDesigner' as TranslationKey,    img: teamRima,    quoteKey: 'aboutPage.quote.rima'    as TranslationKey },
     { name: 'Paul',    roleKey: 'aboutPage.role.leadGen' as TranslationKey,            img: teamPaul,    quoteKey: 'aboutPage.quote.paul'    as TranslationKey },
-    { name: 'Widhi',   roleKey: 'aboutPage.role.fullStackEngineer' as TranslationKey,  img: teamWidhi,   quoteKey: 'aboutPage.quote.widhi'   as TranslationKey },
+    { name: 'Widhi',   roleKey: 'aboutPage.role.fullStackDeveloper' as TranslationKey,  img: teamWidhi,   quoteKey: 'aboutPage.quote.widhi'   as TranslationKey },
     { name: 'Afifah',  roleKey: 'aboutPage.role.growthSpecialist' as TranslationKey,   img: teamAfifah,  quoteKey: 'aboutPage.quote.afifah'  as TranslationKey },
     { name: 'Edmerd',  roleKey: 'aboutPage.role.accountManager' as TranslationKey,     img: teamEdmerd,  quoteKey: 'aboutPage.quote.edmerd'  as TranslationKey },
     { name: 'Gino',    roleKey: 'aboutPage.role.frontEndDeveloper' as TranslationKey,  img: teamGino,    quoteKey: 'aboutPage.quote.gino'    as TranslationKey },
@@ -86,8 +86,18 @@ export const AboutContent = () => {
 
     const teamMembers = lang === 'id'
         ? [
-            { ...TEAM_MEMBERS.find(m => m.name === 'Widhi')!, roleKey: 'aboutPage.role.teamHeadIndonesia' as TranslationKey },
-            ...TEAM_MEMBERS.filter(m => m.name !== 'Widhi'),
+            TEAM_MEMBERS.find(m => m.name === 'Sander')!,
+            TEAM_MEMBERS.find(m => m.name === 'Rima')!,
+            TEAM_MEMBERS.find(m => m.name === 'Marco')!,
+            TEAM_MEMBERS.find(m => m.name === 'Tanisha')!,
+            TEAM_MEMBERS.find(m => m.name === 'Kirsten')!,
+            TEAM_MEMBERS.find(m => m.name === 'Bram')!,
+            TEAM_MEMBERS.find(m => m.name === 'Paul')!,
+            { ...TEAM_MEMBERS.find(m => m.name === 'Widhi')!, roleKey: 'aboutPage.role.fullStackDeveloper' as TranslationKey },
+            TEAM_MEMBERS.find(m => m.name === 'Afifah')!,
+            TEAM_MEMBERS.find(m => m.name === 'Edmerd')!,
+            TEAM_MEMBERS.find(m => m.name === 'Gino')!,
+            TEAM_MEMBERS.find(m => m.name === 'Raffy')!,
           ]
         : TEAM_MEMBERS;
     const [modalOpen, setModalOpen] = useState(false);
