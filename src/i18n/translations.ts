@@ -190,8 +190,10 @@ const translations = {
     'aboutPage.role.fullStackEngineer': 'Full-stack Software Engineer',
     'aboutPage.role.frontEndDeveloper': 'Front-end Developer',
     'aboutPage.role.teamHeadIndonesia': 'Team Head Indonésia',
+    'aboutPage.role.contentDesigner': 'Content Designer',
 
     // ── Team quotes ──
+    'aboutPage.quote.rima':    'Design é a linguagem silenciosa da marca. O meu trabalho é garantir que cada visual conta a história certa, ao público certo, no momento certo.',
     'aboutPage.quote.sander':  'O Performance Max mudou as regras do jogo. Os especialistas que vencem hoje não lutam contra o algoritmo, alimentam-no. Sinais de audiência precisos, criativos fortes e dados próprios são as alavancas que realmente movem resultados.',
     'aboutPage.quote.marco':   'Marco Loureiro combina a sua experiência em imobiliário e mediação com marketing impulsionado por IA. Com a Ukonnect, ajuda empresas e profissionais imobiliários a crescer através de automação inteligente, posicionamento forte e dados. Da visibilidade à autoridade, e da autoridade ao crescimento escalável.',
     'aboutPage.quote.tanisha': 'A grande publicidade já não é sobre alcance, é sobre relevância. Com a IA, conseguimos entregar a mensagem certa à pessoa certa no momento exato.',
@@ -467,8 +469,10 @@ const translations = {
     'aboutPage.role.fullStackEngineer': 'Full-stack Software Engineer',
     'aboutPage.role.frontEndDeveloper': 'Front-end Developer',
     'aboutPage.role.teamHeadIndonesia': 'Team Head Indonesia',
+    'aboutPage.role.contentDesigner': 'Content Designer',
 
     // ── Team quotes ──
+    'aboutPage.quote.rima':    'Design is the silent language of a brand. My job is to make sure every visual tells the right story, to the right audience, at the right moment.',
     'aboutPage.quote.sander':  "Performance Max has changed the game. The specialists who win today aren't fighting the algorithm, they're feeding it. Sharp audience signals, strong creatives, and first-party data are the new levers that actually move results.",
     'aboutPage.quote.marco':   'Marco Loureiro combines his experience in real estate and brokerage with AI-driven marketing. With Ukonnect, he helps businesses and real estate professionals grow through smart automation, strong positioning, and data. From visibility to authority, and from authority to scalable growth.',
     'aboutPage.quote.tanisha': "Great advertising isn't about reach anymore, it's about relevance. With AI, we can now deliver the right message to the right person at exactly the right moment.",
@@ -744,8 +748,10 @@ const translations = {
     'aboutPage.role.fullStackEngineer': 'Full-stack Software Engineer',
     'aboutPage.role.frontEndDeveloper': 'Front-end Developer',
     'aboutPage.role.teamHeadIndonesia': 'Team Head Indonesië',
+    'aboutPage.role.contentDesigner': 'Content Designer',
 
     // ── Team quotes ──
+    'aboutPage.quote.rima':    'Design is de stille taal van een merk. Mijn taak is ervoor zorgen dat elk beeld het juiste verhaal vertelt, aan het juiste publiek, op het juiste moment.',
     'aboutPage.quote.sander':  'Performance Max heeft het spel veranderd. De specialisten die vandaag winnen, vechten niet tegen het algoritme, ze voeden het. Scherpe doelgroepsignalen, sterke creatives en first-party data zijn de hefbomen die echt resultaat opleveren.',
     'aboutPage.quote.marco':   'Marco Loureiro combineert zijn ervaring in vastgoed en makelaardij met AI-gedreven marketing. Met Ukonnect helpt hij bedrijven en vastgoedprofessionals groeien via slimme automatisering, sterke positionering en data. Van zichtbaarheid naar autoriteit en van autoriteit naar schaalbare groei.',
     'aboutPage.quote.tanisha': 'Goede advertenties draaien niet meer om bereik, maar om relevantie. Met AI kunnen we nu de juiste boodschap aan de juiste persoon op precies het juiste moment leveren.',
@@ -1020,8 +1026,10 @@ const translations = {
     'aboutPage.role.fullStackEngineer': 'Full-stack Software Engineer',
     'aboutPage.role.frontEndDeveloper': 'Front-end Developer',
     'aboutPage.role.teamHeadIndonesia': 'Team Head Indonesia',
+    'aboutPage.role.contentDesigner': 'Content Designer',
 
     // ── Team quotes ──
+    'aboutPage.quote.rima':    'Desain adalah bahasa senyap sebuah merek. Tugas saya adalah memastikan setiap visual menceritakan kisah yang tepat, kepada audiens yang tepat, pada momen yang tepat.',
     'aboutPage.quote.sander':  'Performance Max telah mengubah permainan. Spesialis yang menang hari ini tidak melawan algoritma, mereka memberinya makan. Sinyal audiens yang tajam, kreatif yang kuat, dan data first-party adalah tuas baru yang benar-benar menggerakkan hasil.',
     'aboutPage.quote.marco':   'Marco Loureiro menggabungkan pengalamannya di bidang properti dan agen real estate dengan pemasaran berbasis AI. Bersama Ukonnect, ia membantu bisnis dan profesional properti berkembang melalui otomasi cerdas, positioning yang kuat, dan data. Dari visibilitas ke otoritas, dan dari otoritas ke pertumbuhan yang skalabel.',
     'aboutPage.quote.tanisha': 'Iklan yang hebat bukan lagi tentang jangkauan, melainkan tentang relevansi. Dengan AI, kami sekarang dapat menyampaikan pesan yang tepat kepada orang yang tepat pada saat yang tepat.',
