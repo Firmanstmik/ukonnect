@@ -1,6 +1,7 @@
 import React, { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Zap, Eye, Heart, Rocket, ArrowRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../i18n/LanguageContext';
 
 import type { TranslationKey } from '../i18n/translations';
@@ -83,6 +84,13 @@ const TICKER_ITEMS = [
 
 export const AboutContent = () => {
     const { t, lang } = useLanguage();
+    const navigate = useNavigate();
+    const [openCard, setOpenCard] = useState<string | null>(null);
+
+    const handlePhotoClick = (name: string) => {
+        if (window.matchMedia('(hover: hover)').matches) return;
+        setOpenCard(prev => prev === name ? null : name);
+    };
 
     const teamMembers = lang === 'id'
         ? [
@@ -350,7 +358,7 @@ export const AboutContent = () => {
                             className="group relative bg-white rounded-[1.5rem] border border-slate-200 shadow-sm overflow-hidden cursor-default transition-shadow hover:shadow-xl hover:shadow-slate-200/60"
                         >
                             {/* Photo */}
-                            <div className="relative aspect-square overflow-hidden bg-slate-100">
+                            <div className="relative aspect-square overflow-hidden bg-slate-100" onClick={() => handlePhotoClick(member.name)}>
                                 <img
                                     src={member.img}
                                     alt={member.name}
@@ -361,7 +369,7 @@ export const AboutContent = () => {
                                 <div className="absolute inset-0 bg-gradient-to-t from-[#5600e3]/0 group-hover:from-[#5600e3]/15 to-transparent transition-all duration-500" />
                                 {/* Quote overlay — slides up from bottom on hover */}
                                 {member.quoteKey && (
-                                    <div className="absolute inset-0 bg-white/55 backdrop-blur-md translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out flex flex-col items-center justify-center p-6 gap-3">
+                                    <div className={`absolute inset-0 bg-white/55 backdrop-blur-md transition-transform duration-500 ease-out flex flex-col items-center justify-center p-6 gap-3 [@media(hover:hover)]:translate-y-full [@media(hover:hover)]:group-hover:translate-y-0 ${openCard === member.name ? 'translate-y-0' : 'translate-y-full'}`}>
                                         <span className="text-[#5600e3]/30 text-7xl font-serif leading-none select-none">"</span>
                                         <p className="text-slate-700 text-sm leading-relaxed italic text-center">{t(member.quoteKey)}</p>
                                     </div>
@@ -598,7 +606,7 @@ export const AboutContent = () => {
                             viewport={{ once: true }}
                             transition={{ delay: 0.2 }}
                             whileHover={{ y: -2, scale: 1.02 }}
-                            onClick={() => setModalOpen(true)}
+                            onClick={() => navigate(`/${lang}/careers`)}
                             className="inline-flex items-center gap-2.5 px-10 py-4 bg-white text-[#5600e3] rounded-full font-bold text-[15px] hover:bg-white/92 transition-all shadow-xl shadow-slate-900/20"
                         >
                             {t('aboutPage.ctaButton')}
