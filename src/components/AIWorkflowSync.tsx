@@ -43,7 +43,7 @@ const FlowingDot = ({
     nodeTs: number[];
     onNodeArrival: (nodeIdx: number) => void;
 }) => {
-    const ref           = useRef<SVGCircleElement>(null);
+    const ref           = useRef<HTMLDivElement>(null);
     const progressRef   = useRef(startOffset);
     const hoveredRef    = useRef(isHovered);
     hoveredRef.current  = isHovered;
@@ -93,9 +93,9 @@ const FlowingDot = ({
                           : 0.85;
 
             if (ref.current) {
-                ref.current.setAttribute('cx', String(px));
-                ref.current.setAttribute('cy', String(py));
-                ref.current.setAttribute('opacity', String(opacity));
+                ref.current.style.left    = px + '%';
+                ref.current.style.top     = py + '%';
+                ref.current.style.opacity = String(opacity);
             }
 
             frameId = requestAnimationFrame(tick);
@@ -106,7 +106,7 @@ const FlowingDot = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pathSamples]);
 
-    return <circle ref={ref} r={1.2} fill="#5600e3" opacity={0} />;
+    return <div ref={ref} className="absolute w-2 h-2 rounded-full bg-primary pointer-events-none" style={{ transform: 'translate(-50%, -50%)', opacity: 0 }} />;
 };
 
 /* ── Node icon ────────────────────────────────────────────────── */
@@ -175,24 +175,27 @@ export const AIWorkflowSync = () => {
                 <motion.path
                     ref={pathRef}
                     d={PATH_D}
-                    stroke="#CBD5E1" strokeWidth="0.7" strokeLinecap="round" fill="none"
+                    stroke="#CBD5E1" strokeWidth="3" strokeLinecap="round" fill="none"
+                    vectorEffect="non-scaling-stroke"
                     initial={{ opacity: 0 }} animate={{ opacity: 0.45 }}
                     transition={{ duration: 0.6, delay: 0.1 }}
                 />
 
-                {pathSamples.length > 0 && nodeTs.length === NODES.length &&
-                    Array.from({ length: N_DOTS }, (_, i) => (
-                        <FlowingDot
-                            key={i}
-                            pathSamples={pathSamples}
-                            startOffset={i / N_DOTS}
-                            isHovered={isHovered}
-                            nodeTs={nodeTs}
-                            onNodeArrival={handleNodeArrival}
-                        />
-                    ))
-                }
             </svg>
+
+            {/* Flow dots — HTML divs so they stay perfectly circular */}
+            {pathSamples.length > 0 && nodeTs.length === NODES.length &&
+                Array.from({ length: N_DOTS }, (_, i) => (
+                    <FlowingDot
+                        key={i}
+                        pathSamples={pathSamples}
+                        startOffset={i / N_DOTS}
+                        isHovered={isHovered}
+                        nodeTs={nodeTs}
+                        onNodeArrival={handleNodeArrival}
+                    />
+                ))
+            }
 
             {/* ── Node overlays ────────────────────────────── */}
             {NODES.map((node, i) => {

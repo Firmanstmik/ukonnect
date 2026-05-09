@@ -6,6 +6,10 @@ import { AILeadGenerationEngine } from './AILeadGenerationEngine';
 import { AISalesChat } from './AISalesChat';
 import { AIMarketingAutomation } from './AIMarketingAutomation';
 import { AIWorkflowSync } from './AIWorkflowSync';
+import { PaidAdsAnimation } from './PaidAdsAnimation';
+import { ConversionFunnelAnimation } from './ConversionFunnelAnimation';
+import { PerformanceAnimation } from './PerformanceAnimation';
+import { LeadRadarAnimation } from './LeadRadarAnimation';
 import { useLanguage } from '../i18n/LanguageContext';
 import type { TranslationKey } from '../i18n/translations';
 
@@ -757,7 +761,7 @@ const IllSpeed = () => {
 /* ── Tab card illustrations (static, no translations needed) ── */
 
 const TAB_ILLUSTRATIONS: Record<string, React.ReactNode[]> = {
-    'Marketing': [<IllTarget />, <IllFunnel />, <IllTrend />, <IllStrategy />],
+    'Marketing': [<PaidAdsAnimation />, <ConversionFunnelAnimation />, <PerformanceAnimation />, <LeadRadarAnimation />],
     'AI Systems': [<AILeadGenerationEngine />, <AISalesChat />, <AIMarketingAutomation />, <AIWorkflowSync />],
     'Web Development': [<IllBrowser />, <IllLandingPage />, <IllTracking />, <IllSpeed />],
 };

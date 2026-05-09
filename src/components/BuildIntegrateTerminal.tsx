@@ -58,6 +58,13 @@ const ROTATING_PLACEHOLDERS = [
     'Can AI connect our CRM and WhatsApp?',
 ];
 
+const ROTATING_PLACEHOLDERS_MOBILE = [
+    'Improve Meta ads with AI?',
+    'Reduce cost per lead?',
+    'Auto-qualify leads with AI?',
+    'Connect CRM & WhatsApp?',
+];
+
 const WHATSAPP_NUMBER = '351927497086';
 
 export const BuildIntegrateTerminal = () => {
@@ -332,7 +339,8 @@ export const BuildIntegrateTerminal = () => {
                                         exit={{ opacity: 0, y: -5 }}
                                         transition={{ duration: 0.2 }}
                                     >
-                                        {ROTATING_PLACEHOLDERS[placeholderIndex]}
+                                        <span className="hidden sm:inline">{ROTATING_PLACEHOLDERS[placeholderIndex]}</span>
+                                        <span className="sm:hidden">{ROTATING_PLACEHOLDERS_MOBILE[placeholderIndex]}</span>
                                     </motion.span>
                                 </AnimatePresence>
                                 <motion.span

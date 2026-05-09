@@ -67,7 +67,7 @@ const SignalDot = ({
     isHovered: boolean;
     onArrival?: () => void;
 }) => {
-    const ref          = useRef<SVGEllipseElement>(null);
+    const ref          = useRef<HTMLDivElement>(null);
     const progressRef  = useRef(0);
     const hoveredRef   = useRef(isHovered);
     const arrivalRef   = useRef(onArrival);
@@ -110,9 +110,9 @@ const SignalDot = ({
                           : 0.8;
 
             if (ref.current) {
-                ref.current.setAttribute('cx', String(cx));
-                ref.current.setAttribute('cy', String(cy));
-                ref.current.setAttribute('opacity', String(opacity));
+                ref.current.style.left    = cx + '%';
+                ref.current.style.top     = cy + '%';
+                ref.current.style.opacity = String(opacity);
             }
             frameId = requestAnimationFrame(tick);
         };
@@ -122,7 +122,7 @@ const SignalDot = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    return <ellipse ref={ref} rx={0.7} ry={0.95} fill="#5600e3" opacity={0} />;
+    return <div ref={ref} className="absolute w-2 h-2 rounded-full bg-primary pointer-events-none" style={{ transform: 'translate(-50%, -50%)', opacity: 0 }} />;
 };
 
 /* ── Channel icon map ────────────────────────────────────── */
@@ -161,7 +161,8 @@ export const AIMarketingAutomation = () => {
                 {/* Lead → AI line */}
                 <motion.line
                     x1={LEAD_X} y1={LEAD_Y} x2={AI_X} y2={AI_Y}
-                    stroke="#CBD5E1" strokeWidth="0.7" strokeLinecap="round"
+                    stroke="#CBD5E1" strokeWidth="3" strokeLinecap="round"
+                    vectorEffect="non-scaling-stroke"
                     initial={{ opacity: 0 }} animate={{ opacity: 0.45 }}
                     transition={{ duration: 0.6, delay: 0.1 }}
                 />
@@ -169,7 +170,8 @@ export const AIMarketingAutomation = () => {
                 {/* AI → Email: vertical up then curve right (L-shape) */}
                 <motion.path
                     d="M 50 50 L 50 23 Q 50 20 54 20 L 82 20"
-                    stroke="#CBD5E1" strokeWidth="0.7" strokeLinecap="round" fill="none"
+                    stroke="#CBD5E1" strokeWidth="3" strokeLinecap="round" fill="none"
+                    vectorEffect="non-scaling-stroke"
                     initial={{ opacity: 0 }} animate={{ opacity: 0.45 }}
                     transition={{ duration: 0.6, delay: 0.2 }}
                 />
@@ -177,7 +179,8 @@ export const AIMarketingAutomation = () => {
                 {/* AI → Ads: straight horizontal (unchanged) */}
                 <motion.line
                     x1={AI_X} y1={AI_Y} x2={CHANNELS[1].x} y2={CHANNELS[1].y}
-                    stroke="#CBD5E1" strokeWidth="0.7" strokeLinecap="round"
+                    stroke="#CBD5E1" strokeWidth="3" strokeLinecap="round"
+                    vectorEffect="non-scaling-stroke"
                     initial={{ opacity: 0 }} animate={{ opacity: 0.45 }}
                     transition={{ duration: 0.6, delay: 0.3 }}
                 />
@@ -185,33 +188,33 @@ export const AIMarketingAutomation = () => {
                 {/* AI → Content: vertical down then curve right (L-shape, mirrors Email) */}
                 <motion.path
                     d="M 50 50 L 50 77 Q 50 80 54 80 L 82 80"
-                    stroke="#CBD5E1" strokeWidth="0.7" strokeLinecap="round" fill="none"
+                    stroke="#CBD5E1" strokeWidth="3" strokeLinecap="round" fill="none"
+                    vectorEffect="non-scaling-stroke"
                     initial={{ opacity: 0 }} animate={{ opacity: 0.45 }}
                     transition={{ duration: 0.6, delay: 0.4 }}
                 />
 
-                {/* Lead → AI dot */}
-                <SignalDot
-                    cxValues={LEAD_PTS.map(p => p.x)}
-                    cyValues={LEAD_PTS.map(p => p.y)}
-                    duration={LEAD_DURATION}
-                    delay={LEAD_DELAY}
-                    isHovered={isHovered}
-                />
-
-                {/* AI → channel dots */}
-                {CHANNEL_PTS.map((pts, i) => (
-                    <SignalDot
-                        key={i}
-                        cxValues={pts.map(p => p.x)}
-                        cyValues={pts.map(p => p.y)}
-                        duration={OUTPUT_DURATIONS[i]}
-                        delay={OUTPUT_DELAYS[i]}
-                        isHovered={isHovered}
-                        onArrival={() => handleArrival(i)}
-                    />
-                ))}
             </svg>
+
+            {/* Signal dots — HTML divs so they stay perfectly circular */}
+            <SignalDot
+                cxValues={LEAD_PTS.map(p => p.x)}
+                cyValues={LEAD_PTS.map(p => p.y)}
+                duration={LEAD_DURATION}
+                delay={LEAD_DELAY}
+                isHovered={isHovered}
+            />
+            {CHANNEL_PTS.map((pts, i) => (
+                <SignalDot
+                    key={i}
+                    cxValues={pts.map(p => p.x)}
+                    cyValues={pts.map(p => p.y)}
+                    duration={OUTPUT_DURATIONS[i]}
+                    delay={OUTPUT_DELAYS[i]}
+                    isHovered={isHovered}
+                    onArrival={() => handleArrival(i)}
+                />
+            ))}
 
             {/* ── Lead input node ───────────────────────── */}
             <div

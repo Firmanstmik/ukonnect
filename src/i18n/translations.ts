@@ -10,8 +10,8 @@ const translations = {
     'nav.cta': 'Começar a crescer',
 
     // ── Hero ──
-    'hero.badge': 'Infraestrutura de Crescimento Imobiliário',
-    'hero.badgeMobile': 'Infraestrutura de Crescimento Imobiliário',
+    'hero.badge': 'Utilizado por 34 especialistas imobiliários em todo o mundo',
+    'hero.badgeMobile': 'Utilizado por 34 especialistas imobiliários',
     'hero.headingPre': 'Sistemas de Crescimento com',
     'hero.headingMid': 'IA para ',
     'hero.headingHighlight': 'Profissionais Imobiliarios',
@@ -293,8 +293,8 @@ const translations = {
     'nav.cta': 'Start growing',
 
     // ── Hero ──
-    'hero.badge': 'Real Estate Growth Infrastructure',
-    'hero.badgeMobile': 'Real Estate Growth Infrastructure',
+    'hero.badge': 'Used by 34 Real Estate specialists worldwide',
+    'hero.badgeMobile': 'Used by 34 Real Estate specialists',
     'hero.headingPre': 'AI-Powered Growth Systems',
     'hero.headingMid': 'for ',
     'hero.headingHighlight': 'Real Estate Agencies',
@@ -573,8 +573,8 @@ const translations = {
     'nav.cta': 'Begin met groeien',
 
     // ── Hero ──
-    'hero.badge': 'AI Leadgeneratie voor vastgoed professionals',
-    'hero.badgeMobile': 'AI Leadgeneratie voor vastgoed professionals',
+    'hero.badge': 'Gebruikt door 34 vastgoedspecialisten wereldwijd',
+    'hero.badgeMobile': 'Gebruikt door 34 vastgoedspecialisten',
     'hero.headingPre': 'Makelaars: No Cure, No Pay.',
     'hero.headingMid': '',
     'hero.headingHighlight': 'No Bullshit',

@@ -9,8 +9,9 @@ import googleIcon   from '../assets/google ukonnect.svg';
 
 /* ── Design token ─────────────────────────────────────────── */
 
-const NODE_STYLE      = 'w-[54px] h-[54px] bg-[#ecedf1] rounded-2xl shadow-[0_4px_8px_rgba(0,0,0,0.12),0_-2px_4px_rgba(255,255,255,0.9),0_1px_1px_rgba(255,255,255,0.8)] flex items-center justify-center';
-const LEAD_NODE_STYLE = 'w-[66px] h-[66px] bg-[#ecedf1] rounded-2xl shadow-[0_4px_8px_rgba(0,0,0,0.12),0_-2px_4px_rgba(255,255,255,0.9),0_1px_1px_rgba(255,255,255,0.8)] flex items-center justify-center';
+const NODE_STYLE         = 'w-[54px] h-[54px] bg-[#ecedf1] rounded-2xl shadow-[0_4px_8px_rgba(0,0,0,0.12),0_-2px_4px_rgba(255,255,255,0.9),0_1px_1px_rgba(255,255,255,0.8)] flex items-center justify-center';
+const CHANNEL_NODE_STYLE = 'w-[42px] h-[42px] bg-[#ecedf1] rounded-2xl shadow-[0_4px_8px_rgba(0,0,0,0.12),0_-2px_4px_rgba(255,255,255,0.9),0_1px_1px_rgba(255,255,255,0.8)] flex items-center justify-center';
+const LEAD_NODE_STYLE    = 'w-[66px] h-[66px] bg-[#ecedf1] rounded-2xl shadow-[0_4px_8px_rgba(0,0,0,0.12),0_-2px_4px_rgba(255,255,255,0.9),0_1px_1px_rgba(255,255,255,0.8)] flex items-center justify-center';
 
 /* ── Layout coordinates (viewBox 0 0 100 100) ─────────────── */
 
@@ -88,7 +89,7 @@ const SignalDot = ({
     delay: number;
     isHovered: boolean;
 }) => {
-    const ref          = useRef<SVGEllipseElement>(null);
+    const ref          = useRef<HTMLDivElement>(null);
     const progressRef  = useRef(0);
     const hoveredRef   = useRef(isHovered);
     hoveredRef.current = isHovered;
@@ -122,9 +123,9 @@ const SignalDot = ({
                           : 0.8;
 
             if (ref.current) {
-                ref.current.setAttribute('cx', String(cx));
-                ref.current.setAttribute('cy', String(cy));
-                ref.current.setAttribute('opacity', String(opacity));
+                ref.current.style.left    = cx + '%';
+                ref.current.style.top     = cy + '%';
+                ref.current.style.opacity = String(opacity);
             }
             frameId = requestAnimationFrame(tick);
         };
@@ -134,16 +135,16 @@ const SignalDot = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    return <ellipse ref={ref} rx={0.7} ry={0.95} fill="#5600e3" opacity={0} />;
+    return <div ref={ref} className="absolute w-2 h-2 rounded-full bg-primary pointer-events-none" style={{ transform: 'translate(-50%, -50%)', opacity: 0 }} />;
 };
 
 /* ── Channel icon ────────────────────────────────────────── */
 
 const ChannelIcon = ({ type }: { type: string }) => {
-    if (type === 'meta')      return <img src={metaIcon}      alt="Meta Ads"   className="w-[40px] h-[40px] object-contain" />;
-    if (type === 'googleAds') return <img src={googleAdsIcon} alt="Google Ads" className="w-[30px] h-[30px] object-contain" />;
-    if (type === 'wordpress') return <img src={wordpressIcon} alt="Website"    className="w-[30px] h-[30px] object-contain" />;
-    if (type === 'google')    return <img src={googleIcon}    alt="SEO"        className="w-[30px] h-[30px] object-contain" />;
+    if (type === 'meta')      return <img src={metaIcon}      alt="Meta Ads"   className="w-[26px] h-[26px] object-contain" />;
+    if (type === 'googleAds') return <img src={googleAdsIcon} alt="Google Ads" className="w-[20px] h-[20px] object-contain" />;
+    if (type === 'wordpress') return <img src={wordpressIcon} alt="Website"    className="w-[20px] h-[20px] object-contain" />;
+    if (type === 'google')    return <img src={googleIcon}    alt="SEO"        className="w-[20px] h-[20px] object-contain" />;
     return null;
 };
 
@@ -196,23 +197,26 @@ export const AILeadGenerationEngine = () => {
                     <motion.path
                         key={i}
                         d={d}
-                        stroke="#CBD5E1" strokeWidth="0.7" strokeLinecap="round" fill="none"
+                        stroke="#CBD5E1" strokeWidth="3" strokeLinecap="round" fill="none"
+                        vectorEffect="non-scaling-stroke"
                         initial={{ opacity: 0 }} animate={{ opacity: 0.45 }}
                         transition={{ duration: 0.6, delay: 0.1 + i * 0.08 }}
                     />
                 ))}
 
-                {CHANNEL_PTS.map((pts, i) => (
-                    <SignalDot
-                        key={i}
-                        cxValues={pts.map(p => p.x)}
-                        cyValues={pts.map(p => p.y)}
-                        duration={CHANNEL_DURATIONS[i]}
-                        delay={CHANNEL_DELAYS[i]}
-                        isHovered={isHovered}
-                    />
-                ))}
             </svg>
+
+            {/* Signal dots — HTML divs so they stay perfectly circular */}
+            {CHANNEL_PTS.map((pts, i) => (
+                <SignalDot
+                    key={i}
+                    cxValues={pts.map(p => p.x)}
+                    cyValues={pts.map(p => p.y)}
+                    duration={CHANNEL_DURATIONS[i]}
+                    delay={CHANNEL_DELAYS[i]}
+                    isHovered={isHovered}
+                />
+            ))}
 
             {/* ── Channel source nodes (left) ───────────── */}
             {CHANNELS.map((ch, i) => (
@@ -230,7 +234,7 @@ export const AILeadGenerationEngine = () => {
                         }}
                     >
                         <motion.div
-                            className={NODE_STYLE}
+                            className={CHANNEL_NODE_STYLE}
                             animate={{ y: [0, -4, 0] }}
                             transition={{ repeat: Infinity, duration: 3.5 + i * 0.4, ease: 'easeInOut', delay: i * 0.4 }}
                         >

@@ -8,7 +8,7 @@ import slackIcon from '../assets/Slack.webp';
 import googleIcon from '../assets/google ukonnect.svg';
 import hubspotIcon from '../assets/ukonnect hubspot.webp';
 
-const NODE_STYLE = 'w-20 h-20 bg-[#ecedf1] rounded-2xl shadow-[0_4px_8px_rgba(0,0,0,0.12),0_-2px_4px_rgba(255,255,255,0.9),0_1px_1px_rgba(255,255,255,0.8)] flex items-center justify-center';
+const NODE_STYLE = 'w-14 h-14 md:w-20 md:h-20 bg-[#ecedf1] rounded-2xl shadow-[0_4px_8px_rgba(0,0,0,0.12),0_-2px_4px_rgba(255,255,255,0.9),0_1px_1px_rgba(255,255,255,0.8)] flex items-center justify-center';
 
 const CENTER = 50;
 const RADIUS = 34;
@@ -53,7 +53,7 @@ const SignalDot = ({ cxValues, cyValues, duration, delay, isHovered }: {
     delay: number;
     isHovered: boolean;
 }) => {
-    const ref = useRef<SVGEllipseElement>(null);
+    const ref = useRef<HTMLDivElement>(null);
     const progressRef = useRef(0);
     const hoveredRef = useRef(isHovered);
     hoveredRef.current = isHovered;
@@ -93,9 +93,9 @@ const SignalDot = ({ cxValues, cyValues, duration, delay, isHovered }: {
                           : 0.8;
 
             if (ref.current) {
-                ref.current.setAttribute('cx', String(cx));
-                ref.current.setAttribute('cy', String(cy));
-                ref.current.setAttribute('opacity', String(opacity));
+                ref.current.style.left    = cx + '%';
+                ref.current.style.top     = cy + '%';
+                ref.current.style.opacity = String(opacity);
             }
 
             frameId = requestAnimationFrame(tick);
@@ -106,15 +106,7 @@ const SignalDot = ({ cxValues, cyValues, duration, delay, isHovered }: {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    return (
-        <ellipse
-            ref={ref}
-            rx={0.7}
-            ry={0.95}
-            fill="#5600e3"
-            opacity={0}
-        />
-    );
+    return <div ref={ref} className="absolute w-2 h-2 rounded-full bg-primary pointer-events-none" style={{ transform: 'translate(-50%, -50%)', opacity: 0 }} />;
 };
 
 export const LaunchOptimizeEngine = () => {
@@ -133,25 +125,30 @@ export const LaunchOptimizeEngine = () => {
                         <motion.path
                             d={conn.pathD}
                             stroke="#CBD5E1"
-                            strokeWidth="0.7"
+                            strokeWidth="3"
                             strokeLinecap="round"
                             fill="none"
+                            vectorEffect="non-scaling-stroke"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 0.45 }}
                             transition={{ duration: 0.6, delay: 0.2 + i * 0.08 }}
                         />
 
-                        {/* Signal dot */}
-                        <SignalDot
-                            cxValues={conn.cx}
-                            cyValues={conn.cy}
-                            duration={DURATIONS[i]}
-                            delay={i * 0.4}
-                            isHovered={isHovered}
-                        />
                     </React.Fragment>
                 ))}
             </svg>
+
+            {/* Signal dots — HTML divs so they stay perfectly circular */}
+            {CONNECTIONS.map((conn, i) => (
+                <SignalDot
+                    key={i}
+                    cxValues={conn.cx}
+                    cyValues={conn.cy}
+                    duration={DURATIONS[i]}
+                    delay={i * 0.4}
+                    isHovered={isHovered}
+                />
+            ))}
 
             {/* Integration nodes */}
             {INTEGRATIONS.map((node, i) => (
@@ -186,17 +183,17 @@ export const LaunchOptimizeEngine = () => {
                             }}
                         >
                             {node.icon === 'meta'
-                                ? <img src={metaIcon} alt="Meta" className="w-[60px] h-[60px] object-contain" />
+                                ? <img src={metaIcon} alt="Meta" className="w-[42px] h-[42px] md:w-[60px] md:h-[60px] object-contain" />
                                 : node.icon === 'googleAds'
-                                ? <img src={googleAdsIcon} alt="Google Ads" className="w-[46px] h-[46px] object-contain" />
+                                ? <img src={googleAdsIcon} alt="Google Ads" className="w-[32px] h-[32px] md:w-[46px] md:h-[46px] object-contain" />
                                 : node.icon === 'wordpress'
-                                ? <img src={wordpressIcon} alt="WordPress" className="w-[46px] h-[46px] object-contain" />
+                                ? <img src={wordpressIcon} alt="WordPress" className="w-[32px] h-[32px] md:w-[46px] md:h-[46px] object-contain" />
                                 : node.icon === 'slack'
-                                ? <img src={slackIcon} alt="Slack" className="w-[46px] h-[46px] object-contain" />
+                                ? <img src={slackIcon} alt="Slack" className="w-[32px] h-[32px] md:w-[46px] md:h-[46px] object-contain" />
                                 : node.icon === 'google'
-                                ? <img src={googleIcon} alt="Google" className="w-[46px] h-[46px] object-contain" />
+                                ? <img src={googleIcon} alt="Google" className="w-[32px] h-[32px] md:w-[46px] md:h-[46px] object-contain" />
                                 : node.icon === 'hubspot'
-                                ? <img src={hubspotIcon} alt="HubSpot" className="w-[46px] h-[46px] object-contain" />
+                                ? <img src={hubspotIcon} alt="HubSpot" className="w-[32px] h-[32px] md:w-[46px] md:h-[46px] object-contain" />
                                 : node.icon}
                         </motion.div>
                     </motion.div>
@@ -227,7 +224,7 @@ export const LaunchOptimizeEngine = () => {
                         <img
                             src={icon}
                             alt="Ukonnect AI"
-                            className="w-10 h-10 object-contain"
+                            className="w-7 h-7 md:w-10 md:h-10 object-contain"
                         />
                     </motion.div>
                 </motion.div>
