@@ -19,6 +19,7 @@ import teamKirsten from '../assets/Team/Kirsten.webp';
 import teamSander  from '../assets/Team/Sander.webp';
 import teamMarco   from '../assets/Team/Marco.webp';
 import teamTanisha from '../assets/Team/Tanisha.webp';
+import teamFirman  from '../assets/Team/Firman.webp';
 import teamBram    from '../assets/Team/Bram.webp';
 import teamGino    from '../assets/Team/Gino.webp';
 import teamAfifah  from '../assets/Team/Afifah.webp';
@@ -56,6 +57,7 @@ const TEAM_MEMBERS = [
     { name: 'Sander',  roleKey: 'aboutPage.role.coo' as TranslationKey,                img: teamSander,  quoteKey: 'aboutPage.quote.sander'  as TranslationKey },
     { name: 'Marco',   roleKey: 'aboutPage.role.leadDev' as TranslationKey,            img: teamMarco,   quoteKey: 'aboutPage.quote.marco'   as TranslationKey },
     { name: 'Tanisha', roleKey: 'aboutPage.role.contentStrategist' as TranslationKey,  img: teamTanisha, quoteKey: 'aboutPage.quote.tanisha' as TranslationKey },
+    { name: 'Firman',  roleKey: 'aboutPage.role.fullStackDeveloper' as TranslationKey, img: teamFirman,  quoteKey: 'aboutPage.quote.firman'  as TranslationKey },
     { name: 'Kirsten', roleKey: 'aboutPage.role.cmo' as TranslationKey,                img: teamKirsten, quoteKey: 'aboutPage.quote.kirsten' as TranslationKey },
     { name: 'Bram',    roleKey: 'aboutPage.role.headAI' as TranslationKey,             img: teamBram,    quoteKey: 'aboutPage.quote.bram'    as TranslationKey },
     { name: 'Rima',    roleKey: 'aboutPage.role.contentDesigner' as TranslationKey,    img: teamRima,    quoteKey: 'aboutPage.quote.rima'    as TranslationKey },
