@@ -1,4 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useLanguage } from '../i18n/LanguageContext';
+import type { TranslationKey } from '../i18n/translations';
+
+const WhatsAppIcon = () => (
+    <svg viewBox="0 0 24 24" width="11" height="11" fill="white" className="flex-shrink-0">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+        <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.534 5.857L.054 23.25a.75.75 0 00.917.899l5.562-1.463A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.9 0-3.681-.502-5.223-1.381l-.374-.213-3.303.87.882-3.22-.232-.381A9.956 9.956 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+    </svg>
+);
 import { motion, AnimatePresence } from 'framer-motion';
 
 const CODE_BLOCKS = [
@@ -43,31 +52,24 @@ const getLineColor = (type: string) => {
     }
 };
 
-const SUGGESTIONS = [
-    'Improve our ads with AI',
-    'Connect our CRM with AI',
-    'Automate lead follow-ups',
-    'Lower our cost per lead',
-    'GEO AI',
-];
-
-const ROTATING_PLACEHOLDERS = [
-    'How can AI improve our Meta ads performance?',
-    'Can AI reduce our cost per lead?',
-    'How could AI qualify leads automatically?',
-    'Can AI connect our CRM and WhatsApp?',
-];
-
-const ROTATING_PLACEHOLDERS_MOBILE = [
-    'Improve Meta ads with AI?',
-    'Reduce cost per lead?',
-    'Auto-qualify leads with AI?',
-    'Connect CRM & WhatsApp?',
-];
+const N_PLACEHOLDERS = 4;
+const N_SUGGESTIONS  = 5;
 
 const WHATSAPP_NUMBER = '351927497086';
 
 export const BuildIntegrateTerminal = () => {
+    const { t } = useLanguage();
+
+    const ROTATING_PLACEHOLDERS = Array.from({ length: N_PLACEHOLDERS }, (_, i) =>
+        t(`process.step2.placeholder.${i}` as TranslationKey)
+    );
+    const ROTATING_PLACEHOLDERS_MOBILE = Array.from({ length: N_PLACEHOLDERS }, (_, i) =>
+        t(`process.step2.placeholderMobile.${i}` as TranslationKey)
+    );
+    const SUGGESTIONS = Array.from({ length: N_SUGGESTIONS }, (_, i) =>
+        t(`process.step2.suggestion.${i}` as TranslationKey)
+    );
+
     const [lines, setLines] = useState<{ text: string; type: string; complete: boolean }[]>([]);
     const [cursorVisible, setCursorVisible] = useState(true);
     const [isHovered, setIsHovered] = useState(false);
@@ -314,7 +316,7 @@ export const BuildIntegrateTerminal = () => {
 
             {/* AI Prompt Box */}
             <div className="border-t border-[#d8d9de] px-4 py-3 flex flex-col gap-2">
-                <p className="text-[11px] font-semibold text-slate-600 tracking-wide">How could AI improve your marketing or sales?</p>
+                <p className="text-[11px] font-semibold text-slate-600 tracking-wide">{t('process.step2.question')}</p>
                 <div className="flex items-center gap-2">
                     <div className="flex-1 min-w-0 relative">
                         <input
@@ -371,8 +373,9 @@ export const BuildIntegrateTerminal = () => {
                     </div>
                     <button
                         onClick={handleSend}
-                        className="flex-shrink-0 px-3 py-1.5 bg-transparent border border-[#25D366] text-[#25D366] hover:bg-[#25D366]/10 text-[10px] font-semibold rounded-lg transition-colors whitespace-nowrap"
+                        className="flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 bg-[#25D366] hover:bg-[#1aad52] text-white text-[10px] font-semibold rounded-lg transition-colors whitespace-nowrap"
                     >
+                        <WhatsAppIcon />
                         Chat on WhatsApp
                     </button>
                 </div>

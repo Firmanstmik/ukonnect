@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { MarketingAuditScanner } from './MarketingAuditScanner';
+import { AIAuditTool } from './AIAuditTool';
 import { BuildIntegrateTerminal } from './BuildIntegrateTerminal';
 import { LaunchOptimizeEngine } from './LaunchOptimizeEngine';
 import { useLanguage } from '../i18n/LanguageContext';
@@ -28,7 +28,7 @@ export const Process = () => {
                     className="flex flex-col md:flex-row items-center gap-8 lg:gap-16"
                 >
                     <div className="w-full md:w-[45%] aspect-[4/3] relative">
-                        <MarketingAuditScanner />
+                        <AIAuditTool />
                     </div>
                     <div className="w-full md:w-1/2">
                         <h3 className="text-6xl font-bold text-primary/20 mb-4 tracking-tighter">01</h3>

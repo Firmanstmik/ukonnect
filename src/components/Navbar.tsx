@@ -119,7 +119,7 @@ export const Navbar = () => {
         <>
         <header className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4 md:px-8 transition-all duration-300 pointer-events-none">
             <div className="w-full max-w-[1300px] p-[5px] rounded-full transition-all duration-300 bg-transparent pointer-events-auto">
-                <div className="flex items-center justify-between rounded-full p-4 transition-all duration-300 bg-[rgba(236,237,241,0.40)] backdrop-blur-[7px] shadow-[inset_0_4px_8px_rgba(0,0,0,0.12),inset_0_-2px_4px_rgba(255,255,255,0.9),0_1px_1px_rgba(255,255,255,0.8)]">
+                <div className="flex items-center justify-between rounded-full p-4 transition-all duration-300 bg-[rgba(236,237,241,0.10)] backdrop-blur-[7px] shadow-[inset_0_4px_8px_rgba(0,0,0,0.12),inset_0_-2px_4px_rgba(255,255,255,0.9),0_1px_1px_rgba(255,255,255,0.8)]">
 
                     {/* Logo */}
                     <div

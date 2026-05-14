@@ -91,6 +91,7 @@ export const AboutContent = () => {
         ? [
             TEAM_MEMBERS.find(m => m.name === 'Sander')!,
             TEAM_MEMBERS.find(m => m.name === 'Rima')!,
+            TEAM_MEMBERS.find(m => m.name === 'Firman')!,
             TEAM_MEMBERS.find(m => m.name === 'Marco')!,
             TEAM_MEMBERS.find(m => m.name === 'Tanisha')!,
             TEAM_MEMBERS.find(m => m.name === 'Kirsten')!,

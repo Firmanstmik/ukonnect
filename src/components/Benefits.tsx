@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Workflow, PiggyBank, ShieldCheck, Activity, RefreshCw, Handshake } from 'lucide-react';
-import { CardBackground } from './CardBackground';
 import { useLanguage } from '../i18n/LanguageContext';
 import type { TranslationKey } from '../i18n/translations';
 import teamPhoto from '../assets/Ukonnect Team Portugal.webp';
@@ -47,7 +46,6 @@ export const Benefits = () => {
                         transition={{ delay: index * 0.1 }}
                         className="relative isolate overflow-hidden bg-white rounded-[1.5rem] p-8 border border-slate-200 shadow-sm hover:shadow-lg hover:shadow-slate-200/50 transition-all text-center flex flex-col items-center group cursor-default"
                     >
-                        <CardBackground index={index} />
                         <div className="w-14 h-14 bg-primary/5 text-primary rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-300">
                             {benefit.icon}
                         </div>
