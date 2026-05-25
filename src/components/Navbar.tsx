@@ -119,7 +119,7 @@ export const Navbar = () => {
         <>
         <header className="absolute top-0 left-0 right-0 z-50">
             {/* Top announcement bar — desktop only */}
-            <div className="hidden lg:flex items-center justify-end gap-6 px-8 md:px-12 lg:px-16 xl:px-24 py-2 bg-white/20 backdrop-blur-[6px]">
+            <div className="relative hidden lg:flex items-center justify-end gap-6 px-8 md:px-12 lg:px-16 xl:px-24 py-2 bg-white/20 backdrop-blur-[6px]">
                 {([
                     <><b className="font-semibold">Gratis Website</b> Preview</>,
                     <>Gratis <b className="font-semibold">AI Marketing</b> Analyse</>,
@@ -146,6 +146,18 @@ export const Navbar = () => {
                 <a href="tel:0853331000" className="text-[13px] font-normal text-slate-700 hover:text-[#5600e3] transition-colors">
                     {t('topbar.phone')}
                 </a>
+
+                {/* Shockwave bottom border */}
+                <div className="absolute bottom-0 left-0 right-0 h-[1.5px] overflow-hidden">
+                    <div className="absolute inset-y-0 bg-[rgba(86,0,227,0.06)] w-full" />
+                    <div
+                        className="absolute inset-y-0 w-[220px]"
+                        style={{
+                            background: 'linear-gradient(90deg, transparent 0%, rgba(86,0,227,0.15) 30%, rgba(180,130,255,0.6) 48%, rgba(255,255,255,0.7) 50%, rgba(180,130,255,0.6) 52%, rgba(86,0,227,0.15) 70%, transparent 100%)',
+                            animation: 'shockwave 4s linear infinite',
+                        }}
+                    />
+                </div>
             </div>
 
             <div className="flex items-center justify-between w-full px-8 md:px-12 lg:px-16 xl:px-24 pt-4 pb-7 bg-transparent">

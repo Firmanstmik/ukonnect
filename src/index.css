@@ -17,3 +17,14 @@
     text-wrap: balance;
   }
 }
+
+@keyframes shockwave {
+  0%   { transform: translateX(-100%);  animation-timing-function: ease-in; }
+  25%  { transform: translateX(-78%);   animation-timing-function: ease-in; }
+  45%  { transform: translateX(-40%);   animation-timing-function: ease-in; }
+  60%  { transform: translateX(15vw);   animation-timing-function: ease-in; }
+  73%  { transform: translateX(50vw);   animation-timing-function: ease-in; }
+  83%  { transform: translateX(78vw);   animation-timing-function: ease-in; }
+  91%  { transform: translateX(96vw);   animation-timing-function: ease-in; }
+  100% { transform: translateX(115vw); }
+}
