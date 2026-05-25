@@ -2,6 +2,13 @@ export type Language = 'pt' | 'en' | 'nl' | 'id';
 
 const translations = {
   pt: {
+    // ── Top bar ──
+    'topbar.item1': 'Preview Gratuita de Website',
+    'topbar.item2': 'Análise de Marketing com IA Grátis',
+    'topbar.item3': 'Scan de Performance Gratuito',
+    'topbar.item4': 'Resposta em 3 horas',
+    'topbar.phone': '085 333 1000',
+
     // ── Navbar ──
     'nav.howItWorks': 'Como funciona',
     'nav.services': 'Serviços',
@@ -351,6 +358,13 @@ const translations = {
   },
 
   en: {
+    // ── Top bar ──
+    'topbar.item1': 'Free Website Preview',
+    'topbar.item2': 'Free AI Marketing Analysis',
+    'topbar.item3': 'Free Performance Scan',
+    'topbar.item4': 'Response within 3 hours',
+    'topbar.phone': '085 333 1000',
+
     // ── Navbar ──
     'nav.howItWorks': 'How it works',
     'nav.services': 'Services',
@@ -697,6 +711,13 @@ const translations = {
   },
 
   nl: {
+    // ── Top bar ──
+    'topbar.item1': 'Gratis Website Preview',
+    'topbar.item2': 'Gratis AI Marketing Analyse',
+    'topbar.item3': 'Gratis Performance Scan',
+    'topbar.item4': 'Binnen 3 uur reactie',
+    'topbar.phone': '085 333 1000',
+
     // ── Navbar ──
     'nav.howItWorks': 'Hoe het werkt',
     'nav.services': 'Diensten',
@@ -1042,6 +1063,13 @@ const translations = {
     'terms.heading': 'Servicevoorwaarden',
   },
   id: {
+    // ── Top bar ──
+    'topbar.item1': 'Preview Website Gratis',
+    'topbar.item2': 'Analisis Marketing AI Gratis',
+    'topbar.item3': 'Scan Performa Gratis',
+    'topbar.item4': 'Respons dalam 3 jam',
+    'topbar.phone': '085 333 1000',
+
     // ── Navbar ──
     'nav.howItWorks': 'Cara kerja',
     'nav.services': 'Layanan',
