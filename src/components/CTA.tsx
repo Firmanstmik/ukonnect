@@ -17,7 +17,7 @@ export const CTA = () => {
 
                 <div className="relative z-10 max-w-2xl mx-auto flex flex-col items-center">
                     <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-slate-900 tracking-tight">
-                        {t('cta.headingPre')} <span className="text-primary">{t('cta.headingHighlight')}</span>
+                        {t('cta.headingPre')}<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#5600e3] to-[#9b4dff]">{t('cta.headingHighlight1')}</span>{t('cta.headingMid')}<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#5600e3] to-[#9b4dff]">{t('cta.headingHighlight2')}</span>{t('cta.headingPost')}
                     </h2>
                     <p className="text-slate-500 font-medium text-lg leading-relaxed mb-10">
                         {t('cta.sub')}
@@ -26,7 +26,7 @@ export const CTA = () => {
                         onClick={() => setModalOpen(true)}
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
-                        className="px-10 py-5 bg-primary hover:bg-primary-hover text-white rounded-full font-semibold transition-all shadow-xl shadow-primary/30"
+                        className="px-10 py-5 bg-primary hover:bg-primary-hover text-white rounded-2xl font-semibold transition-all shadow-xl shadow-primary/30"
                     >
                         {t('cta.button')}
                     </motion.button>

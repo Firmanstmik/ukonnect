@@ -42,7 +42,9 @@ export const Testimonials = () => {
         <section className="py-[60px] md:py-[80px] lg:py-[120px] max-w-[1300px] mx-auto px-6">
             <div className="text-center max-w-2xl mx-auto mb-16 md:mb-24">
                 <p className="text-primary font-semibold tracking-wide uppercase text-sm mb-3">{t('testimonials.label')}</p>
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-6">{t('testimonials.heading')}</h2>
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
+                    {t('testimonials.headingPre')}<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#5600e3] to-[#9b4dff]">{t('testimonials.headingHighlight')}</span>{t('testimonials.headingPost')}
+                </h2>
                 <p className="text-slate-500 text-lg">{t('testimonials.sub')}</p>
             </div>
 

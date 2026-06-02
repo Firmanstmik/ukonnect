@@ -52,7 +52,7 @@ export const Hero = () => {
                 transition={{ duration: 0.5, delay: 0.1 }}
                 className={`${lang === 'pt' ? 'text-[40px]' : 'text-[44px]'} md:text-5xl lg:text-[64px] font-bold leading-[1.15] tracking-tight text-slate-900 mb-6 max-w-[1100px]`}
             >
-                {t('hero.headingPre')}<br />{t('hero.headingMid')}<span className="text-[#5600e3]">{t('hero.headingHighlight')}</span>
+                {t('hero.headingPre')}<br />{t('hero.headingMid')}<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#5600e3] to-[#9b4dff]" style={{ animation: 'heroShimmer 5s ease-in-out infinite' }}>{t('hero.headingHighlight')}</span>
             </motion.h1>
 
             <motion.p
@@ -72,7 +72,7 @@ export const Hero = () => {
             >
                 <button
                     onClick={() => setModalOpen(true)}
-                    className="px-8 py-3 bg-[#5600e3] hover:bg-[#4500b6] text-white rounded-full text-[15px] font-medium transition-all shadow-sm shadow-[#5600e3]/20 hover:-translate-y-0.5 hover:shadow-md">
+                    className="px-8 py-3 bg-[#5600e3] hover:bg-[#4500b6] text-white rounded-2xl text-[15px] font-medium transition-all shadow-sm shadow-[#5600e3]/20 hover:-translate-y-0.5 hover:shadow-md">
                     {t('hero.cta')}
                 </button>
 

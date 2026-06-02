@@ -27,6 +27,7 @@ import teamPaul    from '../assets/Team/Paul.webp';
 import teamEdmerd  from '../assets/Team/Edmerd.webp';
 import teamWidhi   from '../assets/Team/Widhi.webp';
 import teamRima    from '../assets/Team/Rima.jpg';
+import teamThiago  from '../assets/Team/Thiago.webp';
 
 const ContactFormModal = lazy(() => import('./ContactFormModal').then(m => ({ default: m.ContactFormModal })));
 
@@ -66,6 +67,7 @@ const TEAM_MEMBERS = [
     { name: 'Afifah',  roleKey: 'aboutPage.role.growthSpecialist' as TranslationKey,   img: teamAfifah,  quoteKey: 'aboutPage.quote.afifah'  as TranslationKey },
     { name: 'Edmerd',  roleKey: 'aboutPage.role.accountManager' as TranslationKey,     img: teamEdmerd,  quoteKey: 'aboutPage.quote.edmerd'  as TranslationKey },
     { name: 'Gino',    roleKey: 'aboutPage.role.frontEndDeveloper' as TranslationKey,  img: teamGino,    quoteKey: 'aboutPage.quote.gino'    as TranslationKey },
+    { name: 'Thiago',  roleKey: 'aboutPage.role.googleAdsSpecialist' as TranslationKey, img: teamThiago,  quoteKey: 'aboutPage.quote.thiago'  as TranslationKey },
     { name: 'Raffy',   roleKey: 'aboutPage.role.teamHead' as TranslationKey,           img: teamRaffy,   quoteKey: 'aboutPage.quote.raffy'   as TranslationKey },
 ];
 

@@ -887,7 +887,9 @@ export const Features = () => {
             {/* Header */}
             <div className="text-center max-w-2xl mx-auto mb-8">
                 <p className="text-primary font-semibold tracking-wide uppercase text-sm mb-3">{t('features.label')}</p>
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-6">{t('features.heading')}</h2>
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
+                    {t('features.headingPre')}<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#5600e3] to-[#9b4dff]">{t('features.headingHighlight')}</span>{t('features.headingPost')}
+                </h2>
                 <p className="text-slate-500 text-lg">
                     {t('features.sub')}
                 </p>

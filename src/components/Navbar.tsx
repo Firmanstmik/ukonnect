@@ -9,6 +9,20 @@ const ContactFormModal = lazy(() =>
     import('./ContactFormModal').then(m => ({ default: m.ContactFormModal }))
 );
 
+function renderWithBold(text: string, boldTerms: string[]): React.ReactNode {
+    const escaped = boldTerms.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+    const parts = text.split(new RegExp(`(${escaped.join('|')})`));
+    return <>{parts.map((part, i) =>
+        boldTerms.includes(part) ? <b key={i} className="font-semibold text-[#5600e3]">{part}</b> : part
+    )}</>;
+}
+
+const TOPBAR_ITEMS = [
+    { key: 'topbar.item1' as const, bold: ['Website'] },
+    { key: 'topbar.item2' as const, bold: ['Marketing'] },
+    { key: 'topbar.item4' as const, bold: ['3 uur', '3 hours', '3 horas', '3 jam'] },
+];
+
 const LANGUAGES: { code: Language; flag: string; label: string }[] = [
     { code: 'nl', flag: '🇳🇱', label: 'NL' },
     { code: 'pt', flag: '🇵🇹', label: 'PT' },
@@ -119,16 +133,14 @@ export const Navbar = () => {
         <>
         <header className="absolute top-0 left-0 right-0 z-50">
             {/* Top announcement bar — desktop only */}
-            <div className="relative hidden lg:flex items-center justify-end gap-6 px-8 md:px-12 lg:px-16 xl:px-24 py-2 bg-white/20 backdrop-blur-[6px]">
-                {([
-                    <><b className="font-semibold">Gratis Website</b> Preview</>,
-                    <>Gratis <b className="font-semibold">AI Marketing</b> Analyse</>,
-                    <>Binnen <b className="font-semibold">3 uur</b> reactie</>,
-                ] as React.ReactNode[]).map((item, i) => (
-                    <span key={i} className="text-[13px] font-normal text-slate-700">
-                        {i > 0 && <span className="text-[#5600e3] text-[11px] leading-none font-semibold mx-2">|</span>}
-                        {item}
-                    </span>
+            <div className="relative hidden lg:flex items-center justify-end gap-4 px-8 md:px-12 lg:px-16 xl:px-24 py-2 bg-white/20 backdrop-blur-[6px]">
+                {TOPBAR_ITEMS.map(({ key, bold }, i) => (
+                    <React.Fragment key={key}>
+                        {i > 0 && <span className="text-[#5600e3] text-[11px] leading-none font-semibold">|</span>}
+                        <span className="text-[13px] font-normal text-slate-700">
+                            {renderWithBold(t(key), bold)}
+                        </span>
+                    </React.Fragment>
                 ))}
                 <span className="text-[#5600e3] text-[11px] leading-none font-semibold">|</span>
                 {/* Google review badge */}
@@ -192,7 +204,7 @@ export const Navbar = () => {
 
                     <LanguageSwitcher />
 
-                    <button onClick={() => setModalOpen(true)} className="flex items-center gap-2.5 px-8 py-3.5 bg-[#5600e3] hover:bg-[#4500b6] text-white rounded-full text-[17px] font-semibold transition-all shadow-sm">
+                    <button onClick={() => setModalOpen(true)} className="flex items-center gap-2.5 px-8 py-3.5 bg-[#5600e3] hover:bg-[#4500b6] text-white rounded-2xl text-[17px] font-semibold transition-all shadow-sm">
                         <span className="relative flex items-center justify-center w-2 h-2">
                             <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-300 opacity-80 animate-ping" />
                             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
@@ -229,7 +241,7 @@ export const Navbar = () => {
                         </button>
                     ))}
                     <LanguageSwitcher mobile />
-                    <button onClick={() => setModalOpen(true)} className="mt-4 flex items-center justify-center gap-2.5 px-8 py-4 bg-[#5600e3] hover:bg-[#4500b6] text-white rounded-full text-[12px] font-semibold transition-all shadow-sm w-full">
+                    <button onClick={() => setModalOpen(true)} className="mt-4 flex items-center justify-center gap-2.5 px-8 py-4 bg-[#5600e3] hover:bg-[#4500b6] text-white rounded-2xl text-[12px] font-semibold transition-all shadow-sm w-full">
                         <span className="relative flex items-center justify-center w-2 h-2">
                             <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-300 opacity-80 animate-ping" />
                             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />

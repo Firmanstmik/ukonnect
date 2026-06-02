@@ -1,18 +1,64 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { AIAuditTool } from './AIAuditTool';
 import { BuildIntegrateTerminal } from './BuildIntegrateTerminal';
 import { LaunchOptimizeEngine } from './LaunchOptimizeEngine';
 import { useLanguage } from '../i18n/LanguageContext';
 
+const TAB_SUFFIX_KEY: Record<string, 'process.annotation.websiteSuffix' | 'process.annotation.marketingSuffix'> = {
+    website:   'process.annotation.websiteSuffix',
+    marketing: 'process.annotation.marketingSuffix',
+};
+
+function useTypewriter(target: string, speed = 45) {
+    const [displayed, setDisplayed] = useState(target);
+    const prevRef = useRef(target);
+
+    useEffect(() => {
+        if (prevRef.current === target) return;
+        const prev = prevRef.current;
+        prevRef.current = target;
+
+        let frame: ReturnType<typeof setTimeout>;
+        let current = prev;
+
+        const erase = () => {
+            if (current.length > 0) {
+                current = current.slice(0, -1);
+                setDisplayed(current);
+                frame = setTimeout(erase, speed * 0.6);
+            } else {
+                retype();
+            }
+        };
+
+        const retype = () => {
+            if (current.length < target.length) {
+                current = target.slice(0, current.length + 1);
+                setDisplayed(current);
+                frame = setTimeout(retype, speed);
+            }
+        };
+
+        frame = setTimeout(erase, speed);
+        return () => clearTimeout(frame);
+    }, [target, speed]);
+
+    return displayed;
+}
+
 export const Process = () => {
     const { t } = useLanguage();
+    const [activeTab, setActiveTab] = useState<'website' | 'marketing'>('website');
+    const suffix = useTypewriter(t(TAB_SUFFIX_KEY[activeTab]));
 
     return (
         <section id="process" className="py-[60px] md:py-[80px] lg:py-[120px] max-w-[1300px] mx-auto px-6">
             <div className="text-center max-w-2xl mx-auto mb-16 md:mb-24">
                 <p className="text-primary font-semibold tracking-wide uppercase text-sm mb-3">{t('process.label')}</p>
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-6">{t('process.heading')}</h2>
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
+                    {t('process.headingPre')}<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#5600e3] to-[#9b4dff]">{t('process.headingHighlight')}</span>{t('process.headingPost')}
+                </h2>
                 <p className="text-slate-500 text-lg">
                     {t('process.sub')}
                 </p>
@@ -28,38 +74,44 @@ export const Process = () => {
                     className="flex flex-col md:flex-row items-center gap-8 lg:gap-16"
                 >
                     <div className="w-full md:w-[45%] aspect-[4/3] relative">
-                        <AIAuditTool />
+                        <AIAuditTool onTabChange={setActiveTab} />
 
-                        {/* Handwritten annotation — desktop only */}
-                        {/* translateX(calc(-100% + 30px)) keeps 30px of the arrow tip inside the box */}
+                        {/* Handwritten annotation — desktop only, left side with downward bow */}
                         <div
                             className="hidden md:block absolute pointer-events-none select-none z-10"
-                            style={{ left: 0, top: '22%', transform: 'translateX(calc(-100% + 30px))' }}
+                            style={{ top: 0, left: 0, transform: 'translateX(calc(-100% + 44px)) translateY(calc(-48% - 9px))' }}
                         >
-                            <div style={{ transform: 'rotate(-5deg)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                            <div style={{ transform: 'rotate(-3deg)', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '2px' }}>
                                 <p style={{
                                     fontFamily: "'Caveat', cursive",
                                     fontSize: '20px',
                                     fontWeight: 700,
                                     color: '#5600e3',
                                     lineHeight: 1.25,
-                                    textAlign: 'right',
+                                    textAlign: 'left',
                                     margin: 0,
-                                    whiteSpace: 'nowrap',
+                                    whiteSpace: 'pre',
+                                    minWidth: '162px',
+                                    minHeight: '50px',
+                                    transform: 'translateX(102px)',
                                 }}>
-                                    Gratis AI<br />Website scan
+                                    {t('process.annotation.free')}{suffix}
                                 </p>
-                                <svg width="82" height="36" viewBox="0 0 82 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    {/* Hand-drawn arrow from left (outside box) to right (inside box) */}
+                                <svg width="54" height="120" viewBox="0 0 54 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <defs>
+                                        <linearGradient id="arrowGrad" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="0%" stopColor="#5600e3" />
+                                            <stop offset="100%" stopColor="#9b4dff" />
+                                        </linearGradient>
+                                    </defs>
                                     <path
-                                        d="M 4,18 C 24,5 52,6 74,18"
-                                        stroke="#5600e3" strokeWidth="3.2" fill="none"
+                                        d="M 42,5 C 18,35 18,78 42,108"
+                                        stroke="url(#arrowGrad)" strokeWidth="3.2" fill="none"
                                         strokeLinecap="round"
                                     />
-                                    {/* Arrowhead pointing right */}
                                     <path
-                                        d="M 74,18 L 68,8 M 74,18 L 62,18"
-                                        stroke="#5600e3" strokeWidth="3.2"
+                                        d="M 42,108 L 27,104 M 42,108 L 43,92"
+                                        stroke="url(#arrowGrad)" strokeWidth="3.2"
                                         strokeLinecap="round"
                                     />
                                 </svg>

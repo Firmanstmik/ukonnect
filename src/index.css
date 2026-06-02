@@ -18,6 +18,11 @@
   }
 }
 
+@keyframes heroShimmer {
+  0%, 100% { filter: brightness(1); }
+  50%       { filter: brightness(1.28); }
+}
+
 @keyframes shockwave {
   0%   { transform: translateX(-100%);  animation-timing-function: ease-in; }
   25%  { transform: translateX(-78%);   animation-timing-function: ease-in; }

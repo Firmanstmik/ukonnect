@@ -30,6 +30,9 @@ const translations = {
     // ── Features ──
     'features.label': 'Os nossos serviços',
     'features.heading': 'O Seu Sistema de Crescimento com IA',
+    'features.headingPre': 'O Seu ',
+    'features.headingHighlight': 'Sistema de Crescimento',
+    'features.headingPost': ' com IA',
     'features.sub': 'Quatro sistemas que automatizam e otimizam o seu pipeline de marketing e vendas.',
     'features.tab.marketing': 'Marketing',
     'features.tab.ai': 'Sistemas de IA',
@@ -65,7 +68,7 @@ const translations = {
     // ── Benefits ──
     'benefits.label': 'Benefícios',
     'benefits.headingPre': 'Por Que ',
-    'benefits.headingHighlight': 'Empresas Imobiliárias',
+    'benefits.headingHighlight': 'empresas',
     'benefits.headingPost': ' Escolhem a Ukonnect',
     'benefits.sub': 'Tempo é dinheiro? Nós poupamos os dois. Sem resultados? Sem custos. 100% sem risco, resultados visíveis.',
     'benefits.0.title': 'Pipeline no Piloto Automático',
@@ -83,8 +86,14 @@ const translations = {
 
     // ── Process ──
     'process.label': 'Como Funciona',
-    'process.heading': 'Como Fazemos Crescer a Sua Agência Imobiliária',
+    'process.heading': 'Como fazemos crescer o seu negócio',
+    'process.headingPre': 'Como fazemos ',
+    'process.headingHighlight': 'crescer',
+    'process.headingPost': ' o seu negócio',
     'process.sub': 'Da auditoria à automação em três passos simples.',
+    'process.annotation.free': 'Grátis',
+    'process.annotation.websiteSuffix': ' AI\nWebsite scan',
+    'process.annotation.marketingSuffix': ' AI\nMarketing Audit',
     'process.step1.title': 'Auditoria de Marketing IA & Geração de Leads',
     'process.step1.desc': 'Analisamos o seu funil completo de marketing e vendas, identificamos oportunidades de automação e desenvolvemos um sistema de IA à medida. Sem leads partilhados, mas sim um sistema de geração de leads próprio e escalável, combinado com um processo de seguimento eficaz que converte leads em contratos.',
     'process.step2.title': 'Construir & Integrar',
@@ -183,7 +192,9 @@ const translations = {
 
     // ── Testimonials ──
     'testimonials.label': 'Testemunhos',
-    'testimonials.heading': 'Resultados dos nossos parceiros',
+    'testimonials.headingPre': '',
+    'testimonials.headingHighlight': 'Resultados',
+    'testimonials.headingPost': ' dos nossos parceiros',
     'testimonials.sub': 'Como as empresas usam a Ukonnect para automatizar o crescimento e fechar mais negócios.',
     'testimonials.0.body': 'Estamos muito satisfeitos com o nosso novo website e o serviço prestado. Tudo parece profissional, funciona rapidamente e a comunicação foi excelente,os compromissos foram cumpridos e o resultado superou as nossas expectativas.',
     'testimonials.1.body': 'Colaboramos com a Ukonnect há mais de um ano e estamos muito satisfeitos. A resposta é sempre rápida e somos mantidos informados sobre os nossos leads e campanhas. Uma ótima empresa para trabalhar.',
@@ -264,6 +275,7 @@ const translations = {
     'aboutPage.role.frontEndDeveloper': 'Front-end Developer',
     'aboutPage.role.teamHeadIndonesia': 'Team Head Indonésia',
     'aboutPage.role.contentDesigner': 'Content Designer',
+    'aboutPage.role.googleAdsSpecialist': 'Google Ads Specialist',
 
     // ── Team quotes ──
     'aboutPage.quote.rima':    'Design é a linguagem silenciosa da marca. O meu trabalho é garantir que cada visual conta a história certa, ao público certo, no momento certo.',
@@ -279,10 +291,14 @@ const translations = {
     'aboutPage.quote.edmerd':  'Um grande website é invisível, sai do caminho e deixa o utilizador atingir o seu objetivo. Cada pixel e cada milissegundo de carregamento deve servir esse propósito.',
     'aboutPage.quote.gino':    'O desenvolvimento front-end é onde o design encontra a realidade. O meu trabalho é garantir que a diferença entre o que foi desenhado e o que os utilizadores experienciam seja o mais próximo de zero possível.',
     'aboutPage.quote.raffy':   'Fazer crescer uma equipa significa criar um ambiente onde pessoas talentosas podem dar o seu melhor. Quando a equipa prospera, os resultados para os clientes seguem-se naturalmente.',
+    'aboutPage.quote.thiago':  'O Google Ads é marketing de precisão na sua melhor forma. Cada campanha é um puzzle onde a palavra-chave certa, o lance certo e a segmentação de audiência certa transformam investimento em publicidade em crescimento real para o negócio.',
 
     // ── CTA ──
-    'cta.headingPre': 'Pronto para',
-    'cta.headingHighlight': 'Automatizar o Seu Crescimento?',
+    'cta.headingPre': 'Pronto para ',
+    'cta.headingHighlight1': 'Automatizar',
+    'cta.headingMid': ' o ',
+    'cta.headingHighlight2': 'Seu Crescimento',
+    'cta.headingPost': '?',
     'cta.sub': 'Junte-se a centenas de empresas que usam IA para gerar mais leads e fechar mais negócios no piloto automático.',
     'cta.button': 'Agendar uma Chamada',
 
@@ -386,6 +402,9 @@ const translations = {
     // ── Features ──
     'features.label': 'Our services',
     'features.heading': 'Your AI Growth System',
+    'features.headingPre': 'Your AI ',
+    'features.headingHighlight': 'Growth System',
+    'features.headingPost': '',
     'features.sub': 'Four systems that automate and optimize your marketing and sales pipeline.',
     'features.tab.marketing': 'Marketing',
     'features.tab.ai': 'AI Systems',
@@ -418,7 +437,7 @@ const translations = {
     // ── Benefits ──
     'benefits.label': 'Benefits',
     'benefits.headingPre': 'Why ',
-    'benefits.headingHighlight': 'Real Estate Companies',
+    'benefits.headingHighlight': 'businesses',
     'benefits.headingPost': ' Choose Ukonnect',
     'benefits.sub': 'Time is money? We save you both. No results? No costs. 100% risk-free, visible results.',
     'benefits.0.title': 'Pipeline on Autopilot',
@@ -436,8 +455,14 @@ const translations = {
 
     // ── Process ──
     'process.label': 'How It Works',
-    'process.heading': 'How We Grow Your Real Estate Agency',
+    'process.heading': 'How we grow your business',
+    'process.headingPre': 'How we ',
+    'process.headingHighlight': 'grow',
+    'process.headingPost': ' your business',
     'process.sub': 'From audit to live automation in three straightforward steps.',
+    'process.annotation.free': 'Free',
+    'process.annotation.websiteSuffix': ' AI\nWebsite scan',
+    'process.annotation.marketingSuffix': ' AI\nMarketing Audit',
     'process.step1.title': 'AI Marketing Audit & Lead Generation',
     'process.step1.desc': 'We analyse your complete marketing and sales funnel, identify automation opportunities, and develop a tailored AI system. No shared leads,instead, your own scalable lead generation system combined with an effective follow-up process that converts leads into instructions.',
     'process.step2.title': 'Build & Integrate',
@@ -536,7 +561,9 @@ const translations = {
 
     // ── Testimonials ──
     'testimonials.label': 'Testimonials',
-    'testimonials.heading': 'Results from partners',
+    'testimonials.headingPre': '',
+    'testimonials.headingHighlight': 'Results',
+    'testimonials.headingPost': ' from partners',
     'testimonials.sub': 'How companies use Ukonnect to automate growth and close more deals.',
     'testimonials.0.body': 'We are very satisfied with our new website and the service provided. Everything looks professional, works quickly, and communication was excellent,agreements were kept and the result exceeded our expectations.',
     'testimonials.1.body': 'We have been working with Ukonnect for over a year and are more than satisfied. The response is always fast and we are kept well-informed about our leads and ad campaigns. A great company to work with.',
@@ -617,6 +644,7 @@ const translations = {
     'aboutPage.role.frontEndDeveloper': 'Front-end Developer',
     'aboutPage.role.teamHeadIndonesia': 'Team Head Indonesia',
     'aboutPage.role.contentDesigner': 'Content Designer',
+    'aboutPage.role.googleAdsSpecialist': 'Google Ads Specialist',
 
     // ── Team quotes ──
     'aboutPage.quote.rima':    'Design is the silent language of a brand. My job is to make sure every visual tells the right story, to the right audience, at the right moment.',
@@ -632,10 +660,14 @@ const translations = {
     'aboutPage.quote.edmerd':  "A great website is invisible, it gets out of the way and lets the user achieve their goal. Every pixel and every millisecond of load time should serve that purpose.",
     'aboutPage.quote.gino':    "Front-end development is where design meets reality. My job is to make sure the gap between what was designed and what users actually experience is as close to zero as possible.",
     'aboutPage.quote.raffy':   'Growing a team means creating an environment where talented people can do their best work. When the team thrives, the results for our clients follow naturally.',
+    'aboutPage.quote.thiago':  'Google Ads is precision marketing at its finest. Every campaign is a puzzle where the right keyword, bid, and audience targeting can turn ad spend into measurable business growth.',
 
     // ── CTA ──
-    'cta.headingPre': 'Ready to',
-    'cta.headingHighlight': 'Automate Your Growth?',
+    'cta.headingPre': 'Ready to ',
+    'cta.headingHighlight1': 'Automate',
+    'cta.headingMid': ' ',
+    'cta.headingHighlight2': 'Your Growth',
+    'cta.headingPost': '?',
     'cta.sub': 'Join hundreds of companies using AI to generate more leads and close more deals on autopilot.',
     'cta.button': 'Book a Call',
 
@@ -738,7 +770,10 @@ const translations = {
 
     // ── Features ──
     'features.label': 'Onze diensten',
-    'features.heading': 'Uw AI-groeisysteem',
+    'features.heading': 'Uw groeisysteem',
+    'features.headingPre': 'Uw ',
+    'features.headingHighlight': 'groeisysteem',
+    'features.headingPost': '',
     'features.sub': 'Vier systemen die uw marketing- en verkooppijplijn als makelaar kan automatiseren en optimaliseren.',
     'features.tab.marketing': 'Marketing',
     'features.tab.ai': 'AI systemen',
@@ -771,7 +806,7 @@ const translations = {
     // ── Benefits ──
     'benefits.label': 'Voordelen',
     'benefits.headingPre': 'Waarom ',
-    'benefits.headingHighlight': 'Vastgoedbedrijven',
+    'benefits.headingHighlight': 'bedrijven',
     'benefits.headingPost': ' voor Ukonnect Kiezen',
     'benefits.sub': 'Tijd is geld? Wij besparen je beide. Geen resultaat? Geen kosten. 100% zonder risico, zichtbaar resultaat.',
     'benefits.0.title': 'Pijplijn op Automatische Piloot',
@@ -789,8 +824,14 @@ const translations = {
 
     // ── Process ──
     'process.label': 'Hoe Het Werkt',
-    'process.heading': 'Hoe Wij Uw Vastgoedbedrijf Laten Groeien',
+    'process.heading': 'Hoe wij uw bedrijf laten groeien',
+    'process.headingPre': 'Hoe wij uw bedrijf laten ',
+    'process.headingHighlight': 'groeien',
+    'process.headingPost': '',
     'process.sub': 'Van audit tot live automatiseringen en AI leadgeneratie in drie stappen.',
+    'process.annotation.free': 'Gratis',
+    'process.annotation.websiteSuffix': ' AI\nWebsite scan',
+    'process.annotation.marketingSuffix': ' AI\nMarketing Audit',
     'process.step1.title': 'Marketing audit & Leadgeneratie',
     'process.step1.desc': 'Wij analyseren uw volledige marketing- en salesfunnel, identificeren automatiseringskansen en ontwikkelen een AI-systeem op maat. Geen losse leads, maar een eigen, schaalbaar leadgeneratiesysteem, gecombineerd met een effectief opvolgproces dat leads omzet in opdrachten.',
     'process.step2.title': 'Bouwen & Integreren',
@@ -888,8 +929,10 @@ const translations = {
     'pricing.mo': '/mnd',
 
     // ── Testimonials ──
-    'testimonials.label': 'Getuigenissen',
-    'testimonials.heading': 'Resultaten van onze partners',
+    'testimonials.label': 'Google reviews',
+    'testimonials.headingPre': '',
+    'testimonials.headingHighlight': 'Resultaten',
+    'testimonials.headingPost': ' van onze partners',
     'testimonials.sub': 'Hoe bedrijven Ukonnect gebruiken om groei te automatiseren en meer deals te sluiten.',
     'testimonials.0.body': 'Wij zijn ontzettend tevreden over de vernieuwde website en de service. Alles ziet er professioneel uit, werkt snel en de communicatie verliep uitstekend. Afspraken werden nagekomen en het eindresultaat overtrof onze verwachtingen.',
     'testimonials.1.body': 'Wij werken al een jaar samen met Ukonnect en zijn meer dan tevreden. Met name de snelle respons en we worden goed op de hoogte gehouden van de leads en ads campagnes. Een fijn bedrijf om mee samen te werken.',
@@ -970,6 +1013,7 @@ const translations = {
     'aboutPage.role.frontEndDeveloper': 'Front-end Developer',
     'aboutPage.role.teamHeadIndonesia': 'Team Head Indonesië',
     'aboutPage.role.contentDesigner': 'Content Designer',
+    'aboutPage.role.googleAdsSpecialist': 'Google Ads Specialist',
 
     // ── Team quotes ──
     'aboutPage.quote.rima':    'Design is de stille taal van een merk. Mijn taak is ervoor zorgen dat elk beeld het juiste verhaal vertelt, aan het juiste publiek, op het juiste moment.',
@@ -985,10 +1029,14 @@ const translations = {
     'aboutPage.quote.edmerd':  'Een goede website is onzichtbaar, hij stapt opzij en laat de gebruiker zijn doel bereiken. Elke pixel en elke milliseconde laadtijd moet dat doel dienen.',
     'aboutPage.quote.gino':    'Front-end development is waar design de werkelijkheid ontmoet. Mijn taak is ervoor zorgen dat de kloof tussen het ontwerp en wat gebruikers daadwerkelijk ervaren zo dicht mogelijk bij nul ligt.',
     'aboutPage.quote.raffy':   'Een team laten groeien betekent een omgeving creëren waarin getalenteerde mensen hun beste werk kunnen leveren. Wanneer het team floreert, volgen de resultaten voor onze klanten vanzelf.',
+    'aboutPage.quote.thiago':  'Google Ads is precisiemarketing op zijn best. Elke campagne is een puzzel waarbij het juiste zoekwoord, het juiste bod en de juiste doelgroeptargeting advertentie-uitgaven omzetten in meetbare bedrijfsgroei.',
 
     // ── CTA ──
-    'cta.headingPre': 'Klaar om',
-    'cta.headingHighlight': 'Uw Groei te Automatiseren?',
+    'cta.headingPre': 'Klaar om ',
+    'cta.headingHighlight1': 'Uw Groei',
+    'cta.headingMid': ' te ',
+    'cta.headingHighlight2': 'Automatiseren',
+    'cta.headingPost': '?',
     'cta.sub': 'Sluit u aan bij honderden bedrijven die AI gebruiken om meer leads te genereren en meer deals te sluiten op de automatische piloot.',
     'cta.button': 'Gesprek Inplannen',
 
@@ -1091,6 +1139,9 @@ const translations = {
     // ── Features ──
     'features.label': 'Layanan kami',
     'features.heading': 'Sistem Pertumbuhan AI Anda',
+    'features.headingPre': '',
+    'features.headingHighlight': 'Sistem Pertumbuhan',
+    'features.headingPost': ' AI Anda',
     'features.sub': 'Empat sistem yang mengotomatisasi dan mengoptimalkan jalur pemasaran dan penjualan Anda.',
     'features.tab.marketing': 'Marketing',
     'features.tab.ai': 'Sistem AI',
@@ -1123,7 +1174,7 @@ const translations = {
     // ── Benefits ──
     'benefits.label': 'Keunggulan',
     'benefits.headingPre': 'Mengapa ',
-    'benefits.headingHighlight': 'Bisnis Berkembang',
+    'benefits.headingHighlight': 'bisnis',
     'benefits.headingPost': ' Memilih Ukonnect',
     'benefits.sub': 'Waktu adalah uang? Kami menghemat keduanya. Tidak ada hasil? Tidak ada biaya. 100% bebas risiko, hasil yang terlihat.',
     'benefits.0.title': 'Pipeline di Autopilot',
@@ -1141,8 +1192,14 @@ const translations = {
 
     // ── Process ──
     'process.label': 'Cara Kerjanya',
-    'process.heading': 'Cara Kami Mengakselerasi Pertumbuhan Bisnis Anda',
+    'process.heading': 'Cara kami menumbuhkan bisnis Anda',
+    'process.headingPre': 'Cara kami ',
+    'process.headingHighlight': 'menumbuhkan',
+    'process.headingPost': ' bisnis Anda',
     'process.sub': 'Dari audit hingga otomasi langsung dalam tiga langkah sederhana.',
+    'process.annotation.free': 'Gratis',
+    'process.annotation.websiteSuffix': ' AI\nWebsite scan',
+    'process.annotation.marketingSuffix': ' AI\nMarketing Audit',
     'process.step1.title': 'Audit Pemasaran AI & Generasi Prospek',
     'process.step1.desc': 'Kami menganalisis seluruh funnel pemasaran dan penjualan Anda, mengidentifikasi peluang otomasi, dan mengembangkan sistem AI yang disesuaikan. Hasilnya adalah sistem generasi prospek Anda sendiri yang skalabel, dikombinasikan dengan proses tindak lanjut efektif yang mengubah prospek menjadi pelanggan.',
     'process.step2.title': 'Bangun & Integrasikan',
@@ -1241,7 +1298,9 @@ const translations = {
 
     // ── Testimonials ──
     'testimonials.label': 'Testimoni',
-    'testimonials.heading': 'Hasil dari mitra kami',
+    'testimonials.headingPre': '',
+    'testimonials.headingHighlight': 'Hasil',
+    'testimonials.headingPost': ' dari mitra kami',
     'testimonials.sub': 'Bagaimana perusahaan menggunakan Ukonnect untuk mengotomatisasi pertumbuhan dan menutup lebih banyak transaksi.',
     'testimonials.0.body': 'Kami sangat puas dengan website baru dan layanan yang diberikan. Semuanya terlihat profesional, bekerja cepat, dan komunikasinya sangat baik, komitmen terpenuhi dan hasilnya melampaui ekspektasi kami.',
     'testimonials.1.body': 'Kami telah bekerja sama dengan Ukonnect selama lebih dari setahun dan sangat puas. Respons selalu cepat dan kami selalu mendapat informasi terbaru tentang prospek dan kampanye iklan kami. Perusahaan yang luar biasa untuk diajak bekerja sama.',
@@ -1322,6 +1381,7 @@ const translations = {
     'aboutPage.role.frontEndDeveloper': 'Front-end Developer',
     'aboutPage.role.teamHeadIndonesia': 'Team Head Indonesia',
     'aboutPage.role.contentDesigner': 'Content Designer',
+    'aboutPage.role.googleAdsSpecialist': 'Google Ads Specialist',
 
     // ── Team quotes ──
     'aboutPage.quote.rima':    'Desain adalah bahasa senyap sebuah merek. Tugas saya adalah memastikan setiap visual menceritakan kisah yang tepat, kepada audiens yang tepat, pada momen yang tepat.',
@@ -1337,10 +1397,14 @@ const translations = {
     'aboutPage.quote.edmerd':  'Website yang hebat itu tak terlihat, ia menyingkir dan membiarkan pengguna mencapai tujuannya. Setiap piksel dan setiap milidetik waktu muat harus melayani tujuan itu.',
     'aboutPage.quote.gino':    'Pengembangan front-end adalah di mana desain bertemu realitas. Tugas saya adalah memastikan kesenjangan antara yang dirancang dan yang benar-benar dialami pengguna sedekat mungkin dengan nol.',
     'aboutPage.quote.raffy':   'Mengembangkan tim berarti menciptakan lingkungan di mana orang-orang berbakat dapat melakukan pekerjaan terbaik mereka. Ketika tim berkembang, hasil bagi klien kami mengikuti secara alami.',
+    'aboutPage.quote.thiago':  'Google Ads adalah pemasaran presisi di tingkat terbaiknya. Setiap kampanye adalah teka-teki di mana kata kunci, tawaran, dan penargetan audiens yang tepat dapat mengubah pengeluaran iklan menjadi pertumbuhan bisnis yang terukur.',
 
     // ── CTA ──
-    'cta.headingPre': 'Siap untuk',
-    'cta.headingHighlight': 'Mengotomatisasi Pertumbuhan Anda?',
+    'cta.headingPre': 'Siap untuk ',
+    'cta.headingHighlight1': 'Mengotomatisasi',
+    'cta.headingMid': ' ',
+    'cta.headingHighlight2': 'Pertumbuhan Anda',
+    'cta.headingPost': '?',
     'cta.sub': 'Bergabunglah dengan ratusan perusahaan yang menggunakan AI untuk menghasilkan lebih banyak prospek dan menutup lebih banyak transaksi secara autopilot.',
     'cta.button': 'Jadwalkan Panggilan',
 

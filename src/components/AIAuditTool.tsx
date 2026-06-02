@@ -90,11 +90,16 @@ const MarketingTabIcon = () => (
     </svg>
 );
 
-export const AIAuditTool = () => {
+export const AIAuditTool = ({ onTabChange }: { onTabChange?: (tab: Tab) => void } = {}) => {
     const { t, lang } = useLanguage();
     const navigate = useNavigate();
 
     const [activeTab, setActiveTab] = useState<Tab>('website');
+
+    const handleTabChange = (tab: Tab) => {
+        setActiveTab(tab);
+        onTabChange?.(tab);
+    };
 
     // Website tab state
     const [websitePhase, setWebsitePhase] = useState<WebsitePhase>('idle');
@@ -212,7 +217,7 @@ export const AIAuditTool = () => {
             {/* ── Full-width tab bar ── */}
             <div className="flex flex-shrink-0">
                 <button
-                    onClick={() => setActiveTab('website')}
+                    onClick={() => handleTabChange('website')}
                     className={`flex-1 flex items-center justify-center gap-2 py-4 text-[11px] font-bold tracking-wide transition-all border-r border-white/10 ${
                         activeTab === 'website'
                             ? 'bg-[#5600e3] text-white'
@@ -223,7 +228,7 @@ export const AIAuditTool = () => {
                     {t('auditTool.tab.website')}
                 </button>
                 <button
-                    onClick={() => setActiveTab('marketing')}
+                    onClick={() => handleTabChange('marketing')}
                     className={`flex-1 flex items-center justify-center gap-2 py-4 text-[11px] font-bold tracking-wide transition-all ${
                         activeTab === 'marketing'
                             ? 'bg-[#5600e3] text-white'
