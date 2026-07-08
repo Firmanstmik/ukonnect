@@ -3,9 +3,14 @@ import { useLocation } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 
+const TrustedBy   = lazy(() => import('./components/TrustedBy').then(m => ({ default: m.TrustedBy })));
+const CompanyStoryExperience = lazy(() =>
+  import('./components/company-story/CompanyStoryExperience').then(m => ({ default: m.CompanyStoryExperience })),
+);
 const Process     = lazy(() => import('./components/Process').then(m => ({ default: m.Process })));
 const Features    = lazy(() => import('./components/Features').then(m => ({ default: m.Features })));
 const Benefits    = lazy(() => import('./components/Benefits').then(m => ({ default: m.Benefits })));
+const CaseStudies = lazy(() => import('./components/CaseStudies').then(m => ({ default: m.CaseStudies })));
 const Testimonials = lazy(() => import('./components/Testimonials').then(m => ({ default: m.Testimonials })));
 const FAQ         = lazy(() => import('./components/FAQ').then(m => ({ default: m.FAQ })));
 const CTA         = lazy(() => import('./components/CTA').then(m => ({ default: m.CTA })));
@@ -28,9 +33,12 @@ function App() {
       <main>
         <Hero />
         <Suspense fallback={<div className="bg-[#ecedf1]" style={{ minHeight: '200vh' }} />}>
+          <TrustedBy />
+          <CompanyStoryExperience />
           <Process />
           <Features />
           <Benefits />
+          <CaseStudies />
           <Testimonials />
           <FAQ />
           <CTA />

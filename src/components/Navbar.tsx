@@ -1,9 +1,13 @@
 import React, { lazy, Suspense, useState, useEffect, useRef } from 'react';
-import { Globe } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import logo from '../assets/Ukonnect Marketing logo.webp';
 import { useLanguage } from '../i18n/LanguageContext';
 import type { Language } from '../i18n/translations';
+import { IconGlobal } from './icons/HeroIcons';
+import { MobileMenuToggle } from './MobileMenuToggle';
+import { MegaMenu } from './MegaMenu';
+import { MegaMenuMobile } from './MegaMenuMobile';
+import type { MegaTarget } from './megaMenuData';
 
 const ContactFormModal = lazy(() =>
     import('./ContactFormModal').then(m => ({ default: m.ContactFormModal }))
@@ -70,7 +74,7 @@ const LanguageSwitcher = ({ mobile = false }: { mobile?: boolean }) => {
                 onClick={() => setOpen(p => !p)}
                 className="flex items-center gap-1.5 px-2.5 py-2 rounded-full hover:bg-white/50 transition-all"
             >
-                <Globe className="w-[18px] h-[18px] text-slate-600" />
+                <IconGlobal size={18} color="#475569" variant="Bulk" />
                 <svg className={`w-3 h-3 text-slate-400 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                 </svg>
@@ -122,18 +126,23 @@ export const Navbar = () => {
         }
     };
 
-    const navItems = [
-        { labelKey: 'nav.howItWorks' as const, id: 'process', href: null },
-        { labelKey: 'nav.services' as const, id: 'system-modules', href: null },
-        { labelKey: 'nav.about' as const, id: null, href: `/${lang}/about` },
-        { labelKey: 'nav.contact' as const, id: null, href: `/${lang}/contact` },
-    ];
+    // Single navigation handler for every mega-menu destination.
+    const handleSelect = (target: MegaTarget) => {
+        setMenuOpen(false);
+        if (target.kind === 'scroll') {
+            scrollTo(target.id);
+        } else if (target.kind === 'route') {
+            navigate(`${homePath}/${target.to}`);
+        } else {
+            setModalOpen(true);
+        }
+    };
 
     return (
         <>
         <header className="absolute top-0 left-0 right-0 z-50">
             {/* Top announcement bar — desktop only */}
-            <div className="relative hidden lg:flex items-center justify-end gap-4 px-8 md:px-12 lg:px-16 xl:px-24 py-2 bg-white/20 backdrop-blur-[6px]">
+            <div className="relative hidden lg:flex items-center justify-end gap-4 site-gutter-x py-2 bg-white/20 backdrop-blur-[6px]">
                 {TOPBAR_ITEMS.map(({ key, bold }, i) => (
                     <React.Fragment key={key}>
                         {i > 0 && <span className="text-[#5600e3] text-[11px] leading-none font-semibold">|</span>}
@@ -172,7 +181,7 @@ export const Navbar = () => {
                 </div>
             </div>
 
-            <div className="flex items-center justify-between w-full px-8 md:px-12 lg:px-16 xl:px-24 pt-4 pb-7 bg-transparent">
+            <div className="flex items-center justify-between w-full site-gutter-x pt-4 pb-7 bg-transparent">
 
                 {/* Logo */}
                 <div
@@ -190,63 +199,34 @@ export const Navbar = () => {
                 </div>
 
                 {/* Desktop Navigation + Language + CTA */}
-                <div className="hidden lg:flex items-center gap-10">
-                    {navItems.map(({ labelKey, id, href }) => (
-                        <button
-                            key={labelKey}
-                            onClick={() => href ? navigate(href) : scrollTo(id!)}
-                            className="relative group text-[17px] font-semibold text-slate-800 transition-colors bg-transparent border-none cursor-pointer"
-                        >
-                            {t(labelKey)}
-                            <span className="absolute -bottom-0.5 left-0 w-0 h-[1.5px] bg-[#5600e3] group-hover:w-full transition-all duration-300" />
-                        </button>
-                    ))}
+                <div className="hidden lg:flex items-center gap-6">
+                    <MegaMenu t={t} onSelect={handleSelect} />
 
                     <LanguageSwitcher />
 
-                    <button onClick={() => setModalOpen(true)} className="flex items-center gap-2.5 px-8 py-3.5 bg-[#5600e3] hover:bg-[#4500b6] text-white rounded-2xl text-[17px] font-semibold transition-all shadow-sm">
+                    <button onClick={() => setModalOpen(true)} className="flex items-center gap-2.5 px-7 py-3.5 bg-[#5600e3] hover:bg-[#4500b6] text-white rounded-2xl text-[16px] font-semibold transition-all shadow-sm">
                         <span className="relative flex items-center justify-center w-2 h-2">
                             <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-300 opacity-80 animate-ping" />
                             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
                         </span>
-                        {t('nav.cta')}
+                        {t('mega.cta')}
                     </button>
                 </div>
 
-                {/* Mobile Hamburger */}
-                <button
-                    className="lg:hidden flex flex-col justify-center items-center w-10 h-10 gap-[5px] bg-transparent border-none cursor-pointer"
-                    onClick={() => setMenuOpen(prev => !prev)}
-                    aria-label="Toggle menu"
-                >
-                    <span className={`block h-[2px] w-6 bg-slate-800 rounded-full transition-all duration-300 origin-center ${menuOpen ? 'rotate-45 translate-y-[7px]' : ''}`} />
-                    <span className={`block h-[2px] w-6 bg-slate-800 rounded-full transition-all duration-300 ${menuOpen ? 'opacity-0 scale-x-0' : ''}`} />
-                    <span className={`block h-[2px] w-6 bg-slate-800 rounded-full transition-all duration-300 origin-center ${menuOpen ? '-rotate-45 -translate-y-[7px]' : ''}`} />
-                </button>
+                <MobileMenuToggle open={menuOpen} onClick={() => setMenuOpen(prev => !prev)} />
             </div>
 
             {/* Mobile Dropdown Menu */}
-            <div className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${menuOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
-                <div className="bg-[rgba(236,237,241,0.96)] backdrop-blur-[16px] px-8 py-5 flex flex-col gap-1 border-t border-slate-200/40">
-                    {navItems.map(({ labelKey, id, href }) => (
-                        <button
-                            key={labelKey}
-                            onClick={() => {
-                                if (href) { setMenuOpen(false); navigate(href); }
-                                else scrollTo(id!);
-                            }}
-                            className="text-left text-[13px] font-semibold text-slate-800 transition-colors bg-transparent border-none cursor-pointer py-3.5 border-b border-slate-200/60 last:border-b-0"
-                        >
-                            {t(labelKey)}
-                        </button>
-                    ))}
+            <div className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${menuOpen ? 'max-h-[80vh] opacity-100' : 'max-h-0 opacity-0'}`}>
+                <div className="nav-mobile-panel scrollbar-hide max-h-[80vh] overflow-y-auto px-4 py-5 flex flex-col gap-3 border-t border-white/60 mx-4 rounded-b-3xl">
+                    <MegaMenuMobile t={t} onSelect={handleSelect} />
                     <LanguageSwitcher mobile />
-                    <button onClick={() => setModalOpen(true)} className="mt-4 flex items-center justify-center gap-2.5 px-8 py-4 bg-[#5600e3] hover:bg-[#4500b6] text-white rounded-2xl text-[12px] font-semibold transition-all shadow-sm w-full">
+                    <button onClick={() => setModalOpen(true)} className="mt-1 flex items-center justify-center gap-2.5 px-8 py-4 bg-[#5600e3] hover:bg-[#4500b6] text-white rounded-2xl text-[13px] font-semibold transition-all shadow-sm w-full">
                         <span className="relative flex items-center justify-center w-2 h-2">
                             <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-300 opacity-80 animate-ping" />
                             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
                         </span>
-                        {t('nav.cta')}
+                        {t('mega.cta')}
                     </button>
                 </div>
             </div>

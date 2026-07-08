@@ -12,15 +12,717 @@
   --color-bg-base: #f8fafc;
 }
 
+/* Prevent stray horizontal scroll on mobile from full-bleed / oversized hero media.
+   Cap the app to the viewport so no oversized child (e.g. the hero dashboard mock)
+   can stretch the shared layout width. `clip` (not `hidden`) keeps sticky working. */
+html,
+body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+#root {
+  max-width: 100vw;
+  overflow-x: clip;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Shared horizontal padding — navbar + hero alignment */
+  .site-gutter-x {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .site-gutter-x {
+      padding-left: 3rem;
+      padding-right: 3rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .site-gutter-x {
+      padding-left: 4rem;
+      padding-right: 4rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .site-gutter-x {
+      padding-left: 6rem;
+      padding-right: 6rem;
+    }
+  }
+
+  .case-studies-dot-grid {
+    background-image: radial-gradient(circle, rgb(148 163 184 / 0.22) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  /* Glossy premium hover — a soft light sweeps diagonally across the card. */
+  .card-shine-sweep::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(105deg, transparent 38%, rgba(255, 255, 255, 0.55) 50%, transparent 62%);
+    transform: translateX(-120%) skewX(-18deg);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .group:hover .card-shine-sweep::after {
+    animation: cardShine 0.85s ease-out forwards;
+  }
+
+  /* Hero premium CTA — shine sweep on hover */
+  .hero-btn-shine::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.35) 50%, transparent 65%);
+    transform: translateX(-130%) skewX(-16deg);
+    pointer-events: none;
+  }
+
+  .hero-btn-primary:hover .hero-btn-shine::after,
+  .hero-btn-secondary:hover .hero-btn-shine::after {
+    animation: cardShine 0.75s ease-out forwards;
+  }
+
+  .hero-btn-primary {
+    box-shadow:
+      0 1px 2px rgba(86, 0, 227, 0.2),
+      0 8px 28px rgba(86, 0, 227, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    transition: box-shadow 0.45s ease, transform 0.45s ease;
+  }
+
+  .hero-btn-primary:hover {
+    box-shadow:
+      0 2px 4px rgba(86, 0, 227, 0.25),
+      0 16px 48px rgba(86, 0, 227, 0.45),
+      0 0 0 1px rgba(155, 77, 255, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+  }
+
+  .hero-btn-secondary {
+    transition: transform 0.4s ease;
+  }
+
+  .hero-btn-secondary:hover {
+    transform: translateY(-2px);
+  }
+
+  .hero-float-card {
+    box-shadow:
+      0 4px 6px rgba(15, 23, 42, 0.04),
+      0 20px 50px rgba(86, 0, 227, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    transition: box-shadow 0.45s ease, transform 0.45s ease;
+  }
+
+  @media (hover: hover) {
+    .hero-float-card:hover {
+      box-shadow:
+        0 8px 16px rgba(15, 23, 42, 0.06),
+        0 28px 64px rgba(86, 0, 227, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 1);
+      transform: translateY(-3px) scale(1.02);
+    }
+  }
+
+  .hero-dashboard-shell {
+    background: linear-gradient(
+      148deg,
+      rgba(255, 255, 255, 0.94) 0%,
+      rgba(255, 255, 255, 0.78) 42%,
+      rgba(248, 245, 255, 0.88) 100%
+    );
+    backdrop-filter: blur(24px) saturate(1.65);
+    -webkit-backdrop-filter: blur(24px) saturate(1.65);
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.95),
+      0 0 0 1.5px rgba(155, 77, 255, 0.08),
+      0 12px 40px rgba(86, 0, 227, 0.12),
+      0 48px 100px rgba(86, 0, 227, 0.14),
+      inset 0 1px 0 rgba(255, 255, 255, 1),
+      inset 0 -20px 40px rgba(86, 0, 227, 0.03);
+  }
+
+  .hero-gloss-sheen {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-gloss-sheen::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      128deg,
+      rgba(255, 255, 255, 0.72) 0%,
+      rgba(255, 255, 255, 0.18) 28%,
+      transparent 48%,
+      transparent 72%,
+      rgba(255, 255, 255, 0.22) 100%
+    );
+    pointer-events: none;
+    z-index: 2;
+    border-radius: inherit;
+  }
+
+  .hero-gloss-sheen::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 8%;
+    right: 8%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.98), transparent);
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  .hero-gloss-sweep {
+    position: absolute;
+    inset: -50% -30%;
+    background: linear-gradient(
+      105deg,
+      transparent 42%,
+      rgba(255, 255, 255, 0.45) 50%,
+      transparent 58%
+    );
+    animation: heroGlossSweep 7s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .hero-mesh-glow {
+    background:
+      radial-gradient(ellipse 80% 60% at 85% 15%, rgba(155, 77, 255, 0.18) 0%, transparent 55%),
+      radial-gradient(ellipse 60% 50% at 10% 80%, rgba(86, 0, 227, 0.1) 0%, transparent 50%),
+      radial-gradient(ellipse 50% 40% at 50% 0%, rgba(255, 255, 255, 0.6) 0%, transparent 60%);
+  }
+
+  .hero-dashboard-inner {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.25) 0%, rgba(248, 250, 252, 0.15) 100%);
+  }
+
+  .hero-metric-tray {
+    background: linear-gradient(
+      160deg,
+      rgba(255, 255, 255, 0.88) 0%,
+      rgba(255, 255, 255, 0.62) 50%,
+      rgba(248, 245, 255, 0.75) 100%
+    );
+    backdrop-filter: blur(12px) saturate(1.4);
+    -webkit-backdrop-filter: blur(12px) saturate(1.4);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 1),
+      inset 0 -1px 0 rgba(86, 0, 227, 0.05),
+      0 2px 8px rgba(86, 0, 227, 0.06);
+  }
+
+  .hero-chart-panel {
+    background: linear-gradient(
+      168deg,
+      rgba(255, 255, 255, 0.92) 0%,
+      rgba(250, 248, 255, 0.75) 45%,
+      rgba(237, 233, 254, 0.55) 100%
+    );
+    backdrop-filter: blur(16px) saturate(1.5);
+    -webkit-backdrop-filter: blur(16px) saturate(1.5);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 1),
+      inset 0 2px 12px rgba(86, 0, 227, 0.04),
+      inset 0 -1px 0 rgba(155, 77, 255, 0.08),
+      0 8px 32px rgba(86, 0, 227, 0.1);
+  }
+
+  @media (min-width: 1024px) {
+    .hero-chart-panel {
+      min-height: 0;
+    }
+  }
+
+  .hero-chart-canvas {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.35) 0%,
+      rgba(243, 240, 255, 0.2) 100%
+    );
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    border-radius: 0.75rem;
+    overflow: visible;
+  }
+
+  .hero-chart-canvas--interactive {
+    cursor: crosshair;
+    touch-action: none;
+  }
+
+  .hero-chart-canvas--interactive:active {
+    cursor: zoom-in;
+  }
+
+  .hero-chart-tooltip {
+    filter: drop-shadow(0 8px 20px rgba(86, 0, 227, 0.22));
+  }
+
+  .hero-status-bar {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.85) 0%,
+      rgba(255, 255, 255, 0.55) 100%
+    );
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.98),
+      0 2px 8px rgba(86, 0, 227, 0.05);
+  }
+
+  .hero-status-bar--premium {
+    background: linear-gradient(
+      165deg,
+      rgba(255, 255, 255, 0.92) 0%,
+      rgba(248, 245, 255, 0.78) 48%,
+      rgba(237, 233, 254, 0.62) 100%
+    );
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 1),
+      inset 0 -1px 0 rgba(155, 77, 255, 0.08),
+      0 4px 18px rgba(86, 0, 227, 0.08);
+  }
+
+  .hero-step-node--live {
+    box-shadow:
+      0 0 0 3px rgba(155, 77, 255, 0.12),
+      0 6px 16px rgba(86, 0, 227, 0.28);
+  }
+
+  .hero-live-pill {
+    box-shadow:
+      0 0 0 1px rgba(16, 185, 129, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  }
+
+  /* Mobile — native AI app shell */
+  .hero-mobile-app {
+    padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* Desktop — fit hero above the fold; scale by height only (not width/zoom) */
+  @media (min-width: 1024px) {
+    .hero-desktop-stage {
+      --hero-nav-offset: 12.25rem;
+      --hero-design-h: 43.5rem;
+      /* Never scale down for viewport width — keeps container full-width at 100% zoom */
+      --hero-fit-scale: clamp(
+        0.92,
+        calc((100dvh - var(--hero-nav-offset) - 2rem) / var(--hero-design-h)),
+        1
+      );
+      height: calc(var(--hero-design-h) * var(--hero-fit-scale));
+    }
+
+    .hero-desktop-stage-inner {
+      height: var(--hero-design-h);
+      transform: scale(var(--hero-fit-scale));
+      transform-origin: top center;
+      width: 100%;
+      padding-top: clamp(0.5rem, 1.5vh, 1.25rem);
+    }
+  }
+
+  /* Standard desktop — no transform shrink (matches ~90% zoom appearance at 100%) */
+  @media (min-width: 1280px) {
+    .hero-desktop-stage {
+      --hero-fit-scale: 1;
+      height: auto;
+    }
+
+    .hero-desktop-stage-inner {
+      height: auto;
+      transform: none;
+    }
+  }
+
+  /* Short laptop screens only — gentle height squeeze */
+  @media (min-width: 1024px) and (max-height: 760px) {
+    .hero-desktop-stage {
+      --hero-fit-scale: clamp(
+        0.88,
+        calc((100dvh - var(--hero-nav-offset) - 1.5rem) / var(--hero-design-h)),
+        1
+      );
+      height: calc(var(--hero-design-h) * var(--hero-fit-scale));
+    }
+  }
+
+  .hero-app-chip {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(248, 245, 255, 0.78) 100%);
+    backdrop-filter: blur(16px) saturate(1.5);
+    -webkit-backdrop-filter: blur(16px) saturate(1.5);
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.9),
+      0 4px 20px rgba(86, 0, 227, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 1);
+  }
+
+  /* Signature trust badge — hero social proof */
+  .hero-signature-badge {
+    position: relative;
+    border-radius: 9999px;
+    padding: 1.5px;
+    background: linear-gradient(
+      120deg,
+      rgba(86, 0, 227, 0.55),
+      rgba(155, 77, 255, 0.4),
+      rgba(16, 185, 129, 0.45),
+      rgba(86, 0, 227, 0.55)
+    );
+    background-size: 220% 220%;
+    animation: heroBadgeAurora 7s ease-in-out infinite;
+    box-shadow:
+      0 4px 24px rgba(86, 0, 227, 0.12),
+      0 0 40px rgba(155, 77, 255, 0.08);
+  }
+
+  .hero-signature-badge-inner {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(
+      128deg,
+      rgba(255, 255, 255, 0.97) 0%,
+      rgba(255, 255, 255, 0.88) 45%,
+      rgba(248, 245, 255, 0.92) 100%
+    );
+    backdrop-filter: blur(20px) saturate(1.65);
+    -webkit-backdrop-filter: blur(20px) saturate(1.65);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 1),
+      inset 0 -1px 0 rgba(86, 0, 227, 0.04);
+  }
+
+  .hero-signature-badge-inner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 40%,
+      rgba(255, 255, 255, 0.55) 50%,
+      transparent 60%
+    );
+    animation: heroBadgeShine 5s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  .hero-signature-live {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.14) 0%, rgba(16, 185, 129, 0.06) 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.7),
+      0 0 0 1px rgba(16, 185, 129, 0.18);
+  }
+
+  .hero-signature-logo {
+    background: linear-gradient(145deg, #5600e3, #9b4dff);
+    box-shadow: 0 4px 14px rgba(86, 0, 227, 0.28);
+  }
+
+  .hero-mobile-device {
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.2) 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.65),
+      0 24px 64px rgba(86, 0, 227, 0.14),
+      inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  }
+
+  .hero-mobile-sticky-cta {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.88) 24%,
+      rgba(255, 255, 255, 0.96) 100%
+    );
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    border-top: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 -8px 32px rgba(86, 0, 227, 0.08);
+  }
+
+  .hero-workflow-tip {
+    position: relative;
+    background: linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(86, 0, 227, 0.12) 100%
+    );
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.14),
+      0 6px 16px rgba(0, 0, 0, 0.18);
+  }
+
+  .hero-workflow-card--expanded {
+    box-shadow:
+      0 26px 56px rgba(15, 23, 42, 0.5),
+      0 0 44px rgba(86, 0, 227, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.14),
+      inset 0 -24px 48px rgba(86, 0, 227, 0.08);
+  }
+
+  .hero-workflow-diagram--compact::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 0.75rem;
+    border: 1px dashed rgba(196, 181, 253, 0.32);
+    background: radial-gradient(ellipse at 50% 45%, rgba(139, 92, 246, 0.12) 0%, transparent 72%);
+    pointer-events: none;
+  }
+
+  .hero-workflow-diagram--centered {
+    margin-inline: auto;
+  }
+
+  .hero-mobile-float-card {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.95),
+      0 8px 24px rgba(15, 23, 42, 0.08);
+  }
+
+  .hero-trust-pill {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.65) 100%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 1),
+      0 2px 12px rgba(15, 23, 42, 0.05);
+  }
+
+  .hero-trust-stat-card {
+    background: linear-gradient(
+      155deg,
+      rgba(255, 255, 255, 0.92) 0%,
+      rgba(255, 255, 255, 0.72) 55%,
+      rgba(248, 245, 255, 0.65) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(14px) saturate(1.35);
+    -webkit-backdrop-filter: blur(14px) saturate(1.35);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 1),
+      0 2px 16px rgba(15, 23, 42, 0.05);
+    overflow: hidden;
+    transition: box-shadow 0.25s ease, border-color 0.25s ease;
+  }
+
+  .hero-trust-stat-card:hover {
+    border-color: rgba(155, 77, 255, 0.22);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 1),
+      0 8px 28px rgba(86, 0, 227, 0.1),
+      0 0 0 1px rgba(155, 77, 255, 0.08);
+  }
+
+  .hero-trust-stat-card--purple:hover {
+    border-color: rgba(86, 0, 227, 0.28);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 1),
+      0 10px 32px rgba(86, 0, 227, 0.14);
+  }
+
+  .hero-trust-stat-shine {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 40%,
+      rgba(255, 255, 255, 0.55) 50%,
+      transparent 60%
+    );
+    transform: translateX(-120%) skewX(-12deg);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .hero-trust-stat-card:hover .hero-trust-stat-shine {
+    opacity: 1;
+    animation: heroTrustShine 0.85s ease forwards;
+  }
+
+  .hero-trust-ai-text {
+    background: linear-gradient(90deg, #5600e3, #9b4dff, #5600e3);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: heroTrustAiShimmer 4s linear infinite;
+  }
+
+  .hero-workflow-card--interactive:hover {
+    box-shadow:
+      0 24px 52px rgba(15, 23, 42, 0.48),
+      0 0 40px rgba(86, 0, 227, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.14),
+      inset 0 -24px 48px rgba(86, 0, 227, 0.08);
+  }
+
+  .hero-workflow-node--active {
+    box-shadow:
+      0 0 0 2px rgba(196, 181, 253, 0.2),
+      0 8px 20px rgba(86, 0, 227, 0.45);
+  }
+
+@keyframes heroTrustShine {
+  from { transform: translateX(-120%) skewX(-12deg); }
+  to   { transform: translateX(120%) skewX(-12deg); }
+}
+
+@keyframes heroTrustAiShimmer {
+  0%   { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes heroBadgeAurora {
+  0%, 100% { background-position: 0% 50%; }
+  50%       { background-position: 100% 50%; }
+}
+
+@keyframes heroBadgeShine {
+  0%, 100% { transform: translateX(-120%) skewX(-12deg); opacity: 0; }
+  40%       { opacity: 0.85; }
+  60%       { transform: translateX(120%) skewX(-12deg); opacity: 0; }
+}
+
+@keyframes navMenuGlow {
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50%       { opacity: 0.7; transform: scale(1.06); }
+}
+
+  .nav-menu-glow {
+    background: radial-gradient(circle, rgba(86, 0, 227, 0.35) 0%, transparent 70%);
+    animation: navMenuGlow 3s ease-in-out infinite;
+  }
+
+  .nav-mobile-panel {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(248, 245, 255, 0.92) 100%);
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 1),
+      0 12px 40px rgba(86, 0, 227, 0.1);
+  }
+
+  .hero-step-connector {
+    background: linear-gradient(90deg, rgba(16, 185, 129, 0.5), rgba(86, 0, 227, 0.35));
+  }
+
+  /* Gradient stroke frames — premium card variety */
+  .hero-frame-violet {
+    background: linear-gradient(145deg, rgba(86, 0, 227, 0.35), rgba(155, 77, 255, 0.15), rgba(86, 0, 227, 0.08));
+    padding: 1px;
+  }
+
+  .hero-frame-emerald {
+    background: linear-gradient(145deg, rgba(16, 185, 129, 0.45), rgba(86, 0, 227, 0.12));
+    padding: 1px;
+  }
+
+  .hero-frame-aurora {
+    background: linear-gradient(120deg, #5600e3, #9b4dff, #34d399, #5600e3);
+    background-size: 200% 200%;
+    animation: heroAurora 6s ease infinite;
+    padding: 1.5px;
+  }
+
+  .hero-card-dark {
+    background: linear-gradient(155deg, rgba(15, 23, 42, 0.96) 0%, rgba(49, 25, 92, 0.94) 100%);
+    box-shadow:
+      0 20px 50px rgba(15, 23, 42, 0.35),
+      0 0 0 1px rgba(155, 77, 255, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+
+  .hero-workflow-card {
+    background:
+      linear-gradient(155deg, rgba(12, 8, 32, 0.98) 0%, rgba(28, 14, 58, 0.97) 42%, rgba(18, 10, 40, 0.98) 100%);
+    box-shadow:
+      0 22px 48px rgba(15, 23, 42, 0.42),
+      0 0 32px rgba(86, 0, 227, 0.14),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      inset 0 -24px 48px rgba(86, 0, 227, 0.06);
+  }
+
+  .hero-workflow-mesh {
+    background-image:
+      radial-gradient(circle at 20% 15%, rgba(155, 77, 255, 0.28) 0%, transparent 42%),
+      radial-gradient(circle at 85% 90%, rgba(86, 0, 227, 0.22) 0%, transparent 38%),
+      linear-gradient(rgba(155, 77, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(155, 77, 255, 0.04) 1px, transparent 1px);
+    background-size: auto, auto, 14px 14px, 14px 14px;
+  }
+
+  .hero-notify-tail::after {
+    content: '';
+    position: absolute;
+    right: 14px;
+    top: -6px;
+    width: 12px;
+    height: 12px;
+    background: inherit;
+    border-top: 1px solid rgba(16, 185, 129, 0.25);
+    border-left: 1px solid rgba(16, 185, 129, 0.25);
+    transform: rotate(45deg);
+    border-radius: 2px 0 0 0;
+  }
+}
+
+@keyframes heroGlossSweep {
+  0%, 100% { transform: translateX(-60%) rotate(-12deg); opacity: 0; }
+  15%       { opacity: 0.6; }
+  50%       { transform: translateX(60%) rotate(-12deg); opacity: 0.85; }
+  85%       { opacity: 0; }
+}
+
+@keyframes heroChartPulse {
+  0%, 100% { opacity: 0.55; r: 6; }
+  50%       { opacity: 0.9; r: 9; }
+}
+
+@keyframes heroAurora {
+  0%, 100% { background-position: 0% 50%; }
+  50%       { background-position: 100% 50%; }
 }
 
 @keyframes heroShimmer {
   0%, 100% { filter: brightness(1); }
   50%       { filter: brightness(1.28); }
+}
+
+@keyframes cardShine {
+  0%   { transform: translateX(-120%) skewX(-18deg); opacity: 0; }
+  15%  { opacity: 1; }
+  100% { transform: translateX(220%) skewX(-18deg); opacity: 0; }
 }
 
 @keyframes shockwave {
@@ -32,4 +734,69 @@
   83%  { transform: translateX(78vw);   animation-timing-function: ease-in; }
   91%  { transform: translateX(96vw);   animation-timing-function: ease-in; }
   100% { transform: translateX(115vw); }
+}
+
+/* ── Trusted-by logo marquee ──
+   Two identical tracks sit side by side; translating the row by -50% loops
+   seamlessly. Driven by CSS (not JS) so it stays buttery and can pause on
+   hover via a simple play-state toggle. */
+@keyframes trustedMarquee {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
+.trusted-marquee-track {
+  animation: trustedMarquee var(--trusted-marquee-duration, 42s) linear infinite;
+  will-change: transform;
+}
+
+/* Pause the whole wall while a visitor inspects a logo / reads its tooltip. */
+.trusted-marquee:hover .trusted-marquee-track {
+  animation-play-state: paused;
+}
+
+/* ── Testimonials proof marquee ──
+   Two rows of verified-review cards drift in opposite directions for a
+   living, premium "wall of proof". Same seamless -50% loop as the logo
+   wall; the whole row pauses on hover so a card can actually be read. */
+@keyframes testimonialMarquee {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+@keyframes testimonialMarqueeReverse {
+  from { transform: translate3d(-50%, 0, 0); }
+  to   { transform: translate3d(0, 0, 0); }
+}
+
+.testimonial-marquee-track {
+  animation: testimonialMarquee var(--testimonial-marquee-duration, 64s) linear infinite;
+  will-change: transform;
+}
+.testimonial-marquee-track--reverse {
+  animation-name: testimonialMarqueeReverse;
+}
+
+/* Pause the drifting row while a visitor reads a review. */
+.testimonial-marquee:hover .testimonial-marquee-track {
+  animation-play-state: paused;
+}
+
+/* Respect users who prefer reduced motion: calm the ambient/looping effects. */
+@media (prefers-reduced-motion: reduce) {
+  [style*="heroShimmer"] {
+    animation: none !important;
+  }
+  .group:hover .card-shine-sweep::after {
+    animation: none !important;
+  }
+  .trusted-marquee-track,
+  .testimonial-marquee-track {
+    animation: none !important;
+    transform: none !important;
+  }
+  /* Let the row be scanned manually when the loop is disabled. */
+  .trusted-marquee,
+  .testimonial-marquee {
+    overflow-x: auto;
+  }
 }
