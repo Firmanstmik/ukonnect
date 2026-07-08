@@ -6,7 +6,18 @@ import { EASE_OUT } from '../motion';
 const ContactFormModal = lazy(() => import('../ContactFormModal').then(m => ({ default: m.ContactFormModal })));
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-type SceneItem = { title: string; image: string; detail: string; focal?: string; preview: 'wide' | 'panoramic' | 'tall' | 'editorial' };
+type DocumentaryScene = {
+    title: string;
+    label: string;
+    detail: string;
+    note: string;
+    alt: string;
+    mediaType: 'image' | 'video';
+    src: string;
+    poster?: string;
+    focal?: string;
+    frame: 'landscape' | 'panoramic';
+};
 type JourneyStep = { title: string; image: string; micro: string; focal?: string; ratio: string };
 type RoomCard = {
     title: string;
@@ -88,6 +99,34 @@ function HeroFramedImage({ image, alt, focal }: { image: string; alt: string; fo
     );
 }
 
+function EditorialFrame({
+    children,
+    className,
+}: {
+    children: React.ReactNode;
+    className?: string;
+}) {
+    return (
+        <div className={`group relative ${className ?? ''}`}>
+            <div className="pointer-events-none absolute -inset-x-8 -top-12 -bottom-10 -z-10" aria-hidden="true">
+                <div className="absolute left-1/2 top-1/2 h-[78%] w-[80%] -translate-x-1/2 -translate-y-1/2 rounded-[3.2rem] bg-[radial-gradient(circle_at_center,rgba(155,77,255,0.18),transparent_68%)] blur-[92px]" />
+            </div>
+
+            <motion.div
+                whileHover={{ y: -5 }}
+                transition={{ duration: 0.65, ease: EASE_OUT }}
+                className="relative rounded-[1.7rem] md:rounded-[2.15rem] border border-white/80 bg-gradient-to-b from-white via-white to-[#f3f0ea] p-2.5 md:p-3.5 shadow-[0_1px_0_rgba(255,255,255,0.88)_inset,0_28px_64px_-30px_rgba(15,23,42,0.42),0_80px_140px_-58px_rgba(86,0,227,0.36)]"
+            >
+                <div className="relative overflow-hidden rounded-[1.2rem] md:rounded-[1.55rem] bg-[#ebe6dd] ring-1 ring-inset ring-slate-900/10">
+                    {children}
+                    <div className="pointer-events-none absolute inset-0 shadow-[inset_0_1px_0_rgba(255,255,255,0.58),inset_0_0_0_1px_rgba(255,255,255,0.05),inset_0_-48px_90px_rgba(15,23,42,0.1)]" />
+                    <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_42%,rgba(15,23,42,0.14)_100%)]" />
+                </div>
+            </motion.div>
+        </div>
+    );
+}
+
 function StoryCard({
     children,
     className,
@@ -128,105 +167,135 @@ function SectionHeading({
     );
 }
 
-// Predefined premium preview layouts. Each selected scene picks one; the frame
-// animates smoothly between them (Apple Photos-style adaptive frame).
-const PREVIEW_LAYOUTS: Record<SceneItem['preview'], string> = {
-    wide: 'aspect-[4/3] md:aspect-[3/2]',
+const DOCUMENTARY_LAYOUTS: Record<DocumentaryScene['frame'], string> = {
+    landscape: 'aspect-[4/3] md:aspect-[3/2]',
     panoramic: 'aspect-[16/10] md:aspect-[16/9]',
-    tall: 'aspect-[4/5]',
-    editorial: 'aspect-[5/4] md:aspect-[16/10]',
 };
 
-function BehindSystemsExperience({ scenes }: { scenes: SceneItem[] }) {
+function DocumentarySceneMedia({ scene }: { scene: DocumentaryScene }) {
+    if (scene.mediaType === 'video') {
+        return (
+            <video
+                key={scene.src}
+                className="h-full w-full object-cover transition-transform duration-[1800ms] ease-out will-change-transform group-hover:scale-[1.025]"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                poster={scene.poster}
+                style={scene.focal ? { objectPosition: scene.focal } : undefined}
+            >
+                <source src={scene.src} type="video/mp4" />
+            </video>
+        );
+    }
+
+    return <StoryImage image={scene.src} alt={scene.alt} focal={scene.focal} zoom className="h-full w-full object-cover" />;
+}
+
+function BehindSystemsExperience({ scenes }: { scenes: DocumentaryScene[] }) {
     const [active, setActive] = useState(0);
     const featured = scenes[active];
 
     return (
-        <div className="mt-8 grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-5 items-start">
-            <motion.div
-                className="group relative"
+        <div className="mt-12 grid grid-cols-1 gap-10 xl:grid-cols-[0.52fr_0.48fr] xl:items-start">
+            <div>
+                <Reveal>
+                    <div className="max-w-[30rem]">
+                        <p className="font-mono text-[11px] tracking-[0.28em] text-primary/68">DOCUMENTARY / CHAPTER 01</p>
+                        <h3 className="mt-3 text-[34px] md:text-[54px] leading-[0.96] tracking-[-0.035em] font-semibold text-slate-900">
+                            Behind the Systems
+                        </h3>
+                        <p className="mt-5 text-[16px] md:text-[18px] leading-relaxed text-slate-500">
+                            Captured in Amsterdam. These aren&apos;t staged gestures or stock-office scenes. They&apos;re the real rooms, review loops, and desk-side decisions that shape delivery.
+                        </p>
+                    </div>
+                </Reveal>
+
+                <div className="mt-10 space-y-5 md:space-y-6">
+                    {scenes.map((scene, idx) => {
+                        const isActive = idx === active;
+                        return (
+                            <motion.button
+                                key={scene.title}
+                                type="button"
+                                onClick={() => setActive(idx)}
+                                className="group w-full border-b border-slate-300/75 pb-5 text-left"
+                                whileHover={{ x: 4 }}
+                                whileTap={{ scale: 0.998 }}
+                                transition={{ duration: 0.45, ease: EASE_OUT }}
+                            >
+                                <div className="flex gap-4 md:gap-5">
+                                    <span className={`pt-0.5 font-mono text-[10px] md:text-[11px] tracking-[0.2em] tabular-nums transition-colors ${
+                                        isActive ? 'text-primary/80' : 'text-slate-400 group-hover:text-primary/60'
+                                    }`}>
+                                        0{idx + 1}
+                                    </span>
+                                    <div className="min-w-0">
+                                        <p className={`text-[11px] font-semibold uppercase tracking-[0.22em] transition-colors ${
+                                            isActive ? 'text-primary/75' : 'text-slate-400 group-hover:text-primary/65'
+                                        }`}>
+                                            {scene.label}
+                                        </p>
+                                        <p className={`mt-2 text-[21px] md:text-[26px] leading-[1.08] tracking-[-0.03em] transition-colors ${
+                                            isActive ? 'text-slate-900' : 'text-slate-700 group-hover:text-slate-900'
+                                        }`}>
+                                            {scene.title}
+                                        </p>
+                                        <p className="mt-2.5 max-w-[34ch] text-[14px] md:text-[15px] leading-relaxed text-slate-500">
+                                            {scene.note}
+                                        </p>
+                                    </div>
+                                </div>
+                            </motion.button>
+                        );
+                    })}
+                </div>
+            </div>
+
+            <motion.figure
+                className="relative"
                 initial={{ opacity: 0, scale: 0.985 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true, margin: '-80px' }}
                 transition={{ duration: 0.8, ease: EASE_OUT }}
             >
-                <motion.div
-                    layout
-                    transition={{ layout: { duration: 0.6, ease: EASE } }}
-                    style={{ borderRadius: '2rem' }}
-                    className={`relative overflow-hidden border border-white/75 bg-white/10 backdrop-blur-xl shadow-[0_22px_80px_rgba(86,0,227,0.13),0_8px_32px_rgba(15,23,42,0.08)] ${PREVIEW_LAYOUTS[featured.preview]}`}
-                >
+                <EditorialFrame>
                     <motion.div
-                        key={featured.image}
-                        initial={{ opacity: 0.3, scale: 1.04 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.7, ease: EASE }}
-                        className="absolute inset-0"
+                        layout
+                        transition={{ layout: { duration: 0.6, ease: EASE } }}
+                        className={`relative ${DOCUMENTARY_LAYOUTS[featured.frame]}`}
                     >
-                        <StoryImage image={featured.image} alt={featured.title} focal={featured.focal} zoom className="h-full w-full object-cover" />
+                        <motion.div
+                            key={`${featured.src}-${featured.mediaType}`}
+                            initial={{ opacity: 0.32, scale: 1.035 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.72, ease: EASE }}
+                            className="absolute inset-0"
+                        >
+                            <DocumentarySceneMedia scene={featured} />
+                        </motion.div>
+                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/18 via-transparent to-white/6" />
+                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#5600e3]/8 via-transparent to-[#9b4dff]/8" />
+                        <div className="absolute left-4 top-4 rounded-full border border-white/65 bg-white/82 px-3 py-1.5 shadow-[0_12px_28px_rgba(15,23,42,0.12)] backdrop-blur-sm sm:left-5 sm:top-5">
+                            <p className="font-mono text-[10px] tracking-[0.24em] text-slate-600">CAPTURED IN AMSTERDAM</p>
+                        </div>
                     </motion.div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/62 via-slate-950/18 to-transparent" />
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#5600e3]/16 via-transparent to-[#9b4dff]/14" />
-                    <div className="absolute inset-0 pointer-events-none ring-1 ring-inset ring-white/15" />
+                </EditorialFrame>
 
-                    <div className="absolute left-5 top-5 z-10 rounded-xl border border-white/30 bg-white/12 backdrop-blur-md px-3.5 py-2.5">
-                        <p className="font-mono text-[10px] tracking-[0.24em] text-white/75 tabular-nums">CHAPTER</p>
-                        <p className="mt-0.5 font-mono text-[12px] font-semibold tracking-[0.18em] text-white/90 tabular-nums">
-                            0{active + 1} / 0{scenes.length}
+                <figcaption className="mt-6 flex flex-col gap-4 md:mt-7 md:flex-row md:items-end md:justify-between">
+                    <div>
+                        <p className="font-mono text-[11px] tracking-[0.28em] text-primary/68">SCENE 0{active + 1}</p>
+                        <p className="mt-2 text-[24px] md:text-[31px] font-semibold tracking-[-0.03em] text-slate-900">
+                            {featured.title}
                         </p>
                     </div>
-
-                    <motion.div layout className="absolute left-5 right-5 bottom-5 sm:left-6 sm:right-6 sm:bottom-6">
-                        <motion.div
-                            key={`${featured.title}-cap`}
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.55, ease: EASE_OUT }}
-                            className="rounded-2xl border border-white/35 bg-white/14 backdrop-blur-md px-4 py-3.5 shadow-[0_16px_48px_rgba(0,0,0,0.22)]"
-                        >
-                            <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-white/88">{featured.title}</p>
-                            <p className="mt-1.5 text-[13px] leading-relaxed text-white/92">{featured.detail}</p>
-                        </motion.div>
-                    </motion.div>
-                </motion.div>
-            </motion.div>
-
-            <div className="grid grid-cols-2 lg:grid-cols-1 gap-3.5 sm:gap-4 lg:h-[480px]">
-                {scenes.map((scene, idx) => {
-                    const isActive = idx === active;
-                    return (
-                        <motion.button
-                            key={scene.title}
-                            type="button"
-                            onClick={() => setActive(idx)}
-                            className={`group relative min-h-[92px] sm:min-h-[104px] lg:min-h-0 overflow-hidden rounded-[1.35rem] border text-left transition-all ${
-                                isActive
-                                    ? 'border-primary/40 bg-white/15 shadow-[0_16px_44px_rgba(86,0,227,0.2)] ring-1 ring-primary/20'
-                                    : 'border-white/60 bg-white/10 hover:border-primary/25'
-                            }`}
-                            whileHover={{ y: -3 }}
-                            transition={{ duration: 0.5, ease: EASE_OUT }}
-                        >
-                            <div className="absolute inset-0">
-                                <StoryImage
-                                    image={scene.image}
-                                    alt={scene.title}
-                                    focal={scene.focal}
-                                    className={`h-full w-full object-cover transition-opacity duration-500 ${
-                                        isActive ? 'opacity-78 group-hover:opacity-85' : 'opacity-58 group-hover:opacity-72'
-                                    }`}
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/68 via-slate-950/12 to-transparent" />
-                                <div className={`absolute inset-0 pointer-events-none ${isActive ? 'ring-1 ring-inset ring-primary/25' : ''}`} />
-                            </div>
-                            <div className="relative flex items-end justify-between gap-3 p-3.5 sm:p-4">
-                                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/85">{scene.title}</p>
-                                <span className="font-mono text-[10px] tracking-[0.2em] text-white/65 tabular-nums">0{idx + 1}</span>
-                            </div>
-                        </motion.button>
-                    );
-                })}
-            </div>
+                    <p className="max-w-[29ch] text-[14px] md:text-[15px] leading-relaxed text-slate-500 md:text-right">
+                        {featured.detail}
+                    </p>
+                </figcaption>
+            </motion.figure>
         </div>
     );
 }
@@ -439,7 +508,6 @@ function FounderEditorial({ image }: { image: string }) {
 
 export function CompanyStoryExperience() {
     const [modalOpen, setModalOpen] = useState(false);
-    const [activePeoplePanel, setActivePeoplePanel] = useState(1);
 
     const assets = useMemo(
         () => ({
@@ -463,17 +531,59 @@ export function CompanyStoryExperience() {
             cultureMentoring: '/assets/company/culture-mentoring.webp',
             cultureTeam: '/assets/company/culture-team.webp',
             cultureFocus: '/assets/company/culture-focus.webp',
+            collabLoop: '/assets/company/collab-loop.mp4',
+            collabLoopPoster: '/assets/company/collab-loop-poster.webp',
         }),
         [],
     );
 
-    const scenes: SceneItem[] = useMemo(
+    const scenes: DocumentaryScene[] = useMemo(
         () => [
-            { title: 'Meeting', image: assets.meeting, detail: 'Direction gets clear before execution starts.', focal: 'center 38%', preview: 'wide' },
-            { title: 'Planning', image: assets.planning, detail: 'Priorities align across design, data, and growth.', focal: 'center 36%', preview: 'wide' },
-            { title: 'Design', image: assets.design, detail: 'Experience and system logic are shaped together.', focal: 'center 32%', preview: 'wide' },
-            { title: 'Development', image: assets.devCollab, detail: 'We build fast, but we ship stable.', focal: 'center 26%', preview: 'tall' },
-            { title: 'Client workshop', image: assets.workshop, detail: 'Every decision is grounded in client outcomes.', focal: 'center 36%', preview: 'panoramic' },
+            {
+                title: 'Desk-side build review',
+                label: 'Operators at work',
+                detail: 'Two teammates working through the logic together, before it becomes production behaviour.',
+                note: 'The strongest moving asset in the library: natural body language, clear gestures, and a real sense of hands-on problem solving.',
+                alt: 'Two Ukonnect teammates reviewing build logic together on a laptop',
+                mediaType: 'video',
+                src: assets.collabLoop,
+                poster: assets.collabLoopPoster,
+                focal: 'center center',
+                frame: 'panoramic',
+            },
+            {
+                title: 'Direction gets aligned in the room.',
+                label: 'Boardroom session',
+                detail: 'Leadership, delivery, and growth share the same table before execution starts.',
+                note: 'It has the best group energy of the meeting stills without feeling staged or overly posed.',
+                alt: 'Ukonnect team reviewing direction together around a boardroom table',
+                mediaType: 'image',
+                src: assets.meeting,
+                focal: 'center 34%',
+                frame: 'landscape',
+            },
+            {
+                title: 'The sprint takes shape before the sprint starts.',
+                label: 'Planning wall',
+                detail: 'Design, delivery, and priorities are mapped in one conversation instead of handed off in pieces.',
+                note: 'Strong eye-lines and depth make this feel candid, collaborative, and grounded in real working rhythm.',
+                alt: 'Ukonnect team planning work together around a laptop and whiteboard',
+                mediaType: 'image',
+                src: assets.planning,
+                focal: 'center 34%',
+                frame: 'landscape',
+            },
+            {
+                title: 'Questions are resolved in front of the system.',
+                label: 'Workshop floor',
+                detail: 'Client-facing decisions happen live, with the whiteboard and the room carrying the discussion.',
+                note: 'The framing is clean and documentary-like, with enough air around the scene to feel premium rather than busy.',
+                alt: 'A workshop session with Ukonnect presenting in front of a whiteboard',
+                mediaType: 'image',
+                src: assets.workshop,
+                focal: 'center 38%',
+                frame: 'panoramic',
+            },
         ],
         [assets],
     );
@@ -512,9 +622,9 @@ export function CompanyStoryExperience() {
     );
 
     const peoplePanels = [
-        { title: 'System Architects', body: 'Designing the intelligence behind every workflow.' },
-        { title: 'Automation Engineers', body: 'Shipping reliable AI systems into daily operations.' },
-        { title: 'Growth Strategists', body: 'Turning technical capability into commercial outcomes.' },
+        { title: 'System Architects', body: 'Mapping the logic, constraints, and customer journey before automation enters the room.' },
+        { title: 'Automation Engineers', body: 'Turning those decisions into reliable working systems that can survive daily use.' },
+        { title: 'Growth Strategists', body: 'Keeping every technical choice tied to adoption, outcomes, and commercial reality.' },
     ];
 
     return (
@@ -529,20 +639,30 @@ export function CompanyStoryExperience() {
                 {/* SECTION 1 */}
                 <div>
                     <Reveal>
-                        <div className="flex items-center gap-3.5">
-                            <span className="font-mono text-[12px] md:text-[13px] font-medium tracking-[0.28em] text-primary/70">00</span>
-                            <span className="h-px w-8 md:w-12 bg-gradient-to-r from-primary/45 to-transparent" />
-                            <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.24em] text-primary/70">Built by People. Powered by AI.</p>
+                        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(240px,0.34fr)] lg:items-end">
+                            <div>
+                                <div className="flex items-center gap-3.5">
+                                    <span className="font-mono text-[12px] md:text-[13px] font-medium tracking-[0.28em] text-primary/70">00</span>
+                                    <span className="h-px w-8 md:w-12 bg-gradient-to-r from-primary/45 to-transparent" />
+                                    <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.24em] text-primary/70">Built by People. Powered by AI.</p>
+                                </div>
+                                <h2 className="mt-5 max-w-[13ch] text-[40px] md:text-[68px] lg:text-[84px] leading-[0.92] tracking-[-0.05em] font-semibold text-slate-900">
+                                    The people behind the systems.
+                                </h2>
+                                <p className="mt-6 max-w-[44ch] text-[16px] md:text-[18px] leading-relaxed text-slate-500">
+                                    Not models. Not placeholders. The actual team shaping strategy, automation, and delivery inside Ukonnect.
+                                </p>
+                            </div>
+
+                            <div className="max-w-[24ch] lg:justify-self-end">
+                                <div className="border-l border-slate-300/80 pl-5">
+                                    <p className="font-mono text-[11px] tracking-[0.28em] text-primary/68">AMSTERDAM / STUDIO FLOOR</p>
+                                    <p className="mt-3 text-[14px] leading-relaxed text-slate-500">
+                                        Photographed during regular working sessions, so the section opens with evidence instead of marketing theatre.
+                                    </p>
+                                </div>
+                            </div>
                         </div>
-                        <h2 className="mt-5 text-[40px] md:text-[68px] lg:text-[88px] leading-[0.9] tracking-[-0.035em] font-bold text-slate-900 max-w-[16ch]">
-                            The people behind
-                            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#5600e3] to-[#9b4dff]">
-                                every AI Growth System.
-                            </span>
-                        </h2>
-                        <p className="mt-6 max-w-[48ch] text-[16px] md:text-[18px] leading-relaxed text-slate-500">
-                            No stock photos. No outsourced faces. A real team building reliable AI growth systems — this is how the work actually happens.
-                        </p>
                     </Reveal>
 
                     <motion.div
@@ -552,61 +672,45 @@ export function CompanyStoryExperience() {
                         viewport={{ once: true, margin: '-90px' }}
                         transition={{ duration: 0.8, ease: EASE_OUT }}
                     >
-                        <figure className="group relative mx-auto max-w-[1200px]">
-                            {/* ambient glow — the print sits on light, not on the page */}
-                            <div className="pointer-events-none absolute -inset-x-6 -top-12 -bottom-8 -z-10" aria-hidden="true">
-                                <div className="absolute left-1/2 top-1/2 h-[84%] w-[86%] -translate-x-1/2 -translate-y-1/2 rounded-[3rem] bg-gradient-to-tr from-[#5600e3]/12 via-[#9b4dff]/10 to-transparent blur-[110px]" />
-                            </div>
-
-                            {/* layered mount — floating, elevated */}
-                            <motion.div
-                                whileHover={{ y: -6 }}
-                                transition={{ duration: 0.6, ease: EASE_OUT }}
-                                className="relative rounded-[1.5rem] md:rounded-[2rem] border border-white/75 bg-gradient-to-b from-white via-white to-slate-50/80 p-2 sm:p-2.5 md:p-3.5 shadow-[0_1px_0_rgba(255,255,255,0.85)_inset,0_24px_56px_-28px_rgba(15,23,42,0.45),0_72px_120px_-48px_rgba(86,0,227,0.38)]"
-                            >
-                                {/* Native 3:2 frame — matches source photo, preserves every head */}
-                                <div className="relative overflow-hidden rounded-[1.05rem] md:rounded-[1.5rem] ring-1 ring-inset ring-slate-900/10">
-                                    <div className="relative aspect-[3/2] w-full">
+                        <figure className="relative mx-auto max-w-[1180px]">
+                            <EditorialFrame>
+                                <div className="relative aspect-[4/3] w-full">
+                                    <div className="absolute inset-0">
                                         <HeroFramedImage image={assets.teamHero} alt="The Ukonnect team, together" focal="center 22%" />
-                                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/12 via-transparent to-white/5" />
                                     </div>
-                                    <div className="pointer-events-none absolute inset-0 rounded-[1.05rem] md:rounded-[1.5rem] ring-1 ring-inset ring-white/30" />
+                                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/12 via-transparent to-white/8" />
+                                    <div className="absolute left-4 top-4 rounded-full border border-white/65 bg-white/82 px-3 py-1.5 shadow-[0_12px_28px_rgba(15,23,42,0.12)] backdrop-blur-sm sm:left-5 sm:top-5">
+                                        <p className="font-mono text-[10px] tracking-[0.24em] text-slate-600">DOCUMENTARY OPENING</p>
+                                    </div>
                                 </div>
-                            </motion.div>
+                            </EditorialFrame>
 
-                            {/* editorial caption — museum plate, not a UI chip */}
-                            <figcaption className="mt-6 md:mt-8 flex flex-col gap-3 pl-0.5 md:flex-row md:items-end md:justify-between">
+                            <figcaption className="mt-7 flex flex-col gap-4 pl-0.5 md:mt-8 md:flex-row md:items-end md:justify-between">
                                 <div>
-                                    <p className="font-mono text-[11px] md:text-[12px] tracking-[0.3em] text-primary/70">DOCUMENTARY&nbsp;&nbsp;№&nbsp;01</p>
-                                    <p className="mt-2.5 text-[22px] md:text-[30px] font-semibold tracking-[-0.02em] text-slate-900 leading-[1.15]">
-                                        Real people. Real systems. Real execution.
+                                    <p className="font-mono text-[11px] md:text-[12px] tracking-[0.3em] text-primary/70">DOCUMENTARY&nbsp;&nbsp;№&nbsp;00</p>
+                                    <p className="mt-2.5 text-[22px] md:text-[31px] font-semibold tracking-[-0.03em] text-slate-900 leading-[1.12]">
+                                        Real people. Real rooms. Real operating rhythm.
                                     </p>
                                 </div>
                                 <p className="text-[13px] md:text-[14px] leading-relaxed text-slate-400 md:max-w-[26ch] md:text-right">
-                                    The team building AI growth systems that businesses actually use.
+                                    A company portrait that reads as a company portrait, not a startup stock-image substitute.
                                 </p>
                             </figcaption>
                         </figure>
 
-                        <div className="mt-9 grid grid-cols-1 sm:grid-cols-3 gap-x-8 gap-y-6">
+                        <div className="mt-10 grid grid-cols-1 gap-x-10 gap-y-7 sm:grid-cols-3">
                             {peoplePanels.map((panel, idx) => (
-                                <motion.button
+                                <Reveal
                                     key={panel.title}
-                                    type="button"
-                                    onClick={() => setActivePeoplePanel(idx)}
-                                    className="group text-left"
-                                    whileHover={{ y: -2 }}
-                                    transition={{ duration: 0.45, ease: EASE_OUT }}
+                                    delay={idx * 0.05}
+                                    className="border-t border-slate-300/80 pt-4"
                                 >
-                                    <div className={`h-px w-full origin-left transition-all duration-500 ${
-                                        activePeoplePanel === idx ? 'bg-primary/60 scale-x-100' : 'bg-slate-300/70 group-hover:bg-primary/40'
-                                    }`} />
-                                    <div className="mt-3.5 flex items-baseline gap-2.5">
-                                        <span className="font-mono text-[11px] tracking-[0.1em] text-primary/55 tabular-nums">0{idx + 1}</span>
-                                        <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-slate-800">{panel.title}</p>
+                                    <div className="flex items-baseline gap-2.5">
+                                        <span className="font-mono text-[11px] tracking-[0.18em] text-primary/55 tabular-nums">0{idx + 1}</span>
+                                        <p className="text-[12px] font-bold uppercase tracking-[0.2em] text-slate-800">{panel.title}</p>
                                     </div>
-                                    <p className="mt-2 text-[13.5px] leading-relaxed text-slate-500 max-w-[34ch]">{panel.body}</p>
-                                </motion.button>
+                                    <p className="mt-3 max-w-[34ch] text-[13.5px] leading-relaxed text-slate-500">{panel.body}</p>
+                                </Reveal>
                             ))}
                         </div>
                     </motion.div>
@@ -614,12 +718,6 @@ export function CompanyStoryExperience() {
 
                 {/* SECTION 2 */}
                 <div className="mt-24 md:mt-32 lg:mt-40">
-                    <SectionHeading
-                        index="01 / 05"
-                        eyebrow="Behind the Systems"
-                        title="Step inside how Ukonnect runs."
-                        subtitle="A curated flow of moments from strategy to delivery."
-                    />
                     <BehindSystemsExperience scenes={scenes} />
                 </div>
 
