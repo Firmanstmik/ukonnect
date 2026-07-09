@@ -1,6 +1,6 @@
 import React, { Suspense, lazy, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight2, Flash, MagicStar, ShieldTick, TickCircle, TrendUp } from 'iconsax-react';
+import { ArrowRight2 } from 'iconsax-react';
 import { EASE_OUT } from '../motion';
 
 const ContactFormModal = lazy(() => import('../ContactFormModal').then(m => ({ default: m.ContactFormModal })));
@@ -26,7 +26,14 @@ type RoomCard = {
     pos: { top: string; left: string };
     focal?: string;
 };
-type CultureItem = { title: string; image: string; icon: React.ReactNode; focal?: string; span: string; label?: string };
+type CultureItem = {
+    title: string;
+    image: string;
+    focal?: string;
+    label: string;
+    detail: string;
+    note: string;
+};
 
 function Reveal({
     children,
@@ -827,73 +834,341 @@ function WorkJourney({ steps }: { steps: JourneyStep[] }) {
     );
 }
 
-function CultureFlow({ items }: { items: CultureItem[] }) {
+function CultureManifestTile({
+    item,
+    index,
+    active,
+    onSelect,
+    className,
+}: {
+    item: CultureItem;
+    index: number;
+    active: boolean;
+    onSelect: () => void;
+    className?: string;
+}) {
     return (
-        <div className="mt-9 grid grid-cols-2 lg:grid-cols-6 auto-rows-[150px] lg:auto-rows-[184px] gap-4">
-            {items.map((item, idx) => (
-                <Reveal key={item.title} delay={idx * 0.05} className={`${item.span} h-full`}>
-                    <motion.div
-                        className="group relative h-full w-full overflow-hidden rounded-[1.5rem] border border-white/70 bg-white/10"
-                        whileHover={{ y: -4 }}
-                        transition={{ duration: 0.5, ease: EASE_OUT }}
+        <motion.button
+            type="button"
+            onClick={onSelect}
+            aria-pressed={active}
+            className={`group relative overflow-hidden text-left transition-[box-shadow,transform] duration-700 ${className ?? ''}`}
+            whileHover={{ y: active ? 0 : -3 }}
+            whileTap={{ scale: 0.998 }}
+            transition={{ duration: 0.55, ease: EASE_OUT }}
+        >
+            <div
+                className={`relative h-full min-h-[148px] overflow-hidden rounded-[1.35rem] border bg-[#ebe6de] transition-all duration-700 md:rounded-[1.55rem] ${
+                    active
+                        ? 'border-primary/35 shadow-[0_24px_64px_-28px_rgba(86,0,227,0.42)] ring-1 ring-primary/18'
+                        : 'border-white/75 shadow-[0_10px_30px_-22px_rgba(15,23,42,0.22)] group-hover:border-primary/16'
+                }`}
+            >
+                <StoryImage
+                    image={item.image}
+                    alt={item.title}
+                    focal={item.focal}
+                    className={`h-full w-full object-cover transition-all duration-[1100ms] ease-out ${
+                        active ? 'scale-100 opacity-100' : 'scale-[1.03] opacity-[0.72] group-hover:scale-100 group-hover:opacity-88'
+                    }`}
+                />
+                <div
+                    className={`absolute inset-0 transition-opacity duration-700 ${
+                        active
+                            ? 'bg-gradient-to-t from-slate-950/62 via-slate-950/10 to-white/6'
+                            : 'bg-gradient-to-t from-slate-950/48 via-slate-950/8 to-transparent'
+                    }`}
+                />
+                <div className="pointer-events-none absolute inset-0 opacity-[0.08] mix-blend-soft-light bg-[linear-gradient(135deg,rgba(255,255,255,0.7)_0%,transparent_42%,rgba(15,23,42,0.22)_100%)]" />
+
+                <div className="absolute inset-x-0 top-0 flex items-start justify-between p-4 md:p-5">
+                    <span
+                        className={`font-mono text-[10px] tracking-[0.28em] tabular-nums transition-colors duration-500 ${
+                            active ? 'text-white/88' : 'text-white/58'
+                        }`}
                     >
-                        <StoryImage image={item.image} alt={item.title} focal={item.focal} zoom className="h-full w-full object-cover opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/72 via-slate-950/12 to-transparent" />
-                        <div className="absolute inset-x-0 bottom-0 flex items-center gap-2.5 p-4">
-                            <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/35 bg-white/14 text-white shadow-[0_8px_24px_rgba(86,0,227,0.25)]">
-                                {item.icon}
-                            </span>
-                            <span className="min-w-0">
-                                <span className="block text-[13.5px] font-semibold leading-tight text-white">{item.title}</span>
-                                {item.label ? <span className="mt-0.5 block text-[11px] tracking-wide text-white/70">{item.label}</span> : null}
-                            </span>
+                        0{index + 1}
+                    </span>
+                    <span
+                        className={`rounded-full border px-2.5 py-1 font-mono text-[8px] tracking-[0.26em] backdrop-blur-sm transition-colors duration-500 ${
+                            active
+                                ? 'border-white/35 bg-white/14 text-white/90'
+                                : 'border-white/18 bg-slate-950/18 text-white/62'
+                        }`}
+                    >
+                        {item.label.toUpperCase()}
+                    </span>
+                </div>
+
+                <div className="absolute inset-x-0 bottom-0 p-4 md:p-5">
+                    <p
+                        className={`text-[18px] font-semibold tracking-[-0.03em] transition-colors duration-500 md:text-[21px] ${
+                            active ? 'text-white' : 'text-white/88'
+                        }`}
+                    >
+                        {item.title}
+                    </p>
+                </div>
+
+                <span
+                    className={`absolute inset-x-5 bottom-0 h-px origin-left bg-gradient-to-r from-primary/70 to-transparent transition-transform duration-700 ${
+                        active ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-75'
+                    }`}
+                    aria-hidden
+                />
+            </div>
+        </motion.button>
+    );
+}
+
+function CultureManifest({ items }: { items: CultureItem[] }) {
+    const [active, setActive] = useState(0);
+    const current = items[active];
+
+    return (
+        <div className="mt-12 md:mt-14">
+            <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,220px)_minmax(0,1fr)] lg:gap-12 xl:grid-cols-[minmax(0,248px)_minmax(0,1fr)] xl:gap-16">
+                <Reveal className="lg:pt-1">
+                    <p className="font-mono text-[9px] tracking-[0.38em] text-primary/45">VALUES INDEX</p>
+                    <div className="relative mt-6">
+                        <span
+                            className="absolute bottom-2 left-[11px] top-2 w-px bg-gradient-to-b from-primary/28 via-slate-300/45 to-transparent"
+                            aria-hidden
+                        />
+                        <div className="space-y-1">
+                            {items.map((item, idx) => {
+                                const isActive = idx === active;
+                                return (
+                                    <motion.button
+                                        key={item.title}
+                                        type="button"
+                                        onClick={() => setActive(idx)}
+                                        aria-pressed={isActive}
+                                        className={`group relative w-full rounded-[1rem] px-4 py-3.5 text-left transition-all duration-500 ${
+                                            isActive
+                                                ? 'bg-white/72 shadow-[0_16px_40px_-28px_rgba(86,0,227,0.35)]'
+                                                : 'hover:bg-white/42'
+                                        }`}
+                                        whileHover={{ x: 2 }}
+                                        transition={{ duration: 0.45, ease: EASE_OUT }}
+                                    >
+                                        <span
+                                            className={`absolute left-[7px] top-1/2 h-2 w-2 -translate-y-1/2 rounded-full border transition-all duration-500 ${
+                                                isActive
+                                                    ? 'border-primary/45 bg-primary shadow-[0_0_0_5px_rgba(86,0,227,0.14)]'
+                                                    : 'border-slate-300/80 bg-white group-hover:border-primary/25'
+                                            }`}
+                                            aria-hidden
+                                        />
+                                        <div className="pl-5">
+                                            <p className="font-mono text-[9px] tracking-[0.28em] text-slate-400 tabular-nums">0{idx + 1}</p>
+                                            <p
+                                                className={`mt-1 text-[15px] font-semibold tracking-[-0.022em] transition-colors duration-500 ${
+                                                    isActive ? 'text-slate-900' : 'text-slate-700'
+                                                }`}
+                                            >
+                                                {item.title}
+                                            </p>
+                                            <p className="mt-0.5 text-[11px] tracking-wide text-slate-400">{item.label}</p>
+                                        </div>
+                                    </motion.button>
+                                );
+                            })}
                         </div>
-                    </motion.div>
+                    </div>
                 </Reveal>
-            ))}
+
+                <div className="grid auto-rows-[minmax(132px,auto)] grid-cols-12 gap-3 md:gap-4 md:auto-rows-[minmax(156px,auto)]">
+                    <CultureManifestTile
+                        item={items[0]}
+                        index={0}
+                        active={active === 0}
+                        onSelect={() => setActive(0)}
+                        className="col-span-12 sm:col-span-7 sm:row-span-2"
+                    />
+                    <CultureManifestTile
+                        item={items[1]}
+                        index={1}
+                        active={active === 1}
+                        onSelect={() => setActive(1)}
+                        className="col-span-6 sm:col-span-5"
+                    />
+                    <CultureManifestTile
+                        item={items[2]}
+                        index={2}
+                        active={active === 2}
+                        onSelect={() => setActive(2)}
+                        className="col-span-6 sm:col-span-5"
+                    />
+                    <CultureManifestTile
+                        item={items[3]}
+                        index={3}
+                        active={active === 3}
+                        onSelect={() => setActive(3)}
+                        className="col-span-6 sm:col-span-4"
+                    />
+                    <CultureManifestTile
+                        item={items[4]}
+                        index={4}
+                        active={active === 4}
+                        onSelect={() => setActive(4)}
+                        className="col-span-12 sm:col-span-8"
+                    />
+                </div>
+            </div>
+
+            <Reveal delay={0.08}>
+                <div className="relative mt-10 overflow-hidden rounded-[1.5rem] border border-white/78 bg-[linear-gradient(135deg,rgba(255,255,255,0.96)_0%,rgba(248,244,238,0.94)_48%,rgba(241,235,226,0.98)_100%)] p-6 md:mt-12 md:rounded-[1.85rem] md:p-8 lg:p-10">
+                    <div className="pointer-events-none absolute -right-16 -top-20 h-56 w-56 rounded-full bg-[radial-gradient(circle,rgba(155,77,255,0.14),transparent_68%)] blur-3xl" aria-hidden />
+                    <div className="relative grid gap-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:gap-12">
+                        <AnimatePresence mode="wait">
+                            <motion.div
+                                key={current.title}
+                                initial={{ opacity: 0, y: 8 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: 4 }}
+                                transition={{ duration: 0.45, ease: EASE_OUT }}
+                            >
+                                <p className="font-mono text-[9px] tracking-[0.34em] text-primary/52 md:text-[10px]">
+                                    MANIFEST NOTE · 0{active + 1}
+                                </p>
+                                <p className="mt-3 max-w-[34ch] text-[24px] font-semibold leading-[1.04] tracking-[-0.036em] text-slate-900 md:text-[30px]">
+                                    {current.detail}
+                                </p>
+                                <p className="mt-3 max-w-[48ch] text-[13px] leading-[1.78] text-slate-500 md:text-[14px]">
+                                    {current.note}
+                                </p>
+                            </motion.div>
+                        </AnimatePresence>
+                        <div className="md:max-w-[22ch] md:text-right">
+                            <span className="mb-3 hidden h-px w-12 bg-gradient-to-l from-primary/30 to-transparent md:ml-auto md:block" aria-hidden />
+                            <p className="text-[12px] leading-[1.76] text-slate-400">
+                                A values chapter, not a perks grid — each tile is evidence from the studio floor.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </Reveal>
         </div>
     );
 }
 
-function FounderEditorial({ image }: { image: string }) {
-    return (
-        <div className="mt-10 grid grid-cols-1 lg:grid-cols-[0.78fr_1.22fr] gap-10 lg:gap-16 items-center">
-            <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: '-80px' }}
-                transition={{ duration: 0.75, ease: EASE_OUT }}
-                className="relative"
-            >
-                <div className="group relative mx-auto aspect-[4/5] w-full max-w-[420px] overflow-hidden rounded-[1.75rem] shadow-[0_40px_100px_-35px_rgba(15,23,42,0.5)] lg:mx-0 lg:max-w-none">
-                    <StoryImage image={image} alt="Ukonnect leadership at work" focal="center top" zoom className="h-full w-full object-cover" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/25 via-transparent to-transparent" />
-                </div>
-                <div className="absolute -right-4 -bottom-4 rounded-2xl border border-white/70 bg-white/75 px-4 py-3 backdrop-blur-md shadow-[0_14px_40px_rgba(15,23,42,0.14)]">
-                    <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-primary/70">Leadership</p>
-                    <p className="mt-1 text-[14px] italic text-slate-700">The team behind Ukonnect</p>
-                </div>
-            </motion.div>
+function LeadershipStatement({ image }: { image: string }) {
+    const pillars = [
+        { kicker: '01', title: 'Strategy', body: 'Commercial clarity before automation enters the room.' },
+        { kicker: '02', title: 'Systems', body: 'Architecture that survives daily operations, not demos.' },
+        { kicker: '03', title: 'Growth', body: 'Outcomes tracked, refined, and scaled with accountability.' },
+    ];
 
-            <div>
-                <Reveal>
-                    <h3 className="text-[32px] md:text-[52px] leading-[0.98] font-bold tracking-[-0.03em] text-slate-900 max-w-[16ch]">
-                        We build long-term systems,
-                        <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#5600e3] to-[#9b4dff]">
-                            not short-term hype.
-                        </span>
-                    </h3>
-                </Reveal>
-                <Reveal delay={0.1}>
-                    <blockquote className="mt-8 border-l-2 border-primary/30 pl-6 md:pl-8 text-[21px] md:text-[30px] leading-[1.32] font-medium tracking-[-0.01em] text-slate-600 max-w-[24ch] md:max-w-[26ch]">
-                        “Turn AI into a reliable growth advantage for real businesses — with clarity, craftsmanship, and accountability.”
-                    </blockquote>
-                </Reveal>
-                <Reveal delay={0.18}>
-                    <p className="mt-8 text-[12px] uppercase tracking-[0.22em] font-semibold text-primary/70">
-                        Strategy · Systems · Growth
-                    </p>
-                </Reveal>
+    return (
+        <div className="relative mt-16 md:mt-24">
+            {/* Ambient Background Glow */}
+            <motion.div
+                animate={{
+                    backgroundPosition: ['0% 0%', '100% 100%', '0% 0%'],
+                }}
+                transition={{ duration: 15, ease: 'linear', repeat: Infinity }}
+                className="pointer-events-none absolute -left-20 top-0 h-[600px] w-[600px] rounded-full opacity-30 blur-[120px]"
+                style={{
+                    background: 'linear-gradient(45deg, rgba(86,0,227,0.15), rgba(155,77,255,0.1), rgba(255,77,155,0.05), rgba(86,0,227,0.15))',
+                    backgroundSize: '400% 400%',
+                }}
+                aria-hidden
+            />
+
+            <div className="grid grid-cols-1 gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-16 xl:gap-24">
+                <motion.div
+                    className="relative"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-100px' }}
+                    transition={{ duration: 1, ease: EASE_OUT }}
+                >
+                    <div className="relative mx-auto max-w-[480px] lg:mx-0 lg:max-w-none group">
+                        {/* The Living Frame */}
+                        <div className="relative rounded-[2.2rem] bg-white/10 p-[3px] backdrop-blur-2xl md:rounded-[2.7rem] shadow-[0_0_0_1px_rgba(255,255,255,0.2)_inset,0_32px_80px_-24px_rgba(15,23,42,0.3)]">
+                            
+                            {/* Animated Gradient Border using Framer Motion */}
+                            <div className="absolute inset-0 overflow-hidden rounded-[2.2rem] md:rounded-[2.7rem]">
+                                <motion.div
+                                    animate={{ rotate: 360 }}
+                                    transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
+                                    className="absolute left-1/2 top-1/2 aspect-square w-[150%] -translate-x-1/2 -translate-y-1/2 bg-[conic-gradient(from_0deg,transparent_0deg,transparent_120deg,rgba(155,77,255,0.8)_180deg,transparent_240deg)]"
+                                />
+                                {/* Inner mask to hollow out the rotating gradient */}
+                                <div className="absolute inset-[3px] rounded-[2.1rem] bg-[#fdfaf5] md:rounded-[2.6rem]" />
+                            </div>
+
+                            {/* Inner Image Wrapper */}
+                            <div className="relative aspect-[4/5] overflow-hidden rounded-[2.05rem] md:rounded-[2.55rem] bg-slate-900 shadow-[inset_0_0_0_1px_rgba(15,23,42,0.08)] m-[3px]">
+                                <StoryImage
+                                    image={image}
+                                    alt="Raffy, Ukonnect leadership"
+                                    focal="center 30%"
+                                    eager
+                                    className="h-full w-full object-cover transition-transform duration-[1500ms] group-hover:scale-[1.04]"
+                                />
+                                {/* Cinematic Overlays inside the image */}
+                                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/50 via-transparent to-white/10 mix-blend-overlay" />
+                                <div className="pointer-events-none absolute inset-0 opacity-[0.15] bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.8),transparent_40%)]" />
+                                <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.2)] rounded-[2rem] md:rounded-[2.5rem]" />
+                            </div>
+                        </div>
+
+                        {/* Floating Nameplate */}
+                        <motion.div 
+                            className="absolute -bottom-6 -right-2 md:-bottom-8 md:-right-8 rounded-[1.25rem] border border-white/60 bg-white/85 px-6 py-4 shadow-[0_20px_40px_-15px_rgba(15,23,42,0.15)] backdrop-blur-xl md:px-8 md:py-5 z-20"
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: '-50px' }}
+                            transition={{ duration: 0.8, delay: 0.2, ease: EASE_OUT }}
+                        >
+                            <p className="font-mono text-[9px] font-semibold tracking-[0.35em] text-primary/60 md:text-[10px]">LEADERSHIP</p>
+                            <p className="mt-1.5 text-[20px] font-bold tracking-[-0.03em] text-slate-900 md:text-[24px]">Raffy</p>
+                            <p className="mt-1 text-[13px] text-slate-500 md:text-[14px]">Strategy · Systems · Growth</p>
+                        </motion.div>
+                    </div>
+                </motion.div>
+
+                <div className="relative">
+                    <div className="relative z-10 lg:pl-4 xl:pl-8">
+                        <Reveal>
+                            <div className="flex items-center gap-4">
+                                <span className="h-px w-8 bg-gradient-to-r from-primary/50 to-transparent md:w-12" />
+                                <p className="font-mono text-[10px] font-medium tracking-[0.36em] text-primary/60 md:text-[11px]">FOUNDER STATEMENT</p>
+                            </div>
+                        </Reveal>
+
+                        <Reveal delay={0.1}>
+                            <h3 className="mt-8 max-w-[15ch] text-[36px] font-bold leading-[0.96] tracking-[-0.03em] text-slate-900 sm:text-[44px] md:mt-10 md:text-[54px] lg:text-[60px] xl:text-[68px]">
+                                We build long-term systems,
+                                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#5600e3] to-[#9b4dff]">
+                                    not short-term hype.
+                                </span>
+                            </h3>
+                        </Reveal>
+
+                        <Reveal delay={0.18}>
+                            <div className="relative mt-10 md:mt-14">
+                                <div className="absolute -left-4 -top-6 text-[100px] leading-none text-slate-200/60 font-serif md:-left-8 md:-top-8 md:text-[140px]" aria-hidden>“</div>
+                                <blockquote className="relative z-10 max-w-[28ch] text-[20px] font-medium leading-[1.4] tracking-[-0.015em] text-slate-600 sm:text-[24px] md:text-[28px] lg:text-[32px]">
+                                    Turn AI into a reliable growth advantage for real businesses — with clarity, craftsmanship, and accountability.
+                                </blockquote>
+                            </div>
+                        </Reveal>
+
+                        <Reveal delay={0.25}>
+                            <div className="mt-12 grid gap-8 border-t border-slate-200/60 pt-8 sm:grid-cols-3 md:mt-16 md:gap-10 md:pt-10">
+                                {pillars.map((pillar, idx) => (
+                                    <div key={pillar.title} className="relative">
+                                        <p className="font-mono text-[10px] font-medium tracking-[0.2em] text-primary/50">0{idx + 1} // {pillar.title.toUpperCase()}</p>
+                                        <p className="mt-3 text-[13.5px] leading-[1.7] text-slate-500 md:text-[14.5px]">{pillar.body}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </Reveal>
+                    </div>
+                </div>
             </div>
         </div>
     );
@@ -908,7 +1183,7 @@ export function CompanyStoryExperience() {
             meeting: '/assets/company/meeting-boardroom.webp',
             teamCollab: '/assets/company/team-collaboration.webp',
             officeWide: '/assets/company/office-wide.webp',
-            founder: '/assets/company/founder-portrait.webp',
+            founder: '/assets/company/founder-raffy.webp',
             strategy: '/assets/company/strategy-whiteboard.webp',
             workshop: '/assets/company/workshop-whiteboard.webp',
             handshake: '/assets/company/client-handshake.webp',
@@ -1005,11 +1280,46 @@ export function CompanyStoryExperience() {
 
     const culture: CultureItem[] = useMemo(
         () => [
-            { title: 'Ownership', image: assets.cultureFocus, icon: <ShieldTick size={16} variant="Bulk" color="#ffffff" />, focal: 'center 22%', span: 'col-span-2 row-span-2 lg:col-span-2 lg:row-span-2', label: 'Deep work' },
-            { title: 'Innovation', image: assets.cultureEnergy, icon: <MagicStar size={16} variant="Bulk" color="#ffffff" />, focal: 'center 40%', span: 'col-span-2 lg:col-span-4', label: 'Momentum' },
-            { title: 'Execution', image: assets.cultureMeeting, icon: <TickCircle size={16} variant="Bulk" color="#ffffff" />, focal: 'center 38%', span: 'col-span-1 lg:col-span-2' },
-            { title: 'Curiosity', image: assets.cultureMentoring, icon: <Flash size={16} variant="Bulk" color="#ffffff" />, focal: 'center 32%', span: 'col-span-1 lg:col-span-2' },
-            { title: 'Growth', image: assets.cultureTeam, icon: <TrendUp size={16} variant="Bulk" color="#ffffff" />, focal: 'center 34%', span: 'col-span-2 lg:col-span-6', label: 'Together' },
+            {
+                title: 'Ownership',
+                image: assets.cultureFocus,
+                focal: 'center 22%',
+                label: 'Deep work',
+                detail: 'Everyone owns outcomes end-to-end — not tickets waiting in a queue.',
+                note: 'Photographed during focused build sessions where accountability is visible in the room, not on a slide.',
+            },
+            {
+                title: 'Innovation',
+                image: assets.cultureEnergy,
+                focal: 'center 40%',
+                label: 'Momentum',
+                detail: 'New ideas get tested against production standards, not pitch decks.',
+                note: 'The energy in the studio when experiments move fast — but still have to survive real operations.',
+            },
+            {
+                title: 'Execution',
+                image: assets.cultureMeeting,
+                focal: 'center 38%',
+                label: 'Alignment',
+                detail: 'Direction is resolved in the room before execution starts to fragment.',
+                note: 'A working meeting with enough proximity and eye contact to feel candid, not performative.',
+            },
+            {
+                title: 'Curiosity',
+                image: assets.cultureMentoring,
+                focal: 'center 32%',
+                label: 'Mentorship',
+                detail: 'Knowledge moves sideways across the team, not only top-down.',
+                note: 'Side-by-side review moments where questions are welcomed and resolved in front of the system.',
+            },
+            {
+                title: 'Growth',
+                image: assets.cultureTeam,
+                focal: 'center 34%',
+                label: 'Together',
+                detail: 'Progress is a team rhythm — strategy, build, and delivery in one operating cadence.',
+                note: 'A company portrait that reads as culture evidence, not a stock substitute for a real team.',
+            },
         ],
         [assets],
     );
@@ -1175,14 +1485,20 @@ export function CompanyStoryExperience() {
                         index="04 / 05"
                         eyebrow="Culture"
                         title="Ownership, innovation, execution, curiosity, growth."
+                        subtitle="A values manifest — indexed like an editorial chapter, not a tour interface."
                     />
-                    <CultureFlow items={culture} />
+                    <CultureManifest items={culture} />
                 </div>
 
                 {/* SECTION 6 */}
                 <div className="mt-24 md:mt-32 lg:mt-40">
-                    <SectionHeading index="05 / 05" eyebrow="Leadership" title="Built to outlast trends." />
-                    <FounderEditorial image={assets.founder} />
+                    <SectionHeading
+                        index="05 / 05"
+                        eyebrow="Leadership"
+                        title="Built to outlast trends."
+                        subtitle="A founder statement with portrait weight — strategy led from inside the studio."
+                    />
+                    <LeadershipStatement image={assets.founder} />
                 </div>
 
                 {/* SECTION 7 */}
