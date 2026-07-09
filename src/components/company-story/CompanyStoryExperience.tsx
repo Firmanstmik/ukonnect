@@ -18,7 +18,7 @@ type DocumentaryScene = {
     focal?: string;
     frame: 'landscape' | 'panoramic';
 };
-type JourneyStep = { title: string; image: string; micro: string; focal?: string; tag: string };
+type JourneyStep = { title: string; image: string; micro: string; focal?: string; tag: string; team: string };
 type RoomCard = {
     title: string;
     image: string;
@@ -815,7 +815,7 @@ function JourneyAluminumFrame({
                                 >
                                     <StoryImage
                                         image={step.image}
-                                        alt={step.title}
+                                        alt={`Ukonnect team — ${step.title}: ${step.team}`}
                                         focal={step.focal}
                                         zoom
                                         className="h-full w-full object-cover"
@@ -918,6 +918,7 @@ function WorkAIPlatform({ steps }: { steps: JourneyStep[] }) {
                                     {current.title}
                                 </h4>
                                 <p className="mt-3 text-[14px] leading-[1.7] text-slate-600 md:text-[15px]">{current.micro}</p>
+                                <p className="mt-2 text-[12px] font-medium tracking-[0.06em] text-primary/70 uppercase">Team · {current.team}</p>
                                 <p className="mt-3 text-[12.5px] leading-[1.68] text-slate-400">
                                     Each phase runs inside the same growth engine — context becomes architecture, architecture becomes automation, automation becomes measurable scale.
                                 </p>
@@ -937,7 +938,7 @@ function WorkAIPlatform({ steps }: { steps: JourneyStep[] }) {
                                             : 'border-slate-200/80 opacity-70 hover:opacity-100'
                                     }`}
                                 >
-                                    <StoryImage image={step.image} alt={step.title} focal={step.focal} className="h-full w-full object-cover" />
+                                    <StoryImage image={step.image} alt={`${step.title} — ${step.team}`} focal={step.focal} className="h-full w-full object-cover" />
                                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/55 to-transparent" />
                                     <span className="absolute bottom-1 left-1.5 font-mono text-[8px] text-white/90">0{idx + 1}</span>
                                 </button>
@@ -1315,11 +1316,11 @@ export function CompanyStoryExperience() {
 
     const journey: JourneyStep[] = useMemo(
         () => [
-            { title: 'Discover', image: assets.journeyDiscover, micro: 'Context mapping + target clarity', focal: 'center 42%', tag: 'SCAN' },
-            { title: 'Design', image: assets.journeyDesign, micro: 'System architecture + UX orchestration', focal: 'center 44%', tag: 'BLUEPRINT' },
-            { title: 'Build', image: assets.journeyBuild, micro: 'Integrations + automation logic + QA', focal: 'center 38%', tag: 'COMPILE' },
-            { title: 'Launch', image: assets.journeyLaunch, micro: 'Rollout + training + signal monitoring', focal: 'center 40%', tag: 'DEPLOY' },
-            { title: 'Scale', image: assets.journeyScale, micro: 'Optimization loops + growth multipliers', focal: 'center 46%', tag: 'MULTIPLY' },
+            { title: 'Discover', image: assets.journeyDiscover, micro: 'Context mapping + target clarity', focal: 'center 32%', tag: 'SCAN', team: 'Sander & Kirsten' },
+            { title: 'Design', image: assets.journeyDesign, micro: 'System architecture + UX orchestration', focal: 'center 28%', tag: 'BLUEPRINT', team: 'Bram' },
+            { title: 'Build', image: assets.journeyBuild, micro: 'Integrations + automation logic + QA', focal: 'center 30%', tag: 'COMPILE', team: 'Marco & Firman' },
+            { title: 'Launch', image: assets.journeyLaunch, micro: 'Rollout + training + signal monitoring', focal: 'center 32%', tag: 'DEPLOY', team: 'Edmerd & Paul' },
+            { title: 'Scale', image: assets.journeyScale, micro: 'Optimization loops + growth multipliers', focal: 'center 30%', tag: 'MULTIPLY', team: 'Afifah & Thiago' },
         ],
         [assets],
     );
