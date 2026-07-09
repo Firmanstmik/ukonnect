@@ -1122,116 +1122,123 @@ function LeadershipStatement({ image }: { image: string }) {
     ];
 
     return (
-        <div className="relative mt-16 md:mt-24">
-            {/* Ambient Background Glow */}
-            <motion.div
-                animate={{
-                    backgroundPosition: ['0% 0%', '100% 100%', '0% 0%'],
-                }}
-                transition={{ duration: 15, ease: 'linear', repeat: Infinity }}
-                className="pointer-events-none absolute -left-20 top-0 h-[600px] w-[600px] rounded-full opacity-30 blur-[120px]"
-                style={{
-                    background: 'linear-gradient(45deg, rgba(86,0,227,0.15), rgba(155,77,255,0.1), rgba(255,77,155,0.05), rgba(86,0,227,0.15))',
-                    backgroundSize: '400% 400%',
-                }}
-                aria-hidden
-            />
+        <motion.div
+            className="relative mt-10 md:mt-14"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.85, ease: EASE_OUT }}
+        >
+            <div className="pointer-events-none absolute -inset-x-8 -top-12 bottom-0 -z-10" aria-hidden>
+                <div className="absolute left-[6%] top-[10%] h-80 w-80 rounded-full bg-[radial-gradient(circle,rgba(155,77,255,0.14),transparent_68%)] blur-3xl" />
+                <div className="absolute right-[4%] bottom-[8%] h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(86,0,227,0.1),transparent_70%)] blur-3xl" />
+            </div>
 
-            <div className="grid grid-cols-1 gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-16 xl:gap-24">
-                <motion.div
-                    className="relative"
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-100px' }}
-                    transition={{ duration: 1, ease: EASE_OUT }}
-                >
-                    <div className="relative mx-auto max-w-[480px] lg:mx-0 lg:max-w-none group">
-                        {/* The Living Frame */}
-                        <div className="relative rounded-[2.2rem] bg-white/10 p-[3px] backdrop-blur-2xl md:rounded-[2.7rem] shadow-[0_0_0_1px_rgba(255,255,255,0.2)_inset,0_32px_80px_-24px_rgba(15,23,42,0.3)]">
-                            
-                            {/* Animated Gradient Border using Framer Motion */}
-                            <div className="absolute inset-0 overflow-hidden rounded-[2.2rem] md:rounded-[2.7rem]">
+            <div className="overflow-hidden rounded-[1.75rem] border border-slate-200/70 bg-[linear-gradient(155deg,#ffffff_0%,#faf7f2_42%,#f3ede4_100%)] shadow-[0_36px_90px_-40px_rgba(86,0,227,0.28)] md:rounded-[2.1rem]">
+                <div className="pointer-events-none absolute inset-0 opacity-[0.35] bg-[radial-gradient(circle_at_top_right,rgba(155,77,255,0.08),transparent_42%)]" aria-hidden />
+
+                <div className="relative grid grid-cols-1 lg:grid-cols-[0.88fr_1.12fr]">
+                    <div className="relative border-b border-slate-200/60 p-5 md:p-7 lg:border-b-0 lg:border-r lg:p-8">
+                        <div className="relative mx-auto max-w-[420px] lg:mx-0 lg:max-w-none">
+                            <div className="group relative">
                                 <motion.div
-                                    animate={{ rotate: 360 }}
-                                    transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
-                                    className="absolute left-1/2 top-1/2 aspect-square w-[150%] -translate-x-1/2 -translate-y-1/2 bg-[conic-gradient(from_0deg,transparent_0deg,transparent_120deg,rgba(155,77,255,0.8)_180deg,transparent_240deg)]"
+                                    animate={{ opacity: [0.35, 0.6, 0.35], scale: [1, 1.05, 1] }}
+                                    transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
+                                    className="pointer-events-none absolute -inset-4 rounded-[2rem] bg-[radial-gradient(circle_at_30%_20%,rgba(155,77,255,0.22),transparent_62%)] blur-2xl"
+                                    aria-hidden
                                 />
-                                {/* Inner mask to hollow out the rotating gradient */}
-                                <div className="absolute inset-[3px] rounded-[2.1rem] bg-[#fdfaf5] md:rounded-[2.6rem]" />
-                            </div>
 
-                            {/* Inner Image Wrapper */}
-                            <div className="relative aspect-[4/5] overflow-hidden rounded-[2.05rem] md:rounded-[2.55rem] bg-slate-900 shadow-[inset_0_0_0_1px_rgba(15,23,42,0.08)] m-[3px]">
-                                <StoryImage
-                                    image={image}
-                                    alt="Raffy, Ukonnect leadership"
-                                    focal="center 30%"
-                                    eager
-                                    className="h-full w-full object-cover transition-transform duration-[1500ms] group-hover:scale-[1.04]"
-                                />
-                                {/* Cinematic Overlays inside the image */}
-                                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/50 via-transparent to-white/10 mix-blend-overlay" />
-                                <div className="pointer-events-none absolute inset-0 opacity-[0.15] bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.8),transparent_40%)]" />
-                                <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.2)] rounded-[2rem] md:rounded-[2.5rem]" />
+                                <div className="relative overflow-hidden rounded-[1.5rem] p-[2px] shadow-[0_28px_70px_-28px_rgba(15,23,42,0.35)] md:rounded-[1.85rem]">
+                                    <motion.div
+                                        animate={{ rotate: 360 }}
+                                        transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+                                        className="pointer-events-none absolute left-1/2 top-1/2 aspect-square w-[160%] -translate-x-1/2 -translate-y-1/2 bg-[conic-gradient(from_0deg,transparent,rgba(155,77,255,0.55),transparent,rgba(245,230,200,0.45),transparent,rgba(86,0,227,0.5),transparent)]"
+                                        aria-hidden
+                                    />
+                                    <div className="absolute inset-[2px] rounded-[1.45rem] bg-[#fdfaf5] md:rounded-[1.8rem]" />
+
+                                    <div className="relative m-[2px] aspect-[4/5] overflow-hidden rounded-[1.4rem] bg-slate-900 md:rounded-[1.75rem]">
+                                        <StoryImage
+                                            image={image}
+                                            alt="Raffy, Ukonnect leadership"
+                                            focal="center 28%"
+                                            eager
+                                            zoom
+                                            className="h-full w-full object-cover"
+                                        />
+                                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/55 via-transparent to-white/10" />
+                                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-[#9b4dff]/10" />
+                                        <motion.div
+                                            animate={{ y: ['-120%', '220%'] }}
+                                            transition={{ duration: 6, repeat: Infinity, ease: 'linear' }}
+                                            className="pointer-events-none absolute inset-x-0 h-20 bg-[linear-gradient(180deg,transparent,rgba(255,255,255,0.12),transparent)] opacity-40"
+                                            aria-hidden
+                                        />
+                                    </div>
+                                </div>
+
+                                <motion.div
+                                    className="absolute -bottom-5 left-4 right-4 rounded-[1rem] border border-white/70 bg-white/88 px-5 py-3.5 shadow-[0_18px_40px_-18px_rgba(15,23,42,0.2)] backdrop-blur-xl md:-bottom-6 md:left-6 md:right-6 md:px-6 md:py-4"
+                                    initial={{ opacity: 0, y: 14 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ duration: 0.7, delay: 0.15, ease: EASE_OUT }}
+                                >
+                                    <div className="flex items-center justify-between gap-3">
+                                        <div>
+                                            <p className="font-mono text-[8px] tracking-[0.3em] text-primary/55">FOUNDER</p>
+                                            <p className="mt-1 text-[19px] font-bold tracking-[-0.03em] text-slate-900 md:text-[22px]">Raffy</p>
+                                        </div>
+                                        <div className="text-right">
+                                            <p className="font-mono text-[8px] tracking-[0.22em] text-slate-400">UKONNECT</p>
+                                            <p className="mt-1 text-[11px] text-slate-500">Strategy · Systems · Growth</p>
+                                        </div>
+                                    </div>
+                                </motion.div>
                             </div>
                         </div>
-
-                        {/* Floating Nameplate */}
-                        <motion.div 
-                            className="absolute -bottom-6 -right-2 md:-bottom-8 md:-right-8 rounded-[1.25rem] border border-white/60 bg-white/85 px-6 py-4 shadow-[0_20px_40px_-15px_rgba(15,23,42,0.15)] backdrop-blur-xl md:px-8 md:py-5 z-20"
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: '-50px' }}
-                            transition={{ duration: 0.8, delay: 0.2, ease: EASE_OUT }}
-                        >
-                            <p className="font-mono text-[9px] font-semibold tracking-[0.35em] text-primary/60 md:text-[10px]">LEADERSHIP</p>
-                            <p className="mt-1.5 text-[20px] font-bold tracking-[-0.03em] text-slate-900 md:text-[24px]">Raffy</p>
-                            <p className="mt-1 text-[13px] text-slate-500 md:text-[14px]">Strategy · Systems · Growth</p>
-                        </motion.div>
                     </div>
-                </motion.div>
 
-                <div className="relative">
-                    <div className="relative z-10 lg:pl-4 xl:pl-8">
-                        <Reveal>
-                            <div className="flex items-center gap-4">
-                                <span className="h-px w-8 bg-gradient-to-r from-primary/50 to-transparent md:w-12" />
-                                <p className="font-mono text-[10px] font-medium tracking-[0.36em] text-primary/60 md:text-[11px]">FOUNDER STATEMENT</p>
-                            </div>
-                        </Reveal>
+                    <div className="flex flex-col justify-center p-6 md:p-8 lg:p-10 xl:p-12">
+                        <p className="font-mono text-[9px] tracking-[0.34em] text-primary/55 md:text-[10px]">FOUNDER STATEMENT</p>
 
-                        <Reveal delay={0.1}>
-                            <h3 className="mt-8 max-w-[15ch] text-[36px] font-bold leading-[0.96] tracking-[-0.03em] text-slate-900 sm:text-[44px] md:mt-10 md:text-[54px] lg:text-[60px] xl:text-[68px]">
-                                We build long-term systems,
-                                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#5600e3] to-[#9b4dff]">
-                                    not short-term hype.
-                                </span>
-                            </h3>
-                        </Reveal>
+                        <h3 className="mt-5 max-w-[13ch] text-[34px] font-bold leading-[0.95] tracking-[-0.04em] text-slate-900 sm:text-[42px] md:mt-6 md:text-[50px] lg:text-[56px]">
+                            We build long-term systems,
+                            <span className="mt-1 block text-transparent bg-clip-text bg-gradient-to-r from-[#5600e3] via-[#7c3aed] to-[#9b4dff]">
+                                not short-term hype.
+                            </span>
+                        </h3>
 
-                        <Reveal delay={0.18}>
-                            <div className="relative mt-10 md:mt-14">
-                                <div className="absolute -left-4 -top-6 text-[100px] leading-none text-slate-200/60 font-serif md:-left-8 md:-top-8 md:text-[140px]" aria-hidden>“</div>
-                                <blockquote className="relative z-10 max-w-[28ch] text-[20px] font-medium leading-[1.4] tracking-[-0.015em] text-slate-600 sm:text-[24px] md:text-[28px] lg:text-[32px]">
-                                    Turn AI into a reliable growth advantage for real businesses — with clarity, craftsmanship, and accountability.
-                                </blockquote>
-                            </div>
-                        </Reveal>
+                        <div className="relative mt-8 md:mt-10">
+                            <span className="absolute -left-1 -top-5 font-serif text-[72px] leading-none text-slate-200/70 md:-top-7 md:text-[96px]" aria-hidden>
+                                &ldquo;
+                            </span>
+                            <blockquote className="relative z-10 max-w-[30ch] text-[18px] font-medium leading-[1.45] tracking-[-0.02em] text-slate-600 sm:text-[20px] md:text-[24px] lg:text-[26px]">
+                                Turn AI into a reliable growth advantage for real businesses — with clarity, craftsmanship, and accountability.
+                            </blockquote>
+                            <div className="mt-5 h-px w-16 bg-gradient-to-r from-primary/60 to-transparent" aria-hidden />
+                        </div>
 
-                        <Reveal delay={0.25}>
-                            <div className="mt-12 grid gap-8 border-t border-slate-200/60 pt-8 sm:grid-cols-3 md:mt-16 md:gap-10 md:pt-10">
-                                {pillars.map((pillar, idx) => (
-                                    <div key={pillar.title} className="relative">
-                                        <p className="font-mono text-[10px] font-medium tracking-[0.2em] text-primary/50">0{idx + 1} // {pillar.title.toUpperCase()}</p>
-                                        <p className="mt-3 text-[13.5px] leading-[1.7] text-slate-500 md:text-[14.5px]">{pillar.body}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        </Reveal>
+                        <div className="mt-8 grid gap-3 sm:grid-cols-3 md:mt-10">
+                            {pillars.map((pillar, idx) => (
+                                <motion.div
+                                    key={pillar.title}
+                                    className="group rounded-[1rem] border border-slate-200/70 bg-white/65 p-4 backdrop-blur-sm transition-all duration-500 hover:border-primary/25 hover:bg-white/90 hover:shadow-[0_14px_36px_-20px_rgba(86,0,227,0.25)]"
+                                    initial={{ opacity: 0, y: 12 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true, margin: '-40px' }}
+                                    transition={{ duration: 0.55, delay: 0.1 + idx * 0.08, ease: EASE_OUT }}
+                                    whileHover={{ y: -2 }}
+                                >
+                                    <p className="font-mono text-[9px] tracking-[0.22em] text-primary/50">0{pillar.kicker} // {pillar.title.toUpperCase()}</p>
+                                    <p className="mt-2.5 text-[12.5px] leading-[1.65] text-slate-500 md:text-[13px]">{pillar.body}</p>
+                                </motion.div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 }
 
@@ -1564,7 +1571,7 @@ export function CompanyStoryExperience() {
                         index="05 / 05"
                         eyebrow="Leadership"
                         title="Built to outlast trends."
-                        subtitle="A founder statement with portrait weight — strategy led from inside the studio."
+                        subtitle="A founder manifest inside one editorial panel — portrait, conviction, and operating pillars."
                     />
                     <LeadershipStatement image={assets.founder} />
                 </div>
