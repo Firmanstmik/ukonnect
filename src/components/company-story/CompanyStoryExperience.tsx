@@ -834,222 +834,158 @@ function WorkJourney({ steps }: { steps: JourneyStep[] }) {
     );
 }
 
-function CultureManifestTile({
+function CulturePaperFrame({
     item,
     index,
     active,
-    onSelect,
-    className,
 }: {
     item: CultureItem;
     index: number;
     active: boolean;
-    onSelect: () => void;
-    className?: string;
 }) {
     return (
-        <motion.button
-            type="button"
-            onClick={onSelect}
-            aria-pressed={active}
-            className={`group relative overflow-hidden text-left transition-[box-shadow,transform] duration-700 ${className ?? ''}`}
-            whileHover={{ y: active ? 0 : -3 }}
-            whileTap={{ scale: 0.998 }}
-            transition={{ duration: 0.55, ease: EASE_OUT }}
-        >
-            <div
-                className={`relative h-full min-h-[148px] overflow-hidden rounded-[1.35rem] border bg-[#ebe6de] transition-all duration-700 md:rounded-[1.55rem] ${
-                    active
-                        ? 'border-primary/35 shadow-[0_24px_64px_-28px_rgba(86,0,227,0.42)] ring-1 ring-primary/18'
-                        : 'border-white/75 shadow-[0_10px_30px_-22px_rgba(15,23,42,0.22)] group-hover:border-primary/16'
-                }`}
-            >
-                <StoryImage
-                    image={item.image}
-                    alt={item.title}
-                    focal={item.focal}
-                    className={`h-full w-full object-cover transition-all duration-[1100ms] ease-out ${
-                        active ? 'scale-100 opacity-100' : 'scale-[1.03] opacity-[0.72] group-hover:scale-100 group-hover:opacity-88'
-                    }`}
-                />
-                <div
-                    className={`absolute inset-0 transition-opacity duration-700 ${
-                        active
-                            ? 'bg-gradient-to-t from-slate-950/62 via-slate-950/10 to-white/6'
-                            : 'bg-gradient-to-t from-slate-950/48 via-slate-950/8 to-transparent'
-                    }`}
-                />
-                <div className="pointer-events-none absolute inset-0 opacity-[0.08] mix-blend-soft-light bg-[linear-gradient(135deg,rgba(255,255,255,0.7)_0%,transparent_42%,rgba(15,23,42,0.22)_100%)]" />
+        <div className="relative h-full w-full">
+            <div className="pointer-events-none absolute -inset-3 rounded-[1.6rem] bg-[radial-gradient(circle_at_20%_0%,rgba(155,77,255,0.16),transparent_55%)] blur-xl" aria-hidden />
 
-                <div className="absolute inset-x-0 top-0 flex items-start justify-between p-4 md:p-5">
-                    <span
-                        className={`font-mono text-[10px] tracking-[0.28em] tabular-nums transition-colors duration-500 ${
-                            active ? 'text-white/88' : 'text-white/58'
-                        }`}
-                    >
-                        0{index + 1}
-                    </span>
-                    <span
-                        className={`rounded-full border px-2.5 py-1 font-mono text-[8px] tracking-[0.26em] backdrop-blur-sm transition-colors duration-500 ${
-                            active
-                                ? 'border-white/35 bg-white/14 text-white/90'
-                                : 'border-white/18 bg-slate-950/18 text-white/62'
-                        }`}
-                    >
-                        {item.label.toUpperCase()}
-                    </span>
+            <div className="relative flex h-full flex-col overflow-hidden rounded-[1.35rem] border border-white/80 bg-[linear-gradient(180deg,#ffffff_0%,#faf7f2_100%)] shadow-[0_24px_64px_-32px_rgba(15,23,42,0.28),0_0_0_1px_rgba(15,23,42,0.04)] md:rounded-[1.5rem]">
+                <div className="flex items-center justify-between border-b border-slate-200/70 bg-white/80 px-4 py-2.5 md:px-5">
+                    <div className="flex items-center gap-2">
+                        <span className="h-2 w-2 rounded-full bg-[#ff5f57]/80" />
+                        <span className="h-2 w-2 rounded-full bg-[#febc2e]/80" />
+                        <span className="h-2 w-2 rounded-full bg-[#28c840]/80" />
+                    </div>
+                    <p className="font-mono text-[8px] tracking-[0.28em] text-slate-400 md:text-[9px]">UKONNECT · CULTURE NODE</p>
+                    <p className="font-mono text-[9px] tabular-nums text-primary/55">0{index + 1}</p>
                 </div>
 
-                <div className="absolute inset-x-0 bottom-0 p-4 md:p-5">
-                    <p
-                        className={`text-[18px] font-semibold tracking-[-0.03em] transition-colors duration-500 md:text-[21px] ${
-                            active ? 'text-white' : 'text-white/88'
-                        }`}
-                    >
-                        {item.title}
-                    </p>
-                </div>
+                <div className="relative flex-1 p-3 md:p-4">
+                    <div className="relative h-full min-h-[200px] overflow-hidden rounded-[1rem] border border-slate-200/70 bg-[#f3f0ea] md:min-h-[260px] lg:min-h-[300px]">
+                        <div className="pointer-events-none absolute inset-0 opacity-[0.35] bg-[linear-gradient(rgba(86,0,227,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(86,0,227,0.06)_1px,transparent_1px)] bg-[size:18px_18px]" />
+                        <div className="pointer-events-none absolute inset-y-0 left-0 w-px bg-gradient-to-b from-primary/50 via-primary/20 to-transparent" />
 
-                <span
-                    className={`absolute inset-x-5 bottom-0 h-px origin-left bg-gradient-to-r from-primary/70 to-transparent transition-transform duration-700 ${
-                        active ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-75'
-                    }`}
-                    aria-hidden
-                />
+                        <AnimatePresence mode="wait">
+                            <motion.div
+                                key={item.title}
+                                initial={{ opacity: 0, scale: 1.02, filter: 'blur(4px)' }}
+                                animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+                                exit={{ opacity: 0, scale: 0.99, filter: 'blur(3px)' }}
+                                transition={{ duration: 0.5, ease: EASE_OUT }}
+                                className="absolute inset-2 overflow-hidden rounded-[0.75rem] md:inset-2.5 md:rounded-[0.85rem]"
+                            >
+                                <StoryImage
+                                    image={item.image}
+                                    alt={item.title}
+                                    focal={item.focal}
+                                    className="h-full w-full object-cover"
+                                />
+                                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/38 via-transparent to-white/8" />
+                            </motion.div>
+                        </AnimatePresence>
+
+                        <div className="absolute left-3 top-3 rounded-full border border-white/40 bg-slate-950/35 px-2.5 py-1 backdrop-blur-sm">
+                            <p className="font-mono text-[8px] tracking-[0.24em] text-white/88">{item.label.toUpperCase()}</p>
+                        </div>
+
+                        {active ? (
+                            <motion.span
+                                layoutId="culture-paper-active"
+                                className="absolute inset-0 rounded-[1rem] ring-2 ring-primary/35 ring-offset-2 ring-offset-[#f3f0ea]"
+                                transition={{ duration: 0.45, ease: EASE_OUT }}
+                            />
+                        ) : null}
+                    </div>
+                </div>
             </div>
-        </motion.button>
+        </div>
     );
 }
 
-function CultureManifest({ items }: { items: CultureItem[] }) {
+function CultureAIPlatform({ items }: { items: CultureItem[] }) {
     const [active, setActive] = useState(0);
     const current = items[active];
 
     return (
-        <div className="mt-12 md:mt-14">
-            <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,220px)_minmax(0,1fr)] lg:gap-12 xl:grid-cols-[minmax(0,248px)_minmax(0,1fr)] xl:gap-16">
-                <Reveal className="lg:pt-1">
-                    <p className="font-mono text-[9px] tracking-[0.38em] text-primary/45">VALUES INDEX</p>
-                    <div className="relative mt-6">
-                        <span
-                            className="absolute bottom-2 left-[11px] top-2 w-px bg-gradient-to-b from-primary/28 via-slate-300/45 to-transparent"
-                            aria-hidden
-                        />
-                        <div className="space-y-1">
-                            {items.map((item, idx) => {
-                                const isActive = idx === active;
-                                return (
-                                    <motion.button
-                                        key={item.title}
-                                        type="button"
-                                        onClick={() => setActive(idx)}
-                                        aria-pressed={isActive}
-                                        className={`group relative w-full rounded-[1rem] px-4 py-3.5 text-left transition-all duration-500 ${
-                                            isActive
-                                                ? 'bg-white/72 shadow-[0_16px_40px_-28px_rgba(86,0,227,0.35)]'
-                                                : 'hover:bg-white/42'
-                                        }`}
-                                        whileHover={{ x: 2 }}
-                                        transition={{ duration: 0.45, ease: EASE_OUT }}
-                                    >
-                                        <span
-                                            className={`absolute left-[7px] top-1/2 h-2 w-2 -translate-y-1/2 rounded-full border transition-all duration-500 ${
-                                                isActive
-                                                    ? 'border-primary/45 bg-primary shadow-[0_0_0_5px_rgba(86,0,227,0.14)]'
-                                                    : 'border-slate-300/80 bg-white group-hover:border-primary/25'
-                                            }`}
-                                            aria-hidden
-                                        />
-                                        <div className="pl-5">
-                                            <p className="font-mono text-[9px] tracking-[0.28em] text-slate-400 tabular-nums">0{idx + 1}</p>
-                                            <p
-                                                className={`mt-1 text-[15px] font-semibold tracking-[-0.022em] transition-colors duration-500 ${
-                                                    isActive ? 'text-slate-900' : 'text-slate-700'
-                                                }`}
-                                            >
-                                                {item.title}
-                                            </p>
-                                            <p className="mt-0.5 text-[11px] tracking-wide text-slate-400">{item.label}</p>
-                                        </div>
-                                    </motion.button>
-                                );
-                            })}
-                        </div>
-                    </div>
-                </Reveal>
+        <motion.div
+            className="relative mt-8 md:mt-10"
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.8, ease: EASE_OUT }}
+        >
+            <div className="overflow-hidden rounded-[1.5rem] border border-white/75 bg-[linear-gradient(160deg,rgba(255,255,255,0.97)_0%,rgba(248,244,238,0.95)_55%,rgba(241,235,226,0.98)_100%)] p-4 shadow-[0_28px_80px_-40px_rgba(86,0,227,0.28)] md:rounded-[1.85rem] md:p-5 lg:p-6">
+                <div className="pointer-events-none absolute inset-0 opacity-[0.4] bg-[radial-gradient(circle_at_top_right,rgba(155,77,255,0.08),transparent_42%)]" aria-hidden />
 
-                <div className="grid auto-rows-[minmax(132px,auto)] grid-cols-12 gap-3 md:gap-4 md:auto-rows-[minmax(156px,auto)]">
-                    <CultureManifestTile
-                        item={items[0]}
-                        index={0}
-                        active={active === 0}
-                        onSelect={() => setActive(0)}
-                        className="col-span-12 sm:col-span-7 sm:row-span-2"
-                    />
-                    <CultureManifestTile
-                        item={items[1]}
-                        index={1}
-                        active={active === 1}
-                        onSelect={() => setActive(1)}
-                        className="col-span-6 sm:col-span-5"
-                    />
-                    <CultureManifestTile
-                        item={items[2]}
-                        index={2}
-                        active={active === 2}
-                        onSelect={() => setActive(2)}
-                        className="col-span-6 sm:col-span-5"
-                    />
-                    <CultureManifestTile
-                        item={items[3]}
-                        index={3}
-                        active={active === 3}
-                        onSelect={() => setActive(3)}
-                        className="col-span-6 sm:col-span-4"
-                    />
-                    <CultureManifestTile
-                        item={items[4]}
-                        index={4}
-                        active={active === 4}
-                        onSelect={() => setActive(4)}
-                        className="col-span-12 sm:col-span-8"
-                    />
+                <div className="relative flex flex-wrap gap-2 border-b border-slate-200/65 pb-4">
+                    {items.map((item, idx) => {
+                        const isActive = idx === active;
+                        return (
+                            <motion.button
+                                key={item.title}
+                                type="button"
+                                onClick={() => setActive(idx)}
+                                aria-pressed={isActive}
+                                className={`rounded-full border px-3.5 py-2 text-left transition-all duration-500 md:px-4 ${
+                                    isActive
+                                        ? 'border-primary/30 bg-primary/[0.08] shadow-[0_10px_28px_-16px_rgba(86,0,227,0.45)]'
+                                        : 'border-slate-200/80 bg-white/55 hover:border-primary/18 hover:bg-white/80'
+                                }`}
+                                whileHover={{ y: -1 }}
+                                whileTap={{ scale: 0.99 }}
+                                transition={{ duration: 0.4, ease: EASE_OUT }}
+                            >
+                                <span className="font-mono text-[8px] tracking-[0.24em] text-primary/50 tabular-nums">0{idx + 1}</span>
+                                <span className={`ml-2 text-[12px] font-semibold tracking-[-0.02em] md:text-[13px] ${isActive ? 'text-slate-900' : 'text-slate-600'}`}>
+                                    {item.title}
+                                </span>
+                            </motion.button>
+                        );
+                    })}
                 </div>
-            </div>
 
-            <Reveal delay={0.08}>
-                <div className="relative mt-10 overflow-hidden rounded-[1.5rem] border border-white/78 bg-[linear-gradient(135deg,rgba(255,255,255,0.96)_0%,rgba(248,244,238,0.94)_48%,rgba(241,235,226,0.98)_100%)] p-6 md:mt-12 md:rounded-[1.85rem] md:p-8 lg:p-10">
-                    <div className="pointer-events-none absolute -right-16 -top-20 h-56 w-56 rounded-full bg-[radial-gradient(circle,rgba(155,77,255,0.14),transparent_68%)] blur-3xl" aria-hidden />
-                    <div className="relative grid gap-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:gap-12">
+                <div className="relative mt-4 grid grid-cols-1 gap-4 lg:grid-cols-[1.15fr_0.85fr] lg:gap-5">
+                    <CulturePaperFrame item={current} index={active} active />
+
+                    <div className="flex flex-col justify-between rounded-[1.25rem] border border-slate-200/70 bg-white/72 p-5 backdrop-blur-sm md:p-6">
                         <AnimatePresence mode="wait">
                             <motion.div
                                 key={current.title}
-                                initial={{ opacity: 0, y: 8 }}
+                                initial={{ opacity: 0, y: 6 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: 4 }}
-                                transition={{ duration: 0.45, ease: EASE_OUT }}
+                                exit={{ opacity: 0, y: 3 }}
+                                transition={{ duration: 0.4, ease: EASE_OUT }}
                             >
-                                <p className="font-mono text-[9px] tracking-[0.34em] text-primary/52 md:text-[10px]">
-                                    MANIFEST NOTE · 0{active + 1}
-                                </p>
-                                <p className="mt-3 max-w-[34ch] text-[24px] font-semibold leading-[1.04] tracking-[-0.036em] text-slate-900 md:text-[30px]">
-                                    {current.detail}
-                                </p>
-                                <p className="mt-3 max-w-[48ch] text-[13px] leading-[1.78] text-slate-500 md:text-[14px]">
-                                    {current.note}
-                                </p>
+                                <p className="font-mono text-[9px] tracking-[0.32em] text-primary/52">MANIFEST · 0{active + 1}</p>
+                                <h4 className="mt-2 text-[22px] font-semibold leading-[1.05] tracking-[-0.03em] text-slate-900 md:text-[26px]">
+                                    {current.title}
+                                </h4>
+                                <p className="mt-3 text-[14px] leading-[1.7] text-slate-600 md:text-[15px]">{current.detail}</p>
+                                <p className="mt-3 text-[12.5px] leading-[1.68] text-slate-400">{current.note}</p>
                             </motion.div>
                         </AnimatePresence>
-                        <div className="md:max-w-[22ch] md:text-right">
-                            <span className="mb-3 hidden h-px w-12 bg-gradient-to-l from-primary/30 to-transparent md:ml-auto md:block" aria-hidden />
-                            <p className="text-[12px] leading-[1.76] text-slate-400">
-                                A values chapter, not a perks grid — each tile is evidence from the studio floor.
-                            </p>
+
+                        <div className="mt-5 flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] lg:mt-6 [&::-webkit-scrollbar]:hidden">
+                            {items.map((item, idx) => (
+                                <button
+                                    key={item.title}
+                                    type="button"
+                                    onClick={() => setActive(idx)}
+                                    aria-label={`View ${item.title}`}
+                                    className={`relative h-14 w-[4.5rem] shrink-0 overflow-hidden rounded-[0.7rem] border transition-all duration-500 md:h-16 md:w-20 ${
+                                        idx === active
+                                            ? 'border-primary/35 shadow-[0_8px_24px_-12px_rgba(86,0,227,0.45)]'
+                                            : 'border-slate-200/80 opacity-70 hover:opacity-100'
+                                    }`}
+                                >
+                                    <StoryImage image={item.image} alt={item.title} focal={item.focal} className="h-full w-full object-cover" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/45 to-transparent" />
+                                    <span className="absolute bottom-1 left-1.5 font-mono text-[8px] text-white/90">0{idx + 1}</span>
+                                </button>
+                            ))}
                         </div>
                     </div>
                 </div>
-            </Reveal>
-        </div>
+            </div>
+        </motion.div>
     );
 }
 
@@ -1485,9 +1421,9 @@ export function CompanyStoryExperience() {
                         index="04 / 05"
                         eyebrow="Culture"
                         title="Ownership, innovation, execution, curiosity, growth."
-                        subtitle="A values manifest — indexed like an editorial chapter, not a tour interface."
+                        subtitle="Five values in one view — switch nodes without scrolling through a long grid."
                     />
-                    <CultureManifest items={culture} />
+                    <CultureAIPlatform items={culture} />
                 </div>
 
                 {/* SECTION 6 */}
