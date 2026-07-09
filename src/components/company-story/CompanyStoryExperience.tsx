@@ -25,6 +25,7 @@ type RoomCard = {
     blurb: string;
     pos: { top: string; left: string };
     focal?: string;
+    team: string;
 };
 type CultureItem = {
     title: string;
@@ -544,14 +545,12 @@ function OpeningTrustStrip() {
     );
 }
 
-function OfficeRoomChip({
+function OfficeConfiguratorHotspot({
     room,
-    index,
     active,
     onSelect,
 }: {
     room: RoomCard;
-    index: number;
     active: boolean;
     onSelect: () => void;
 }) {
@@ -559,204 +558,272 @@ function OfficeRoomChip({
         <motion.button
             type="button"
             onClick={onSelect}
+            aria-label={`Explore ${room.title}`}
             aria-pressed={active}
-            className={`group min-w-[148px] shrink-0 text-left transition-colors md:min-w-0 ${
-                active ? 'opacity-100' : 'opacity-72 hover:opacity-95'
-            }`}
-            whileHover={{ y: -2 }}
-            whileTap={{ scale: 0.998 }}
-            transition={{ duration: 0.5, ease: EASE_OUT }}
+            className="absolute z-10 -translate-x-1/2 -translate-y-1/2"
+            style={{ top: room.pos.top, left: room.pos.left }}
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.94 }}
+            transition={{ duration: 0.4, ease: EASE_OUT }}
         >
-            <div
-                className={`relative overflow-hidden rounded-[1rem] border transition-all duration-500 ${
+            {active ? (
+                <>
+                    <motion.span
+                        animate={{ scale: [1, 2.4], opacity: [0.55, 0] }}
+                        transition={{ duration: 2.2, repeat: Infinity, ease: 'easeOut' }}
+                        className="absolute inset-0 rounded-full bg-primary/45"
+                        aria-hidden
+                    />
+                    <motion.span
+                        animate={{ scale: [1, 1.8], opacity: [0.4, 0] }}
+                        transition={{ duration: 2.2, repeat: Infinity, ease: 'easeOut', delay: 0.5 }}
+                        className="absolute inset-0 rounded-full bg-[#9b4dff]/35"
+                        aria-hidden
+                    />
+                </>
+            ) : null}
+
+            <span
+                className={`relative flex h-3.5 w-3.5 items-center justify-center rounded-full border-2 transition-all duration-500 md:h-4 md:w-4 ${
                     active
-                        ? 'border-primary/30 shadow-[0_14px_36px_-20px_rgba(86,0,227,0.35)]'
-                        : 'border-slate-200/70 group-hover:border-primary/18'
+                        ? 'border-white bg-primary shadow-[0_0_22px_rgba(155,77,255,0.75),0_0_0_5px_rgba(155,77,255,0.18)]'
+                        : 'border-white/90 bg-white/20 hover:bg-white/45 hover:shadow-[0_0_14px_rgba(255,255,255,0.4)]'
                 }`}
             >
-                <div className="aspect-[4/3] overflow-hidden bg-[#ebe6de]">
-                    <StoryImage
-                        image={room.image}
-                        alt={room.title}
-                        focal={room.focal}
-                        zoom
-                        className="h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.04]"
+                {active ? (
+                    <motion.span
+                        layoutId="office-hotspot-ring"
+                        className="absolute -inset-2.5 rounded-full border border-primary/45 md:-inset-3"
+                        transition={{ duration: 0.45, ease: EASE_OUT }}
                     />
-                </div>
-                <span
-                    className={`absolute inset-x-0 bottom-0 h-px origin-left transition-transform duration-500 ${
-                        active ? 'scale-x-100 bg-primary/55' : 'scale-x-0 bg-primary/35 group-hover:scale-x-100'
-                    }`}
-                    aria-hidden
-                />
-            </div>
-            <p className={`mt-2.5 font-mono text-[9px] tracking-[0.28em] tabular-nums ${active ? 'text-primary/62' : 'text-slate-400'}`}>
-                0{index + 1}
-            </p>
-            <p className={`mt-1 text-[13px] font-semibold tracking-[-0.02em] ${active ? 'text-slate-900' : 'text-slate-700'}`}>
-                {room.title}
-            </p>
+                ) : null}
+            </span>
+
+            {active ? (
+                <motion.span
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="absolute left-1/2 top-full mt-2 -translate-x-1/2 whitespace-nowrap rounded-full border border-white/20 bg-slate-950/80 px-2.5 py-1 shadow-[0_8px_24px_-8px_rgba(86,0,227,0.55)] backdrop-blur-md"
+                >
+                    <span className="font-mono text-[7px] tracking-[0.22em] text-white/92 md:text-[8px]">{room.title.toUpperCase()}</span>
+                </motion.span>
+            ) : null}
         </motion.button>
     );
 }
 
-function OfficeExperience({ panoramic, rooms }: { panoramic: string; rooms: RoomCard[] }) {
-    const [active, setActive] = useState(0);
-    const current = rooms[active];
-    const ref = useRef<HTMLDivElement>(null);
-    const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
-    const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1.04, 1, 1.04]);
-
+function OfficeConfiguratorFrame({
+    room,
+    index,
+    panoramic,
+    rooms,
+    active,
+    onSelect,
+}: {
+    room: RoomCard;
+    index: number;
+    panoramic: string;
+    rooms: RoomCard[];
+    active: number;
+    onSelect: (idx: number) => void;
+}) {
     return (
-        <div ref={ref} className="mt-10 md:mt-12">
-            <motion.figure
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-80px' }}
-                transition={{ duration: 0.85, ease: EASE_OUT }}
-            >
-                <OpeningEditorialFrame>
-                    <div className="relative aspect-[4/3] w-full overflow-hidden sm:aspect-[16/9] lg:aspect-[21/9]">
-                        <motion.div style={{ scale }} className="absolute inset-0 will-change-transform">
-                            <StoryImage
-                                image={panoramic}
-                                alt="Inside the Ukonnect studio during a strategy session"
-                                focal="center 38%"
-                                className="h-full w-full object-cover"
+        <div className="relative h-full w-full">
+            <div className="pointer-events-none absolute -inset-3 rounded-[1.6rem] bg-[radial-gradient(circle_at_12%_0%,rgba(155,77,255,0.18),transparent_55%)] blur-xl" aria-hidden />
+
+            <div className="group relative flex h-full flex-col overflow-hidden rounded-[1.35rem] p-[2px] shadow-[0_28px_72px_-28px_rgba(15,23,42,0.5)] md:rounded-[1.5rem]">
+                <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 16, repeat: Infinity, ease: 'linear' }}
+                    className="pointer-events-none absolute left-1/2 top-1/2 aspect-square w-[155%] -translate-x-1/2 -translate-y-1/2 bg-[conic-gradient(from_0deg,transparent_0deg,rgba(148,163,184,0.3)_70deg,transparent_130deg,rgba(155,77,255,0.7)_210deg,transparent_270deg,rgba(203,213,225,0.35)_330deg,transparent_360deg)]"
+                    aria-hidden
+                />
+                <div className="absolute inset-[2px] rounded-[1.28rem] bg-[linear-gradient(165deg,#1a1f2e_0%,#0f131c_42%,#171c28_100%)] md:rounded-[1.42rem]" />
+
+                <div className="relative flex flex-1 flex-col overflow-hidden rounded-[1.25rem] md:rounded-[1.4rem]">
+                    <div className="flex items-center justify-between border-b border-white/[0.08] bg-[linear-gradient(180deg,rgba(255,255,255,0.08)_0%,rgba(255,255,255,0.02)_100%)] px-4 py-2.5 md:px-5">
+                        <div className="flex items-center gap-2">
+                            <span className="h-2 w-2 rounded-full bg-slate-500/80" />
+                            <span className="h-2 w-2 rounded-full bg-slate-400/70" />
+                            <span className="h-2 w-2 rounded-full bg-primary/70 shadow-[0_0_8px_rgba(155,77,255,0.55)]" />
+                        </div>
+                        <p className="font-mono text-[8px] tracking-[0.28em] text-slate-400/80 md:text-[9px]">UKONNECT · STUDIO CONFIGURATOR</p>
+                        <p className="font-mono text-[9px] tabular-nums text-primary/70">0{index + 1}</p>
+                    </div>
+
+                    <div className="relative flex-1 p-3 md:p-4">
+                        <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[0.9rem] border border-white/[0.1] bg-[#0a0d14] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] md:rounded-[1rem]">
+                            <div className="pointer-events-none absolute inset-0 opacity-[0.4] bg-[linear-gradient(rgba(155,77,255,0.07)_1px,transparent_1px),linear-gradient(90deg,rgba(155,77,255,0.07)_1px,transparent_1px)] bg-[size:20px_20px]" />
+                            <motion.div
+                                animate={{ y: ['-120%', '220%'] }}
+                                transition={{ duration: 5.2, repeat: Infinity, ease: 'linear' }}
+                                className="pointer-events-none absolute inset-x-0 h-14 bg-[linear-gradient(180deg,transparent,rgba(155,77,255,0.1),transparent)] opacity-50"
+                                aria-hidden
                             />
-                        </motion.div>
 
-                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/42 via-slate-950/6 to-white/8" />
-                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#5600e3]/10 via-transparent to-[#9b4dff]/10" />
-                        <div className="pointer-events-none absolute inset-0 opacity-[0.05] bg-[linear-gradient(rgba(15,23,42,0.85)_0.5px,transparent_0.5px),linear-gradient(90deg,rgba(15,23,42,0.85)_0.5px,transparent_0.5px)] bg-[size:3px_3px]" />
-
-                        <div className="absolute left-4 top-4 sm:left-5 sm:top-5">
-                            <DocumentaryCapsuleLabel>STUDIO TOUR</DocumentaryCapsuleLabel>
-                        </div>
-
-                        <div className="absolute right-4 top-4 sm:right-5 sm:top-5">
-                            <div className="rounded-full border border-white/45 bg-slate-950/28 px-3 py-1.5 backdrop-blur-sm">
-                                <p className="font-mono text-[10px] tracking-[0.22em] text-white/88 tabular-nums">
-                                    0{active + 1} / 0{rooms.length}
-                                </p>
-                            </div>
-                        </div>
-
-                        <div className="absolute inset-0 hidden lg:block">
-                            {rooms.map((room, idx) => {
-                                const isActive = idx === active;
-                                return (
-                                    <motion.button
-                                        key={room.title}
-                                        type="button"
-                                        onClick={() => setActive(idx)}
-                                        aria-label={`View ${room.title}`}
-                                        className="absolute -translate-x-1/2 -translate-y-1/2"
-                                        style={{ top: room.pos.top, left: room.pos.left }}
-                                        whileHover={{ scale: 1.08 }}
-                                        whileTap={{ scale: 0.96 }}
-                                        transition={{ duration: 0.45, ease: EASE_OUT }}
-                                    >
-                                        <span
-                                            className={`relative flex h-3 w-3 items-center justify-center rounded-full border-2 transition-all duration-500 ${
-                                                isActive
-                                                    ? 'border-white bg-primary shadow-[0_0_0_6px_rgba(86,0,227,0.22)]'
-                                                    : 'border-white/85 bg-white/35 hover:bg-white/55'
-                                            }`}
-                                        >
-                                            {isActive ? (
-                                                <motion.span
-                                                    layoutId="office-active-pin"
-                                                    className="absolute -inset-2 rounded-full border border-primary/35"
-                                                    transition={{ duration: 0.45, ease: EASE_OUT }}
-                                                />
-                                            ) : null}
-                                        </span>
-                                    </motion.button>
-                                );
-                            })}
-                        </div>
-
-                        <div className="absolute inset-x-4 bottom-4 hidden sm:inset-x-auto sm:bottom-5 sm:right-5 sm:block sm:w-[min(300px,36%)]">
                             <AnimatePresence mode="wait">
                                 <motion.div
-                                    key={current.title}
-                                    initial={{ opacity: 0, y: 10, filter: 'blur(4px)' }}
-                                    animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                                    exit={{ opacity: 0, y: 6, filter: 'blur(3px)' }}
+                                    key={room.title}
+                                    initial={{ opacity: 0, scale: 1.03, filter: 'blur(5px)' }}
+                                    animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+                                    exit={{ opacity: 0, scale: 0.98, filter: 'blur(4px)' }}
                                     transition={{ duration: 0.55, ease: EASE_OUT }}
-                                    className="overflow-hidden rounded-[1.05rem] border border-white/22 bg-white/10 backdrop-blur-md"
+                                    className="absolute inset-2 overflow-hidden rounded-[0.7rem] md:inset-2.5 md:rounded-[0.8rem]"
                                 >
-                                    <div className="aspect-[16/10] overflow-hidden">
-                                        <StoryImage
-                                            image={current.image}
-                                            alt={current.title}
-                                            focal={current.focal}
-                                            className="h-full w-full object-cover"
-                                        />
-                                    </div>
-                                    <div className="px-4 py-3.5">
-                                        <p className="font-mono text-[9px] tracking-[0.3em] text-white/68">ROOM 0{active + 1}</p>
-                                        <p className="mt-1 text-[15px] font-semibold tracking-[-0.02em] text-white">{current.title}</p>
-                                        <p className="mt-1 text-[12px] leading-[1.65] text-white/82">{current.blurb}</p>
-                                    </div>
+                                    <StoryImage
+                                        image={room.image}
+                                        alt={`Ukonnect ${room.title} — ${room.team}`}
+                                        focal={room.focal}
+                                        zoom
+                                        className="h-full w-full object-cover"
+                                    />
+                                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0a0d14]/65 via-transparent to-primary/[0.05]" />
                                 </motion.div>
                             </AnimatePresence>
+
+                            <div className="absolute left-3 top-3 rounded-full border border-white/15 bg-slate-950/55 px-2.5 py-1 backdrop-blur-sm">
+                                <p className="font-mono text-[8px] tracking-[0.24em] text-white/88">ROOM LIVE</p>
+                            </div>
+
+                            <div className="absolute bottom-3 left-3 right-[38%] hidden rounded-xl border border-white/12 bg-slate-950/50 px-3 py-2 backdrop-blur-md sm:block">
+                                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/90">{room.title}</p>
+                                <p className="mt-0.5 text-[11px] text-white/65">{room.blurb}</p>
+                            </div>
+
+                            <div className="absolute bottom-3 right-3 w-[34%] min-w-[108px] max-w-[148px] overflow-hidden rounded-[0.65rem] border border-white/18 bg-slate-950/70 shadow-[0_12px_32px_-12px_rgba(0,0,0,0.65)] backdrop-blur-md md:min-w-[128px] md:max-w-[168px]">
+                                <div className="border-b border-white/10 px-2 py-1">
+                                    <p className="font-mono text-[7px] tracking-[0.2em] text-white/55">FLOOR MAP</p>
+                                </div>
+                                <div className="relative aspect-[4/3]">
+                                    <StoryImage
+                                        image={panoramic}
+                                        alt="Ukonnect studio floor plan"
+                                        focal="center 38%"
+                                        className="h-full w-full object-cover opacity-80"
+                                    />
+                                    <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_30%,rgba(10,13,20,0.55)_100%)]" />
+                                    <div className="absolute inset-0">
+                                        {rooms.map((r, idx) => (
+                                            <OfficeConfiguratorHotspot
+                                                key={r.title}
+                                                room={r}
+                                                active={idx === active}
+                                                onSelect={() => onSelect(idx)}
+                                            />
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <motion.span
+                                layoutId="office-room-active"
+                                className="pointer-events-none absolute inset-0 rounded-[0.9rem] ring-2 ring-primary/35 ring-offset-2 ring-offset-[#0a0d14] md:rounded-[1rem]"
+                                transition={{ duration: 0.45, ease: EASE_OUT }}
+                            />
                         </div>
                     </div>
-                </OpeningEditorialFrame>
-
-                <motion.figcaption
-                    className="mt-7 md:mt-9"
-                    initial={{ opacity: 0, y: 8 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-50px' }}
-                    transition={{ duration: 0.65, delay: 0.1, ease: EASE_OUT }}
-                >
-                    <div className="grid gap-5 border-t border-slate-200/65 pt-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:gap-14 md:pt-7">
-                        <div className="max-w-[32rem]">
-                            <p className="font-mono text-[9px] tracking-[0.34em] text-primary/52 md:text-[10px]">AMSTERDAM / STUDIO FLOOR</p>
-                            <AnimatePresence mode="wait">
-                                <motion.div
-                                    key={current.title}
-                                    initial={{ opacity: 0, y: 6 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: 4 }}
-                                    transition={{ duration: 0.45, ease: EASE_OUT }}
-                                >
-                                    <p className="mt-3 text-[21px] font-semibold leading-[1.06] tracking-[-0.036em] text-slate-900 sm:text-[24px] md:text-[28px]">
-                                        {current.title}
-                                    </p>
-                                    <p className="mt-2.5 max-w-[42ch] text-[13px] leading-[1.76] text-slate-500 md:text-[14px]">
-                                        {current.blurb}
-                                    </p>
-                                </motion.div>
-                            </AnimatePresence>
-                        </div>
-                        <div className="md:max-w-[24ch] md:text-right">
-                            <span className="mb-3.5 hidden h-px w-10 bg-gradient-to-l from-slate-300/70 to-transparent md:ml-auto md:block" aria-hidden />
-                            <p className="text-[12.5px] leading-[1.78] text-slate-400 md:text-[13px]">
-                                Five rooms. One operating rhythm — mapped for clients who want to see where the work happens.
-                            </p>
-                        </div>
-                    </div>
-                </motion.figcaption>
-            </motion.figure>
-
-            <div className="mt-8 md:mt-10">
-                <div className="flex gap-4 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] md:grid md:grid-cols-5 md:gap-4 md:overflow-visible [&::-webkit-scrollbar]:hidden">
-                    {rooms.map((room, idx) => (
-                        <OfficeRoomChip
-                            key={room.title}
-                            room={room}
-                            index={idx}
-                            active={idx === active}
-                            onSelect={() => setActive(idx)}
-                        />
-                    ))}
                 </div>
             </div>
         </div>
+    );
+}
+
+function OfficeConfigurator({ panoramic, rooms }: { panoramic: string; rooms: RoomCard[] }) {
+    const [active, setActive] = useState(0);
+    const current = rooms[active];
+
+    return (
+        <motion.div
+            className="relative mt-8 md:mt-10"
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.8, ease: EASE_OUT }}
+        >
+            <div className="overflow-hidden rounded-[1.5rem] border border-slate-200/70 bg-[linear-gradient(160deg,rgba(248,250,252,0.98)_0%,rgba(241,245,249,0.96)_48%,rgba(226,232,240,0.94)_100%)] p-4 shadow-[0_28px_80px_-40px_rgba(86,0,227,0.3)] md:rounded-[1.85rem] md:p-5 lg:p-6">
+                <div className="pointer-events-none absolute inset-0 opacity-50 bg-[radial-gradient(circle_at_top_right,rgba(155,77,255,0.09),transparent_42%),radial-gradient(circle_at_bottom_left,rgba(15,23,42,0.05),transparent_45%)]" aria-hidden />
+
+                <div className="relative flex flex-wrap gap-2 border-b border-slate-200/65 pb-4">
+                    {rooms.map((room, idx) => {
+                        const isActive = idx === active;
+                        return (
+                            <motion.button
+                                key={room.title}
+                                type="button"
+                                onClick={() => setActive(idx)}
+                                aria-pressed={isActive}
+                                className={`rounded-full border px-3.5 py-2 text-left transition-all duration-500 md:px-4 ${
+                                    isActive
+                                        ? 'border-primary/35 bg-primary/[0.09] shadow-[0_10px_28px_-16px_rgba(86,0,227,0.5)]'
+                                        : 'border-slate-200/80 bg-white/60 hover:border-primary/18 hover:bg-white/85'
+                                }`}
+                                whileHover={{ y: -1 }}
+                                whileTap={{ scale: 0.99 }}
+                                transition={{ duration: 0.4, ease: EASE_OUT }}
+                            >
+                                <span className="font-mono text-[8px] tracking-[0.24em] text-primary/55 tabular-nums">0{idx + 1}</span>
+                                <span className={`ml-2 text-[12px] font-semibold tracking-[-0.02em] md:text-[13px] ${isActive ? 'text-slate-900' : 'text-slate-600'}`}>
+                                    {room.title}
+                                </span>
+                            </motion.button>
+                        );
+                    })}
+                </div>
+
+                <div className="relative mt-4 grid grid-cols-1 gap-4 lg:grid-cols-[1.12fr_0.88fr] lg:gap-5">
+                    <OfficeConfiguratorFrame
+                        room={current}
+                        index={active}
+                        panoramic={panoramic}
+                        rooms={rooms}
+                        active={active}
+                        onSelect={setActive}
+                    />
+
+                    <div className="flex flex-col justify-between rounded-[1.25rem] border border-slate-200/70 bg-white/78 p-5 backdrop-blur-sm md:p-6">
+                        <AnimatePresence mode="wait">
+                            <motion.div
+                                key={current.title}
+                                initial={{ opacity: 0, y: 6 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: 3 }}
+                                transition={{ duration: 0.4, ease: EASE_OUT }}
+                            >
+                                <p className="font-mono text-[9px] tracking-[0.32em] text-primary/55">ROOM · 0{active + 1}</p>
+                                <h4 className="mt-2 text-[22px] font-semibold leading-[1.05] tracking-[-0.03em] text-slate-900 md:text-[26px]">
+                                    {current.title}
+                                </h4>
+                                <p className="mt-3 text-[14px] leading-[1.7] text-slate-600 md:text-[15px]">{current.blurb}</p>
+                                <p className="mt-2 text-[12px] font-medium tracking-[0.06em] text-primary/70 uppercase">Team · {current.team}</p>
+                                <p className="mt-3 text-[12.5px] leading-[1.68] text-slate-400">
+                                    Five rooms. One operating rhythm — tap a hotspot on the floor map or switch nodes to explore where strategy, build, and delivery converge.
+                                </p>
+                            </motion.div>
+                        </AnimatePresence>
+
+                        <div className="mt-5 flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] lg:mt-6 [&::-webkit-scrollbar]:hidden">
+                            {rooms.map((room, idx) => (
+                                <button
+                                    key={room.title}
+                                    type="button"
+                                    onClick={() => setActive(idx)}
+                                    aria-label={`View ${room.title}`}
+                                    className={`relative h-14 w-[4.5rem] shrink-0 overflow-hidden rounded-[0.7rem] border transition-all duration-500 md:h-16 md:w-20 ${
+                                        idx === active
+                                            ? 'border-primary/40 shadow-[0_8px_24px_-12px_rgba(86,0,227,0.5)]'
+                                            : 'border-slate-200/80 opacity-70 hover:opacity-100'
+                                    }`}
+                                >
+                                    <StoryImage image={room.image} alt={`${room.title} — ${room.team}`} focal={room.focal} className="h-full w-full object-cover" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/55 to-transparent" />
+                                    <span className="absolute bottom-1 left-1.5 font-mono text-[8px] text-white/90">0{idx + 1}</span>
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </motion.div>
     );
 }
 
@@ -1235,7 +1302,13 @@ export function CompanyStoryExperience() {
             teamHero: '/assets/company/team-hero.webp',
             meeting: '/assets/company/meeting-boardroom.webp',
             teamCollab: '/assets/company/team-collaboration.webp',
-            officeWide: '/assets/company/office-wide.webp',
+            officeWide: '/assets/company/office-panorama.webp',
+            officePanorama: '/assets/company/office-panorama.webp',
+            officeAiLab: '/assets/company/office-ai-lab.webp',
+            officeStrategy: '/assets/company/office-strategy.webp',
+            officeCreative: '/assets/company/office-creative.webp',
+            officeAutomation: '/assets/company/office-automation.webp',
+            officeClient: '/assets/company/office-client.webp',
             founder: '/assets/company/founder-raffy.webp',
             strategy: '/assets/company/strategy-whiteboard.webp',
             workshop: '/assets/company/workshop-whiteboard.webp',
@@ -1327,11 +1400,11 @@ export function CompanyStoryExperience() {
 
     const officeRooms: RoomCard[] = useMemo(
         () => [
-            { title: 'AI Lab', image: assets.devCollab, blurb: 'Experimentation with production standards.', pos: { top: '14%', left: '8%' }, focal: 'center 34%' },
-            { title: 'Strategy Room', image: assets.strategy, blurb: 'Where priorities become action plans.', pos: { top: '10%', left: '58%' }, focal: 'center 38%' },
-            { title: 'Creative Studio', image: assets.teamCollab, blurb: 'Interface, messaging, and conversion thinking.', pos: { top: '44%', left: '6%' }, focal: 'center 34%' },
-            { title: 'Automation Hub', image: assets.developer, blurb: 'Integrations monitored and continuously improved.', pos: { top: '42%', left: '56%' }, focal: 'center 30%' },
-            { title: 'Client Success', image: assets.handshake, blurb: 'Partnership reviews and growth roadmap syncs.', pos: { top: '68%', left: '25%' }, focal: 'center 40%' },
+            { title: 'AI Lab', image: assets.officeAiLab, blurb: 'Experimentation with production standards.', pos: { top: '18%', left: '22%' }, focal: 'center 30%', team: 'Bram' },
+            { title: 'Strategy Room', image: assets.officeStrategy, blurb: 'Where priorities become action plans.', pos: { top: '24%', left: '68%' }, focal: 'center 32%', team: 'Sander & Kirsten' },
+            { title: 'Creative Studio', image: assets.officeCreative, blurb: 'Interface, messaging, and conversion thinking.', pos: { top: '58%', left: '18%' }, focal: 'center 30%', team: 'Rima & Tanisha' },
+            { title: 'Automation Hub', image: assets.officeAutomation, blurb: 'Integrations monitored and continuously improved.', pos: { top: '52%', left: '72%' }, focal: 'center 28%', team: 'Marco & Widhi' },
+            { title: 'Client Success', image: assets.officeClient, blurb: 'Partnership reviews and growth roadmap syncs.', pos: { top: '78%', left: '48%' }, focal: 'center 32%', team: 'Edmerd & Paul' },
         ],
         [assets],
     );
@@ -1528,13 +1601,9 @@ export function CompanyStoryExperience() {
                         index="03 / 05"
                         eyebrow="Office Experience"
                         title="An editorial view of where systems get built."
-                        subtitle="Five rooms. One studio rhythm — explore where strategy, build, and delivery converge."
+                        subtitle="Five rooms in one configurator — explore the studio floor with live hotspots."
                     />
-                    <div className="relative left-1/2 w-screen -translate-x-1/2">
-                        <div className="mx-auto max-w-[1560px] px-4 sm:px-6 lg:px-10">
-                            <OfficeExperience panoramic={assets.officeWide} rooms={officeRooms} />
-                        </div>
-                    </div>
+                    <OfficeConfigurator panoramic={assets.officePanorama} rooms={officeRooms} />
                 </div>
 
                 {/* SECTION 5 */}
