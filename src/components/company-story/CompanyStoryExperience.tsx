@@ -34,6 +34,8 @@ type CultureItem = {
     label: string;
     detail: string;
     note: string;
+    team: string;
+    accent: string;
 };
 
 function Reveal({
@@ -1026,65 +1028,143 @@ function WorkAIPlatform({ steps }: { steps: JourneyStep[] }) {
     );
 }
 
-function CulturePaperFrame({
+function CultureLivingStage({
     item,
     index,
+    items,
     active,
+    onSelect,
 }: {
     item: CultureItem;
     index: number;
-    active: boolean;
+    items: CultureItem[];
+    active: number;
+    onSelect: (idx: number) => void;
 }) {
     return (
-        <div className="relative h-full w-full">
-            <div className="pointer-events-none absolute -inset-3 rounded-[1.6rem] bg-[radial-gradient(circle_at_20%_0%,rgba(155,77,255,0.16),transparent_55%)] blur-xl" aria-hidden />
+        <div className="relative h-full min-h-[280px] w-full md:min-h-[360px] lg:min-h-[420px]">
+            <motion.div
+                animate={{
+                    background: [
+                        `radial-gradient(circle at 20% 20%, ${item.accent}33, transparent 50%)`,
+                        `radial-gradient(circle at 80% 30%, ${item.accent}44, transparent 55%)`,
+                        `radial-gradient(circle at 20% 20%, ${item.accent}33, transparent 50%)`,
+                    ],
+                }}
+                transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+                className="pointer-events-none absolute -inset-6 rounded-[2rem] blur-3xl"
+                aria-hidden
+            />
 
-            <div className="relative flex h-full flex-col overflow-hidden rounded-[1.35rem] border border-white/80 bg-[linear-gradient(180deg,#ffffff_0%,#faf7f2_100%)] shadow-[0_24px_64px_-32px_rgba(15,23,42,0.28),0_0_0_1px_rgba(15,23,42,0.04)] md:rounded-[1.5rem]">
-                <div className="flex items-center justify-between border-b border-slate-200/70 bg-white/80 px-4 py-2.5 md:px-5">
-                    <div className="flex items-center gap-2">
-                        <span className="h-2 w-2 rounded-full bg-[#ff5f57]/80" />
-                        <span className="h-2 w-2 rounded-full bg-[#febc2e]/80" />
-                        <span className="h-2 w-2 rounded-full bg-[#28c840]/80" />
-                    </div>
-                    <p className="font-mono text-[8px] tracking-[0.28em] text-slate-400 md:text-[9px]">UKONNECT · CULTURE NODE</p>
-                    <p className="font-mono text-[9px] tabular-nums text-primary/55">0{index + 1}</p>
-                </div>
+            <div className="relative h-full overflow-hidden rounded-[1.4rem] p-[2px] shadow-[0_32px_80px_-24px_rgba(0,0,0,0.55)] md:rounded-[1.65rem]">
+                <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 18, repeat: Infinity, ease: 'linear' }}
+                    className="pointer-events-none absolute left-1/2 top-1/2 aspect-square w-[170%] -translate-x-1/2 -translate-y-1/2 opacity-80"
+                    style={{
+                        background: `conic-gradient(from 0deg, transparent, ${item.accent}88, transparent, #f5e6c888, transparent, ${item.accent}66, transparent)`,
+                    }}
+                    aria-hidden
+                />
+                <div className="absolute inset-[2px] rounded-[1.35rem] bg-[#120a1f] md:rounded-[1.6rem]" />
 
-                <div className="relative flex-1 p-3 md:p-4">
-                    <div className="relative h-full min-h-[200px] overflow-hidden rounded-[1rem] border border-slate-200/70 bg-[#f3f0ea] md:min-h-[260px] lg:min-h-[300px]">
-                        <div className="pointer-events-none absolute inset-0 opacity-[0.35] bg-[linear-gradient(rgba(86,0,227,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(86,0,227,0.06)_1px,transparent_1px)] bg-[size:18px_18px]" />
-                        <div className="pointer-events-none absolute inset-y-0 left-0 w-px bg-gradient-to-b from-primary/50 via-primary/20 to-transparent" />
-
-                        <AnimatePresence mode="wait">
-                            <motion.div
-                                key={item.title}
-                                initial={{ opacity: 0, scale: 1.02, filter: 'blur(4px)' }}
-                                animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-                                exit={{ opacity: 0, scale: 0.99, filter: 'blur(3px)' }}
-                                transition={{ duration: 0.5, ease: EASE_OUT }}
-                                className="absolute inset-2 overflow-hidden rounded-[0.75rem] md:inset-2.5 md:rounded-[0.85rem]"
-                            >
-                                <StoryImage
-                                    image={item.image}
-                                    alt={item.title}
-                                    focal={item.focal}
-                                    className="h-full w-full object-cover"
-                                />
-                                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/38 via-transparent to-white/8" />
-                            </motion.div>
-                        </AnimatePresence>
-
-                        <div className="absolute left-3 top-3 rounded-full border border-white/40 bg-slate-950/35 px-2.5 py-1 backdrop-blur-sm">
-                            <p className="font-mono text-[8px] tracking-[0.24em] text-white/88">{item.label.toUpperCase()}</p>
-                        </div>
-
-                        {active ? (
-                            <motion.span
-                                layoutId="culture-paper-active"
-                                className="absolute inset-0 rounded-[1rem] ring-2 ring-primary/35 ring-offset-2 ring-offset-[#f3f0ea]"
-                                transition={{ duration: 0.45, ease: EASE_OUT }}
+                <div className="relative h-full overflow-hidden rounded-[1.3rem] md:rounded-[1.55rem]">
+                    <AnimatePresence mode="wait">
+                        <motion.div
+                            key={item.title}
+                            initial={{ opacity: 0, scale: 1.04, filter: 'blur(8px)' }}
+                            animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+                            exit={{ opacity: 0, scale: 0.98, filter: 'blur(6px)' }}
+                            transition={{ duration: 0.65, ease: EASE_OUT }}
+                            className="absolute inset-0"
+                        >
+                            <StoryImage
+                                image={item.image}
+                                alt={`Ukonnect culture — ${item.title}: ${item.team}`}
+                                focal={item.focal}
+                                zoom
+                                className="h-full w-full object-cover"
                             />
-                        ) : null}
+                        </motion.div>
+                    </AnimatePresence>
+
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#120a1f]/92 via-[#120a1f]/20 to-[#5600e3]/10" />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#120a1f]/35 via-transparent to-[#9b4dff]/12" />
+                    <motion.div
+                        animate={{ y: ['-130%', '230%'] }}
+                        transition={{ duration: 5.5, repeat: Infinity, ease: 'linear' }}
+                        className="pointer-events-none absolute inset-x-0 h-24 opacity-30"
+                        style={{ background: `linear-gradient(180deg, transparent, ${item.accent}33, transparent)` }}
+                        aria-hidden
+                    />
+
+                    {items.map((node, idx) => {
+                        const positions = [
+                            { top: '12%', left: '8%' },
+                            { top: '10%', left: '88%' },
+                            { top: '78%', left: '12%' },
+                            { top: '76%', left: '86%' },
+                            { top: '44%', left: '94%' },
+                        ];
+                        const pos = positions[idx];
+                        const isActive = idx === active;
+                        return (
+                            <motion.button
+                                key={node.title}
+                                type="button"
+                                onClick={() => onSelect(idx)}
+                                aria-label={`View ${node.title}`}
+                                aria-pressed={isActive}
+                                className="absolute z-10 -translate-x-1/2 -translate-y-1/2"
+                                style={{ top: pos.top, left: pos.left }}
+                                whileHover={{ scale: 1.12 }}
+                                whileTap={{ scale: 0.92 }}
+                            >
+                                {isActive ? (
+                                    <motion.span
+                                        animate={{ scale: [1, 2.2], opacity: [0.5, 0] }}
+                                        transition={{ duration: 2, repeat: Infinity, ease: 'easeOut' }}
+                                        className="absolute inset-0 rounded-full"
+                                        style={{ backgroundColor: `${node.accent}66` }}
+                                        aria-hidden
+                                    />
+                                ) : null}
+                                <span
+                                    className={`relative flex h-7 w-7 items-center justify-center rounded-full border-2 text-[10px] font-bold backdrop-blur-sm transition-all duration-500 md:h-8 md:w-8 ${
+                                        isActive
+                                            ? 'border-white text-white shadow-[0_0_24px_rgba(155,77,255,0.75)]'
+                                            : 'border-white/50 bg-black/25 text-white/70 hover:border-white/80 hover:bg-black/40'
+                                    }`}
+                                    style={isActive ? { backgroundColor: node.accent } : undefined}
+                                >
+                                    {idx + 1}
+                                </span>
+                            </motion.button>
+                        );
+                    })}
+
+                    <div className="absolute inset-x-4 bottom-4 md:inset-x-6 md:bottom-6">
+                        <motion.div
+                            key={`${item.title}-manifest`}
+                            initial={{ opacity: 0, y: 12 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, ease: EASE_OUT }}
+                            className="rounded-[1.1rem] border border-white/15 bg-[#120a1f]/72 p-4 backdrop-blur-xl md:p-5"
+                        >
+                            <div className="flex flex-wrap items-center gap-2">
+                                <span
+                                    className="rounded-full border border-white/20 px-2.5 py-1 font-mono text-[8px] tracking-[0.24em] text-white/85"
+                                    style={{ backgroundColor: `${item.accent}33` }}
+                                >
+                                    {item.label.toUpperCase()}
+                                </span>
+                                <span className="font-mono text-[8px] tracking-[0.2em] text-white/45">TEAM · {item.team.toUpperCase()}</span>
+                            </div>
+                            <p className="mt-3 text-[18px] font-semibold leading-[1.08] tracking-[-0.03em] text-white md:text-[22px]">
+                                {item.title}
+                            </p>
+                            <p className="mt-2 max-w-[52ch] text-[13px] leading-[1.72] text-white/72 md:text-[14px]">{item.detail}</p>
+                        </motion.div>
                     </div>
                 </div>
             </div>
@@ -1092,88 +1172,107 @@ function CulturePaperFrame({
     );
 }
 
-function CultureAIPlatform({ items }: { items: CultureItem[] }) {
+function CultureManifestExperience({ items }: { items: CultureItem[] }) {
     const [active, setActive] = useState(0);
     const current = items[active];
 
     return (
         <motion.div
             className="relative mt-8 md:mt-10"
-            initial={{ opacity: 0, y: 18 }}
+            initial={{ opacity: 0, y: 22 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.8, ease: EASE_OUT }}
+            transition={{ duration: 0.85, ease: EASE_OUT }}
         >
-            <div className="overflow-hidden rounded-[1.5rem] border border-white/75 bg-[linear-gradient(160deg,rgba(255,255,255,0.97)_0%,rgba(248,244,238,0.95)_55%,rgba(241,235,226,0.98)_100%)] p-4 shadow-[0_28px_80px_-40px_rgba(86,0,227,0.28)] md:rounded-[1.85rem] md:p-5 lg:p-6">
-                <div className="pointer-events-none absolute inset-0 opacity-[0.4] bg-[radial-gradient(circle_at_top_right,rgba(155,77,255,0.08),transparent_42%)]" aria-hidden />
+            <div className="relative overflow-hidden rounded-[1.65rem] border border-[#f5e6c8]/15 shadow-[0_40px_100px_-32px_rgba(86,0,227,0.45)] md:rounded-[2rem]">
+                <div className="absolute inset-0 bg-[linear-gradient(145deg,#1a0f2e_0%,#2a1548_38%,#1c1035_68%,#0d0818_100%)]" />
+                <motion.div
+                    animate={{ opacity: [0.35, 0.55, 0.35], scale: [1, 1.04, 1] }}
+                    transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+                    className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full blur-[100px]"
+                    style={{ backgroundColor: current.accent }}
+                    aria-hidden
+                />
+                <motion.div
+                    animate={{ opacity: [0.2, 0.4, 0.2] }}
+                    transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+                    className="pointer-events-none absolute -bottom-16 -left-16 h-64 w-64 rounded-full bg-[#f5e6c8]/10 blur-[90px]"
+                    aria-hidden
+                />
+                <div className="pointer-events-none absolute inset-0 opacity-[0.18] bg-[linear-gradient(rgba(245,230,200,0.12)_1px,transparent_1px),linear-gradient(90deg,rgba(245,230,200,0.12)_1px,transparent_1px)] bg-[size:32px_32px]" aria-hidden />
 
-                <div className="relative flex flex-wrap gap-2 border-b border-slate-200/65 pb-4">
-                    {items.map((item, idx) => {
-                        const isActive = idx === active;
-                        return (
-                            <motion.button
-                                key={item.title}
-                                type="button"
-                                onClick={() => setActive(idx)}
-                                aria-pressed={isActive}
-                                className={`rounded-full border px-3.5 py-2 text-left transition-all duration-500 md:px-4 ${
-                                    isActive
-                                        ? 'border-primary/30 bg-primary/[0.08] shadow-[0_10px_28px_-16px_rgba(86,0,227,0.45)]'
-                                        : 'border-slate-200/80 bg-white/55 hover:border-primary/18 hover:bg-white/80'
-                                }`}
-                                whileHover={{ y: -1 }}
-                                whileTap={{ scale: 0.99 }}
-                                transition={{ duration: 0.4, ease: EASE_OUT }}
-                            >
-                                <span className="font-mono text-[8px] tracking-[0.24em] text-primary/50 tabular-nums">0{idx + 1}</span>
-                                <span className={`ml-2 text-[12px] font-semibold tracking-[-0.02em] md:text-[13px] ${isActive ? 'text-slate-900' : 'text-slate-600'}`}>
-                                    {item.title}
-                                </span>
-                            </motion.button>
-                        );
-                    })}
+                <div className="relative flex items-center justify-between border-b border-white/[0.08] px-4 py-3.5 md:px-6">
+                    <div>
+                        <p className="font-mono text-[8px] tracking-[0.32em] text-[#f5e6c8]/55 md:text-[9px]">CULTURE MANIFEST</p>
+                        <p className="mt-0.5 text-[12px] font-medium text-white/50 md:text-[13px]">Five values · one living stage</p>
+                    </div>
+                    <div className="flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-3 py-1.5">
+                        <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#f5e6c8]" />
+                        <p className="font-mono text-[9px] tracking-[0.18em] text-white/65 tabular-nums">0{active + 1} / 0{items.length}</p>
+                    </div>
                 </div>
 
-                <div className="relative mt-4 grid grid-cols-1 gap-4 lg:grid-cols-[1.15fr_0.85fr] lg:gap-5">
-                    <CulturePaperFrame item={current} index={active} active />
+                <div className="relative grid grid-cols-1 gap-0 lg:grid-cols-[220px_1fr]">
+                    <div className="border-b border-white/[0.08] p-3 lg:border-b-0 lg:border-r lg:p-4">
+                        <div className="flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] lg:flex-col lg:gap-1 lg:overflow-visible lg:pb-0 [&::-webkit-scrollbar]:hidden">
+                            {items.map((item, idx) => {
+                                const isActive = idx === active;
+                                return (
+                                    <motion.button
+                                        key={item.title}
+                                        type="button"
+                                        onClick={() => setActive(idx)}
+                                        aria-pressed={isActive}
+                                        className={`group relative min-w-[148px] shrink-0 rounded-xl px-3 py-3 text-left transition-all duration-500 lg:min-w-0 lg:px-4 lg:py-3.5 ${
+                                            isActive ? 'bg-white/[0.08]' : 'hover:bg-white/[0.04]'
+                                        }`}
+                                        whileHover={{ x: 3 }}
+                                        whileTap={{ scale: 0.98 }}
+                                    >
+                                        {isActive ? (
+                                            <motion.span
+                                                layoutId="culture-rail-glow"
+                                                className="absolute inset-y-2 left-0 w-0.5 rounded-full"
+                                                style={{ backgroundColor: item.accent, boxShadow: `0 0 14px ${item.accent}` }}
+                                                transition={{ duration: 0.45, ease: EASE_OUT }}
+                                            />
+                                        ) : null}
+                                        <span className={`font-mono text-[9px] tabular-nums ${isActive ? 'text-[#f5e6c8]' : 'text-white/30'}`}>
+                                            0{idx + 1}
+                                        </span>
+                                        <p className={`mt-1 text-[14px] font-semibold tracking-[-0.02em] lg:text-[15px] ${isActive ? 'text-white' : 'text-white/50 group-hover:text-white/75'}`}>
+                                            {item.title}
+                                        </p>
+                                        <p className={`mt-1 hidden text-[11px] leading-[1.5] lg:block ${isActive ? 'text-white/55' : 'text-white/30'}`}>
+                                            {item.label}
+                                        </p>
+                                    </motion.button>
+                                );
+                            })}
+                        </div>
+                    </div>
 
-                    <div className="flex flex-col justify-between rounded-[1.25rem] border border-slate-200/70 bg-white/72 p-5 backdrop-blur-sm md:p-6">
+                    <div className="p-3 md:p-4 lg:p-5">
+                        <CultureLivingStage
+                            item={current}
+                            index={active}
+                            items={items}
+                            active={active}
+                            onSelect={setActive}
+                        />
+
                         <AnimatePresence mode="wait">
-                            <motion.div
-                                key={current.title}
+                            <motion.p
+                                key={current.note}
                                 initial={{ opacity: 0, y: 6 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: 3 }}
+                                exit={{ opacity: 0 }}
                                 transition={{ duration: 0.4, ease: EASE_OUT }}
+                                className="mt-4 text-[12.5px] leading-[1.72] text-white/40 md:mt-5 md:text-[13px]"
                             >
-                                <p className="font-mono text-[9px] tracking-[0.32em] text-primary/52">MANIFEST · 0{active + 1}</p>
-                                <h4 className="mt-2 text-[22px] font-semibold leading-[1.05] tracking-[-0.03em] text-slate-900 md:text-[26px]">
-                                    {current.title}
-                                </h4>
-                                <p className="mt-3 text-[14px] leading-[1.7] text-slate-600 md:text-[15px]">{current.detail}</p>
-                                <p className="mt-3 text-[12.5px] leading-[1.68] text-slate-400">{current.note}</p>
-                            </motion.div>
+                                {current.note}
+                            </motion.p>
                         </AnimatePresence>
-
-                        <div className="mt-5 flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] lg:mt-6 [&::-webkit-scrollbar]:hidden">
-                            {items.map((item, idx) => (
-                                <button
-                                    key={item.title}
-                                    type="button"
-                                    onClick={() => setActive(idx)}
-                                    aria-label={`View ${item.title}`}
-                                    className={`relative h-14 w-[4.5rem] shrink-0 overflow-hidden rounded-[0.7rem] border transition-all duration-500 md:h-16 md:w-20 ${
-                                        idx === active
-                                            ? 'border-primary/35 shadow-[0_8px_24px_-12px_rgba(86,0,227,0.45)]'
-                                            : 'border-slate-200/80 opacity-70 hover:opacity-100'
-                                    }`}
-                                >
-                                    <StoryImage image={item.image} alt={item.title} focal={item.focal} className="h-full w-full object-cover" />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/45 to-transparent" />
-                                    <span className="absolute bottom-1 left-1.5 font-mono text-[8px] text-white/90">0{idx + 1}</span>
-                                </button>
-                            ))}
-                        </div>
                     </div>
                 </div>
             </div>
@@ -1333,6 +1432,11 @@ export function CompanyStoryExperience() {
             cultureMentoring: '/assets/company/culture-mentoring.webp',
             cultureTeam: '/assets/company/culture-team.webp',
             cultureFocus: '/assets/company/culture-focus.webp',
+            cultureOwnership: '/assets/company/culture-ownership.webp',
+            cultureInnovation: '/assets/company/culture-innovation.webp',
+            cultureExecution: '/assets/company/culture-execution.webp',
+            cultureCuriosity: '/assets/company/culture-curiosity.webp',
+            cultureGrowthNew: '/assets/company/culture-growth.webp',
             collabLoop: '/assets/company/collab-loop.mp4',
             collabLoopPoster: '/assets/company/collab-loop-poster.webp',
             journeyDiscover: '/assets/company/journey-discover.webp',
@@ -1421,43 +1525,53 @@ export function CompanyStoryExperience() {
         () => [
             {
                 title: 'Ownership',
-                image: assets.cultureFocus,
-                focal: 'center 22%',
+                image: assets.cultureOwnership,
+                focal: 'center 30%',
                 label: 'Deep work',
                 detail: 'Everyone owns outcomes end-to-end — not tickets waiting in a queue.',
-                note: 'Photographed during focused build sessions where accountability is visible in the room, not on a slide.',
+                note: 'Accountability visible in the room during focused build sessions — not on a slide.',
+                team: 'Marco & Firman',
+                accent: '#9b4dff',
             },
             {
                 title: 'Innovation',
-                image: assets.cultureEnergy,
-                focal: 'center 40%',
+                image: assets.cultureInnovation,
+                focal: 'center 32%',
                 label: 'Momentum',
                 detail: 'New ideas get tested against production standards, not pitch decks.',
-                note: 'The energy in the studio when experiments move fast — but still have to survive real operations.',
+                note: 'The energy in the studio when experiments move fast — but still survive real operations.',
+                team: 'Bram & Tanisha',
+                accent: '#7c5cff',
             },
             {
                 title: 'Execution',
-                image: assets.cultureMeeting,
-                focal: 'center 38%',
+                image: assets.cultureExecution,
+                focal: 'center 32%',
                 label: 'Alignment',
                 detail: 'Direction is resolved in the room before execution starts to fragment.',
-                note: 'A working meeting with enough proximity and eye contact to feel candid, not performative.',
+                note: 'A working meeting with proximity and eye contact that feels candid, not performative.',
+                team: 'Sander & Kirsten',
+                accent: '#5600e3',
             },
             {
                 title: 'Curiosity',
-                image: assets.cultureMentoring,
-                focal: 'center 32%',
+                image: assets.cultureCuriosity,
+                focal: 'center 30%',
                 label: 'Mentorship',
                 detail: 'Knowledge moves sideways across the team, not only top-down.',
-                note: 'Side-by-side review moments where questions are welcomed and resolved in front of the system.',
+                note: 'Side-by-side review moments where questions are welcomed in front of the system.',
+                team: 'Widhi & Gino',
+                accent: '#c084fc',
             },
             {
                 title: 'Growth',
-                image: assets.cultureTeam,
-                focal: 'center 34%',
+                image: assets.cultureGrowthNew,
+                focal: 'center 32%',
                 label: 'Together',
                 detail: 'Progress is a team rhythm — strategy, build, and delivery in one operating cadence.',
-                note: 'A company portrait that reads as culture evidence, not a stock substitute for a real team.',
+                note: 'A company portrait that reads as culture evidence from a real team in motion.',
+                team: 'Afifah, Thiago, Paul & Edmerd',
+                accent: '#e8c47a',
             },
         ],
         [assets],
@@ -1620,9 +1734,9 @@ export function CompanyStoryExperience() {
                         index="04 / 05"
                         eyebrow="Culture"
                         title="Ownership, innovation, execution, curiosity, growth."
-                        subtitle="Five values in one view — switch nodes without scrolling through a long grid."
+                        subtitle="A living manifest — five values on one cinematic stage with orbital nodes."
                     />
-                    <CultureAIPlatform items={culture} />
+                    <CultureManifestExperience items={culture} />
                 </div>
 
                 {/* SECTION 6 */}
