@@ -18,7 +18,7 @@ type DocumentaryScene = {
     focal?: string;
     frame: 'landscape' | 'panoramic';
 };
-type JourneyStep = { title: string; image: string; micro: string; focal?: string; ratio: string };
+type JourneyStep = { title: string; image: string; micro: string; focal?: string; tag: string };
 type RoomCard = {
     title: string;
     image: string;
@@ -760,77 +760,193 @@ function OfficeExperience({ panoramic, rooms }: { panoramic: string; rooms: Room
     );
 }
 
-function WorkJourney({ steps }: { steps: JourneyStep[] }) {
-    const [activeStep, setActiveStep] = useState(2);
-    const current = steps[activeStep];
-
+function JourneyAluminumFrame({
+    step,
+    index,
+    active,
+}: {
+    step: JourneyStep;
+    index: number;
+    active: boolean;
+}) {
     return (
-        <div className="mt-9 grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] gap-5 items-start">
-            <StoryCard className="p-5 md:p-6">
-                <div className="relative">
-                    <div className="absolute left-[15px] top-[18px] bottom-[18px] w-px bg-gradient-to-b from-primary/35 via-primary/15 to-transparent" />
-                    <div className="space-y-3">
-                        {steps.map((step, idx) => {
-                            const active = idx === activeStep;
-                            return (
-                                <motion.button
+        <div className="relative h-full w-full">
+            <div className="pointer-events-none absolute -inset-3 rounded-[1.6rem] bg-[radial-gradient(circle_at_80%_0%,rgba(155,77,255,0.22),transparent_55%)] blur-xl" aria-hidden />
+
+            <div className="group relative flex h-full flex-col overflow-hidden rounded-[1.35rem] p-[2px] shadow-[0_28px_72px_-28px_rgba(15,23,42,0.55)] md:rounded-[1.5rem]">
+                <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 14, repeat: Infinity, ease: 'linear' }}
+                    className="pointer-events-none absolute left-1/2 top-1/2 aspect-square w-[160%] -translate-x-1/2 -translate-y-1/2 bg-[conic-gradient(from_0deg,transparent_0deg,rgba(148,163,184,0.35)_60deg,transparent_120deg,rgba(155,77,255,0.75)_200deg,transparent_260deg,rgba(203,213,225,0.4)_320deg,transparent_360deg)]"
+                    aria-hidden
+                />
+                <div className="absolute inset-[2px] rounded-[1.28rem] bg-[linear-gradient(165deg,#1a1f2e_0%,#0f131c_42%,#171c28_100%)] md:rounded-[1.42rem]" />
+
+                <div className="relative flex flex-1 flex-col overflow-hidden rounded-[1.25rem] md:rounded-[1.4rem]">
+                    <div className="flex items-center justify-between border-b border-white/[0.08] bg-[linear-gradient(180deg,rgba(255,255,255,0.08)_0%,rgba(255,255,255,0.02)_100%)] px-4 py-2.5 md:px-5">
+                        <div className="flex items-center gap-2">
+                            <span className="h-2 w-2 rounded-full bg-slate-500/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.25)]" />
+                            <span className="h-2 w-2 rounded-full bg-slate-400/70 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)]" />
+                            <span className="h-2 w-2 rounded-full bg-primary/70 shadow-[0_0_8px_rgba(155,77,255,0.55)]" />
+                        </div>
+                        <p className="font-mono text-[8px] tracking-[0.28em] text-slate-400/80 md:text-[9px]">UKONNECT · GROWTH ENGINE</p>
+                        <p className="font-mono text-[9px] tabular-nums text-primary/70">0{index + 1}</p>
+                    </div>
+
+                    <div className="relative flex-1 p-3 md:p-4">
+                        <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[0.9rem] border border-white/[0.1] bg-[#0a0d14] shadow-[inset_0_1px_0_rgba(255,255,255,0.06),inset_0_-24px_48px_rgba(0,0,0,0.35)] md:rounded-[1rem]">
+                            <div className="pointer-events-none absolute inset-0 opacity-[0.45] bg-[linear-gradient(rgba(155,77,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(155,77,255,0.08)_1px,transparent_1px)] bg-[size:22px_22px]" />
+                            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_12%,rgba(155,77,255,0.18),transparent_38%)]" />
+                            <motion.div
+                                animate={{ y: ['-120%', '220%'] }}
+                                transition={{ duration: 4.8, repeat: Infinity, ease: 'linear' }}
+                                className="pointer-events-none absolute inset-x-0 h-16 bg-[linear-gradient(180deg,transparent,rgba(155,77,255,0.12),transparent)] opacity-60"
+                                aria-hidden
+                            />
+
+                            <AnimatePresence mode="wait">
+                                <motion.div
                                     key={step.title}
-                                    type="button"
-                                    onClick={() => setActiveStep(idx)}
-                                    className={`w-full text-left rounded-2xl border px-4 py-3 transition-all ${
-                                        active
-                                            ? 'border-primary/35 bg-primary/[0.08] shadow-[0_10px_30px_rgba(86,0,227,0.15)]'
-                                            : 'border-white/70 bg-white/30 hover:border-primary/20'
-                                    }`}
-                                    whileHover={{ x: 2 }}
-                                    whileTap={{ scale: 0.995 }}
-                                    transition={{ duration: 0.4, ease: EASE_OUT }}
+                                    initial={{ opacity: 0, scale: 1.03, filter: 'blur(6px)' }}
+                                    animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+                                    exit={{ opacity: 0, scale: 0.98, filter: 'blur(4px)' }}
+                                    transition={{ duration: 0.55, ease: EASE_OUT }}
+                                    className="absolute inset-2 overflow-hidden rounded-[0.7rem] md:inset-2.5 md:rounded-[0.8rem]"
                                 >
-                                    <div className="flex items-center gap-3">
-                                        <div className={`relative h-8 w-8 rounded-full border flex items-center justify-center ${
-                                            active ? 'border-primary/45 bg-primary text-white' : 'border-slate-200/80 bg-white text-slate-500'
-                                        }`}>
-                                            <span className="text-[11px] font-bold">{idx + 1}</span>
-                                        </div>
-                                        <div className="min-w-0">
-                                            <p className="text-[13px] font-bold uppercase tracking-[0.14em] text-slate-700">{step.title}</p>
-                                            <p className="mt-1 text-[13px] text-slate-500">{step.micro}</p>
-                                        </div>
-                                    </div>
-                                </motion.button>
-                            );
-                        })}
+                                    <StoryImage
+                                        image={step.image}
+                                        alt={step.title}
+                                        focal={step.focal}
+                                        zoom
+                                        className="h-full w-full object-cover"
+                                    />
+                                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0a0d14]/72 via-[#0a0d14]/10 to-primary/[0.06]" />
+                                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-[#9b4dff]/12" />
+                                </motion.div>
+                            </AnimatePresence>
+
+                            <div className="absolute left-3 top-3 flex items-center gap-2">
+                                <span className="rounded-full border border-white/15 bg-slate-950/55 px-2.5 py-1 backdrop-blur-sm">
+                                    <p className="font-mono text-[8px] tracking-[0.24em] text-white/88">{step.tag}</p>
+                                </span>
+                                <span className="hidden rounded-full border border-primary/25 bg-primary/15 px-2 py-0.5 sm:inline-block">
+                                    <p className="font-mono text-[7px] tracking-[0.2em] text-primary/90">LIVE NODE</p>
+                                </span>
+                            </div>
+
+                            <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between gap-3">
+                                <div className="rounded-xl border border-white/12 bg-slate-950/45 px-3 py-2 backdrop-blur-md">
+                                    <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/90">{step.title}</p>
+                                    <p className="mt-0.5 text-[11px] text-white/65">{step.micro}</p>
+                                </div>
+                                <div className="hidden rounded-lg border border-white/10 bg-white/[0.04] px-2 py-1.5 font-mono text-[8px] tracking-[0.18em] text-slate-300/70 sm:block">
+                                    16:10 · AI RENDER
+                                </div>
+                            </div>
+
+                            {active ? (
+                                <motion.span
+                                    layoutId="journey-aluminum-active"
+                                    className="absolute inset-0 rounded-[0.9rem] ring-2 ring-primary/40 ring-offset-2 ring-offset-[#0a0d14] md:rounded-[1rem]"
+                                    transition={{ duration: 0.45, ease: EASE_OUT }}
+                                />
+                            ) : null}
+                        </div>
                     </div>
                 </div>
-            </StoryCard>
-
-            <StoryCard className={`group w-full ${current.ratio}`}>
-                <motion.div
-                    key={current.title}
-                    initial={{ opacity: 0.28, scale: 1.03 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.75, ease: EASE }}
-                    className="absolute inset-0"
-                >
-                    <StoryImage image={current.image} alt={current.title} focal={current.focal} zoom className="h-full w-full object-cover" />
-                </motion.div>
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/58 via-slate-950/15 to-transparent" />
-                <div className="absolute inset-0 bg-gradient-to-r from-[#5600e3]/14 via-transparent to-[#9b4dff]/15" />
-
-                <div className="absolute left-6 right-6 bottom-6">
-                    <motion.div
-                        key={`${current.title}-overlay`}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, ease: EASE_OUT }}
-                        className="rounded-2xl border border-white/25 bg-white/12 backdrop-blur-md px-4 py-3"
-                    >
-                        <p className="text-[12px] font-semibold uppercase tracking-[0.15em] text-white/85">{current.title}</p>
-                        <p className="mt-1 text-[13px] text-white/90">{current.micro}</p>
-                    </motion.div>
-                </div>
-            </StoryCard>
+            </div>
         </div>
+    );
+}
+
+function WorkAIPlatform({ steps }: { steps: JourneyStep[] }) {
+    const [active, setActive] = useState(2);
+    const current = steps[active];
+
+    return (
+        <motion.div
+            className="relative mt-8 md:mt-10"
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.8, ease: EASE_OUT }}
+        >
+            <div className="overflow-hidden rounded-[1.5rem] border border-slate-200/70 bg-[linear-gradient(160deg,rgba(248,250,252,0.98)_0%,rgba(241,245,249,0.96)_48%,rgba(226,232,240,0.94)_100%)] p-4 shadow-[0_28px_80px_-40px_rgba(86,0,227,0.32)] md:rounded-[1.85rem] md:p-5 lg:p-6">
+                <div className="pointer-events-none absolute inset-0 opacity-50 bg-[radial-gradient(circle_at_top_left,rgba(155,77,255,0.1),transparent_40%),radial-gradient(circle_at_bottom_right,rgba(15,23,42,0.06),transparent_45%)]" aria-hidden />
+
+                <div className="relative flex flex-wrap gap-2 border-b border-slate-200/65 pb-4">
+                    {steps.map((step, idx) => {
+                        const isActive = idx === active;
+                        return (
+                            <motion.button
+                                key={step.title}
+                                type="button"
+                                onClick={() => setActive(idx)}
+                                aria-pressed={isActive}
+                                className={`rounded-full border px-3.5 py-2 text-left transition-all duration-500 md:px-4 ${
+                                    isActive
+                                        ? 'border-primary/35 bg-primary/[0.09] shadow-[0_10px_28px_-16px_rgba(86,0,227,0.5)]'
+                                        : 'border-slate-200/80 bg-white/60 hover:border-primary/18 hover:bg-white/85'
+                                }`}
+                                whileHover={{ y: -1 }}
+                                whileTap={{ scale: 0.99 }}
+                                transition={{ duration: 0.4, ease: EASE_OUT }}
+                            >
+                                <span className="font-mono text-[8px] tracking-[0.24em] text-primary/55 tabular-nums">0{idx + 1}</span>
+                                <span className={`ml-2 text-[12px] font-semibold tracking-[-0.02em] md:text-[13px] ${isActive ? 'text-slate-900' : 'text-slate-600'}`}>
+                                    {step.title}
+                                </span>
+                            </motion.button>
+                        );
+                    })}
+                </div>
+
+                <div className="relative mt-4 grid grid-cols-1 gap-4 lg:grid-cols-[1.12fr_0.88fr] lg:gap-5">
+                    <JourneyAluminumFrame step={current} index={active} active />
+
+                    <div className="flex flex-col justify-between rounded-[1.25rem] border border-slate-200/70 bg-white/78 p-5 backdrop-blur-sm md:p-6">
+                        <AnimatePresence mode="wait">
+                            <motion.div
+                                key={current.title}
+                                initial={{ opacity: 0, y: 6 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: 3 }}
+                                transition={{ duration: 0.4, ease: EASE_OUT }}
+                            >
+                                <p className="font-mono text-[9px] tracking-[0.32em] text-primary/55">PHASE · 0{active + 1}</p>
+                                <h4 className="mt-2 text-[22px] font-semibold leading-[1.05] tracking-[-0.03em] text-slate-900 md:text-[26px]">
+                                    {current.title}
+                                </h4>
+                                <p className="mt-3 text-[14px] leading-[1.7] text-slate-600 md:text-[15px]">{current.micro}</p>
+                                <p className="mt-3 text-[12.5px] leading-[1.68] text-slate-400">
+                                    Each phase runs inside the same growth engine — context becomes architecture, architecture becomes automation, automation becomes measurable scale.
+                                </p>
+                            </motion.div>
+                        </AnimatePresence>
+
+                        <div className="mt-5 flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] lg:mt-6 [&::-webkit-scrollbar]:hidden">
+                            {steps.map((step, idx) => (
+                                <button
+                                    key={step.title}
+                                    type="button"
+                                    onClick={() => setActive(idx)}
+                                    aria-label={`View ${step.title}`}
+                                    className={`relative h-14 w-[4.5rem] shrink-0 overflow-hidden rounded-[0.7rem] border transition-all duration-500 md:h-16 md:w-20 ${
+                                        idx === active
+                                            ? 'border-primary/40 shadow-[0_8px_24px_-12px_rgba(86,0,227,0.5)]'
+                                            : 'border-slate-200/80 opacity-70 hover:opacity-100'
+                                    }`}
+                                >
+                                    <StoryImage image={step.image} alt={step.title} focal={step.focal} className="h-full w-full object-cover" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/55 to-transparent" />
+                                    <span className="absolute bottom-1 left-1.5 font-mono text-[8px] text-white/90">0{idx + 1}</span>
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </motion.div>
     );
 }
 
@@ -1137,6 +1253,11 @@ export function CompanyStoryExperience() {
             cultureFocus: '/assets/company/culture-focus.webp',
             collabLoop: '/assets/company/collab-loop.mp4',
             collabLoopPoster: '/assets/company/collab-loop-poster.webp',
+            journeyDiscover: '/assets/company/journey-discover.webp',
+            journeyDesign: '/assets/company/journey-design.webp',
+            journeyBuild: '/assets/company/journey-build.webp',
+            journeyLaunch: '/assets/company/journey-launch.webp',
+            journeyScale: '/assets/company/journey-scale.webp',
         }),
         [],
     );
@@ -1194,11 +1315,11 @@ export function CompanyStoryExperience() {
 
     const journey: JourneyStep[] = useMemo(
         () => [
-            { title: 'Discover', image: assets.discussion, micro: 'Context mapping + target clarity', focal: 'center 38%', ratio: 'aspect-[3/2]' },
-            { title: 'Design', image: assets.blueprint, micro: 'System architecture + UX orchestration', focal: 'center 44%', ratio: 'aspect-[3/2]' },
-            { title: 'Build', image: assets.developer, micro: 'Integrations + automation logic + QA', focal: 'center 32%', ratio: 'aspect-[4/5] max-w-[460px] mx-auto' },
-            { title: 'Launch', image: assets.handshake, micro: 'Rollout + training + signal monitoring', focal: 'center 40%', ratio: 'aspect-[3/2]' },
-            { title: 'Scale', image: assets.growth, micro: 'Optimization loops + growth multipliers', focal: 'center 46%', ratio: 'aspect-[3/2]' },
+            { title: 'Discover', image: assets.journeyDiscover, micro: 'Context mapping + target clarity', focal: 'center 42%', tag: 'SCAN' },
+            { title: 'Design', image: assets.journeyDesign, micro: 'System architecture + UX orchestration', focal: 'center 44%', tag: 'BLUEPRINT' },
+            { title: 'Build', image: assets.journeyBuild, micro: 'Integrations + automation logic + QA', focal: 'center 38%', tag: 'COMPILE' },
+            { title: 'Launch', image: assets.journeyLaunch, micro: 'Rollout + training + signal monitoring', focal: 'center 40%', tag: 'DEPLOY' },
+            { title: 'Scale', image: assets.journeyScale, micro: 'Optimization loops + growth multipliers', focal: 'center 46%', tag: 'MULTIPLY' },
         ],
         [assets],
     );
@@ -1395,9 +1516,9 @@ export function CompanyStoryExperience() {
                         index="02 / 05"
                         eyebrow="How We Work"
                         title="An interactive journey, not a static timeline."
-                        subtitle="Discover ↓ Design ↓ Build ↓ Launch ↓ Scale"
+                        subtitle="Five phases in one console — explore the full journey without scrolling through a vertical timeline."
                     />
-                    <WorkJourney steps={journey} />
+                    <WorkAIPlatform steps={journey} />
                 </div>
 
                 {/* SECTION 4 */}
