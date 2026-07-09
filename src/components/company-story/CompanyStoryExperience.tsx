@@ -34,8 +34,6 @@ type CultureItem = {
     label: string;
     detail: string;
     note: string;
-    team: string;
-    accent: string;
 };
 
 function Reveal({
@@ -1028,253 +1026,89 @@ function WorkAIPlatform({ steps }: { steps: JourneyStep[] }) {
     );
 }
 
-function CultureLivingStage({
-    item,
-    index,
-    items,
-    active,
-    onSelect,
-}: {
-    item: CultureItem;
-    index: number;
-    items: CultureItem[];
-    active: number;
-    onSelect: (idx: number) => void;
-}) {
+function CultureMosaicCard({ item, index, spanClass }: { item: CultureItem; index: number; spanClass: string }) {
+    const feature = index === 0;
+
     return (
-        <div className="relative h-full min-h-[280px] w-full md:min-h-[360px] lg:min-h-[420px]">
-            <motion.div
-                animate={{
-                    background: [
-                        `radial-gradient(circle at 20% 20%, ${item.accent}33, transparent 50%)`,
-                        `radial-gradient(circle at 80% 30%, ${item.accent}44, transparent 55%)`,
-                        `radial-gradient(circle at 20% 20%, ${item.accent}33, transparent 50%)`,
-                    ],
-                }}
-                transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-                className="pointer-events-none absolute -inset-6 rounded-[2rem] blur-3xl"
-                aria-hidden
+        <motion.article
+            className={`group relative overflow-hidden rounded-[1.15rem] md:rounded-[1.35rem] ${spanClass}`}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.7, delay: index * 0.08, ease: EASE_OUT }}
+        >
+            <StoryImage
+                image={item.image}
+                alt={`Ukonnect culture — ${item.title}`}
+                focal={item.focal}
+                zoom
+                className="absolute inset-0 h-full w-full object-cover"
             />
 
-            <div className="relative h-full overflow-hidden rounded-[1.4rem] p-[2px] shadow-[0_32px_80px_-24px_rgba(0,0,0,0.55)] md:rounded-[1.65rem]">
-                <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 18, repeat: Infinity, ease: 'linear' }}
-                    className="pointer-events-none absolute left-1/2 top-1/2 aspect-square w-[170%] -translate-x-1/2 -translate-y-1/2 opacity-80"
-                    style={{
-                        background: `conic-gradient(from 0deg, transparent, ${item.accent}88, transparent, #f5e6c888, transparent, ${item.accent}66, transparent)`,
-                    }}
-                    aria-hidden
-                />
-                <div className="absolute inset-[2px] rounded-[1.35rem] bg-[#120a1f] md:rounded-[1.6rem]" />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/88 via-slate-950/25 to-slate-950/5" />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-primary/15 via-transparent to-[#9b4dff]/10 opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
+            <div className="pointer-events-none absolute inset-0 rounded-[1.15rem] ring-1 ring-inset ring-white/10 transition-all duration-500 group-hover:ring-primary/40 md:rounded-[1.35rem]" />
 
-                <div className="relative h-full overflow-hidden rounded-[1.3rem] md:rounded-[1.55rem]">
-                    <AnimatePresence mode="wait">
-                        <motion.div
-                            key={item.title}
-                            initial={{ opacity: 0, scale: 1.04, filter: 'blur(8px)' }}
-                            animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-                            exit={{ opacity: 0, scale: 0.98, filter: 'blur(6px)' }}
-                            transition={{ duration: 0.65, ease: EASE_OUT }}
-                            className="absolute inset-0"
-                        >
-                            <StoryImage
-                                image={item.image}
-                                alt={`Ukonnect culture — ${item.title}: ${item.team}`}
-                                focal={item.focal}
-                                zoom
-                                className="h-full w-full object-cover"
-                            />
-                        </motion.div>
-                    </AnimatePresence>
+            <div className="absolute left-4 top-4 flex items-center gap-2 md:left-5 md:top-5">
+                <span className="flex h-7 w-7 items-center justify-center rounded-full border border-white/25 bg-slate-950/40 font-mono text-[10px] font-semibold text-white/90 backdrop-blur-md">
+                    {index + 1}
+                </span>
+                <span className="rounded-full border border-white/20 bg-slate-950/35 px-2.5 py-1 font-mono text-[8px] tracking-[0.24em] text-white/80 backdrop-blur-md">
+                    {item.label.toUpperCase()}
+                </span>
+            </div>
 
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#120a1f]/92 via-[#120a1f]/20 to-[#5600e3]/10" />
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#120a1f]/35 via-transparent to-[#9b4dff]/12" />
-                    <motion.div
-                        animate={{ y: ['-130%', '230%'] }}
-                        transition={{ duration: 5.5, repeat: Infinity, ease: 'linear' }}
-                        className="pointer-events-none absolute inset-x-0 h-24 opacity-30"
-                        style={{ background: `linear-gradient(180deg, transparent, ${item.accent}33, transparent)` }}
-                        aria-hidden
-                    />
-
-                    {items.map((node, idx) => {
-                        const positions = [
-                            { top: '12%', left: '8%' },
-                            { top: '10%', left: '88%' },
-                            { top: '78%', left: '12%' },
-                            { top: '76%', left: '86%' },
-                            { top: '44%', left: '94%' },
-                        ];
-                        const pos = positions[idx];
-                        const isActive = idx === active;
-                        return (
-                            <motion.button
-                                key={node.title}
-                                type="button"
-                                onClick={() => onSelect(idx)}
-                                aria-label={`View ${node.title}`}
-                                aria-pressed={isActive}
-                                className="absolute z-10 -translate-x-1/2 -translate-y-1/2"
-                                style={{ top: pos.top, left: pos.left }}
-                                whileHover={{ scale: 1.12 }}
-                                whileTap={{ scale: 0.92 }}
-                            >
-                                {isActive ? (
-                                    <motion.span
-                                        animate={{ scale: [1, 2.2], opacity: [0.5, 0] }}
-                                        transition={{ duration: 2, repeat: Infinity, ease: 'easeOut' }}
-                                        className="absolute inset-0 rounded-full"
-                                        style={{ backgroundColor: `${node.accent}66` }}
-                                        aria-hidden
-                                    />
-                                ) : null}
-                                <span
-                                    className={`relative flex h-7 w-7 items-center justify-center rounded-full border-2 text-[10px] font-bold backdrop-blur-sm transition-all duration-500 md:h-8 md:w-8 ${
-                                        isActive
-                                            ? 'border-white text-white shadow-[0_0_24px_rgba(155,77,255,0.75)]'
-                                            : 'border-white/50 bg-black/25 text-white/70 hover:border-white/80 hover:bg-black/40'
-                                    }`}
-                                    style={isActive ? { backgroundColor: node.accent } : undefined}
-                                >
-                                    {idx + 1}
-                                </span>
-                            </motion.button>
-                        );
-                    })}
-
-                    <div className="absolute inset-x-4 bottom-4 md:inset-x-6 md:bottom-6">
-                        <motion.div
-                            key={`${item.title}-manifest`}
-                            initial={{ opacity: 0, y: 12 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, ease: EASE_OUT }}
-                            className="rounded-[1.1rem] border border-white/15 bg-[#120a1f]/72 p-4 backdrop-blur-xl md:p-5"
-                        >
-                            <div className="flex flex-wrap items-center gap-2">
-                                <span
-                                    className="rounded-full border border-white/20 px-2.5 py-1 font-mono text-[8px] tracking-[0.24em] text-white/85"
-                                    style={{ backgroundColor: `${item.accent}33` }}
-                                >
-                                    {item.label.toUpperCase()}
-                                </span>
-                                <span className="font-mono text-[8px] tracking-[0.2em] text-white/45">TEAM · {item.team.toUpperCase()}</span>
-                            </div>
-                            <p className="mt-3 text-[18px] font-semibold leading-[1.08] tracking-[-0.03em] text-white md:text-[22px]">
-                                {item.title}
-                            </p>
-                            <p className="mt-2 max-w-[52ch] text-[13px] leading-[1.72] text-white/72 md:text-[14px]">{item.detail}</p>
-                        </motion.div>
+            <div className="absolute inset-x-4 bottom-4 md:inset-x-5 md:bottom-5">
+                <h4 className={`font-semibold leading-[1.02] tracking-[-0.03em] text-white ${feature ? 'text-[28px] md:text-[38px]' : 'text-[20px] md:text-[24px]'}`}>
+                    {item.title}
+                </h4>
+                <div className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-out group-hover:grid-rows-[1fr]">
+                    <div className="overflow-hidden">
+                        <p className={`mt-2 leading-[1.6] text-white/78 ${feature ? 'text-[13px] md:text-[14.5px]' : 'text-[12px] md:text-[13px]'}`}>
+                            {item.detail}
+                        </p>
                     </div>
                 </div>
+                <span className="mt-2.5 block h-px w-8 origin-left scale-x-100 bg-gradient-to-r from-primary to-transparent transition-all duration-500 group-hover:w-14" aria-hidden />
             </div>
-        </div>
+        </motion.article>
     );
 }
 
-function CultureManifestExperience({ items }: { items: CultureItem[] }) {
-    const [active, setActive] = useState(0);
-    const current = items[active];
+function CultureMosaic({ items }: { items: CultureItem[] }) {
+    const spans = [
+        'sm:col-span-2 lg:col-span-6 lg:row-span-2 min-h-[300px] sm:min-h-[360px] lg:min-h-0',
+        'lg:col-span-3 min-h-[220px]',
+        'lg:col-span-3 min-h-[220px]',
+        'lg:col-span-3 min-h-[220px]',
+        'lg:col-span-3 min-h-[220px]',
+    ];
 
     return (
         <motion.div
             className="relative mt-8 md:mt-10"
-            initial={{ opacity: 0, y: 22 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.85, ease: EASE_OUT }}
+            transition={{ duration: 0.8, ease: EASE_OUT }}
         >
-            <div className="relative overflow-hidden rounded-[1.65rem] border border-[#f5e6c8]/15 shadow-[0_40px_100px_-32px_rgba(86,0,227,0.45)] md:rounded-[2rem]">
-                <div className="absolute inset-0 bg-[linear-gradient(145deg,#1a0f2e_0%,#2a1548_38%,#1c1035_68%,#0d0818_100%)]" />
-                <motion.div
-                    animate={{ opacity: [0.35, 0.55, 0.35], scale: [1, 1.04, 1] }}
-                    transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
-                    className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full blur-[100px]"
-                    style={{ backgroundColor: current.accent }}
-                    aria-hidden
-                />
-                <motion.div
-                    animate={{ opacity: [0.2, 0.4, 0.2] }}
-                    transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-                    className="pointer-events-none absolute -bottom-16 -left-16 h-64 w-64 rounded-full bg-[#f5e6c8]/10 blur-[90px]"
-                    aria-hidden
-                />
-                <div className="pointer-events-none absolute inset-0 opacity-[0.18] bg-[linear-gradient(rgba(245,230,200,0.12)_1px,transparent_1px),linear-gradient(90deg,rgba(245,230,200,0.12)_1px,transparent_1px)] bg-[size:32px_32px]" aria-hidden />
+            <div className="pointer-events-none absolute -inset-x-6 -top-10 bottom-0 -z-10" aria-hidden>
+                <div className="absolute left-[8%] top-0 h-64 w-64 rounded-full bg-[radial-gradient(circle,rgba(155,77,255,0.14),transparent_70%)] blur-2xl" />
+                <div className="absolute right-[6%] top-1/3 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(86,0,227,0.12),transparent_70%)] blur-2xl" />
+            </div>
 
-                <div className="relative flex items-center justify-between border-b border-white/[0.08] px-4 py-3.5 md:px-6">
-                    <div>
-                        <p className="font-mono text-[8px] tracking-[0.32em] text-[#f5e6c8]/55 md:text-[9px]">CULTURE MANIFEST</p>
-                        <p className="mt-0.5 text-[12px] font-medium text-white/50 md:text-[13px]">Five values · one living stage</p>
-                    </div>
-                    <div className="flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-3 py-1.5">
-                        <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#f5e6c8]" />
-                        <p className="font-mono text-[9px] tracking-[0.18em] text-white/65 tabular-nums">0{active + 1} / 0{items.length}</p>
-                    </div>
-                </div>
+            <div className="mb-5 flex flex-wrap items-center gap-x-3 gap-y-2 md:mb-6">
+                <span className="font-mono text-[9px] tracking-[0.34em] text-primary/55">THE UKONNECT WAY</span>
+                <span className="h-px flex-1 bg-gradient-to-r from-slate-300/70 to-transparent" aria-hidden />
+                <p className="text-[12.5px] leading-[1.5] text-slate-500 md:text-[13px]">
+                    Not a poster on the wall — how the studio actually operates, every day.
+                </p>
+            </div>
 
-                <div className="relative grid grid-cols-1 gap-0 lg:grid-cols-[220px_1fr]">
-                    <div className="border-b border-white/[0.08] p-3 lg:border-b-0 lg:border-r lg:p-4">
-                        <div className="flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] lg:flex-col lg:gap-1 lg:overflow-visible lg:pb-0 [&::-webkit-scrollbar]:hidden">
-                            {items.map((item, idx) => {
-                                const isActive = idx === active;
-                                return (
-                                    <motion.button
-                                        key={item.title}
-                                        type="button"
-                                        onClick={() => setActive(idx)}
-                                        aria-pressed={isActive}
-                                        className={`group relative min-w-[148px] shrink-0 rounded-xl px-3 py-3 text-left transition-all duration-500 lg:min-w-0 lg:px-4 lg:py-3.5 ${
-                                            isActive ? 'bg-white/[0.08]' : 'hover:bg-white/[0.04]'
-                                        }`}
-                                        whileHover={{ x: 3 }}
-                                        whileTap={{ scale: 0.98 }}
-                                    >
-                                        {isActive ? (
-                                            <motion.span
-                                                layoutId="culture-rail-glow"
-                                                className="absolute inset-y-2 left-0 w-0.5 rounded-full"
-                                                style={{ backgroundColor: item.accent, boxShadow: `0 0 14px ${item.accent}` }}
-                                                transition={{ duration: 0.45, ease: EASE_OUT }}
-                                            />
-                                        ) : null}
-                                        <span className={`font-mono text-[9px] tabular-nums ${isActive ? 'text-[#f5e6c8]' : 'text-white/30'}`}>
-                                            0{idx + 1}
-                                        </span>
-                                        <p className={`mt-1 text-[14px] font-semibold tracking-[-0.02em] lg:text-[15px] ${isActive ? 'text-white' : 'text-white/50 group-hover:text-white/75'}`}>
-                                            {item.title}
-                                        </p>
-                                        <p className={`mt-1 hidden text-[11px] leading-[1.5] lg:block ${isActive ? 'text-white/55' : 'text-white/30'}`}>
-                                            {item.label}
-                                        </p>
-                                    </motion.button>
-                                );
-                            })}
-                        </div>
-                    </div>
-
-                    <div className="p-3 md:p-4 lg:p-5">
-                        <CultureLivingStage
-                            item={current}
-                            index={active}
-                            items={items}
-                            active={active}
-                            onSelect={setActive}
-                        />
-
-                        <AnimatePresence mode="wait">
-                            <motion.p
-                                key={current.note}
-                                initial={{ opacity: 0, y: 6 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0 }}
-                                transition={{ duration: 0.4, ease: EASE_OUT }}
-                                className="mt-4 text-[12.5px] leading-[1.72] text-white/40 md:mt-5 md:text-[13px]"
-                            >
-                                {current.note}
-                            </motion.p>
-                        </AnimatePresence>
-                    </div>
-                </div>
+            <div className="grid auto-rows-[minmax(0,1fr)] grid-cols-1 gap-3 sm:grid-cols-2 md:gap-4 lg:grid-cols-12 lg:grid-rows-2">
+                {items.map((item, idx) => (
+                    <CultureMosaicCard key={item.title} item={item} index={idx} spanClass={spans[idx]} />
+                ))}
             </div>
         </motion.div>
     );
@@ -1432,11 +1266,6 @@ export function CompanyStoryExperience() {
             cultureMentoring: '/assets/company/culture-mentoring.webp',
             cultureTeam: '/assets/company/culture-team.webp',
             cultureFocus: '/assets/company/culture-focus.webp',
-            cultureOwnership: '/assets/company/culture-ownership.webp',
-            cultureInnovation: '/assets/company/culture-innovation.webp',
-            cultureExecution: '/assets/company/culture-execution.webp',
-            cultureCuriosity: '/assets/company/culture-curiosity.webp',
-            cultureGrowthNew: '/assets/company/culture-growth.webp',
             collabLoop: '/assets/company/collab-loop.mp4',
             collabLoopPoster: '/assets/company/collab-loop-poster.webp',
             journeyDiscover: '/assets/company/journey-discover.webp',
@@ -1525,53 +1354,43 @@ export function CompanyStoryExperience() {
         () => [
             {
                 title: 'Ownership',
-                image: assets.cultureOwnership,
-                focal: 'center 30%',
+                image: assets.cultureFocus,
+                focal: 'center 22%',
                 label: 'Deep work',
                 detail: 'Everyone owns outcomes end-to-end — not tickets waiting in a queue.',
                 note: 'Accountability visible in the room during focused build sessions — not on a slide.',
-                team: 'Marco & Firman',
-                accent: '#9b4dff',
             },
             {
                 title: 'Innovation',
-                image: assets.cultureInnovation,
-                focal: 'center 32%',
+                image: assets.cultureEnergy,
+                focal: 'center 40%',
                 label: 'Momentum',
                 detail: 'New ideas get tested against production standards, not pitch decks.',
                 note: 'The energy in the studio when experiments move fast — but still survive real operations.',
-                team: 'Bram & Tanisha',
-                accent: '#7c5cff',
             },
             {
                 title: 'Execution',
-                image: assets.cultureExecution,
-                focal: 'center 32%',
+                image: assets.cultureMeeting,
+                focal: 'center 38%',
                 label: 'Alignment',
                 detail: 'Direction is resolved in the room before execution starts to fragment.',
                 note: 'A working meeting with proximity and eye contact that feels candid, not performative.',
-                team: 'Sander & Kirsten',
-                accent: '#5600e3',
             },
             {
                 title: 'Curiosity',
-                image: assets.cultureCuriosity,
-                focal: 'center 30%',
+                image: assets.cultureMentoring,
+                focal: 'center 32%',
                 label: 'Mentorship',
                 detail: 'Knowledge moves sideways across the team, not only top-down.',
                 note: 'Side-by-side review moments where questions are welcomed in front of the system.',
-                team: 'Widhi & Gino',
-                accent: '#c084fc',
             },
             {
                 title: 'Growth',
-                image: assets.cultureGrowthNew,
-                focal: 'center 32%',
+                image: assets.cultureTeam,
+                focal: 'center 34%',
                 label: 'Together',
                 detail: 'Progress is a team rhythm — strategy, build, and delivery in one operating cadence.',
                 note: 'A company portrait that reads as culture evidence from a real team in motion.',
-                team: 'Afifah, Thiago, Paul & Edmerd',
-                accent: '#e8c47a',
             },
         ],
         [assets],
@@ -1734,9 +1553,9 @@ export function CompanyStoryExperience() {
                         index="04 / 05"
                         eyebrow="Culture"
                         title="Ownership, innovation, execution, curiosity, growth."
-                        subtitle="A living manifest — five values on one cinematic stage with orbital nodes."
+                        subtitle="Five values, one editorial wall — hover any frame to read how it shows up in the work."
                     />
-                    <CultureManifestExperience items={culture} />
+                    <CultureMosaic items={culture} />
                 </div>
 
                 {/* SECTION 6 */}
