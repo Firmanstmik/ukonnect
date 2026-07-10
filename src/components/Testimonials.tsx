@@ -332,7 +332,7 @@ export const Testimonials = () => {
                 {import.meta.env.DEV && TESTIMONIAL_METRICS_PENDING_VERIFICATION && (
                     <div className="mx-auto mb-10 flex max-w-2xl items-center justify-center gap-2 rounded-xl border border-amber-300/70 bg-amber-50 px-4 py-2.5 text-center text-xs font-semibold text-amber-700">
                         <TriangleAlert className="h-4 w-4 shrink-0" aria-hidden />
-                        Placeholder result metrics — pending founder verification before production.
+                        Placeholder result metrics. Pending founder verification before production.
                     </div>
                 )}
 
