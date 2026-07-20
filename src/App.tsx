@@ -21,9 +21,16 @@ function App() {
   useEffect(() => {
     if (location.hash) {
       const id = location.hash.slice(1);
-      setTimeout(() => {
-        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
+      let attempts = 0;
+      const scrollWhenReady = () => {
+        const target = document.getElementById(id);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+          return;
+        }
+        if (attempts++ < 40) window.setTimeout(scrollWhenReady, 50);
+      };
+      scrollWhenReady();
     }
   }, [location.hash]);
 
@@ -32,10 +39,16 @@ function App() {
       <Navbar />
       <main>
         <Hero />
-        <Suspense fallback={<div className="bg-[#ecedf1]" style={{ minHeight: '200vh' }} />}>
+        <Suspense fallback={<div className="bg-[#ecedf1]" style={{ minHeight: '48rem' }} />}>
           <TrustedBy />
+        </Suspense>
+        <Suspense fallback={<div className="bg-[#ecedf1]" style={{ minHeight: '40rem' }} />}>
           <CompanyStoryExperience />
+        </Suspense>
+        <Suspense fallback={<div className="bg-[#ecedf1]" style={{ minHeight: '42rem' }} />}>
           <Process />
+        </Suspense>
+        <Suspense fallback={<div className="bg-[#ecedf1]" style={{ minHeight: '80vh' }} />}>
           <Features />
           <Benefits />
           <CaseStudies />
