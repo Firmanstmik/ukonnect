@@ -9,7 +9,6 @@ import { HeroWorkflowBack, HeroWorkflowFront, HeroWorkflowNodes } from './HeroWo
 import { WORKFLOW_NODES } from './heroDesign';
 
 function DesktopStage({ animate }: { animate: boolean }) {
-    const { t } = useLanguage();
     const pointerX = useMotionValue(0);
     const pointerY = useMotionValue(0);
     const smoothX = useSpring(pointerX, { stiffness: 48, damping: 20, mass: 0.9 });
@@ -39,7 +38,9 @@ function DesktopStage({ animate }: { animate: boolean }) {
             onPointerLeave={reset}
         >
             <div className="cinematic-stage-canvas relative aspect-[1000/800] w-full overflow-visible lg:origin-center">
+                {/* Layer 1 — room / gradient atmosphere */}
                 <div className="cinematic-stage-room pointer-events-none absolute inset-[-22%_-5%_-5%] z-0" aria-hidden />
+                {/* Layer 2 — ambient mesh + fog + cursor light */}
                 <div className="cinematic-stage-mesh pointer-events-none absolute inset-[-12%_0_0] z-[1]" aria-hidden />
                 <div className="cinematic-stage-fog pointer-events-none absolute inset-0 z-[2]" aria-hidden />
                 <motion.div
@@ -59,8 +60,10 @@ function DesktopStage({ animate }: { animate: boolean }) {
                     <small>AMSTERDAM · NL</small>
                 </div>
 
+                {/* Layer 3 — workflow energy (behind team) */}
                 <HeroWorkflowBack animate={animate} />
 
+                {/* Layer 4 / 5 — team is the brightest focal point */}
                 <motion.div
                     className="cinematic-team-hero-focus pointer-events-none absolute inset-x-[2%] bottom-[10%] top-[-4%] z-[20]"
                     style={animate ? { x: teamX, y: teamY } : undefined}
@@ -68,14 +71,21 @@ function DesktopStage({ animate }: { animate: boolean }) {
                     <HeroTeamSpotlight className="h-full w-full" />
                 </motion.div>
 
-                <div className="cinematic-team-origin pointer-events-none absolute left-1/2 top-[65%] z-[25] -translate-x-1/2 -translate-y-1/2" aria-hidden>
+                {/* Origin marker — tucked behind faces, above energy */}
+                <div
+                    className="cinematic-team-origin pointer-events-none absolute left-1/2 top-[64.5%] z-[15] -translate-x-1/2 -translate-y-1/2"
+                    aria-hidden
+                >
                     <span />
-                    <small>{t('hero.stageEyebrow')}</small>
                 </div>
 
+                {/* Depth crossing in front of team, under cards */}
                 <HeroWorkflowFront animate={animate} />
+
+                {/* Layer 4 — operating-system cards */}
                 <HeroWorkflowNodes animate={animate} />
 
+                {/* Layer 6/7 — film grain + soft vignette */}
                 <div className="cinematic-stage-grain pointer-events-none absolute inset-[-2%] z-[50]" aria-hidden />
                 <div className="cinematic-stage-vignette pointer-events-none absolute inset-[-3%] z-[51]" aria-hidden />
             </div>

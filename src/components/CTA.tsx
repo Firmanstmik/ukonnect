@@ -26,7 +26,7 @@ export const CTA = () => {
     const reduce = useReducedMotion();
 
     return (
-        <section className="mx-auto max-w-[1300px] px-6 py-[60px] md:py-[80px] lg:py-[110px]">
+        <section id="cta" className="mx-auto max-w-[1300px] px-6 py-[60px] md:py-[80px] lg:py-[110px]">
             {/* Animated aurora gradient border */}
             <motion.div
                 initial={{ opacity: 0, y: 32 }}

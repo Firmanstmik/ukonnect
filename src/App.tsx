@@ -4,13 +4,12 @@ import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { PageIntro } from './components/PageIntro';
 
+const GrowthScore = lazy(() => import('./components/GrowthScore').then(m => ({ default: m.GrowthScore })));
 const TrustedBy   = lazy(() => import('./components/TrustedBy').then(m => ({ default: m.TrustedBy })));
-const CompanyStoryExperience = lazy(() =>
-  import('./components/company-story/CompanyStoryExperience').then(m => ({ default: m.CompanyStoryExperience })),
-);
+const WhatWeDo    = lazy(() => import('./components/WhatWeDo').then(m => ({ default: m.WhatWeDo })));
 const Process     = lazy(() => import('./components/Process').then(m => ({ default: m.Process })));
 const Features    = lazy(() => import('./components/Features').then(m => ({ default: m.Features })));
-const Benefits    = lazy(() => import('./components/Benefits').then(m => ({ default: m.Benefits })));
+const MiniTeam    = lazy(() => import('./components/MiniTeam').then(m => ({ default: m.MiniTeam })));
 const CaseStudies = lazy(() => import('./components/CaseStudies').then(m => ({ default: m.CaseStudies })));
 const Testimonials = lazy(() => import('./components/Testimonials').then(m => ({ default: m.Testimonials })));
 const FAQ         = lazy(() => import('./components/FAQ').then(m => ({ default: m.FAQ })));
@@ -41,18 +40,25 @@ function App() {
       <Navbar />
       <main>
         <Hero />
-        <Suspense fallback={<div className="bg-[#ecedf1]" style={{ minHeight: '48rem' }} />}>
+        <Suspense fallback={<div className="bg-[#ecedf1]" style={{ minHeight: '36rem' }} />}>
+          <GrowthScore />
+        </Suspense>
+        <Suspense fallback={<div className="bg-[#ecedf1]" style={{ minHeight: '28rem' }} />}>
           <TrustedBy />
         </Suspense>
-        <Suspense fallback={<div className="bg-[#ecedf1]" style={{ minHeight: '40rem' }} />}>
-          <CompanyStoryExperience />
+        <Suspense fallback={<div className="bg-[#ecedf1]" style={{ minHeight: '36rem' }} />}>
+          <WhatWeDo />
         </Suspense>
         <Suspense fallback={<div className="bg-[#ecedf1]" style={{ minHeight: '42rem' }} />}>
           <Process />
         </Suspense>
         <Suspense fallback={<div className="bg-[#ecedf1]" style={{ minHeight: '80vh' }} />}>
           <Features />
-          <Benefits />
+        </Suspense>
+        <Suspense fallback={<div className="bg-[#ecedf1]" style={{ minHeight: '24rem' }} />}>
+          <MiniTeam />
+        </Suspense>
+        <Suspense fallback={<div className="bg-[#ecedf1]" style={{ minHeight: '80vh' }} />}>
           <CaseStudies />
           <Testimonials />
           <FAQ />

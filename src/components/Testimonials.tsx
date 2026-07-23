@@ -1,38 +1,21 @@
 /**
- * Testimonials — reframed as a "Verified Proof" customer-success layer.
+ * Testimonials — waterfall proof wall (elevated from jouwdroomoverkapping pattern).
  *
- * Where Case Studies tells the anonymized, in-depth transformation stories,
- * this section is the *human, verified* counterpart: real, named Google
- * reviewers stand as evidence that those results are real.
- *
- *   1. Header + Google trust bar   — "these are verified by Google".
- *   2. Featured success spotlight  — one client, editorial layout, a mini
- *                                    growth dashboard + animated KPIs, and the
- *                                    verified review as supporting evidence.
- *                                    Its CTA hands off to the Case Studies
- *                                    transformations so the two sections tie
- *                                    together instead of repeating each other.
- *   3. Verified proof grid         — the remaining named reviews as compact
- *                                    cards: client, industry, services used,
- *                                    a headline result, and the Google review.
- *
- * ⚠ All numeric results are design placeholders — see testimonialData.ts. A
- *   dev-only banner guards them, mirroring the Case Studies convention.
+ * Desktop: left column scrolls UP, right scrolls DOWN, soft fade masks,
+ * dark Google trust pillar in the center. Mobile: horizontal marquee + stats.
+ * Brand: UKONNECT cyan/violet — not a 1:1 clone of the orange/navy reference.
  */
-import { motion } from 'framer-motion';
-import { ArrowRight, Info, Sparkles, TrendingUp, TriangleAlert } from 'lucide-react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { Check, MapPin, Quote, ThumbsUp, TriangleAlert, Users } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
 import type { Translate } from '../i18n/translations';
 import { EASE_OUT } from './motion';
 import { AnimatedCounter } from './AnimatedCounter';
-import { GoogleG, GoogleStars, GrowthChart } from './CaseStudyWidgets';
+import { GoogleG, GoogleStars } from './CaseStudyWidgets';
 import {
-    BRAND_FROM,
-    BRAND_TO,
     FEATURED_STORY,
     TESTIMONIAL_METRICS_PENDING_VERIFICATION,
     VERIFIED_REVIEWS,
-    type FeaturedStory,
     type VerifiedReview,
 } from './testimonialData';
 
@@ -45,269 +28,154 @@ const headerVariants = {
     }),
 };
 
-/* ── Small shared pieces ──────────────────────────────────────── */
+type ProofCard = VerifiedReview & { featured?: boolean };
 
-function ServiceChips({ services, t }: { services: VerifiedReview['services']; t: Translate }) {
+const FEATURED_CARD: ProofCard = {
+    name: FEATURED_STORY.name,
+    initials: FEATURED_STORY.initials,
+    color: FEATURED_STORY.color,
+    bodyKey: FEATURED_STORY.quoteKey,
+    industryKey: FEATURED_STORY.industryKey,
+    services: FEATURED_STORY.services,
+    resultValue: FEATURED_STORY.growthDelta,
+    resultLabelKey: 'testimonials.res.leads',
+    featured: true,
+};
+
+/** Real Google reviews — reused in interleaved order so the wall feels dense (like the reference). */
+const ALL_CARDS: ProofCard[] = [
+    VERIFIED_REVIEWS[0],
+    VERIFIED_REVIEWS[1],
+    FEATURED_CARD,
+    VERIFIED_REVIEWS[2],
+    VERIFIED_REVIEWS[3],
+    VERIFIED_REVIEWS[4],
+];
+
+/** Build a long column roster so many cards are always in motion. */
+function densify(order: ProofCard[], cycles = 2): ProofCard[] {
+    const out: ProofCard[] = [];
+    for (let i = 0; i < cycles; i++) out.push(...order);
+    return out;
+}
+
+/** Left column — scrolls upward. */
+const LEFT_ROSTER = densify(
+    [
+        ALL_CARDS[0],
+        ALL_CARDS[1],
+        ALL_CARDS[3],
+        ALL_CARDS[4],
+        ALL_CARDS[2],
+        ALL_CARDS[5],
+        ALL_CARDS[1],
+        ALL_CARDS[0],
+        ALL_CARDS[4],
+        ALL_CARDS[3],
+    ],
+    1,
+);
+
+/** Right column — scrolls downward (different order so sides never sync). */
+const RIGHT_ROSTER = densify(
+    [
+        ALL_CARDS[2],
+        ALL_CARDS[5],
+        ALL_CARDS[1],
+        ALL_CARDS[0],
+        ALL_CARDS[4],
+        ALL_CARDS[3],
+        ALL_CARDS[5],
+        ALL_CARDS[2],
+        ALL_CARDS[0],
+        ALL_CARDS[1],
+    ],
+    1,
+);
+
+function ReviewCard({ review, t }: { review: ProofCard; t: Translate }) {
     return (
-        <div className="flex flex-wrap gap-1.5">
-            {services.map((key) => (
-                <span
-                    key={key}
-                    className="inline-flex items-center rounded-full border border-slate-200/80 bg-white/70 px-2.5 py-1 text-[10px] font-semibold tracking-tight text-slate-500 shadow-sm"
-                >
-                    {t(key)}
+        <article className="uk-rev-card group relative w-full shrink-0 overflow-hidden rounded-[1.15rem] border border-white/80 bg-white/90 p-5 shadow-[0_8px_32px_rgba(15,23,42,0.06)] backdrop-blur-[10px] transition-all duration-300 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] hover:-translate-y-1 hover:border-[#5600e3]/20 hover:shadow-[0_18px_48px_rgba(86,0,227,0.12)] sm:p-[22px]">
+            {/* Brand edge reveal on hover */}
+            <div
+                className="pointer-events-none absolute inset-y-0 left-0 w-[3px] origin-top scale-y-0 bg-gradient-to-b from-[#00d4e8] via-[#5600e3] to-transparent opacity-0 transition-all duration-300 group-hover:scale-y-100 group-hover:opacity-100"
+                aria-hidden
+            />
+
+            <div className="mb-3 flex items-center justify-between gap-3">
+                <span className="rounded-md bg-[#5600e3]/[0.08] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.06em] text-[#5600e3]">
+                    {t(review.industryKey)}
                 </span>
-            ))}
-        </div>
-    );
-}
-
-function IndustryChip({ industryKey, t }: { industryKey: VerifiedReview['industryKey']; t: Translate }) {
-    return (
-        <span className="rounded-full border border-slate-200/80 bg-white/80 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500 shadow-sm backdrop-blur-sm">
-            {t(industryKey)}
-        </span>
-    );
-}
-
-/* ── Featured success spotlight ───────────────────────────────── */
-
-function FeaturedSpotlight({ story, t }: { story: FeaturedStory; t: Translate }) {
-    return (
-        <motion.div
-            initial={{ opacity: 0, y: 36 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.75, ease: EASE_OUT }}
-            className="group relative"
-        >
-            {/* Gradient ring that intensifies on hover */}
-            <div className="absolute -inset-[1px] rounded-[2.25rem] bg-gradient-to-br from-primary/25 via-[#9b4dff]/15 to-primary/10 opacity-60 blur-[0.5px] transition-opacity duration-700 group-hover:opacity-100" />
-
-            <div className="relative overflow-hidden rounded-[2.2rem] border border-slate-200/60 bg-white/90 shadow-[0_20px_80px_rgba(15,23,42,0.06)] backdrop-blur-xl">
-                <div className="pointer-events-none absolute right-0 top-0 h-72 w-72 -translate-y-1/3 translate-x-1/4 rounded-full bg-gradient-to-bl from-primary/8 to-transparent" />
-                <div className="pointer-events-none absolute bottom-0 left-0 h-56 w-56 -translate-x-1/4 translate-y-1/3 rounded-full bg-gradient-to-tr from-[#9b4dff]/8 to-transparent" />
-
-                <div className="relative grid gap-10 p-8 md:p-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14 lg:p-14">
-                    {/* ── Left: editorial quote + author + services + CTA ── */}
-                    <div className="flex flex-col">
-                        <span className="mb-6 inline-flex w-fit items-center gap-2 rounded-full border border-primary/15 bg-primary/[0.05] px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-primary">
-                            <Sparkles className="h-3.5 w-3.5" />
-                            {t('testimonials.featured.eyebrow')}
-                        </span>
-
-                        <blockquote className="text-xl font-medium leading-[1.5] tracking-tight text-slate-800 md:text-2xl lg:text-[1.7rem]">
-                            &ldquo;{t(story.quoteKey)}&rdquo;
-                        </blockquote>
-
-                        {/* Author + verified */}
-                        <div className="mt-8 flex flex-wrap items-center gap-4">
-                            <div
-                                className="flex items-center justify-center rounded-2xl text-base font-bold text-white shadow-md ring-2 ring-white"
-                                style={{ height: 52, width: 52, background: `linear-gradient(135deg, ${story.color}, ${story.color}cc)` }}
-                            >
-                                {story.initials}
-                            </div>
-                            <div className="min-w-0">
-                                <p className="text-base font-bold tracking-tight text-slate-900">{story.name}</p>
-                                <div className="mt-1 flex items-center gap-2">
-                                    <GoogleG className="h-3.5 w-3.5" />
-                                    <span className="text-xs font-medium text-slate-500">{t(story.industryKey)}</span>
-                                </div>
-                            </div>
-                            <div className="ml-auto inline-flex items-center gap-2 rounded-full border border-slate-200/80 bg-white px-3 py-2 shadow-sm">
-                                <GoogleStars delay={0.4} />
-                                <span className="text-[10px] font-bold uppercase tracking-wide text-slate-500">
-                                    {t('testimonials.verified')}
-                                </span>
-                            </div>
-                        </div>
-
-                        {/* Services used */}
-                        <div className="mt-7">
-                            <p className="mb-2.5 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400">
-                                {t('testimonials.servicesLabel')}
-                            </p>
-                            <ServiceChips services={story.services} t={t} />
-                        </div>
-
-                        {/* Outcome + CTA pinned to the bottom */}
-                        <div className="mt-8 flex flex-wrap items-center gap-4 lg:mt-auto lg:pt-8">
-                            <div className="inline-flex items-center gap-2.5 rounded-2xl border border-primary/15 bg-primary/[0.04] px-4 py-2.5">
-                                <TrendingUp className="h-4 w-4 text-primary" />
-                                <span className="text-sm font-semibold text-primary">{t('testimonials.featured.outcome')}</span>
-                            </div>
-                            <a
-                                href="#case-studies"
-                                className="group/cta inline-flex items-center gap-2 rounded-2xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-900/10 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-primary hover:shadow-primary/25 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
-                            >
-                                {t('testimonials.viewTransformation')}
-                                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/cta:translate-x-0.5" />
-                            </a>
-                        </div>
-                    </div>
-
-                    {/* ── Right: mini dashboard + animated KPIs ── */}
-                    <div className="rounded-[1.75rem] border border-slate-200/70 bg-gradient-to-b from-white to-slate-50/70 p-6 shadow-[0_1px_2px_rgba(15,23,42,0.04),0_18px_40px_-24px_rgba(15,23,42,0.16)] md:p-7">
-                        <GrowthChart
-                            series={story.series}
-                            accentFrom={BRAND_FROM}
-                            accentTo={BRAND_TO}
-                            delta={story.growthDelta}
-                            caption={t('caseStudies.growth.caption')}
-                            height={132}
-                        />
-
-                        <div className="mt-6 grid grid-cols-3 gap-3 border-t border-slate-100 pt-6">
-                            {story.metrics.map((m, i) => (
-                                <motion.div
-                                    key={m.labelKey}
-                                    initial={{ opacity: 0, y: 12 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ duration: 0.5, delay: 0.15 + i * 0.1, ease: EASE_OUT }}
-                                    className="text-center"
-                                >
-                                    <p className="bg-gradient-to-r from-[#5600e3] to-[#9b4dff] bg-clip-text text-xl font-bold leading-none tracking-tight text-transparent tabular-nums md:text-2xl">
-                                        <AnimatedCounter
-                                            to={m.to}
-                                            prefix={m.prefix}
-                                            suffix={m.suffix}
-                                            decimals={m.decimals ?? 0}
-                                            duration={1.8}
-                                        />
-                                    </p>
-                                    <p className="mt-2 text-[11px] font-medium leading-tight text-slate-500">{t(m.labelKey)}</p>
-                                </motion.div>
-                            ))}
-                        </div>
-
-                        <div className="mt-6 flex items-center justify-between gap-3 rounded-2xl border border-slate-200/80 bg-white px-4 py-2.5 shadow-sm">
-                            <div className="flex items-center gap-2">
-                                <GoogleG className="h-4 w-4" />
-                                <GoogleStars delay={0.5} />
-                            </div>
-                            <span className="text-[10px] font-bold uppercase tracking-wide text-slate-500">
-                                {t('caseStudies.featured.googleBadge')}
-                            </span>
-                        </div>
-
-                        <p className="mt-3 flex items-center gap-1.5 text-[11px] font-normal text-slate-400">
-                            <Info className="h-3 w-3 shrink-0" aria-hidden />
-                            {t('caseStudies.illustrative')}
-                        </p>
-                    </div>
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-[#5600e3]/15 to-[#00d4e8]/10 text-[#5600e3] transition-all duration-300 group-hover:rotate-[-8deg] group-hover:from-[#5600e3] group-hover:to-[#00d4e8] group-hover:text-white">
+                    <Quote className="h-3.5 w-3.5" aria-hidden />
                 </div>
             </div>
-        </motion.div>
-    );
-}
 
-/* ── Compact verified proof card ──────────────────────────────── */
+            <div className="mb-3">
+                <GoogleStars size="w-3.5 h-3.5" delay={0.1} />
+            </div>
 
-function VerifiedCard({ review, t }: { review: VerifiedReview; t: Translate }) {
-    return (
-        <article className="group relative h-full">
-            {/* Soft brand glow, hover only */}
-            <div className="pointer-events-none absolute -inset-px rounded-[1.5rem] bg-gradient-to-br from-primary/20 to-[#9b4dff]/10 opacity-0 blur-[2px] transition-opacity duration-500 group-hover:opacity-100" />
+            <p className="mb-4 line-clamp-3 text-[14px] leading-[1.65] text-slate-600">
+                &ldquo;{t(review.bodyKey)}&rdquo;
+            </p>
 
-            <div className="relative flex h-full flex-col overflow-hidden rounded-[1.5rem] border border-slate-200/70 bg-white p-6 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-[transform,box-shadow,border-color] duration-300 ease-out group-hover:-translate-y-1.5 group-hover:border-slate-300 group-hover:shadow-[0_2px_6px_rgba(15,23,42,0.04),0_24px_48px_-20px_rgba(15,23,42,0.18)]">
-                {/* Top accent wash */}
+            <div className="flex items-center gap-3 border-t border-slate-900/[0.06] pt-3.5">
                 <div
-                    className="pointer-events-none absolute inset-x-0 top-0 h-24 opacity-60"
-                    style={{ background: `linear-gradient(135deg, ${BRAND_FROM}0d 0%, transparent 65%)` }}
-                />
-
-                {/* Header */}
-                <div className="relative mb-4 flex items-start justify-between gap-3">
-                    <div className="flex items-center gap-3">
-                        <div
-                            className="flex h-11 w-11 items-center justify-center rounded-xl text-sm font-bold text-white shadow-sm ring-2 ring-white"
-                            style={{ backgroundColor: review.color }}
-                        >
-                            {review.initials}
-                        </div>
-                        <div>
-                            <p className="text-sm font-bold leading-tight tracking-tight text-slate-900">{review.name}</p>
-                            <div className="mt-1">
-                                <GoogleStars size="w-3 h-3" delay={0.2} />
-                            </div>
-                        </div>
-                    </div>
-                    <IndustryChip industryKey={review.industryKey} t={t} />
+                    className="flex h-[42px] w-[42px] shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white shadow-sm transition-transform duration-300 group-hover:scale-110"
+                    style={{
+                        background: `linear-gradient(135deg, ${review.color}, ${review.color}b3)`,
+                        boxShadow: `0 6px 16px ${review.color}40`,
+                    }}
+                >
+                    {review.initials}
                 </div>
-
-                {/* Verified Google review — supporting evidence */}
-                <p className="relative mb-5 flex-1 text-[13px] leading-relaxed text-slate-600">
-                    &ldquo;{t(review.bodyKey)}&rdquo;
-                </p>
-
-                {/* Services used */}
-                <div className="mb-5">
-                    <ServiceChips services={review.services} t={t} />
+                <div className="min-w-0 flex-1">
+                    <p className="truncate text-sm font-bold tracking-tight text-slate-900">{review.name}</p>
+                    <p className="mt-0.5 flex items-center gap-1.5 text-[11px] text-slate-400">
+                        <MapPin className="h-3 w-3 shrink-0" aria-hidden />
+                        <span className="truncate">{t('testimonials.verified')}</span>
+                        {review.featured ? (
+                            <span className="ml-1 rounded-full border border-[#00d4e8]/25 bg-[#00d4e8]/10 px-1.5 py-px font-mono text-[8px] font-bold uppercase tracking-wider text-[#0891b2]">
+                                {t('testimonials.featured.badge')}
+                            </span>
+                        ) : null}
+                    </p>
                 </div>
-
-                {/* Footer: headline result + Google verified */}
-                <div className="mt-auto flex items-center justify-between gap-3 border-t border-slate-100 pt-4">
-                    <div>
-                        <p className="bg-gradient-to-r from-[#5600e3] to-[#9b4dff] bg-clip-text text-lg font-bold leading-none tracking-tight text-transparent tabular-nums">
-                            {review.resultValue}
-                        </p>
-                        <p className="mt-1 text-[11px] font-medium leading-tight text-slate-400">{t(review.resultLabelKey)}</p>
-                    </div>
-                    <div className="inline-flex items-center gap-1.5 rounded-full border border-slate-200/80 bg-white px-2.5 py-1.5 shadow-sm">
-                        <GoogleG className="h-3.5 w-3.5" />
-                        <span className="text-[10px] font-bold uppercase tracking-wide text-slate-500">
-                            {t('testimonials.verified')}
-                        </span>
-                    </div>
+                <div className="flex flex-col items-end gap-1.5">
+                    <span className="bg-gradient-to-r from-[#5600e3] to-[#00d4e8] bg-clip-text text-xs font-bold tabular-nums text-transparent">
+                        {review.resultValue}
+                    </span>
+                    <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-gradient-to-br from-emerald-500 to-emerald-400 text-white shadow-sm">
+                        <Check className="h-3.5 w-3.5" strokeWidth={3} />
+                    </span>
                 </div>
             </div>
         </article>
     );
 }
 
-/* ── Living proof marquee ─────────────────────────────────────────
-   The verified cards drift as an infinite, pausable row. Two of these
-   stacked (one reversed) make the "wall of proof" feel alive without
-   ever demanding a click. Duplicated cards are aria-hidden so the loop
-   stays seamless without doubling up for screen readers. */
-const PROOF_MARQUEE_MASK = 'linear-gradient(to right, transparent, black 5%, black 95%, transparent)';
-
-function ProofMarquee({
+function WaterfallColumn({
     reviews,
+    /** Visual direction: left = up, right = down (matches jouwdroomoverkapping). */
+    direction,
     t,
-    reverse = false,
-    duration = 64,
 }: {
-    reviews: VerifiedReview[];
+    reviews: ProofCard[];
+    direction: 'up' | 'down';
     t: Translate;
-    reverse?: boolean;
-    duration?: number;
 }) {
-    // Doubled roster gives the -50% loop a seamless wrap point.
+    // Double the roster for a seamless -50% CSS loop.
     const track = [...reviews, ...reviews];
     return (
-        <div
-            className="testimonial-marquee scrollbar-hide relative overflow-hidden py-3"
-            style={{
-                maskImage: PROOF_MARQUEE_MASK,
-                WebkitMaskImage: PROOF_MARQUEE_MASK,
-                ['--testimonial-marquee-duration' as string]: `${duration}s`,
-            }}
-        >
+        <div className="uk-rev-col relative h-[560px] overflow-hidden">
             <div
-                className={`testimonial-marquee-track flex w-max items-stretch gap-5 md:gap-6 ${
-                    reverse ? 'testimonial-marquee-track--reverse' : ''
+                className={`uk-rev-col-track flex flex-col gap-5 ${
+                    direction === 'up' ? 'uk-rev-col-track--up' : 'uk-rev-col-track--down'
                 }`}
             >
                 {track.map((review, idx) => (
-                    <div
-                        key={`${review.name}-${idx}`}
-                        className="w-[300px] shrink-0 sm:w-[330px]"
-                        aria-hidden={idx >= reviews.length}
-                    >
-                        <VerifiedCard review={review} t={t} />
+                    <div key={`${review.name}-${direction}-${idx}`} aria-hidden={idx >= reviews.length}>
+                        <ReviewCard review={review} t={t} />
                     </div>
                 ))}
             </div>
@@ -315,38 +183,209 @@ function ProofMarquee({
     );
 }
 
-/* ── Section ──────────────────────────────────────────────────── */
+function TrustPillar({ t }: { t: Translate }) {
+    const reduce = useReducedMotion();
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 24, scale: 0.96 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.75, ease: EASE_OUT }}
+            className="relative mx-auto w-full max-w-[300px] lg:max-w-none"
+        >
+            <div
+                className="pointer-events-none absolute -inset-6 rounded-[2rem] opacity-80 blur-2xl"
+                style={{
+                    background:
+                        'radial-gradient(circle at 50% 30%, rgba(86,0,227,0.32), transparent 55%), radial-gradient(circle at 50% 85%, rgba(0,212,232,0.18), transparent 50%)',
+                }}
+                aria-hidden
+            />
+
+            <div className="relative flex h-full flex-col items-center gap-6 overflow-hidden rounded-[1.5rem] border border-white/10 bg-[#0b1020] px-6 py-8 text-white shadow-[0_20px_60px_rgba(8,13,25,0.45)] sm:px-7 sm:py-9 lg:min-h-[560px] lg:justify-center">
+                <div className="pointer-events-none absolute inset-0" aria-hidden>
+                    <div
+                        className="absolute inset-0 opacity-50"
+                        style={{
+                            backgroundImage:
+                                'radial-gradient(circle at 40% 20%, rgba(86,0,227,0.4), transparent 45%), radial-gradient(circle at 80% 75%, rgba(0,212,232,0.2), transparent 42%)',
+                        }}
+                    />
+                    <div
+                        className="absolute inset-0 opacity-25"
+                        style={{
+                            backgroundImage:
+                                'linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)',
+                            backgroundSize: '22px 22px',
+                        }}
+                    />
+                </div>
+
+                <div className="relative flex w-full flex-col items-center gap-6">
+                    <p className="font-mono text-[9px] font-bold uppercase tracking-[0.22em] text-white/45">
+                        {t('testimonials.pillar.eyebrow')}
+                    </p>
+
+                    <div className="relative grid h-[140px] w-[140px] place-items-center">
+                        <svg className="absolute inset-0 h-full w-full -rotate-90" viewBox="0 0 120 120" aria-hidden>
+                            <circle cx="60" cy="60" r="54" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="10" />
+                            <motion.circle
+                                cx="60"
+                                cy="60"
+                                r="54"
+                                fill="none"
+                                stroke="url(#uk-rev-ring)"
+                                strokeWidth="10"
+                                strokeLinecap="round"
+                                strokeDasharray={`${2 * Math.PI * 54}`}
+                                initial={reduce ? false : { strokeDashoffset: 2 * Math.PI * 54 }}
+                                whileInView={{ strokeDashoffset: 2 * Math.PI * 54 * (1 - 0.98) }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 1.5, ease: EASE_OUT, delay: 0.15 }}
+                            />
+                            <defs>
+                                <linearGradient id="uk-rev-ring" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stopColor="#00D4E8" />
+                                    <stop offset="50%" stopColor="#6C30FF" />
+                                    <stop offset="100%" stopColor="#9B4DFF" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                        <div className="text-center">
+                            <p className="text-[32px] font-extrabold leading-none tracking-tight text-white">4.9</p>
+                            <p className="mt-1 text-[11px] font-semibold uppercase tracking-wide text-white/50">
+                                {t('testimonials.pillar.ofFive')}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="flex w-full flex-col gap-2.5">
+                        <div className="flex items-center gap-3 rounded-xl bg-white/[0.06] px-3.5 py-2.5 transition-colors hover:bg-white/[0.12]">
+                            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#00d4e8]/15 text-[#00d4e8]">
+                                <Users className="h-4 w-4" />
+                            </div>
+                            <div>
+                                <p className="text-lg font-extrabold leading-none tabular-nums">
+                                    <AnimatedCounter to={150} suffix="+" duration={1.5} />
+                                </p>
+                                <p className="mt-1 text-[11px] font-semibold uppercase tracking-wide text-white/45">
+                                    {t('testimonials.pillar.reviews')}
+                                </p>
+                            </div>
+                        </div>
+                        <div className="flex items-center gap-3 rounded-xl bg-white/[0.06] px-3.5 py-2.5 transition-colors hover:bg-white/[0.12]">
+                            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#9b4dff]/20 text-[#c4b5fd]">
+                                <ThumbsUp className="h-4 w-4" />
+                            </div>
+                            <div>
+                                <p className="text-lg font-extrabold leading-none tabular-nums">
+                                    <AnimatedCounter to={98} suffix="%" duration={1.5} />
+                                </p>
+                                <p className="mt-1 text-[11px] font-semibold uppercase tracking-wide text-white/45">
+                                    {t('testimonials.pillar.recommend')}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2.5 transition-colors hover:bg-white/[0.18]">
+                        <GoogleG className="h-5 w-5" />
+                        <GoogleStars delay={0.35} />
+                        <span className="text-xs font-semibold text-white/80">{t('testimonials.pillar.google')}</span>
+                    </div>
+                </div>
+            </div>
+        </motion.div>
+    );
+}
+
+function MobileStats({ t }: { t: Translate }) {
+    return (
+        <div className="mb-7 flex flex-wrap items-center justify-center gap-2 lg:hidden">
+            <div className="inline-flex items-center gap-2.5 rounded-full border border-slate-200/80 bg-white px-4 py-2.5 shadow-[0_4px_20px_rgba(0,0,0,0.06)]">
+                <span className="bg-gradient-to-r from-[#5600e3] to-[#00d4e8] bg-clip-text text-lg font-extrabold text-transparent">
+                    4.9/5
+                </span>
+                <span className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">
+                    {t('testimonials.pillar.ofFive')}
+                </span>
+            </div>
+            <div className="inline-flex items-center gap-2 rounded-full border border-slate-200/80 bg-white px-4 py-2.5 shadow-[0_4px_20px_rgba(0,0,0,0.06)]">
+                <Users className="h-4 w-4 text-[#5600e3]" />
+                <span className="text-sm font-extrabold text-slate-900">150+</span>
+                <span className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">
+                    {t('testimonials.pillar.reviews')}
+                </span>
+            </div>
+            <div className="inline-flex items-center gap-2 rounded-full border border-slate-200/80 bg-white px-4 py-2.5 shadow-[0_4px_20px_rgba(0,0,0,0.06)]">
+                <ThumbsUp className="h-4 w-4 text-[#5600e3]" />
+                <span className="text-sm font-extrabold text-slate-900">98%</span>
+                <span className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">
+                    {t('testimonials.pillar.recommend')}
+                </span>
+            </div>
+        </div>
+    );
+}
+
+function MobileMarquee({ t }: { t: Translate }) {
+    // Dense horizontal wall — same reviews interleaved twice, then doubled for the loop.
+    const roster = densify(ALL_CARDS, 2);
+    const track = [...roster, ...roster];
+    return (
+        <div className="uk-rev-marquee relative overflow-hidden lg:hidden">
+            <div className="uk-rev-marquee-track flex w-max gap-5">
+                {track.map((review, idx) => (
+                    <div
+                        key={`${review.name}-m-${idx}`}
+                        className="w-[300px] shrink-0 sm:w-[320px]"
+                        aria-hidden={idx >= roster.length}
+                    >
+                        <ReviewCard review={review} t={t} />
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+}
 
 export const Testimonials = () => {
     const { t } = useLanguage();
 
     return (
-        <section id="testimonials" className="relative overflow-hidden py-[60px] md:py-[80px] lg:py-[120px]">
-            {/* Ambient background — matches Case Studies for a seamless flow */}
-            <div className="pointer-events-none absolute inset-0 case-studies-dot-grid opacity-[0.25]" />
-            <div className="pointer-events-none absolute left-1/2 top-0 h-[420px] w-full max-w-[900px] -translate-x-1/2 rounded-full bg-gradient-to-b from-primary/[0.04] to-transparent blur-3xl" />
-            <div className="pointer-events-none absolute -right-40 bottom-24 h-[460px] w-[460px] rounded-full bg-[#9b4dff]/[0.05] blur-[150px]" />
+        <section id="testimonials" className="uk-rev relative overflow-hidden py-[60px] md:py-[80px] lg:py-[100px]">
+            <div className="pointer-events-none absolute inset-0 case-studies-dot-grid opacity-[0.3]" />
+            <div className="pointer-events-none absolute left-1/2 top-0 h-[420px] w-full max-w-[900px] -translate-x-1/2 rounded-full bg-gradient-to-b from-primary/[0.05] to-transparent blur-3xl" />
+            <div className="pointer-events-none absolute -left-32 bottom-16 h-[360px] w-[360px] rounded-full bg-[#00d4e8]/[0.04] blur-[140px]" />
+            <div className="pointer-events-none absolute -right-40 top-32 h-[400px] w-[400px] rounded-full bg-[#9b4dff]/[0.055] blur-[150px]" />
 
-            <div className="relative mx-auto max-w-[1300px] px-6">
-                {/* Dev-only guardrail: placeholder metrics must be verified before shipping. */}
+            {/* Soft architectural guides */}
+            <div className="pointer-events-none absolute inset-y-0 left-[6%] hidden w-px bg-gradient-to-b from-transparent via-[#5600e3]/10 to-transparent lg:block" />
+            <div className="pointer-events-none absolute inset-y-0 right-[6%] hidden w-px bg-gradient-to-b from-transparent via-[#00d4e8]/10 to-transparent lg:block" />
+
+            <div className="relative z-[2] mx-auto max-w-[1300px] px-6">
                 {import.meta.env.DEV && TESTIMONIAL_METRICS_PENDING_VERIFICATION && (
-                    <div className="mx-auto mb-10 flex max-w-2xl items-center justify-center gap-2 rounded-xl border border-amber-300/70 bg-amber-50 px-4 py-2.5 text-center text-xs font-semibold text-amber-700">
+                    <div className="mx-auto mb-8 flex max-w-2xl items-center justify-center gap-2 rounded-xl border border-amber-300/70 bg-amber-50 px-4 py-2.5 text-center text-xs font-semibold text-amber-700">
                         <TriangleAlert className="h-4 w-4 shrink-0" aria-hidden />
                         Placeholder result metrics. Pending founder verification before production.
                     </div>
                 )}
 
-                {/* ── Header ── */}
-                <div className="mx-auto mb-14 max-w-3xl text-center md:mb-20">
+                <div className="mx-auto mb-10 max-w-3xl text-center md:mb-12">
                     <motion.div
                         custom={0}
                         initial="hidden"
                         whileInView="visible"
                         viewport={{ once: true }}
                         variants={headerVariants}
-                        className="mb-3 text-sm font-semibold uppercase tracking-wide text-primary"
+                        className="uk-rev-eyebrow relative mb-4 inline-flex items-center gap-3 overflow-hidden rounded-full border border-[#5600e3]/15 bg-[#5600e3]/[0.06] py-2.5 pl-3.5 pr-5"
                     >
-                        {t('testimonials.label')}
+                        <span className="h-1.5 w-1.5 rounded-full bg-gradient-to-r from-[#00d4e8] to-[#5600e3]" />
+                        <span className="h-4 w-px bg-[#5600e3]/20" aria-hidden />
+                        <span className="text-[11.5px] font-bold uppercase tracking-[0.2em] text-[#5600e3]">
+                            {t('testimonials.label')}
+                        </span>
                     </motion.div>
 
                     <motion.h2
@@ -355,13 +394,16 @@ export const Testimonials = () => {
                         whileInView="visible"
                         viewport={{ once: true }}
                         variants={headerVariants}
-                        className="mb-6 text-balance text-3xl font-bold leading-[1.12] tracking-tight text-slate-900 md:text-4xl lg:text-5xl"
+                        className="mb-4 text-balance text-[clamp(1.875rem,4vw,3rem)] font-extrabold leading-[1.15] tracking-tight text-slate-900"
                     >
-                        {t('testimonials.headingPre')}
-                        <span className="bg-gradient-to-r from-[#5600e3] to-[#9b4dff] bg-clip-text text-transparent">
+                        <span className="relative inline-block bg-gradient-to-r from-[#5600e3] to-[#00d4e8] bg-clip-text text-transparent">
                             {t('testimonials.headingHighlight')}
-                        </span>
-                        {t('testimonials.headingPost')}
+                            <span
+                                className="pointer-events-none absolute bottom-1.5 left-0 -z-10 h-3 w-full -skew-x-6 rounded-md bg-gradient-to-r from-[#5600e3]/20 to-[#00d4e8]/10"
+                                aria-hidden
+                            />
+                        </span>{' '}
+                        <span className="text-slate-900">{t('testimonials.headingPost')}</span>
                     </motion.h2>
 
                     <motion.p
@@ -370,40 +412,22 @@ export const Testimonials = () => {
                         whileInView="visible"
                         viewport={{ once: true }}
                         variants={headerVariants}
-                        className="mx-auto max-w-2xl text-base leading-relaxed text-slate-500 md:text-lg"
+                        className="mx-auto max-w-xl text-base leading-relaxed text-slate-500 md:text-lg"
                     >
                         {t('testimonials.sub')}
                     </motion.p>
-
-                    {/* Google trust bar */}
-                    <motion.div
-                        custom={3}
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true }}
-                        variants={headerVariants}
-                        className="mx-auto mt-7 inline-flex items-center gap-3 rounded-full border border-slate-200/80 bg-white/80 px-5 py-2.5 shadow-sm backdrop-blur-sm"
-                    >
-                        <GoogleG className="h-4 w-4" />
-                        <GoogleStars delay={0.3} />
-                        <span className="text-xs font-semibold text-slate-600">{t('testimonials.trustbar')}</span>
-                    </motion.div>
                 </div>
 
-                {/* ── Featured spotlight ── */}
-                <FeaturedSpotlight story={FEATURED_STORY} t={t} />
+                {/* Mobile stats + horizontal fade marquee */}
+                <MobileStats t={t} />
+                <MobileMarquee t={t} />
 
-                {/* ── Verified proof — infinite living wall ── */}
-                <motion.div
-                    initial={{ opacity: 0, y: 28 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-60px' }}
-                    transition={{ duration: 0.7, ease: EASE_OUT }}
-                    className="mt-6 space-y-5 md:mt-10 md:space-y-6"
-                >
-                    <ProofMarquee reviews={VERIFIED_REVIEWS} t={t} duration={64} />
-                    <ProofMarquee reviews={[...VERIFIED_REVIEWS].reverse()} t={t} reverse duration={78} />
-                </motion.div>
+                {/* Desktop waterfall: left ↑ / right ↓ — auto infinite with fade masks */}
+                <div className="relative hidden grid-cols-[1fr_280px_1fr] items-stretch gap-7 lg:grid">
+                    <WaterfallColumn reviews={LEFT_ROSTER} direction="up" t={t} />
+                    <TrustPillar t={t} />
+                    <WaterfallColumn reviews={RIGHT_ROSTER} direction="down" t={t} />
+                </div>
             </div>
         </section>
     );

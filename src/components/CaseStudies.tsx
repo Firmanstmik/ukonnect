@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { LayoutGroup, motion } from 'framer-motion';
 import { TriangleAlert } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
 import { EASE_OUT } from './motion';
@@ -8,9 +8,10 @@ import {
     CASE_STUDY_EXPERIENCES,
     type CaseStudyExperience,
 } from './case-studies/caseStudyExperienceData';
+import { CaseStudyCompactCard } from './case-studies/CaseStudyCompactCard';
+import { CaseStudyExpandOverlay } from './case-studies/CaseStudyExpandOverlay';
 import { CaseStudyExperienceModalHost } from './case-studies/CaseStudyExperienceModal';
-import { CaseStudyFeaturedCard } from './case-studies/CaseStudyFeaturedCard';
-import { DemoBadge, IllustrativeBadge } from './case-studies/CaseStudyPrimitives';
+import { DemoBadge } from './case-studies/CaseStudyPrimitives';
 
 const headerVariants = {
     hidden: { opacity: 0, y: 24 },
@@ -23,25 +24,31 @@ const headerVariants = {
 
 export const CaseStudies = () => {
     const { t } = useLanguage();
-    const [activeId, setActiveId] = useState<string | null>(null);
+    const [expandedId, setExpandedId] = useState<string | null>(null);
+    const [deepId, setDeepId] = useState<string | null>(null);
 
-    const openStudy = useCallback((study: CaseStudyExperience) => setActiveId(study.id), []);
-    const closeStudy = useCallback(() => setActiveId(null), []);
-    const navigateStudy = useCallback((study: CaseStudyExperience) => setActiveId(study.id), []);
+    const expandedStudy = CASE_STUDY_EXPERIENCES.find((s) => s.id === expandedId) ?? null;
+    const expandedIndex = Math.max(
+        0,
+        CASE_STUDY_EXPERIENCES.findIndex((s) => s.id === expandedId),
+    );
+
+    const expandStudy = useCallback((study: CaseStudyExperience) => setExpandedId(study.id), []);
+    const closeExpand = useCallback(() => setExpandedId(null), []);
+    const openDeep = useCallback((study: CaseStudyExperience) => {
+        setDeepId(study.id);
+    }, []);
+    const closeDeep = useCallback(() => setDeepId(null), []);
+    const navigateDeep = useCallback((study: CaseStudyExperience) => setDeepId(study.id), []);
 
     useEffect(() => {
-        if (!activeId) return;
+        if (!expandedId && !deepId) return;
         const prevOverflow = document.body.style.overflow;
         document.body.style.overflow = 'hidden';
-        const onKeyDown = (e: KeyboardEvent) => {
-            if (e.key === 'Escape') closeStudy();
-        };
-        window.addEventListener('keydown', onKeyDown);
         return () => {
             document.body.style.overflow = prevOverflow;
-            window.removeEventListener('keydown', onKeyDown);
         };
-    }, [activeId, closeStudy]);
+    }, [expandedId, deepId]);
 
     return (
         <section id="case-studies" className="relative overflow-hidden py-[60px] md:py-[80px] lg:py-[120px]">
@@ -58,7 +65,7 @@ export const CaseStudies = () => {
                     </div>
                 )}
 
-                <div className="mx-auto mb-14 max-w-3xl text-center md:mb-20">
+                <div className="mx-auto mb-14 max-w-3xl text-center md:mb-16 lg:mb-20">
                     <motion.div
                         custom={0}
                         initial="hidden"
@@ -68,7 +75,7 @@ export const CaseStudies = () => {
                         className="mb-4 flex flex-wrap items-center justify-center gap-2"
                     >
                         <span className="text-sm font-semibold uppercase tracking-wide text-primary">{t('caseStudies.label')}</span>
-                        <DemoBadge>Framework Preview</DemoBadge>
+                        <DemoBadge>Documentary Archive</DemoBadge>
                     </motion.div>
 
                     <motion.h2
@@ -96,47 +103,60 @@ export const CaseStudies = () => {
                     >
                         {t('caseStudies.sub')}
                     </motion.p>
-
-                    <motion.div
-                        custom={3}
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true }}
-                        variants={headerVariants}
-                        className="mt-5 flex flex-wrap items-center justify-center gap-2"
-                    >
-                        <IllustrativeBadge />
-                        <DemoBadge>Pending Founder Verification</DemoBadge>
-                    </motion.div>
                 </div>
 
-                <div className="grid grid-cols-1 gap-7 xl:grid-cols-3 xl:gap-8">
-                    {CASE_STUDY_EXPERIENCES.map((study, index) => (
-                        <CaseStudyFeaturedCard
-                            key={study.id}
-                            study={study}
-                            index={index}
-                            onOpen={openStudy}
-                        />
-                    ))}
-                </div>
+                <LayoutGroup>
+                    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+                        {CASE_STUDY_EXPERIENCES.map((study, index) =>
+                            expandedId === study.id ? (
+                                <div
+                                    key={study.id}
+                                    className="pointer-events-none invisible min-h-[320px]"
+                                    aria-hidden
+                                />
+                            ) : (
+                                <CaseStudyCompactCard
+                                    key={study.id}
+                                    study={study}
+                                    index={index}
+                                    onExpand={expandStudy}
+                                />
+                            ),
+                        )}
+                    </div>
+
+                    <CaseStudyExpandOverlay
+                        study={expandedStudy}
+                        index={expandedIndex}
+                        onClose={closeExpand}
+                        onDeepOpen={openDeep}
+                    />
+                </LayoutGroup>
 
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-60px' }}
-                    transition={{ duration: 0.7, ease: EASE_OUT }}
-                    className="mx-auto mt-12 max-w-3xl rounded-[1.5rem] border border-slate-200/70 bg-white/75 px-5 py-4 text-center text-sm leading-relaxed text-slate-500 backdrop-blur-sm md:px-8 md:py-5"
+                    viewport={{ once: true, margin: '-40px' }}
+                    transition={{ duration: 0.65, ease: EASE_OUT }}
+                    className="mx-auto mt-14 flex max-w-xl flex-col items-center gap-4 text-center"
                 >
-                    This section is a premium case study framework. Replace the structured demo data with verified client projects when ready.
-                    No layout changes required.
+                    <p className="text-sm leading-relaxed text-slate-500">
+                        Click a project to expand the documentary. Open Case Study for the full experience.
+                    </p>
+                    <a
+                        href="#cta"
+                        className="group inline-flex items-center gap-2 text-sm font-semibold text-primary transition-colors hover:text-[#4500b6]"
+                    >
+                        View all projects
+                        <span className="transition-transform group-hover:translate-x-1" aria-hidden>→</span>
+                    </a>
                 </motion.div>
             </div>
 
             <CaseStudyExperienceModalHost
-                activeId={activeId}
-                onClose={closeStudy}
-                onNavigate={navigateStudy}
+                activeId={deepId}
+                onClose={closeDeep}
+                onNavigate={navigateDeep}
                 studies={CASE_STUDY_EXPERIENCES}
             />
         </section>

@@ -6,8 +6,6 @@ import {
     ArrowRight,
     Download,
     Sparkles,
-    Target,
-    Workflow,
     X,
 } from 'lucide-react';
 import type { CaseStudyExperience } from './caseStudyExperienceData';
@@ -140,37 +138,48 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                             ))}
                         </div>
 
-                        <SectionBlock eyebrow="PROJECT OVERVIEW" title="What we set out to solve">
+                        <SectionBlock eyebrow="THE JOURNEY" title="Before → Transform → Result">
+                            <div className="grid gap-5 md:grid-cols-3">
+                                <div className="rounded-[1.25rem] border border-slate-200/80 bg-slate-50/60 p-5">
+                                    <p className="font-mono text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400">Before</p>
+                                    <p className="mt-3 text-sm leading-relaxed text-slate-600">{study.before}</p>
+                                </div>
+                                <div
+                                    className="rounded-[1.25rem] border p-5"
+                                    style={{
+                                        borderColor: `${study.theme.from}28`,
+                                        background: `${study.theme.from}08`,
+                                    }}
+                                >
+                                    <p
+                                        className="font-mono text-[9px] font-bold uppercase tracking-[0.2em]"
+                                        style={{ color: study.theme.from }}
+                                    >
+                                        Transform
+                                    </p>
+                                    <p className="mt-3 text-sm font-medium leading-relaxed text-slate-700">{study.transform}</p>
+                                </div>
+                                <div className="rounded-[1.25rem] border border-emerald-100/80 bg-emerald-50/35 p-5">
+                                    <p className="font-mono text-[9px] font-bold uppercase tracking-[0.2em] text-emerald-600/80">Result</p>
+                                    <p className="mt-3 text-sm leading-relaxed text-slate-600">{study.after}</p>
+                                </div>
+                            </div>
+                        </SectionBlock>
+
+                        <SectionBlock eyebrow="CONTEXT" title="What we set out to solve">
                             <p className="text-base leading-relaxed text-slate-600">{study.challenge}</p>
                         </SectionBlock>
 
-                        <SectionBlock eyebrow="SOLUTION" title="The system we designed">
+                        <SectionBlock eyebrow="SYSTEM DESIGN" title="How we built it">
                             <p className="text-base leading-relaxed text-slate-600">{study.solution}</p>
                         </SectionBlock>
 
-                        <SectionBlock eyebrow="EXECUTION PROCESS" title="How the build came together">
+                        <SectionBlock eyebrow="EXECUTION" title="How the build came together">
                             <p className="text-base leading-relaxed text-slate-600">{study.implementation}</p>
                         </SectionBlock>
 
-                        <section className="mt-10 grid gap-4 md:grid-cols-2">
-                            <div className="rounded-[1.35rem] border border-rose-100 bg-rose-50/40 p-6">
-                                <div className="mb-3 flex items-center gap-2 text-rose-500">
-                                    <Target className="h-4 w-4" />
-                                    <p className="text-[10px] font-bold uppercase tracking-[0.16em]">Before</p>
-                                </div>
-                                <p className="text-sm leading-relaxed text-slate-600">{study.before}</p>
-                            </div>
-                            <div className="rounded-[1.35rem] border border-primary/10 bg-primary/[0.04] p-6">
-                                <div className="mb-3 flex items-center gap-2 text-primary">
-                                    <Workflow className="h-4 w-4" />
-                                    <p className="text-[10px] font-bold uppercase tracking-[0.16em]">After</p>
-                                </div>
-                                <p className="text-sm leading-relaxed text-slate-600">{study.after}</p>
-                            </div>
-                        </section>
-
                         <section className="mt-10 rounded-[1.5rem] border border-slate-200/70 bg-white p-6 md:p-8">
-                            <CaseStudyMetricGrid metrics={study.metrics} theme={study.theme} />
+                            <CaseStudyMetricGrid metrics={study.metrics} theme={study.theme} editorial />
                             <p className="mt-5 text-sm leading-relaxed text-slate-500">{study.businessOutcome}</p>
                         </section>
 

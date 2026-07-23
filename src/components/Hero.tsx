@@ -152,7 +152,7 @@ export const Hero = () => {
 
                     {isDesktop ? (
                         <motion.div
-                            className="cinematic-hero-trusted relative z-[8] mx-auto mt-2 mb-1 w-full max-w-[52rem]"
+                            className="cinematic-hero-trusted relative z-[8] mx-auto mt-1 mb-0 w-full max-w-[54rem]"
                             initial={reduced ? false : { opacity: 0, y: 12 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: reduced ? 0 : 0.75, delay: reduced ? 0 : 0.95, ease: EASE }}
@@ -161,7 +161,7 @@ export const Hero = () => {
                         </motion.div>
                     ) : null}
 
-                    <div className="relative z-[6] mx-auto mt-2 flex justify-center sm:mt-3 lg:mt-1 lg:pb-3">
+                    <div className="relative z-[6] mx-auto mt-1 flex justify-center sm:mt-2 lg:mt-0 lg:pb-2">
                         <HeroJourneyHandoff label={t('hero.scrollExplore')} scaleY={handoffScale} />
                     </div>
                 </div>

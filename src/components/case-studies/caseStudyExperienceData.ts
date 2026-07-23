@@ -1,8 +1,12 @@
 /**
  * Case Study Experience — structured demo data.
- * Every value is illustrative. Replace this file with verified client data later.
- * No layout changes required when swapping content.
+ * Visual covers use real UKONNECT photography (documentary stills).
+ * Metrics/copy remain illustrative until founder verification.
  */
+
+import coverEstate from '../../assets/Culture/Large left.jpg';
+import coverConsulting from '../../assets/Culture/Top bento row (upper).jpg';
+import coverLuxury from '../../assets/Culture/bottom row (center).jpg';
 
 export const CASE_STUDY_DATA_PENDING_VERIFICATION = true;
 
@@ -45,16 +49,20 @@ export type CaseStudyExperience = {
     industry: string;
     title: string;
     summary: string;
+    documentaryLabel: string;
     businessType: string;
     duration: string;
     services: string[];
     challenge: string;
     solution: string;
+    transform: string;
     implementation: string;
     businessOutcome: string;
     results: string;
     before: string;
     after: string;
+    coverImage: string;
+    coverAlt: string;
     technologies: string[];
     futureImprovements: string[];
     theme: CaseStudyTheme;
@@ -69,8 +77,8 @@ export const CASE_STUDY_EXPERIENCES: CaseStudyExperience[] = [
         id: 'demo-luxury-estate',
         industry: 'Real Estate',
         title: 'AI Lead Pipeline for Premium Property Sales',
-        summary:
-            'A documentary-style growth system connecting paid acquisition, AI qualification, and CRM follow-up for high-value property inquiries.',
+        summary: 'Paid acquisition, AI qualification, and CRM follow-up — rebuilt as one growth system.',
+        documentaryLabel: 'DOCUMENTED SYSTEM',
         businessType: 'Luxury residential brokerage · Demo',
         duration: '14 weeks · Illustrative',
         services: ['Marketing', 'AI Systems', 'Web Development'],
@@ -78,14 +86,16 @@ export const CASE_STUDY_EXPERIENCES: CaseStudyExperience[] = [
             'Inbound demand was inconsistent. High-intent buyers waited too long for follow-up, and the sales team lacked visibility into which channels produced qualified viewings.',
         solution:
             'Ukonnect designed an AI-assisted lead engine with automated qualification, routing, and nurture sequences tied directly into the CRM and booking workflow.',
+        transform: 'Connected ads, AI qualification, and CRM into one living pipeline.',
         implementation:
             'We rebuilt the acquisition funnel, deployed AI agents for first-response qualification, synced Meta and Google campaigns to HubSpot, and launched a conversion-focused landing experience with live tracking.',
         businessOutcome:
             'The operating model shifted from reactive follow-up to a predictable pipeline rhythm with clearer attribution across every stage of the buyer journey.',
-        results:
-            'Illustrative outcome: more qualified viewings, faster response times, and stronger visibility from ad click to booked appointment.',
-        before: 'Fragmented lead flow, manual qualification, and slow response across channels.',
-        after: 'Unified AI-assisted pipeline with automated nurture, CRM sync, and live performance dashboards.',
+        results: 'More qualified viewings, faster response, clearer path from click to appointment.',
+        before: 'Fragmented lead flow, manual qualification, slow response.',
+        after: 'Unified pipeline with automated nurture and live attribution.',
+        coverImage: coverEstate,
+        coverAlt: 'UKONNECT real estate growth system documentary still',
         technologies: ['HubSpot', 'Meta Ads', 'Google Ads', 'n8n', 'Custom AI Agents', 'GA4'],
         futureImprovements: [
             'Predictive lead scoring based on historical close patterns',
@@ -93,11 +103,11 @@ export const CASE_STUDY_EXPERIENCES: CaseStudyExperience[] = [
             'WhatsApp nurture sequences for international buyers',
         ],
         theme: {
-            from: '#5600e3',
-            to: '#9b4dff',
-            glow: 'rgba(86,0,227,0.22)',
-            mesh: 'from-[#5600e3]/30 via-[#7c3aed]/20 to-[#0f172a]',
-            label: 'Violet System',
+            from: '#059669',
+            to: '#34d399',
+            glow: 'rgba(5,150,105,0.24)',
+            mesh: 'from-[#059669]/35 via-[#10b981]/18 to-[#0f172a]',
+            label: 'Emerald System',
         },
         metrics: [
             { value: '+184%', label: 'Qualified Leads' },
@@ -150,10 +160,10 @@ export const CASE_STUDY_EXPERIENCES: CaseStudyExperience[] = [
     },
     {
         id: 'demo-b2b-growth',
-        industry: 'Professional Services',
+        industry: 'Consulting',
         title: 'Automated B2B Growth Engine for Consultancies',
-        summary:
-            'A premium operating system for consultancies that need qualified meetings, not just more form fills.',
+        summary: 'A meeting-generation system for firms that need qualified conversations — not form spam.',
+        documentaryLabel: 'CLIENT STORY',
         businessType: 'B2B advisory firm · Demo',
         duration: '11 weeks · Illustrative',
         services: ['Marketing', 'AI Systems', 'Web Development'],
@@ -161,14 +171,16 @@ export const CASE_STUDY_EXPERIENCES: CaseStudyExperience[] = [
             'Outbound and paid acquisition were disconnected from CRM reality. The team could not see which campaigns produced revenue-ready conversations.',
         solution:
             'Ukonnect built a meeting-generation engine with AI qualification, paid media orchestration, and automated follow-up tied to pipeline stages.',
+        transform: 'Orchestrated media, scoring, and CRM into one meeting engine.',
         implementation:
             'We launched LinkedIn and Google campaigns, implemented AI lead scoring, connected CRM sync, and created a premium service landing experience with proof-led messaging.',
         businessOutcome:
             'Illustrative outcome: a more predictable meeting pipeline with cleaner handoff between marketing and sales.',
-        results:
-            'Demo result narrative: stronger meeting volume, lower cost per qualified conversation, and clearer source attribution.',
-        before: 'Manual outreach, inconsistent CRM hygiene, and limited visibility into campaign quality.',
-        after: 'Integrated growth engine with AI scoring, automated routing, and live pipeline intelligence.',
+        results: 'Stronger meeting volume, lower cost per conversation, clearer attribution.',
+        before: 'Manual outreach, inconsistent CRM, opaque campaign quality.',
+        after: 'Integrated engine with AI scoring and live pipeline intelligence.',
+        coverImage: coverConsulting,
+        coverAlt: 'UKONNECT consulting growth system documentary still',
         technologies: ['LinkedIn Ads', 'Google Ads', 'HubSpot', 'Slack', 'Custom AI Agents', 'Zapier'],
         futureImprovements: [
             'Account-based nurture for enterprise targets',
@@ -178,9 +190,9 @@ export const CASE_STUDY_EXPERIENCES: CaseStudyExperience[] = [
         theme: {
             from: '#2563eb',
             to: '#60a5fa',
-            glow: 'rgba(37,99,235,0.2)',
-            mesh: 'from-[#2563eb]/28 via-[#3b82f6]/18 to-[#0f172a]',
-            label: 'Ocean Engine',
+            glow: 'rgba(37,99,235,0.22)',
+            mesh: 'from-[#2563eb]/32 via-[#3b82f6]/16 to-[#0f172a]',
+            label: 'Blue Engine',
         },
         metrics: [
             { value: '+142%', label: 'Meetings Booked' },
@@ -233,10 +245,10 @@ export const CASE_STUDY_EXPERIENCES: CaseStudyExperience[] = [
     },
     {
         id: 'demo-property-dev',
-        industry: 'Property Development',
+        industry: 'Luxury',
         title: 'Conversion System for Off-Plan Development Launches',
-        summary:
-            'A launch-ready digital system for developers who need demand validation, lead capture, and sales momentum from day one.',
+        summary: 'Cinematic launch storytelling with AI qualification — demand validated from day one.',
+        documentaryLabel: 'LIVE PROJECT',
         businessType: 'Residential development studio · Demo',
         duration: '16 weeks · Illustrative',
         services: ['Marketing', 'AI Systems', 'Web Development'],
@@ -244,14 +256,16 @@ export const CASE_STUDY_EXPERIENCES: CaseStudyExperience[] = [
             'Launch campaigns generated interest but weak qualification. Sales teams spent too much time on low-intent inquiries while high-value buyers slipped through.',
         solution:
             'Ukonnect built a launch funnel with AI qualification, premium project storytelling, and automated booking flows connected to the sales calendar.',
+        transform: 'Turned launch traffic into qualified demand with cinematic storytelling.',
         implementation:
             'We produced a cinematic project site, configured tracking and attribution, deployed AI inquiry handling, and launched paid acquisition with retargeting loops.',
         businessOutcome:
             'Illustrative outcome: stronger launch momentum, better inquiry quality, and a clearer view of buyer intent before sales calls.',
-        results:
-            'Demo result narrative: higher-quality inquiries, improved launch conversion, and stronger sales team focus.',
-        before: 'High traffic, low clarity, and manual qualification slowing down the launch cycle.',
-        after: 'Premium launch experience with AI-assisted qualification and live demand intelligence.',
+        results: 'Higher-quality inquiries, improved launch conversion, sharper sales focus.',
+        before: 'High traffic, low clarity, manual qualification slowing launches.',
+        after: 'Premium launch experience with AI qualification and live demand signal.',
+        coverImage: coverLuxury,
+        coverAlt: 'UKONNECT luxury development launch documentary still',
         technologies: ['Meta Ads', 'Google Ads', 'Cal.com', 'HubSpot', 'GA4', 'Custom CMS'],
         futureImprovements: [
             'Buyer intent scoring by unit type preference',
@@ -259,11 +273,11 @@ export const CASE_STUDY_EXPERIENCES: CaseStudyExperience[] = [
             'Dynamic inventory-led ad creative',
         ],
         theme: {
-            from: '#059669',
-            to: '#34d399',
-            glow: 'rgba(5,150,105,0.2)',
-            mesh: 'from-[#059669]/26 via-[#10b981]/16 to-[#0f172a]',
-            label: 'Emerald Launch',
+            from: '#B45309',
+            to: '#F59E0B',
+            glow: 'rgba(180,83,9,0.22)',
+            mesh: 'from-[#B45309]/30 via-[#D97706]/16 to-[#0f172a]',
+            label: 'Gold Launch',
         },
         metrics: [
             { value: '+210%', label: 'Qualified Inquiries' },

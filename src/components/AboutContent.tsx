@@ -86,7 +86,7 @@ const TICKER_ITEMS = [
 ];
 
 
-export const AboutContent = () => {
+export const AboutContent = ({ mode = 'full' }: { mode?: 'full' | 'supplement' }) => {
     const { t, lang } = useLanguage();
     const navigate = useNavigate();
     const teamMembers = lang === 'id'
@@ -118,10 +118,10 @@ export const AboutContent = () => {
     return (
         <>
             {/* ══════════════════════════════════════════════════════
-                HERO
+                HERO — full mode only (About storytelling hero lives in CompanyStoryExperience)
             ══════════════════════════════════════════════════════ */}
+            {mode === 'full' ? (
             <section className="relative pt-36 pb-20 overflow-hidden">
-
                 {/* Background: dot grid + floating orbs */}
                 <div className="absolute inset-0 pointer-events-none select-none">
                     <div className="absolute inset-0" style={{
@@ -240,11 +240,12 @@ export const AboutContent = () => {
                     </div>
                 </div>
             </section>
+            ) : null}
 
             {/* ══════════════════════════════════════════════════════
                 SCROLLING TICKER
             ══════════════════════════════════════════════════════ */}
-            <div className="overflow-hidden border-y border-slate-200 py-5 my-6">
+            <div className={`overflow-hidden border-y border-slate-200 py-5 ${mode === 'supplement' ? 'mt-0' : 'my-6'}`}>
                 <motion.div
                     animate={{ x: ['0%', '-50%'] }}
                     transition={{ repeat: Infinity, duration: 22, ease: 'linear' }}
@@ -320,7 +321,7 @@ export const AboutContent = () => {
             {/* ══════════════════════════════════════════════════════
                 TEAM GRID
             ══════════════════════════════════════════════════════ */}
-            <section className="py-[60px] md:py-[80px] lg:py-[100px] max-w-[1300px] mx-auto px-6">
+            <section id="about-team" className="scroll-mt-28 py-[60px] md:py-[80px] lg:py-[100px] max-w-[1300px] mx-auto px-6">
                 <div className="text-center max-w-2xl mx-auto mb-16 md:mb-20">
                     <motion.p
                         initial={{ opacity: 0, y: 10 }}
