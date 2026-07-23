@@ -1,4 +1,5 @@
 import React, { lazy, Suspense, useState, useEffect, useRef } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { useNavigate, useLocation } from 'react-router-dom';
 import logo from '../assets/Ukonnect Marketing logo.webp';
 import { useLanguage } from '../i18n/LanguageContext';
@@ -107,6 +108,7 @@ export const Navbar = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { t, lang } = useLanguage();
+    const reduced = Boolean(useReducedMotion());
 
     useEffect(() => {
         setMenuOpen(false);
@@ -140,7 +142,12 @@ export const Navbar = () => {
 
     return (
         <>
-        <header className="absolute top-0 left-0 right-0 z-50">
+        <motion.header
+            className="absolute top-0 left-0 right-0 z-50"
+            initial={reduced ? false : { opacity: 0, y: -16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: reduced ? 0 : 0.75, delay: reduced ? 0 : 0.55, ease: [0.16, 1, 0.3, 1] }}
+        >
             {/* Top announcement bar — desktop only */}
             <div className="relative hidden lg:flex items-center justify-end gap-4 site-gutter-x py-2 bg-white/20 backdrop-blur-[6px]">
                 {TOPBAR_ITEMS.map(({ key, bold }, i) => (
@@ -204,12 +211,20 @@ export const Navbar = () => {
 
                     <LanguageSwitcher />
 
-                    <button onClick={() => setModalOpen(true)} className="flex items-center gap-2.5 px-7 py-3.5 bg-[#5600e3] hover:bg-[#4500b6] text-white rounded-2xl text-[16px] font-semibold transition-all shadow-sm">
-                        <span className="relative flex items-center justify-center w-2 h-2">
-                            <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-300 opacity-80 animate-ping" />
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+                    <button
+                        type="button"
+                        onClick={() => setModalOpen(true)}
+                        className="uk-btn-premium group relative isolate flex items-center gap-2.5 overflow-hidden rounded-2xl px-7 py-3.5 text-[16px] font-semibold text-white shadow-sm"
+                    >
+                        <span className="uk-btn-premium-swipe" aria-hidden />
+                        <span className="uk-btn-premium-shine" aria-hidden />
+                        <span className="relative z-10 flex items-center gap-2.5">
+                            <span className="relative flex h-2 w-2 items-center justify-center">
+                                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-300 opacity-80" />
+                                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+                            </span>
+                            {t('mega.cta')}
                         </span>
-                        {t('mega.cta')}
                     </button>
                 </div>
 
@@ -221,16 +236,24 @@ export const Navbar = () => {
                 <div className="nav-mobile-panel scrollbar-hide max-h-[80vh] overflow-y-auto px-4 py-5 flex flex-col gap-3 border-t border-white/60 mx-4 rounded-b-3xl">
                     <MegaMenuMobile t={t} onSelect={handleSelect} />
                     <LanguageSwitcher mobile />
-                    <button onClick={() => setModalOpen(true)} className="mt-1 flex items-center justify-center gap-2.5 px-8 py-4 bg-[#5600e3] hover:bg-[#4500b6] text-white rounded-2xl text-[13px] font-semibold transition-all shadow-sm w-full">
-                        <span className="relative flex items-center justify-center w-2 h-2">
-                            <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-300 opacity-80 animate-ping" />
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+                    <button
+                        type="button"
+                        onClick={() => setModalOpen(true)}
+                        className="uk-btn-premium group relative isolate mt-1 flex w-full items-center justify-center gap-2.5 overflow-hidden rounded-2xl px-8 py-4 text-[13px] font-semibold text-white shadow-sm"
+                    >
+                        <span className="uk-btn-premium-swipe" aria-hidden />
+                        <span className="uk-btn-premium-shine" aria-hidden />
+                        <span className="relative z-10 flex items-center gap-2.5">
+                            <span className="relative flex h-2 w-2 items-center justify-center">
+                                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-300 opacity-80" />
+                                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+                            </span>
+                            {t('mega.cta')}
                         </span>
-                        {t('mega.cta')}
                     </button>
                 </div>
             </div>
-        </header>
+        </motion.header>
 
         <Suspense fallback={null}>
             <ContactFormModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />

@@ -2,6 +2,7 @@ import React, { lazy, Suspense, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
+import { PageIntro } from './components/PageIntro';
 
 const TrustedBy   = lazy(() => import('./components/TrustedBy').then(m => ({ default: m.TrustedBy })));
 const CompanyStoryExperience = lazy(() =>
@@ -36,6 +37,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-[#ecedf1] font-sans text-slate-900 selection:bg-primary/20">
+      <PageIntro />
       <Navbar />
       <main>
         <Hero />

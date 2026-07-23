@@ -1,44 +1,12 @@
-import type { CSSProperties, PointerEvent } from 'react';
+import type { PointerEvent } from 'react';
 import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from 'framer-motion';
 import { useLanguage } from '../../i18n/LanguageContext';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
-import { PARTNERS } from '../partnersData';
 import { HeroBrandLogo } from './HeroBrandLogo';
 import { HeroTeamSpotlight } from './HeroTeamSpotlight';
+import { HeroTrustedStrip } from './HeroTrustedStrip';
 import { HeroWorkflowBack, HeroWorkflowFront, HeroWorkflowNodes } from './HeroWorkflowEnergy';
 import { WORKFLOW_NODES } from './heroDesign';
-
-function ClientDestination({ compact = false }: { compact?: boolean }) {
-    const { t } = useLanguage();
-    const reduced = Boolean(useReducedMotion());
-    const logos = PARTNERS;
-    const track = [...logos, ...logos];
-    const durationStyle = {
-        '--client-marquee-duration': compact ? '28s' : '32s',
-    } as CSSProperties;
-
-    return (
-        <div className={compact ? 'cinematic-client-destination cinematic-client-destination--mobile' : 'cinematic-client-destination'}>
-            <span className="cinematic-client-destination-label">
-                <i aria-hidden />
-                {t('hero.clientEyebrow')}
-            </span>
-            <div className="cinematic-client-marquee" aria-label={t('hero.clientEyebrow')}>
-                <div className={`cinematic-client-marquee-track${reduced ? ' is-static' : ''}`} style={durationStyle}>
-                    {track.map((partner, index) => (
-                        <img
-                            key={`${partner.alt}-${index}`}
-                            src={partner.src}
-                            alt={index < logos.length ? partner.alt : ''}
-                            loading="lazy"
-                            aria-hidden={index >= logos.length}
-                        />
-                    ))}
-                </div>
-            </div>
-        </div>
-    );
-}
 
 function DesktopStage({ animate }: { animate: boolean }) {
     const { t } = useLanguage();
@@ -72,7 +40,6 @@ function DesktopStage({ animate }: { animate: boolean }) {
         >
             <div className="cinematic-stage-canvas relative aspect-[1000/800] w-full overflow-visible lg:origin-center">
                 <div className="cinematic-stage-room pointer-events-none absolute inset-[-22%_-5%_-5%] z-0" aria-hidden />
-                <div className="cinematic-stage-orbit pointer-events-none absolute z-[1]" aria-hidden />
                 <div className="cinematic-stage-mesh pointer-events-none absolute inset-[-12%_0_0] z-[1]" aria-hidden />
                 <div className="cinematic-stage-fog pointer-events-none absolute inset-0 z-[2]" aria-hidden />
                 <motion.div
@@ -108,10 +75,6 @@ function DesktopStage({ animate }: { animate: boolean }) {
 
                 <HeroWorkflowFront animate={animate} />
                 <HeroWorkflowNodes animate={animate} />
-
-                <div className="pointer-events-auto absolute bottom-[1.7%] left-1/2 z-[44] -translate-x-1/2">
-                    <ClientDestination />
-                </div>
 
                 <div className="cinematic-stage-grain pointer-events-none absolute inset-[-2%] z-[50]" aria-hidden />
                 <div className="cinematic-stage-vignette pointer-events-none absolute inset-[-3%] z-[51]" aria-hidden />
@@ -156,8 +119,8 @@ function MobileStage({ animate }: { animate: boolean }) {
                 ))}
             </div>
 
-            <div className="mt-2">
-                <ClientDestination compact />
+            <div className="mt-4">
+                <HeroTrustedStrip compact />
             </div>
         </div>
     );
