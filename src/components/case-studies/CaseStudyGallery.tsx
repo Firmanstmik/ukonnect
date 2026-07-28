@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowLeft2, ArrowRight2, Chart21, Mobile, MonitorMobbile } from 'iconsax-react';
+import { ArrowLeft2, ArrowRight2, Chart21, Mobile, MonitorMobbile, PresentionChart } from 'iconsax-react';
 import type { CaseStudyExperience } from './caseStudyExperienceData';
 import { GalleryFrame } from './CaseStudyPrimitives';
 import { EASE_OUT } from '../motion';
