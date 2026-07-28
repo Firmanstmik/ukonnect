@@ -13,7 +13,7 @@ import { getAdjacentCaseStudies } from './caseStudyExperienceData';
 import { CaseStudyGallery } from './CaseStudyGallery';
 import { CaseStudyMetricGrid } from './CaseStudyMetricGrid';
 import { CaseStudyTimeline } from './CaseStudyTimeline';
-import { DemoBadge, IllustrativeBadge, PlaceholderFrame } from './CaseStudyPrimitives';
+import { DemoBadge, IllustrativeBadge, GalleryFrame } from './CaseStudyPrimitives';
 import { GoogleG, GoogleStars } from '../CaseStudyWidgets';
 import { EASE_OUT } from '../motion';
 
@@ -101,7 +101,12 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
 
                 <div className="flex-1 overflow-y-auto">
                     <div className="relative">
-                        <PlaceholderFrame item={hero} theme={study.theme} className="min-h-[280px] rounded-none md:min-h-[420px]" />
+                        <GalleryFrame
+                            item={hero}
+                            theme={study.theme}
+                            alt={study.coverAlt}
+                            className="min-h-[280px] rounded-none md:min-h-[420px]"
+                        />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#f8fafc] via-transparent to-slate-950/20" />
                         <div className="absolute inset-x-0 bottom-0 p-6 md:p-10">
                             <span
@@ -204,12 +209,12 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                             </div>
                         </SectionBlock>
 
-                        <SectionBlock eyebrow="SCREENSHOTS" title="Interface placeholders">
+                        <SectionBlock eyebrow="INTERFACES" title="Delivered project surfaces">
                             <div className="grid gap-4 md:grid-cols-2">
                                 {study.gallery
                                     .filter((item) => item.type !== 'hero')
                                     .map((item) => (
-                                        <PlaceholderFrame key={item.id} item={item} theme={study.theme} />
+                                        <GalleryFrame key={item.id} item={item} theme={study.theme} alt={study.coverAlt} />
                                     ))}
                             </div>
                         </SectionBlock>

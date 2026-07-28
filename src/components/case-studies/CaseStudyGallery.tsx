@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import type { CaseStudyExperience } from './caseStudyExperienceData';
-import { PlaceholderFrame } from './CaseStudyPrimitives';
+import { GalleryFrame } from './CaseStudyPrimitives';
 import { EASE_OUT } from '../motion';
 
 export function CaseStudyGallery({ study }: { study: CaseStudyExperience }) {
@@ -25,7 +25,7 @@ export function CaseStudyGallery({ study }: { study: CaseStudyExperience }) {
                     <p className="font-mono text-[10px] tracking-[0.28em] text-primary/55">GALLERY</p>
                     <h4 className="mt-2 text-2xl font-semibold tracking-tight text-slate-900">Project visuals</h4>
                     <p className="mt-2 max-w-xl text-sm text-slate-500">
-                        Placeholder screenshots designed to be replaced with verified client assets.
+                        Desktop and mobile captures from the live build — curated for this case study experience.
                     </p>
                 </div>
                 <div className="flex items-center gap-2">
@@ -33,7 +33,7 @@ export function CaseStudyGallery({ study }: { study: CaseStudyExperience }) {
                         type="button"
                         onClick={() => go(-1)}
                         aria-label="Previous gallery item"
-                        className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200/80 bg-white text-slate-600 transition hover:border-primary/25 hover:text-primary"
+                        className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200/80 bg-white text-slate-600 shadow-sm transition hover:border-primary/25 hover:text-primary"
                     >
                         <ChevronLeft className="h-4 w-4" />
                     </button>
@@ -41,7 +41,7 @@ export function CaseStudyGallery({ study }: { study: CaseStudyExperience }) {
                         type="button"
                         onClick={() => go(1)}
                         aria-label="Next gallery item"
-                        className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200/80 bg-white text-slate-600 transition hover:border-primary/25 hover:text-primary"
+                        className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200/80 bg-white text-slate-600 shadow-sm transition hover:border-primary/25 hover:text-primary"
                     >
                         <ChevronRight className="h-4 w-4" />
                     </button>
@@ -55,8 +55,14 @@ export function CaseStudyGallery({ study }: { study: CaseStudyExperience }) {
                     animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
                     exit={{ opacity: 0, scale: 1.01, filter: 'blur(6px)' }}
                     transition={{ duration: 0.45, ease: EASE_OUT }}
+                    className="overflow-hidden rounded-[1.5rem] ring-1 ring-slate-200/60"
                 >
-                    <PlaceholderFrame item={active} theme={study.theme} className="min-h-[280px] md:min-h-[360px]" />
+                    <GalleryFrame
+                        item={active}
+                        theme={study.theme}
+                        alt={study.coverAlt}
+                        className="min-h-[280px] rounded-[1.5rem] md:min-h-[360px]"
+                    />
                 </motion.div>
             </AnimatePresence>
 
@@ -66,13 +72,20 @@ export function CaseStudyGallery({ study }: { study: CaseStudyExperience }) {
                         key={item.id}
                         type="button"
                         onClick={() => setActiveIndex(index)}
-                        className={`overflow-hidden rounded-xl border text-left transition ${
+                        className={`group overflow-hidden rounded-xl border text-left transition duration-300 ${
                             index === activeIndex
-                                ? 'border-primary/35 shadow-[0_12px_30px_-18px_rgba(86,0,227,0.35)]'
-                                : 'border-slate-200/70 opacity-75 hover:opacity-100'
+                                ? 'border-primary/40 shadow-[0_16px_40px_-20px_rgba(86,0,227,0.45)] ring-2 ring-primary/20'
+                                : 'border-slate-200/70 opacity-80 hover:opacity-100 hover:shadow-md'
                         }`}
                     >
-                        <PlaceholderFrame item={item} theme={study.theme} className="!aspect-[4/3] !rounded-xl" />
+                        <GalleryFrame
+                            item={item}
+                            theme={study.theme}
+                            alt={study.coverAlt}
+                            compact
+                            interactive
+                            className="!aspect-[4/3] !rounded-xl !shadow-none"
+                        />
                     </button>
                 ))}
             </div>

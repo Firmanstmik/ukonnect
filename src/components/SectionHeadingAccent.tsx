@@ -9,18 +9,12 @@ type Props = {
     className?: string;
 };
 
-/**
- * Static hero-style accent line — same Caveat script + cyan/violet rail as HeroHighlightRotator,
- * for section headings site-wide.
- */
+/** Static Caveat script accent for section headings — no underline rail (hero rotator keeps the rail). */
 export function SectionHeadingAccent({ children, block = false, tone = 'default', className = '' }: Props) {
     return (
         <span
             className={`cinematic-headline-accent cinematic-headline-accent-static ${block ? 'cinematic-headline-accent-static--block' : 'cinematic-headline-accent-static--inline'} ${tone === 'on-dark' ? 'cinematic-headline-accent-static--on-dark' : ''} ${className}`}
         >
-            <span className="cinematic-headline-rotator-rail cinematic-headline-accent-static-rail" aria-hidden>
-                <i />
-            </span>
             <span className="cinematic-headline-rotator-text cinematic-headline-accent-static-text">
                 {children}
             </span>

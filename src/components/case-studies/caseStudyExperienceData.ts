@@ -23,7 +23,73 @@ export type CaseStudyGalleryItem = {
     type: 'hero' | 'desktop' | 'mobile' | 'dashboard' | 'analytics' | 'workflow';
     title: string;
     overlay: 'Illustrative Preview' | 'Placeholder Screenshot' | 'Demo Case Study';
+    imageSrc: string;
+    objectPosition?: string;
 };
+
+function buildCaseStudyGallery(
+    cover: string,
+    mobile: string,
+    labels: {
+        hero: string;
+        desktop: string;
+        mobile: string;
+        dashboard: string;
+        analytics: string;
+        workflow: string;
+    },
+): CaseStudyGalleryItem[] {
+    return [
+        {
+            id: 'hero',
+            type: 'hero',
+            title: labels.hero,
+            overlay: 'Illustrative Preview',
+            imageSrc: cover,
+            objectPosition: 'center 10%',
+        },
+        {
+            id: 'desktop',
+            type: 'desktop',
+            title: labels.desktop,
+            overlay: 'Illustrative Preview',
+            imageSrc: cover,
+            objectPosition: 'center 24%',
+        },
+        {
+            id: 'mobile',
+            type: 'mobile',
+            title: labels.mobile,
+            overlay: 'Illustrative Preview',
+            imageSrc: mobile,
+            objectPosition: 'center top',
+        },
+        {
+            id: 'dashboard',
+            type: 'dashboard',
+            title: labels.dashboard,
+            overlay: 'Illustrative Preview',
+            imageSrc: cover,
+            objectPosition: 'center 52%',
+        },
+        {
+            id: 'analytics',
+            type: 'analytics',
+            title: labels.analytics,
+            overlay: 'Illustrative Preview',
+            imageSrc: cover,
+            objectPosition: 'center 72%',
+        },
+        {
+            id: 'workflow',
+            type: 'workflow',
+            title: labels.workflow,
+            overlay: 'Illustrative Preview',
+            imageSrc: mobile,
+            objectPosition: 'center 38%',
+        },
+    ];
+}
 
 export type CaseStudyTimelineStep = {
     phase: string;
@@ -148,14 +214,14 @@ export const CASE_STUDY_EXPERIENCES: CaseStudyExperience[] = [
                 description: 'Iterated on qualification prompts, ad creative, and booking conversion based on live data.',
             },
         ],
-        gallery: [
-            { id: 'hero', type: 'hero', title: 'Campaign Hero', overlay: 'Illustrative Preview' },
-            { id: 'desktop', type: 'desktop', title: 'Landing Page', overlay: 'Placeholder Screenshot' },
-            { id: 'mobile', type: 'mobile', title: 'Mobile Experience', overlay: 'Demo Case Study' },
-            { id: 'dashboard', type: 'dashboard', title: 'Pipeline Dashboard', overlay: 'Placeholder Screenshot' },
-            { id: 'analytics', type: 'analytics', title: 'Attribution Analytics', overlay: 'Illustrative Preview' },
-            { id: 'workflow', type: 'workflow', title: 'AI Workflow Map', overlay: 'Demo Case Study' },
-        ],
+        gallery: buildCaseStudyGallery(coverJouwdroom, mobileJouwdroom, {
+            hero: 'Campaign Hero',
+            desktop: 'Landing Page',
+            mobile: 'Mobile Experience',
+            dashboard: 'Pipeline Dashboard',
+            analytics: 'Attribution Analytics',
+            workflow: 'AI Workflow Map',
+        }),
         testimonial: {
             quote:
                 'Placeholder testimonial. The new system gave our team a clearer rhythm from inquiry to viewing, with far less manual chasing.',
@@ -235,14 +301,14 @@ export const CASE_STUDY_EXPERIENCES: CaseStudyExperience[] = [
                 description: 'Tuned AI prompts, audience segments, and meeting conversion paths.',
             },
         ],
-        gallery: [
-            { id: 'hero', type: 'hero', title: 'Growth Console', overlay: 'Demo Case Study' },
-            { id: 'desktop', type: 'desktop', title: 'Service Landing', overlay: 'Illustrative Preview' },
-            { id: 'mobile', type: 'mobile', title: 'Mobile Funnel', overlay: 'Placeholder Screenshot' },
-            { id: 'dashboard', type: 'dashboard', title: 'Meeting Dashboard', overlay: 'Illustrative Preview' },
-            { id: 'analytics', type: 'analytics', title: 'Channel Analytics', overlay: 'Demo Case Study' },
-            { id: 'workflow', type: 'workflow', title: 'Qualification Workflow', overlay: 'Placeholder Screenshot' },
-        ],
+        gallery: buildCaseStudyGallery(coverAyat, mobileAyat, {
+            hero: 'Growth Console',
+            desktop: 'Service Landing',
+            mobile: 'Mobile Funnel',
+            dashboard: 'Meeting Dashboard',
+            analytics: 'Channel Analytics',
+            workflow: 'Qualification Workflow',
+        }),
         testimonial: {
             quote:
                 'Placeholder testimonial. We finally had one place to see which campaigns were creating real conversations instead of noise.',
@@ -322,14 +388,14 @@ export const CASE_STUDY_EXPERIENCES: CaseStudyExperience[] = [
                 description: 'Refined audience targeting, inquiry handling, and booking conversion.',
             },
         ],
-        gallery: [
-            { id: 'hero', type: 'hero', title: 'Project Hero', overlay: 'Illustrative Preview' },
-            { id: 'desktop', type: 'desktop', title: 'Launch Website', overlay: 'Placeholder Screenshot' },
-            { id: 'mobile', type: 'mobile', title: 'Mobile Inquiry Flow', overlay: 'Demo Case Study' },
-            { id: 'dashboard', type: 'dashboard', title: 'Demand Dashboard', overlay: 'Illustrative Preview' },
-            { id: 'analytics', type: 'analytics', title: 'Launch Analytics', overlay: 'Placeholder Screenshot' },
-            { id: 'workflow', type: 'workflow', title: 'Booking Workflow', overlay: 'Demo Case Study' },
-        ],
+        gallery: buildCaseStudyGallery(coverKeuken, mobileKeuken, {
+            hero: 'Project Hero',
+            desktop: 'Launch Website',
+            mobile: 'Mobile Inquiry Flow',
+            dashboard: 'Demand Dashboard',
+            analytics: 'Launch Analytics',
+            workflow: 'Booking Workflow',
+        }),
         testimonial: {
             quote:
                 'Placeholder testimonial. The launch finally felt like a product experience, not just a brochure with a contact form.',
