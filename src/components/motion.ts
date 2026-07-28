@@ -6,3 +6,6 @@
  * so Framer Motion infers the 4-tuple `Easing` type rather than `number[]`.
  */
 export const EASE_OUT = [0.22, 1, 0.36, 1] as const;
+
+/** Softer deceleration for luxury surfaces — almost imperceptible, never mechanical. */
+export const EASE_LUXURY = [0.16, 1, 0.3, 1] as const;

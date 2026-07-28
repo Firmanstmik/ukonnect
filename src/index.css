@@ -102,6 +102,82 @@ body {
     background-size: 28px 28px;
   }
 
+  /* Case study luxury craft — quiet depth, soft light, calm scroll */
+  .cs-lux-scroll {
+    scroll-behavior: smooth;
+  }
+
+  .cs-lux-frame {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .cs-lux-frame::before {
+    content: '';
+    pointer-events: none;
+    position: absolute;
+    inset: -18% -8% auto;
+    height: 55%;
+    z-index: -1;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgb(255 255 255 / 0.08), transparent 68%);
+    filter: blur(28px);
+    opacity: 0.7;
+  }
+
+  .cs-lux-vignette {
+    box-shadow:
+      inset 0 0 0 1px rgb(255 255 255 / 0.06),
+      inset 0 -48px 64px -28px rgb(0 0 0 / 0.45),
+      0 40px 90px -48px rgb(0 0 0 / 0.72);
+  }
+
+  .cs-lux-divider {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgb(255 255 255 / 0.1) 18%,
+      rgb(255 255 255 / 0.1) 82%,
+      transparent 100%
+    );
+  }
+
+  .cs-lux-btn {
+    transition:
+      background-color 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+      color 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .cs-lux-img {
+    transition: transform 1.15s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+  }
+
+  .group:hover .cs-lux-img,
+  .group\/frame:hover .cs-lux-img {
+    transform: scale(1.025);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cs-lux-scroll {
+      scroll-behavior: auto;
+    }
+
+    .cs-lux-btn,
+    .cs-lux-img {
+      transition: none !important;
+    }
+
+    .group:hover .cs-lux-img,
+    .group\/frame:hover .cs-lux-img {
+      transform: none;
+    }
+  }
+
   /* Glossy premium hover — a soft light sweeps diagonally across the card. */
   .card-shine-sweep::after {
     content: '';

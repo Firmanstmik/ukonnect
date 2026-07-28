@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import {
     ArrowLeft2,
     ArrowRight2,
@@ -8,20 +8,16 @@ import {
     CloseCircle,
     DocumentDownload,
     MagicStar,
-    Mobile,
-    MonitorMobbile,
     PresentionChart,
-    Profile2User,
-    Timer1,
 } from 'iconsax-react';
 import type { CaseStudyExperience } from './caseStudyExperienceData';
 import { getAdjacentCaseStudies } from './caseStudyExperienceData';
 import { CaseStudyGallery } from './CaseStudyGallery';
 import { CaseStudyMetricGrid } from './CaseStudyMetricGrid';
 import { CaseStudyTimeline } from './CaseStudyTimeline';
-import { DemoBadge, IllustrativeBadge, GalleryFrame } from './CaseStudyPrimitives';
+import { GalleryFrame } from './CaseStudyPrimitives';
 import { GoogleG, GoogleStars } from '../CaseStudyWidgets';
-import { EASE_OUT } from '../motion';
+import { EASE_LUXURY } from '../motion';
 
 type CaseStudyExperienceModalProps = {
     study: CaseStudyExperience;
@@ -33,16 +29,21 @@ function SectionBlock({
     eyebrow,
     title,
     children,
+    className = '',
 }: {
     eyebrow: string;
     title: string;
     children: ReactNode;
+    className?: string;
 }) {
     return (
-        <section className="border-t border-white/10 pt-10">
-            <p className="font-mono text-[10px] tracking-[0.28em] text-white/40">{eyebrow}</p>
-            <h4 className="mt-2 text-2xl font-semibold tracking-tight text-white">{title}</h4>
-            <div className="mt-5">{children}</div>
+        <section className={`pt-20 md:pt-24 ${className}`}>
+            <div className="cs-lux-divider mb-14 md:mb-16" aria-hidden />
+            <p className="font-mono text-[10px] tracking-[0.28em] text-white/32">{eyebrow}</p>
+            <h4 className="mt-4 max-w-[16ch] text-[1.7rem] font-semibold leading-[1.12] tracking-[-0.02em] text-white md:text-[2rem]">
+                {title}
+            </h4>
+            <div className="mt-10 md:mt-12">{children}</div>
         </section>
     );
 }
@@ -51,6 +52,7 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
     const { prev, next } = getAdjacentCaseStudies(study.id);
     const hero = study.gallery.find((item) => item.type === 'hero') ?? study.gallery[0];
     const [gallerySeed, setGallerySeed] = useState(study.id);
+    const reduce = useReducedMotion();
 
     useEffect(() => {
         setGallerySeed(study.id);
@@ -62,11 +64,12 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.4, ease: EASE_LUXURY }}
         >
             <motion.button
                 type="button"
                 aria-label="Close case study"
-                className="absolute inset-0 bg-[#040915]/95 backdrop-blur-md"
+                className="absolute inset-0 bg-[#030812]/96 backdrop-blur-[10px]"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -78,182 +81,96 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                 aria-modal="true"
                 aria-label={`${study.title} case study`}
                 className="relative flex h-full w-full flex-col overflow-hidden bg-[#060d19] text-white"
-                initial={{ opacity: 0, y: 18, scale: 0.995 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 10, scale: 0.99 }}
-                transition={{ duration: 0.55, ease: EASE_OUT }}
+                initial={reduce ? false : { opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={reduce ? undefined : { opacity: 0, y: 8 }}
+                transition={{ duration: 0.65, ease: EASE_LUXURY }}
             >
                 <div className="pointer-events-none absolute inset-0 overflow-hidden">
                     <div
-                        className="absolute left-[8%] top-0 h-[420px] w-[420px] rounded-full blur-[130px]"
-                        style={{ background: `${study.theme.from}1f` }}
+                        className="absolute left-[6%] top-[-8%] h-[520px] w-[520px] rounded-full blur-[150px]"
+                        style={{ background: `${study.theme.from}12` }}
                     />
                     <div
-                        className="absolute bottom-[12%] right-[6%] h-[380px] w-[380px] rounded-full blur-[140px]"
-                        style={{ background: `${study.theme.to}1c` }}
+                        className="absolute bottom-[8%] right-[4%] h-[460px] w-[460px] rounded-full blur-[160px]"
+                        style={{ background: `${study.theme.to}10` }}
                     />
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_35%),linear-gradient(180deg,rgba(255,255,255,0.02),transparent_26%,rgba(255,255,255,0.03)_100%)]" />
+                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.035),transparent_42%)]" />
                 </div>
 
-                <div className="sticky top-0 z-20 flex items-center justify-between gap-4 border-b border-white/10 bg-[#07111f]/78 px-5 py-4 backdrop-blur-xl md:px-8 lg:px-12">
-                    <div className="min-w-0">
-                        <div className="flex flex-wrap items-center gap-2">
-                            <span className="inline-flex items-center gap-1.5 rounded-full border border-white/12 bg-white/6 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-white/78">
-                                <MagicStar size={14} variant="Bulk" color={study.theme.to} />
-                                Case Study Experience
-                            </span>
-                            <DemoBadge className="border-white/12 bg-white/6 text-white/58">Illustrative Content</DemoBadge>
-                            <IllustrativeBadge />
-                        </div>
-                        <p className="mt-2 truncate text-sm font-semibold text-white">{study.title}</p>
-                    </div>
+                <div className="sticky top-0 z-20 flex items-center justify-between gap-4 border-b border-white/[0.045] bg-[#07111f]/65 px-5 py-3.5 backdrop-blur-2xl md:px-8 lg:px-12">
+                    <p className="min-w-0 truncate text-[11px] font-medium uppercase tracking-[0.2em] text-white/40">
+                        {study.clientName}
+                    </p>
                     <button
                         type="button"
                         onClick={onClose}
                         aria-label="Close"
-                        className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/70 transition hover:border-white/20 hover:bg-white/10 hover:text-white"
+                        className="cs-lux-btn inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.03] text-white/65 hover:border-white/16 hover:bg-white/[0.07] hover:text-white"
                     >
-                        <CloseCircle size={22} variant="Outline" color="currentColor" />
+                        <CloseCircle size={20} variant="Outline" color="currentColor" />
                     </button>
                 </div>
 
-                <div className="flex-1 overflow-y-auto">
+                <div className="cs-lux-scroll flex-1 overflow-y-auto">
+                    {/* Chapter: full-bleed visual + editorial intro */}
                     <section className="relative">
-                        <div className="mx-auto grid max-w-[1440px] gap-10 px-5 py-8 md:px-8 lg:min-h-[calc(100vh-76px)] lg:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)] lg:items-center lg:px-12 lg:py-14">
-                            <div className="relative z-[2]">
-                                <div className="flex flex-wrap items-center gap-2">
-                                    <span
-                                        className="inline-flex rounded-full border px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-white/92 backdrop-blur-md"
-                                        style={{ borderColor: `${study.theme.from}55`, background: `${study.theme.from}1f` }}
-                                    >
-                                        {study.industry}
-                                    </span>
-                                    <span className="inline-flex rounded-full border border-white/12 bg-white/6 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-white/58">
-                                        {study.clientName}
-                                    </span>
-                                </div>
+                        <div className="mx-auto grid max-w-[1340px] gap-14 px-5 py-12 md:px-8 lg:min-h-[calc(100vh-68px)] lg:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)] lg:items-center lg:gap-20 lg:px-12 lg:py-20">
+                            <div className="relative z-[2] max-w-[34rem]">
+                                <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-white/35">
+                                    {study.industry}
+                                </p>
 
-                                <h2 className="mt-5 max-w-[13ch] text-4xl font-bold leading-[0.96] tracking-[-0.04em] text-white md:text-6xl lg:text-[4.75rem]">
+                                <h2 className="mt-6 text-[2.35rem] font-bold leading-[1.02] tracking-[-0.045em] text-white md:text-5xl lg:text-[3.55rem]">
                                     {study.title}
                                 </h2>
-                                <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/70 md:text-lg">
+
+                                <p className="mt-7 max-w-[34ch] text-[1.02rem] leading-[1.75] text-white/58 md:text-[1.08rem]">
                                     {study.summary}
                                 </p>
 
-                                <div className="mt-8 grid gap-3 sm:grid-cols-3">
-                                    <HeroMetaTile
-                                        icon={<MonitorMobbile size={20} variant="Bulk" color={study.theme.to} />}
-                                        label="Business Type"
-                                        value={study.businessType}
-                                    />
-                                    <HeroMetaTile
-                                        icon={<Timer1 size={20} variant="Bulk" color={study.theme.to} />}
-                                        label="Duration"
-                                        value={study.duration}
-                                    />
-                                    <HeroMetaTile
-                                        icon={<Profile2User size={20} variant="Bulk" color={study.theme.to} />}
-                                        label="Services"
-                                        value={study.services.join(' · ')}
-                                    />
-                                </div>
-
-                                <div className="mt-8 flex flex-wrap gap-3">
-                                    {study.metrics.map((metric) => (
-                                        <div
-                                            key={metric.label}
-                                            className="min-w-[128px] rounded-[1.35rem] border border-white/10 bg-white/6 px-4 py-3 backdrop-blur-md"
-                                        >
-                                            <p
-                                                className="text-2xl font-bold tracking-tight"
-                                                style={{
-                                                    backgroundImage: `linear-gradient(135deg, ${study.theme.from}, ${study.theme.to})`,
-                                                    WebkitBackgroundClip: 'text',
-                                                    backgroundClip: 'text',
-                                                    color: 'transparent',
-                                                }}
-                                            >
-                                                {metric.value}
-                                            </p>
-                                            <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-white/45">
-                                                {metric.label}
-                                            </p>
-                                        </div>
-                                    ))}
-                                </div>
-
-                                <div className="mt-8 flex flex-wrap gap-3">
-                                    <button
-                                        type="button"
-                                        disabled={!prev}
-                                        onClick={() => prev && onNavigate(prev)}
-                                        className="inline-flex items-center gap-2 rounded-2xl border border-white/12 bg-white/6 px-4 py-3 text-sm font-semibold text-white/80 transition enabled:hover:border-white/22 enabled:hover:bg-white/10 disabled:opacity-35"
-                                    >
-                                        <ArrowLeft2 size={18} variant="Outline" color="currentColor" />
-                                        Previous
-                                    </button>
-                                    <button
-                                        type="button"
-                                        disabled={!next}
-                                        onClick={() => next && onNavigate(next)}
-                                        className="inline-flex items-center gap-2 rounded-2xl border border-white/12 bg-white/6 px-4 py-3 text-sm font-semibold text-white/80 transition enabled:hover:border-white/22 enabled:hover:bg-white/10 disabled:opacity-35"
-                                    >
-                                        Next
-                                        <ArrowRight2 size={18} variant="Outline" color="currentColor" />
-                                    </button>
+                                <div className="mt-12 flex flex-wrap gap-x-10 gap-y-5 border-t border-white/[0.06] pt-8 text-sm">
+                                    <div>
+                                        <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/28">Duration</p>
+                                        <p className="mt-2 text-white/70">{study.duration}</p>
+                                    </div>
+                                    <div>
+                                        <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/28">Services</p>
+                                        <p className="mt-2 max-w-[28ch] text-white/70">{study.services.join(' · ')}</p>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div className="relative">
-                                <div className="relative overflow-hidden rounded-[2rem] border border-white/12 bg-white/6 p-3 shadow-[0_50px_120px_-40px_rgba(0,0,0,0.7)] backdrop-blur-md">
+                            <div className="cs-lux-frame relative">
+                                <div className="overflow-hidden rounded-[1.85rem]">
                                     <GalleryFrame
                                         item={hero}
                                         theme={study.theme}
                                         alt={study.coverAlt}
-                                        className="min-h-[320px] rounded-[1.6rem] md:min-h-[520px]"
+                                        className="min-h-[360px] rounded-[1.85rem] md:min-h-[580px]"
                                     />
-
-                                    <div className="pointer-events-none absolute inset-x-8 bottom-8 top-auto flex flex-wrap gap-3">
-                                        <FloatingInsight
-                                            icon={<PresentionChart size={18} variant="Bulk" color={study.theme.to} />}
-                                            label="Outcome"
-                                            value={study.results}
-                                        />
-                                        <FloatingInsight
-                                            icon={<Chart21 size={18} variant="Bulk" color={study.theme.to} />}
-                                            label="Transformation"
-                                            value={study.transform}
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className="mt-4 grid gap-3 sm:grid-cols-3">
-                                    {study.gallery.slice(1, 4).map((item) => (
-                                        <GalleryFrame
-                                            key={item.id}
-                                            item={item}
-                                            theme={study.theme}
-                                            alt={item.title}
-                                            compact
-                                            className="!aspect-[4/3] !rounded-[1.25rem] border-white/12 bg-white/5 !shadow-[0_16px_40px_-26px_rgba(0,0,0,0.55)]"
-                                        />
-                                    ))}
                                 </div>
                             </div>
                         </div>
                     </section>
 
-                    <div className="mx-auto max-w-[1440px] px-5 py-14 md:px-8 lg:px-12 lg:py-18">
+                    <div className="mx-auto max-w-[1040px] px-5 pb-24 pt-4 md:px-8 lg:px-12 lg:pb-32">
+                        {/* Chapter: quiet editorial journey */}
                         <SectionBlock eyebrow="THE JOURNEY" title="Before → Transform → Result">
-                            <div className="grid gap-4 lg:grid-cols-3">
+                            <div className="grid gap-10 lg:grid-cols-3 lg:gap-12">
                                 <JourneyCard tone="muted" label="Before" text={study.before} />
                                 <JourneyCard tone="accent" label="Transform" text={study.transform} color={study.theme.from} />
                                 <JourneyCard tone="success" label="Result" text={study.after} />
                             </div>
                         </SectionBlock>
 
-                        <SectionBlock eyebrow="STRATEGY" title="What changed under the hood">
-                            <div className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
+                        {/* Chapter: soft ambient strategy panel */}
+                        <section className="mt-20 overflow-hidden rounded-[2rem] border border-white/[0.05] bg-white/[0.025] px-6 py-12 md:mt-24 md:px-10 md:py-16">
+                            <p className="font-mono text-[10px] tracking-[0.28em] text-white/32">STRATEGY</p>
+                            <h4 className="mt-4 max-w-[16ch] text-[1.7rem] font-semibold leading-[1.12] tracking-[-0.02em] text-white md:text-[2rem]">
+                                What changed under the hood
+                            </h4>
+                            <div className="mt-12 grid gap-12 lg:grid-cols-2 lg:gap-16">
                                 <NarrativePanel
                                     icon={<PresentionChart size={20} variant="Bulk" color={study.theme.to} />}
                                     title="Challenge"
@@ -265,47 +182,49 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                                     body={study.solution}
                                 />
                             </div>
-                            <div className="mt-4">
+                            <div className="mt-14 max-w-3xl border-t border-white/[0.06] pt-12">
                                 <NarrativePanel
                                     icon={<MagicStar size={20} variant="Bulk" color={study.theme.to} />}
                                     title="Implementation"
                                     body={study.implementation}
                                 />
                             </div>
-                        </SectionBlock>
+                        </section>
 
-                        <div className="mt-10 grid gap-6 xl:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
-                            <section className="rounded-[2rem] border border-white/10 bg-white/6 p-6 backdrop-blur-md md:p-8">
-                                <div className="flex items-center gap-3">
-                                    <span className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/6">
-                                        <Chart21 size={22} variant="Bulk" color={study.theme.to} />
-                                    </span>
-                                    <div>
-                                        <p className="font-mono text-[10px] tracking-[0.2em] text-white/40">OUTCOMES</p>
-                                        <h4 className="text-2xl font-semibold tracking-tight text-white">Performance snapshot</h4>
-                                    </div>
-                                </div>
-                                <div className="mt-6">
+                        {/* Chapter: metrics + timeline — asymmetric breathing */}
+                        <div className="mt-20 grid gap-16 border-t border-transparent pt-0 md:mt-24 xl:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)] xl:gap-20">
+                            <div className="cs-lux-divider xl:hidden" aria-hidden />
+                            <section className="pt-16 xl:pt-20">
+                                <p className="font-mono text-[10px] tracking-[0.28em] text-white/32">OUTCOMES</p>
+                                <h4 className="mt-4 text-[1.7rem] font-semibold leading-[1.12] tracking-[-0.02em] text-white md:text-[2rem]">
+                                    Performance snapshot
+                                </h4>
+                                <div className="mt-10">
                                     <CaseStudyMetricGrid metrics={study.metrics} theme={study.theme} editorial tone="dark" />
                                 </div>
-                                <p className="mt-5 text-sm leading-relaxed text-white/58">{study.businessOutcome}</p>
+                                <p className="mt-9 max-w-[40ch] text-[15.5px] leading-[1.75] text-white/52">
+                                    {study.businessOutcome}
+                                </p>
                             </section>
 
-                            <section className="rounded-[2rem] border border-white/10 bg-[#0a1322]/92 p-6 shadow-[0_24px_60px_-34px_rgba(0,0,0,0.55)] md:p-8">
+                            <section className="pt-4 xl:pt-20">
                                 <CaseStudyTimeline steps={study.timeline} theme={study.theme} tone="dark" />
                             </section>
                         </div>
 
-                        <div className="mt-12 rounded-[2rem] border border-white/10 bg-[#091221]/88 p-6 md:p-8">
+                        {/* Chapter: immersive gallery */}
+                        <div className="mt-20 md:mt-24">
+                            <div className="cs-lux-divider mb-14 md:mb-16" aria-hidden />
                             <CaseStudyGallery key={gallerySeed} study={study} />
                         </div>
 
+                        {/* Chapter: quiet tools */}
                         <SectionBlock eyebrow="TOOLS USED" title="Technology stack">
-                            <div className="flex flex-wrap gap-2">
+                            <div className="flex flex-wrap gap-2.5">
                                 {study.technologies.map((tool) => (
                                     <span
                                         key={tool}
-                                        className="rounded-full border border-white/10 bg-white/6 px-3 py-1.5 text-xs font-semibold text-white/72"
+                                        className="rounded-full border border-white/[0.07] bg-transparent px-3.5 py-1.5 text-xs font-medium tracking-wide text-white/58"
                                     >
                                         {tool}
                                     </span>
@@ -313,58 +232,40 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                             </div>
                         </SectionBlock>
 
-                        <SectionBlock eyebrow="DELIVERABLES" title="Project surfaces and interfaces">
-                            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-                                {study.gallery.map((item) => (
-                                    <GalleryFrame
-                                        key={item.id}
-                                        item={item}
-                                        theme={study.theme}
-                                        alt={study.coverAlt}
-                                        className="border-white/10 bg-white/5"
-                                    />
-                                ))}
-                            </div>
-                        </SectionBlock>
-
-                        <section className="mt-10 overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.07),rgba(255,255,255,0.03))] p-6 shadow-[0_24px_60px_-34px_rgba(0,0,0,0.45)] md:p-8">
-                            <div className="flex flex-wrap items-center gap-2">
-                                <DemoBadge className="border-white/12 bg-white/6 text-white/58">Placeholder testimonial</DemoBadge>
-                                <IllustrativeBadge />
-                            </div>
-                            <blockquote className="mt-6 max-w-4xl text-xl font-medium leading-relaxed tracking-tight text-white/92 md:text-3xl">
+                        {/* Chapter: quote exhibition */}
+                        <section className="mt-20 md:mt-28">
+                            <div className="cs-lux-divider mb-14 md:mb-16" aria-hidden />
+                            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/32">Client voice</p>
+                            <blockquote className="mt-10 max-w-[28ch] text-[1.85rem] font-medium leading-[1.32] tracking-[-0.02em] text-white/92 md:max-w-[22ch] md:text-[2.35rem]">
                                 &ldquo;{study.testimonial.quote}&rdquo;
                             </blockquote>
-                            <div className="mt-8 flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+                            <div className="mt-12 flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
                                 <div className="flex items-center gap-4">
                                     <div
-                                        className="flex h-14 w-14 items-center justify-center rounded-2xl text-sm font-bold text-white"
-                                        style={{ background: `linear-gradient(135deg, ${study.theme.from}, ${study.theme.to})` }}
+                                        className="flex h-12 w-12 items-center justify-center rounded-2xl text-sm font-bold text-white shadow-[0_12px_30px_-12px_rgba(0,0,0,0.45)]"
+                                        style={{ background: `linear-gradient(145deg, ${study.theme.from}, ${study.theme.to})` }}
                                     >
                                         {study.testimonial.initials}
                                     </div>
                                     <div>
-                                        <p className="font-semibold text-white">{study.testimonial.name}</p>
-                                        <p className="text-sm text-white/52">{study.testimonial.role}</p>
-                                        <p className="text-sm font-medium text-white/70">{study.testimonial.company}</p>
+                                        <p className="font-semibold tracking-tight text-white">{study.testimonial.name}</p>
+                                        <p className="mt-1 text-sm text-white/42">{study.testimonial.role}</p>
                                     </div>
                                 </div>
-                                <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/6 px-4 py-2.5">
+                                <div className="inline-flex items-center gap-2 opacity-55">
                                     <GoogleG />
                                     <GoogleStars delay={0.2} />
-                                    <span className="text-[11px] font-bold uppercase tracking-wide text-white/58">
-                                        Demo verification badge
-                                    </span>
                                 </div>
                             </div>
                         </section>
 
-                        <SectionBlock eyebrow="WHAT COMES NEXT" title="Future optimization opportunities">
-                            <ul className="grid gap-3 md:grid-cols-3">
+                        {/* Chapter: sparse future */}
+                        <SectionBlock eyebrow="WHAT COMES NEXT" title="Future opportunities">
+                            <ul className="grid gap-8 md:grid-cols-3 md:gap-10">
                                 {study.futureImprovements.map((item) => (
                                     <li
                                         key={item}
-                                        className="rounded-[1.4rem] border border-white/10 bg-white/6 px-4 py-4 text-sm leading-relaxed text-white/65"
+                                        className="border-t border-white/[0.08] pt-6 text-[14.5px] leading-[1.7] text-white/55"
                                     >
                                         {item}
                                     </li>
@@ -372,64 +273,42 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                             </ul>
                         </SectionBlock>
 
-                        <div className="mt-10 flex flex-wrap items-center justify-between gap-4 rounded-[1.5rem] border border-dashed border-white/14 bg-white/[0.04] px-5 py-4">
-                            <div>
-                                <p className="text-sm font-semibold text-white">Download Case Study PDF</p>
-                                <p className="mt-1 text-xs text-white/48">
-                                    Demo control only. PDF export will be enabled once verified case studies are approved.
-                                </p>
+                        {/* Closing CTA rhythm */}
+                        <div className="mt-20 flex flex-wrap items-center justify-between gap-5 border-t border-white/[0.05] pt-12 md:mt-24">
+                            <div className="flex flex-wrap gap-2.5">
+                                <button
+                                    type="button"
+                                    disabled={!prev}
+                                    onClick={() => prev && onNavigate(prev)}
+                                    className="cs-lux-btn inline-flex items-center gap-2 rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 text-sm font-semibold text-white/70 enabled:hover:border-white/16 enabled:hover:bg-white/[0.06] enabled:hover:text-white disabled:opacity-28"
+                                >
+                                    <ArrowLeft2 size={18} variant="Outline" color="currentColor" />
+                                    Previous
+                                </button>
+                                <button
+                                    type="button"
+                                    disabled={!next}
+                                    onClick={() => next && onNavigate(next)}
+                                    className="cs-lux-btn inline-flex items-center gap-2 rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 text-sm font-semibold text-white/70 enabled:hover:border-white/16 enabled:hover:bg-white/[0.06] enabled:hover:text-white disabled:opacity-28"
+                                >
+                                    Next
+                                    <ArrowRight2 size={18} variant="Outline" color="currentColor" />
+                                </button>
                             </div>
+
                             <button
                                 type="button"
                                 disabled
-                                className="inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/8 px-4 py-3 text-sm font-semibold text-white/36"
+                                className="inline-flex items-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold text-white/28"
                             >
                                 <DocumentDownload size={18} variant="Outline" color="currentColor" />
-                                Coming Soon
+                                PDF coming soon
                             </button>
                         </div>
                     </div>
                 </div>
             </motion.div>
         </motion.div>
-    );
-}
-
-function HeroMetaTile({
-    icon,
-    label,
-    value,
-}: {
-    icon: ReactNode;
-    label: string;
-    value: string;
-}) {
-    return (
-        <div className="rounded-[1.35rem] border border-white/10 bg-white/6 p-4 backdrop-blur-md">
-            <div className="flex items-center gap-2 text-white/72">{icon}</div>
-            <p className="mt-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/38">{label}</p>
-            <p className="mt-2 text-sm leading-relaxed text-white/78">{value}</p>
-        </div>
-    );
-}
-
-function FloatingInsight({
-    icon,
-    label,
-    value,
-}: {
-    icon: ReactNode;
-    label: string;
-    value: string;
-}) {
-    return (
-        <div className="max-w-[280px] rounded-[1.2rem] border border-white/12 bg-[#08111fd9] px-4 py-3 backdrop-blur-md">
-            <div className="flex items-center gap-2 text-white/74">
-                {icon}
-                <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/44">{label}</span>
-            </div>
-            <p className="mt-2 text-sm leading-relaxed text-white/82">{value}</p>
-        </div>
     );
 }
 
@@ -444,22 +323,22 @@ function JourneyCard({
     tone: 'muted' | 'accent' | 'success';
     color?: string;
 }) {
-    const toneClass =
-        tone === 'accent'
-            ? 'border-white/14 bg-white/8 text-white/86'
-            : tone === 'success'
-              ? 'border-emerald-400/20 bg-emerald-400/[0.08] text-white/82'
-              : 'border-white/10 bg-white/5 text-white/76';
-
     return (
-        <div className={`rounded-[1.6rem] border p-5 ${toneClass}`}>
+        <div className="border-t border-white/[0.08] pt-6">
             <p
-                className="font-mono text-[9px] font-bold uppercase tracking-[0.2em]"
-                style={{ color: tone === 'accent' && color ? color : undefined }}
+                className="font-mono text-[9px] font-bold uppercase tracking-[0.22em] text-white/32"
+                style={{
+                    color:
+                        tone === 'accent' && color
+                            ? color
+                            : tone === 'success'
+                              ? 'rgba(110,231,183,0.85)'
+                              : undefined,
+                }}
             >
                 {label}
             </p>
-            <p className="mt-3 text-sm leading-relaxed">{text}</p>
+            <p className="mt-5 text-[15px] leading-[1.75] text-white/62">{text}</p>
         </div>
     );
 }
@@ -474,17 +353,14 @@ function NarrativePanel({
     body: string;
 }) {
     return (
-        <div className="rounded-[1.65rem] border border-white/10 bg-white/6 p-5 backdrop-blur-md md:p-6">
-            <div className="flex items-center gap-3">
-                <span className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/7">
+        <div>
+            <div className="flex items-center gap-3.5">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/[0.07] bg-white/[0.03]">
                     {icon}
                 </span>
-                <div>
-                    <p className="font-mono text-[10px] tracking-[0.2em] text-white/38">DETAIL</p>
-                    <h5 className="text-lg font-semibold tracking-tight text-white">{title}</h5>
-                </div>
+                <h5 className="text-lg font-semibold tracking-tight text-white">{title}</h5>
             </div>
-            <p className="mt-5 text-sm leading-relaxed text-white/66 md:text-[15px]">{body}</p>
+            <p className="mt-6 text-[15.5px] leading-[1.75] text-white/54">{body}</p>
         </div>
     );
 }

@@ -89,15 +89,9 @@ export function CaseStudyExpandOverlay({ study, index, onClose, onDeepOpen }: Pr
                                         initial={reduce ? false : { opacity: 0, y: 10 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: 0.18, duration: 0.4 }}
-                                        className="absolute left-5 top-5 z-[4] flex flex-wrap gap-2 sm:left-6 sm:top-6"
+                                        className="absolute left-5 top-5 z-[4] sm:left-6 sm:top-6"
                                     >
-                                        <span className="rounded-full border border-white/25 bg-black/25 px-3 py-1.5 font-mono text-[9px] font-semibold uppercase tracking-[0.2em] text-white/90 backdrop-blur-md">
-                                            {study.documentaryLabel}
-                                        </span>
-                                        <span
-                                            className="rounded-full border border-white/15 px-3 py-1.5 font-mono text-[9px] font-semibold uppercase tracking-[0.18em] text-white/75 backdrop-blur-md"
-                                            style={{ background: `${study.theme.from}40` }}
-                                        >
+                                        <span className="rounded-full border border-white/20 bg-black/25 px-3 py-1.5 font-mono text-[9px] font-semibold uppercase tracking-[0.18em] text-white/90 backdrop-blur-md">
                                             {study.clientName}
                                         </span>
                                     </motion.div>
@@ -106,32 +100,18 @@ export function CaseStudyExpandOverlay({ study, index, onClose, onDeepOpen }: Pr
                                         initial={reduce ? false : { opacity: 0, y: 8 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: 0.22, duration: 0.4 }}
-                                        className="absolute bottom-5 left-5 z-[4] font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-white/60 sm:bottom-6 sm:left-6"
+                                        className="absolute bottom-5 left-5 z-[4] font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-white/55 sm:bottom-6 sm:left-6"
                                     >
                                         0{index + 1} · {study.industry}
                                     </motion.p>
                                 </div>
 
-                                <div className="relative flex flex-col justify-center px-6 py-7 sm:px-8 sm:py-9 lg:px-10 lg:py-11">
-                                    <motion.span
-                                        initial={reduce ? false : { opacity: 0, y: 8 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ delay: 0.15, duration: 0.35 }}
-                                        className="mb-4 inline-flex w-fit items-center rounded-full border px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em]"
-                                        style={{
-                                            color: study.theme.from,
-                                            borderColor: `${study.theme.from}33`,
-                                            background: `${study.theme.from}0d`,
-                                        }}
-                                    >
-                                        {study.industry}
-                                    </motion.span>
-
+                                <div className="relative flex flex-col justify-center px-7 py-9 sm:px-9 sm:py-11 lg:px-11 lg:py-14">
                                     <motion.h2
                                         layoutId={`cs-title-${study.id}`}
                                         id={`cs-expanded-title-${study.id}`}
                                         transition={SPRING}
-                                        className="max-w-[18ch] text-[1.55rem] font-bold leading-[1.05] tracking-tight text-slate-900 sm:text-[1.85rem] lg:text-[2rem]"
+                                        className="max-w-[18ch] text-[1.6rem] font-bold leading-[1.05] tracking-tight text-slate-900 sm:text-[1.9rem] lg:text-[2.1rem]"
                                     >
                                         {study.title}
                                     </motion.h2>
@@ -139,8 +119,8 @@ export function CaseStudyExpandOverlay({ study, index, onClose, onDeepOpen }: Pr
                                     <motion.p
                                         initial={reduce ? false : { opacity: 0, y: 10 }}
                                         animate={{ opacity: 1, y: 0 }}
-                                        transition={{ delay: 0.2, duration: 0.4 }}
-                                        className="mt-3.5 max-w-[36ch] text-[14.5px] leading-relaxed text-slate-500"
+                                        transition={{ delay: 0.2, duration: 0.5, ease: EASE_OUT }}
+                                        className="mt-5 max-w-[32ch] text-[15px] leading-[1.7] text-slate-500"
                                     >
                                         {study.summary}
                                     </motion.p>
@@ -148,11 +128,11 @@ export function CaseStudyExpandOverlay({ study, index, onClose, onDeepOpen }: Pr
                                     <motion.div
                                         initial={reduce ? false : { opacity: 0, y: 14 }}
                                         animate={{ opacity: 1, y: 0 }}
-                                        transition={{ delay: 0.26, duration: 0.45 }}
-                                        className="mt-7 space-y-0"
+                                        transition={{ delay: 0.28, duration: 0.55, ease: EASE_OUT }}
+                                        className="mt-10 space-y-0"
                                     >
                                         <NarrativeBeat label="Before" text={study.before} accent="rgba(148,163,184,0.9)" />
-                                        <div className="flex items-center gap-3 py-1.5 pl-1" aria-hidden>
+                                        <div className="flex items-center gap-3 py-2 pl-1" aria-hidden>
                                             <span
                                                 className="h-6 w-px"
                                                 style={{
@@ -166,10 +146,10 @@ export function CaseStudyExpandOverlay({ study, index, onClose, onDeepOpen }: Pr
                                                 Transform
                                             </span>
                                         </div>
-                                        <p className="pl-1 text-[13px] font-medium leading-snug text-slate-700">
+                                        <p className="pl-1 text-[13px] font-medium leading-[1.65] text-slate-700">
                                             {study.transform}
                                         </p>
-                                        <div className="flex items-center gap-3 py-1.5 pl-1" aria-hidden>
+                                        <div className="flex items-center gap-3 py-2 pl-1" aria-hidden>
                                             <span
                                                 className="h-6 w-px"
                                                 style={{
@@ -183,8 +163,8 @@ export function CaseStudyExpandOverlay({ study, index, onClose, onDeepOpen }: Pr
                                     <motion.div
                                         initial={reduce ? false : { opacity: 0, y: 12 }}
                                         animate={{ opacity: 1, y: 0 }}
-                                        transition={{ delay: 0.32, duration: 0.4 }}
-                                        className="mt-7"
+                                        transition={{ delay: 0.34, duration: 0.5, ease: EASE_OUT }}
+                                        className="mt-10"
                                     >
                                         <CaseStudyMetricGrid
                                             metrics={study.metrics}
@@ -197,18 +177,18 @@ export function CaseStudyExpandOverlay({ study, index, onClose, onDeepOpen }: Pr
                                         type="button"
                                         initial={reduce ? false : { opacity: 0, y: 10 }}
                                         animate={{ opacity: 1, y: 0 }}
-                                        transition={{ delay: 0.38, duration: 0.4 }}
+                                        transition={{ delay: 0.4, duration: 0.5, ease: EASE_OUT }}
                                         onClick={() => onDeepOpen(study)}
-                                        whileHover={reduce ? undefined : { y: -2 }}
-                                        whileTap={reduce ? undefined : { scale: 0.985 }}
-                                        className="group/btn relative mt-7 inline-flex w-full items-center justify-between overflow-hidden rounded-2xl px-5 py-4 text-sm font-semibold text-white"
+                                        whileHover={reduce ? undefined : { y: -1.5 }}
+                                        whileTap={reduce ? undefined : { scale: 0.99 }}
+                                        className="group/btn relative mt-10 inline-flex w-full items-center justify-between overflow-hidden rounded-2xl px-5 py-4 text-sm font-semibold text-white transition-shadow duration-500"
                                         style={{
-                                            background: `linear-gradient(135deg, ${study.theme.from}, ${study.theme.to})`,
+                                            background: `linear-gradient(145deg, ${study.theme.from}, ${study.theme.to})`,
                                             boxShadow: `0 18px 40px -16px ${study.theme.glow}`,
                                         }}
                                     >
                                         <span>Open Case Study</span>
-                                        <ArrowRight2 size={18} variant="Outline" color="#ffffff" className="transition-transform duration-300 group-hover/btn:translate-x-1.5" />
+                                        <ArrowRight2 size={18} variant="Outline" color="#ffffff" className="transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/btn:translate-x-1" />
                                     </motion.button>
                                 </div>
                             </div>
@@ -234,7 +214,7 @@ function NarrativeBeat({
             <p className="font-mono text-[9px] font-bold uppercase tracking-[0.2em]" style={{ color: accent }}>
                 {label}
             </p>
-            <p className="mt-1.5 max-w-[40ch] text-[13px] leading-relaxed text-slate-600">{text}</p>
+            <p className="mt-2 max-w-[38ch] text-[13.5px] leading-[1.65] text-slate-600">{text}</p>
         </div>
     );
 }

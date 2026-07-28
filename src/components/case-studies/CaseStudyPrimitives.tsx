@@ -31,44 +31,52 @@ export function GalleryFrame({
 
     return (
         <div
-            className={`group relative overflow-hidden rounded-[1.25rem] border border-slate-200/80 bg-slate-950 shadow-[0_24px_60px_-34px_rgba(15,23,42,0.35)] ${TYPE_ASPECT[item.type]} ${className}`}
+            className={`group/frame relative overflow-hidden rounded-[1.35rem] bg-slate-950 cs-lux-vignette ${TYPE_ASPECT[item.type]} ${className}`}
         >
             <img
                 src={item.imageSrc}
                 alt={alt || item.title}
-                className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.02]"
+                className="cs-lux-img absolute inset-0 h-full w-full object-cover"
                 style={{ objectPosition }}
                 loading="lazy"
                 decoding="async"
             />
 
+            {/* Soft key light */}
             <div
-                className="pointer-events-none absolute inset-0 opacity-50"
-                style={{ background: `radial-gradient(circle at 20% 15%, ${theme.glow}, transparent 50%)` }}
+                className="pointer-events-none absolute inset-0 opacity-[0.34]"
+                style={{
+                    background: `radial-gradient(ellipse 70% 55% at 22% 12%, ${theme.glow}, transparent 58%)`,
+                }}
             />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/15 to-slate-950/10" />
+            {/* Natural vignette + base read */}
+            <div
+                className="pointer-events-none absolute inset-0"
+                style={{
+                    background:
+                        'linear-gradient(180deg, rgba(4,9,21,0.12) 0%, transparent 34%, rgba(4,9,21,0.55) 78%, rgba(4,9,21,0.78) 100%)',
+                }}
+            />
+            <div
+                className="pointer-events-none absolute inset-0 opacity-[0.18] mix-blend-soft-light"
+                style={{
+                    background:
+                        'radial-gradient(circle at 80% 20%, rgba(255,255,255,0.35), transparent 42%)',
+                }}
+            />
 
-            {!compact ? (
-                <div className="absolute left-4 top-4 flex flex-wrap gap-2">
-                    <span className="rounded-full border border-white/20 bg-black/30 px-3 py-1 font-mono text-[9px] tracking-[0.2em] text-white/80 backdrop-blur-md">
-                        {item.type}
-                    </span>
-                </div>
-            ) : null}
-
-            <div className={`absolute inset-x-0 bottom-0 ${compact ? 'p-2.5' : 'p-5'}`}>
-                {!compact ? (
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/50">{item.type}</p>
-                ) : null}
+            <div className={`absolute inset-x-0 bottom-0 ${compact ? 'p-2.5' : 'p-5 md:p-7'}`}>
                 <p
-                    className={`font-semibold tracking-tight text-white ${compact ? 'text-[11px] leading-tight' : 'mt-1 text-lg'}`}
+                    className={`font-semibold tracking-tight text-white/95 ${
+                        compact ? 'text-[11px] leading-tight' : 'text-lg leading-snug md:text-[1.35rem]'
+                    }`}
                 >
                     {item.title}
                 </p>
             </div>
 
             {interactive ? (
-                <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10 transition duration-500 group-hover:ring-white/25" />
+                <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/[0.08] transition duration-500 group-hover/frame:ring-white/18" />
             ) : null}
         </div>
     );
