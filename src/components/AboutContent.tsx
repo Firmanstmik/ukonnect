@@ -90,10 +90,16 @@ const VALUE_ICONS = [
 ];
 
 // ── Ticker items ───────────────────────────────────────────────────────────
-const TICKER_ITEMS = [
-    'AI-First', 'Lead Generation', 'Transparent', 'Paid Ads',
-    'Client-Obsessed', 'AI Automation', 'Fast Execution', 'Web Development',
-];
+const TICKER_KEYS = [
+    'aboutPage.ticker.0',
+    'aboutPage.ticker.1',
+    'aboutPage.ticker.2',
+    'aboutPage.ticker.3',
+    'aboutPage.ticker.4',
+    'aboutPage.ticker.5',
+    'aboutPage.ticker.6',
+    'aboutPage.ticker.7',
+] as const satisfies readonly TranslationKey[];
 
 
 export const AboutContent = ({ mode = 'full' }: { mode?: 'full' | 'supplement' }) => {
@@ -258,9 +264,9 @@ export const AboutContent = ({ mode = 'full' }: { mode?: 'full' | 'supplement' }
                     transition={{ repeat: Infinity, duration: 22, ease: 'linear' }}
                     className="flex w-max items-center gap-0"
                 >
-                    {[...TICKER_ITEMS, ...TICKER_ITEMS, ...TICKER_ITEMS, ...TICKER_ITEMS].map((item, i) => (
+                    {[...TICKER_KEYS, ...TICKER_KEYS, ...TICKER_KEYS, ...TICKER_KEYS].map((key, i) => (
                         <span key={i} className="flex items-center gap-5 px-0">
-                            <span className="text-slate-400 font-semibold text-[13px] tracking-[0.18em] uppercase whitespace-nowrap">{item}</span>
+                            <span className="text-slate-400 font-semibold text-[13px] tracking-[0.18em] uppercase whitespace-nowrap">{t(key)}</span>
                             <span className="w-1 h-1 rounded-full bg-[#5600e3] opacity-40 mx-5" />
                         </span>
                     ))}

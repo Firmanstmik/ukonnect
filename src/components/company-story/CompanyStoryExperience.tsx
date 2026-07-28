@@ -1,8 +1,9 @@
-import React, { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { Suspense, createContext, lazy, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion, useInView, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight2 } from 'iconsax-react';
 import { useLanguage } from '../../i18n/LanguageContext';
 import { EASE_OUT } from '../motion';
+import { getCompanyStoryCopy, type CompanyStoryCopy } from './companyStoryLocales';
 
 const ContactFormModal = lazy(() => import('../ContactFormModal').then(m => ({ default: m.ContactFormModal })));
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -38,7 +39,31 @@ type CultureItem = {
     note: string;
 };
 
+const CompanyStoryCopyContext = createContext<CompanyStoryCopy | null>(null);
+
+function useCompanyStoryCopy(): CompanyStoryCopy {
+    const copy = useContext(CompanyStoryCopyContext);
+    if (!copy) {
+        throw new Error('useCompanyStoryCopy must be used within CompanyStoryCopyContext.Provider');
+    }
+    return copy;
+}
+
 const JOURNEY_PHASE_MS = 5000;
+
+function StoryRichBody({ parts }: { parts: CompanyStoryCopy['opening']['bodyParts'] }) {
+    return (
+        <>
+            {parts.intro}
+            <StoryTextAccent>{parts.marketing}</StoryTextAccent>
+            {parts.connectorOne}
+            <StoryTextAccent gradient>{parts.aiSystems}</StoryTextAccent>
+            {parts.connectorTwo}
+            <StoryTextAccent>{parts.webDevelopment}</StoryTextAccent>
+            {parts.outro}
+        </>
+    );
+}
 
 function Reveal({
     children,
@@ -408,28 +433,26 @@ function StoryLiveEyebrow({ index, label }: { index: string; label: string }) {
 }
 
 function BehindSystemsSectionHeader({ className }: { className?: string }) {
+    const { behind } = useCompanyStoryCopy();
+
     return (
         <div className={className}>
             <div className="flex flex-wrap items-center gap-2.5">
-                <StoryTagPill active>DOCUMENTARY</StoryTagPill>
+                <StoryTagPill active>{behind.documentary}</StoryTagPill>
                 <span className="font-mono text-[10px] tracking-[0.24em] text-slate-300">/</span>
-                <StoryTagPill>CHAPTER 01</StoryTagPill>
+                <StoryTagPill>{`${behind.chapter} ${behind.chapterNumber}`}</StoryTagPill>
             </div>
             <h3 className="mt-4 text-[34px] leading-[0.94] tracking-[-0.04em] font-semibold text-slate-900 lg:text-[40px] xl:text-[52px]">
-                Behind the{' '}
+                {behind.titlePre}{' '}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#5600e3] via-[#7c3aed] to-[#9b4dff]">
-                    Systems
+                    {behind.titleHighlight}
                 </span>
             </h3>
-            <p className="mt-4 max-w-[38ch] text-[15px] leading-[1.72] text-slate-500">
-                Captured in Amsterdam. The same <StoryTextAccent>Marketing</StoryTextAccent>,{' '}
-                <StoryTextAccent gradient>AI Systems</StoryTextAccent>, and{' '}
-                <StoryTextAccent>Web Development</StoryTextAccent> teams you see in Our services, explored scene by scene.
-            </p>
+            <p className="mt-4 max-w-[38ch] text-[15px] leading-[1.72] text-slate-500"><StoryRichBody parts={behind.bodyParts} /></p>
             <div className="mt-4 flex flex-wrap gap-2">
-                {['MARKETING', 'AI SYSTEMS', 'WEB'].map((tag) => (
-                    <StoryTagPill key={tag} active={tag === 'AI SYSTEMS'}>
-                        {tag}
+                {behind.pills.map((pill) => (
+                    <StoryTagPill key={pill} active={pill === behind.bodyParts.aiSystems.toUpperCase()}>
+                        {pill}
                     </StoryTagPill>
                 ))}
             </div>
@@ -438,6 +461,9 @@ function BehindSystemsSectionHeader({ className }: { className?: string }) {
 }
 
 function DocumentarySceneHeroCaption({ scene }: { scene: DocumentaryScene }) {
+    const {
+        behind: { liveLoop },
+    } = useCompanyStoryCopy();
     const titleWords = scene.title.split(' ');
     const titleLead = titleWords.length > 2 ? titleWords.slice(0, 2).join(' ') : scene.title;
     const titleAccent = titleWords.length > 2 ? titleWords.slice(2).join(' ') : '';
@@ -481,7 +507,7 @@ function DocumentarySceneHeroCaption({ scene }: { scene: DocumentaryScene }) {
                                         className="h-1.5 w-1.5 rounded-full bg-primary shadow-[0_0_8px_rgba(155,77,255,0.8)]"
                                         aria-hidden
                                     />
-                                    LIVE LOOP
+                                    {liveLoop}
                                 </span>
                             ) : null}
                         </div>
@@ -560,18 +586,14 @@ function OpeningRoleCompact({
 }
 
 function OpeningTrustBand({ className }: { className?: string }) {
-    const items = [
-        { label: 'Based in', value: 'Amsterdam', signal: 'NL HQ' },
-        { label: 'Delivery', value: 'In-house team', signal: 'NO OUTSOURCE' },
-        { label: 'Focus', value: 'AI Growth System', signal: 'MKT, AI, WEB' },
-    ];
+    const { trust } = useCompanyStoryCopy();
 
     return (
         <div
             className={`flex h-full flex-col justify-between gap-2.5 rounded-[1rem] border border-slate-200/70 bg-gradient-to-br from-white/72 via-white/55 to-primary/[0.04] p-3.5 shadow-[0_1px_0_rgba(255,255,255,0.92)_inset] lg:p-3 xl:p-3.5 ${className ?? ''}`}
         >
-            <p className="font-mono text-[8px] tracking-[0.28em] text-primary/50">TRUST SIGNALS</p>
-            {items.map((item, idx) => (
+            <p className="font-mono text-[8px] tracking-[0.28em] text-primary/50">{trust.signalsLabel}</p>
+            {trust.items.map((item, idx) => (
                 <motion.div
                     key={item.label}
                     className="rounded-lg border border-slate-200/55 bg-white/55 px-3 py-2.5 transition-colors duration-500 hover:border-primary/18 hover:bg-white/80"
@@ -592,25 +614,27 @@ function OpeningTrustBand({ className }: { className?: string }) {
 }
 
 function OpeningImageCaptionOverlay() {
+    const { opening } = useCompanyStoryCopy();
+
     return (
         <div className="absolute inset-x-0 bottom-0 z-10 p-3 sm:p-4">
             <div className="rounded-[0.9rem] border border-white/22 bg-slate-950/42 px-4 py-3 backdrop-blur-md sm:px-5 sm:py-3.5">
                 <div className="flex flex-wrap items-center gap-2">
                     <span className="inline-flex rounded-full border border-white/18 bg-white/10 px-2.5 py-1 font-mono text-[8px] tracking-[0.22em] text-white/78">
-                        DOCUMENTARY 00
+                        {opening.captionBadge1}
                     </span>
                     <span className="inline-flex rounded-full border border-white/12 bg-white/5 px-2.5 py-1 font-mono text-[8px] tracking-[0.22em] text-white/55">
-                        LIVE PORTRAIT
+                        {opening.captionBadge2}
                     </span>
                 </div>
                 <p className="mt-2 text-[15px] font-semibold leading-[1.1] tracking-[-0.03em] text-white sm:text-[17px]">
-                    Operators +{' '}
+                    {opening.captionTitlePre}{' '}
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#c4a5ff] via-[#9b4dff] to-[#e8d5ff]">
-                        intelligence.
+                        {opening.captionTitleHighlight}
                     </span>
                 </p>
                 <p className="mt-1.5 line-clamp-2 text-[11px] leading-[1.6] text-white/72 sm:text-[11.5px]">
-                    Marketing, AI Systems, and Web Development. One in-house team behind your connected growth engine.
+                    {opening.captionBody}
                 </p>
             </div>
         </div>
@@ -772,6 +796,8 @@ function CinematicSceneMedia({ scene }: { scene: DocumentaryScene }) {
 }
 
 function DocumentaryPcChassis({ children }: { children: React.ReactNode }) {
+    const { behind } = useCompanyStoryCopy();
+
     return (
         <div className="relative mx-auto w-full pb-4 sm:pb-5">
             <div
@@ -805,16 +831,16 @@ function DocumentaryPcChassis({ children }: { children: React.ReactNode }) {
                                 className="h-1.5 w-1.5 rounded-full bg-primary shadow-[0_0_8px_rgba(86,0,227,0.75)]"
                                 aria-hidden
                             />
-                            <span className="font-mono text-[7px] tracking-[0.22em] text-white/55 md:text-[8px]">AI CAM</span>
+                            <span className="font-mono text-[7px] tracking-[0.22em] text-white/55 md:text-[8px]">{behind.aiCam}</span>
                         </div>
                         {children}
 
                         {/* Slim monitor chin — status only */}
                         <div className="pointer-events-none relative z-10 -mt-px mx-auto flex w-full items-center justify-between gap-3 rounded-b-[0.85rem] border border-t-0 border-slate-700/40 bg-gradient-to-b from-[#343841] via-[#252830] to-[#14161b] px-4 py-2 shadow-[0_14px_32px_-20px_rgba(15,23,42,0.6)] sm:px-5 sm:py-2.5 md:rounded-b-[1rem]">
                             <div className="flex items-center gap-2">
-                                <span className="font-mono text-[7px] tracking-[0.22em] text-primary/55 sm:text-[7.5px]">UKONNECT OS</span>
+                                <span className="font-mono text-[7px] tracking-[0.22em] text-primary/55 sm:text-[7.5px]">{behind.ukonnectOs}</span>
                                 <span className="hidden h-2.5 w-px bg-white/10 sm:block" aria-hidden />
-                                <span className="hidden font-mono text-[7px] tracking-[0.16em] text-white/32 sm:inline sm:text-[7.5px]">SCENE READER</span>
+                                <span className="hidden font-mono text-[7px] tracking-[0.16em] text-white/32 sm:inline sm:text-[7.5px]">{behind.sceneReader}</span>
                             </div>
                             <div className="flex items-center gap-2">
                                 <span className="rounded-full border border-emerald-400/25 bg-emerald-400/10 px-2 py-0.5 font-mono text-[6.5px] tracking-[0.14em] text-emerald-300/85 sm:text-[7px]">
@@ -824,7 +850,7 @@ function DocumentaryPcChassis({ children }: { children: React.ReactNode }) {
                                         className="mr-1 inline-block h-1 w-1 rounded-full bg-emerald-400 align-middle"
                                         aria-hidden
                                     />
-                                    LIVE
+                                    {behind.live}
                                 </span>
                                 <span className="font-mono text-[6.5px] tracking-[0.14em] text-white/28 sm:text-[7px]">AI</span>
                             </div>
@@ -884,6 +910,10 @@ function DocumentaryPcChassis({ children }: { children: React.ReactNode }) {
 }
 
 function DocumentaryPreviewPanel({ scene, activeIndex, total }: { scene: DocumentaryScene; activeIndex: number; total: number }) {
+    const {
+        behind: { capturedInAmsterdam, sceneCountTemplate },
+    } = useCompanyStoryCopy();
+
     return (
         <figure className="w-full" aria-label={`${scene.label}: ${scene.title}`}>
             <DocumentaryPcChassis>
@@ -911,11 +941,11 @@ function DocumentaryPreviewPanel({ scene, activeIndex, total }: { scene: Documen
 
                     <div className="absolute left-4 top-4 z-30 flex items-center gap-2 sm:left-5 sm:top-5">
                         <div className="rounded-full border border-white/68 bg-white/82 px-3.5 py-1.5 shadow-[0_12px_24px_rgba(15,23,42,0.1)] backdrop-blur-sm">
-                            <p className="font-mono text-[10px] tracking-[0.26em] text-slate-600">CAPTURED IN AMSTERDAM</p>
+                            <p className="font-mono text-[10px] tracking-[0.26em] text-slate-600">{capturedInAmsterdam}</p>
                         </div>
                         <div className="rounded-full border border-white/50 bg-slate-950/28 px-3 py-1.5 backdrop-blur-sm">
                             <p className="font-mono text-[10px] tracking-[0.22em] text-white/88 tabular-nums">
-                                0{activeIndex + 1} / 0{total}
+                                {sceneCountTemplate.replace('{current}', `0${activeIndex + 1}`).replace('{total}', `0${total}`)}
                             </p>
                         </div>
                     </div>
@@ -927,6 +957,7 @@ function DocumentaryPreviewPanel({ scene, activeIndex, total }: { scene: Documen
 }
 
 function BehindSystemsExperience({ scenes }: { scenes: DocumentaryScene[] }) {
+    const { behind } = useCompanyStoryCopy();
     const [active, setActive] = useState(0);
     const featured = scenes[active];
     const progress = ((active + 1) / scenes.length) * 100;
@@ -1001,9 +1032,9 @@ function BehindSystemsExperience({ scenes }: { scenes: DocumentaryScene[] }) {
                         </div>
 
                         <p className="mt-5 flex items-center gap-2 font-mono text-[10px] tracking-[0.28em] text-slate-400 tabular-nums">
-                            <StoryTagPill className="!text-[8px]">SCENE</StoryTagPill>
+                            <StoryTagPill className="!text-[8px]">{behind.sceneLabel}</StoryTagPill>
                             <span>
-                                0{active + 1} OF 0{scenes.length}
+                                {behind.sceneCountTemplate.replace('{current}', `0${active + 1}`).replace('{total}', `0${scenes.length}`)}
                             </span>
                         </p>
                     </div>
@@ -1024,16 +1055,12 @@ function BehindSystemsExperience({ scenes }: { scenes: DocumentaryScene[] }) {
 }
 
 function OpeningTrustStrip() {
-    const items = [
-        { label: 'Based in', value: 'Amsterdam', signal: 'NL HQ' },
-        { label: 'Delivery', value: 'In-house team', signal: 'NO OUTSOURCE' },
-        { label: 'Focus', value: 'AI Growth System', signal: 'MKT, AI, WEB' },
-    ];
+    const { trust } = useCompanyStoryCopy();
 
     return (
         <div className="mt-10 hidden border-t border-slate-200/60 pt-8 lg:block">
             <div className="grid grid-cols-3 gap-4">
-                {items.map((item, idx) => (
+                {trust.items.map((item, idx) => (
                     <motion.div
                         key={item.label}
                         className="group rounded-xl border border-slate-200/65 bg-white/45 px-4 py-3.5 transition-all duration-500 hover:border-primary/22 hover:bg-white/75 hover:shadow-[0_12px_28px_-18px_rgba(86,0,227,0.2)]"
@@ -1067,11 +1094,13 @@ function OfficeConfiguratorHotspot({
     active: boolean;
     onSelect: () => void;
 }) {
+    const { officeChrome } = useCompanyStoryCopy();
+
     return (
         <motion.button
             type="button"
             onClick={onSelect}
-            aria-label={`Explore ${room.title}`}
+            aria-label={`${officeChrome.exploreAriaPrefix} ${room.title}`}
             aria-pressed={active}
             className="group absolute z-10 -translate-x-1/2 -translate-y-1/2"
             style={{ top: room.pos.top, left: room.pos.left }}
@@ -1135,6 +1164,7 @@ function OfficeConfiguratorHotspot({
 }
 
 function OfficeFloatingRoomCard({ room, index, pos }: { room: RoomCard; index: number; pos: { top: string; left: string } }) {
+    const { officeChrome } = useCompanyStoryCopy();
     const leftPct = parseFloat(pos.left);
     const topPct = parseFloat(pos.top);
     const cardOnLeft = leftPct > 52;
@@ -1155,19 +1185,19 @@ function OfficeFloatingRoomCard({ room, index, pos }: { room: RoomCard; index: n
                 <div className="relative aspect-[16/10] overflow-hidden">
                     <StoryImage
                         image={room.image}
-                        alt={`Ukonnect ${room.title}, ${room.team}`}
+                        alt={`${officeChrome.floatingCardAltPrefix} ${room.title}${officeChrome.dockCardAltSeparator}${room.team}`}
                         focal={room.focal}
                         className="h-full w-full object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-slate-950/10 to-primary/[0.08]" />
                     <div className="absolute left-3 top-3 rounded-full border border-white/20 bg-primary/25 px-2.5 py-1">
-                        <p className="font-mono text-[7px] tracking-[0.24em] text-white/92">ROOM 0{index + 1}</p>
+                        <p className="font-mono text-[7px] tracking-[0.24em] text-white/92">{officeChrome.roomLabelPrefix} 0{index + 1}</p>
                     </div>
                 </div>
                 <div className="border-t border-white/10 px-4 py-3.5">
                     <p className="text-[15px] font-semibold tracking-[-0.02em] text-white">{room.title}</p>
                     <p className="mt-1 text-[12px] leading-[1.6] text-white/72">{room.blurb}</p>
-                    <p className="mt-2 font-mono text-[8px] tracking-[0.2em] text-primary/80">TEAM {room.team.toUpperCase()}</p>
+                    <p className="mt-2 font-mono text-[8px] tracking-[0.2em] text-primary/80">{officeChrome.teamPrefix} {room.team.toUpperCase()}</p>
                 </div>
             </div>
 
@@ -1185,6 +1215,7 @@ function OfficeFloatingRoomCard({ room, index, pos }: { room: RoomCard; index: n
 }
 
 function OfficeConfigurator({ panoramic, rooms }: { panoramic: string; rooms: RoomCard[] }) {
+    const { officeChrome } = useCompanyStoryCopy();
     const [active, setActive] = useState(0);
     const current = rooms[active];
 
@@ -1206,13 +1237,13 @@ function OfficeConfigurator({ panoramic, rooms }: { panoramic: string; rooms: Ro
                             <span className="h-2 w-2 animate-pulse rounded-full bg-primary shadow-[0_0_10px_rgba(155,77,255,0.8)]" />
                         </span>
                         <div>
-                            <p className="font-mono text-[8px] tracking-[0.3em] text-primary/65 md:text-[9px]">STUDIO CONFIGURATOR</p>
-                            <p className="text-[12px] font-medium text-white/55 md:text-[13px]">Amsterdam, Live floor map</p>
+                            <p className="font-mono text-[8px] tracking-[0.3em] text-primary/65 md:text-[9px]">{officeChrome.configuratorLabel}</p>
+                            <p className="text-[12px] font-medium text-white/55 md:text-[13px]">{officeChrome.floorMapLabel}</p>
                         </div>
                     </div>
                     <div className="rounded-full border border-white/12 bg-white/[0.04] px-3 py-1.5 backdrop-blur-sm">
                         <p className="font-mono text-[9px] tracking-[0.2em] text-white/70 tabular-nums md:text-[10px]">
-                            0{active + 1} / 0{rooms.length}
+                            {officeChrome.countTemplate.replace('{current}', `0${active + 1}`).replace('{total}', `0${rooms.length}`)}
                         </p>
                     </div>
                 </div>
@@ -1259,7 +1290,7 @@ function OfficeConfigurator({ panoramic, rooms }: { panoramic: string; rooms: Ro
                         <div className="relative aspect-[16/11] w-full overflow-hidden md:aspect-[16/10]">
                             <StoryImage
                                 image={panoramic}
-                                alt="Ukonnect studio floor plan"
+                                alt={officeChrome.floorPlanAlt}
                                 focal="center 38%"
                                 className="h-full w-full object-cover"
                             />
@@ -1291,7 +1322,7 @@ function OfficeConfigurator({ panoramic, rooms }: { panoramic: string; rooms: Ro
 
                 <div className="relative border-t border-white/[0.08] bg-[#06080d]/80 px-3 py-3 backdrop-blur-md md:px-5 md:py-4">
                     <div className="mb-2 flex items-center justify-between lg:hidden">
-                        <p className="font-mono text-[8px] tracking-[0.24em] text-white/40">SELECT ROOM</p>
+                        <p className="font-mono text-[8px] tracking-[0.24em] text-white/40">{officeChrome.selectRoom}</p>
                         <p className="font-mono text-[8px] tracking-[0.18em] text-primary/70">{current.title.toUpperCase()}</p>
                     </div>
 
@@ -1315,7 +1346,7 @@ function OfficeConfigurator({ panoramic, rooms }: { panoramic: string; rooms: Ro
                                     <div className="relative aspect-[16/10] overflow-hidden">
                                         <StoryImage
                                             image={room.image}
-                                            alt={`${room.title}, ${room.team}`}
+                                            alt={`${officeChrome.floatingCardAltPrefix} ${room.title}${officeChrome.dockCardAltSeparator}${room.team}`}
                                             focal={room.focal}
                                             className={`h-full w-full object-cover transition-all duration-700 ${
                                                 isActive ? 'scale-100' : 'scale-105 opacity-55 group-hover:opacity-80'
@@ -1355,6 +1386,8 @@ function JourneyAluminumFrame({
     index: number;
     active: boolean;
 }) {
+    const { journeyChrome } = useCompanyStoryCopy();
+
     return (
         <div className="relative h-full w-full">
             <div className="pointer-events-none absolute -inset-3 rounded-[1.6rem] bg-[radial-gradient(circle_at_80%_0%,rgba(155,77,255,0.22),transparent_55%)] blur-xl" aria-hidden />
@@ -1375,7 +1408,7 @@ function JourneyAluminumFrame({
                             <span className="h-2 w-2 rounded-full bg-slate-400/70 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)]" />
                             <span className="h-2 w-2 rounded-full bg-primary/70 shadow-[0_0_8px_rgba(155,77,255,0.55)]" />
                         </div>
-                        <p className="font-mono text-[8px] tracking-[0.28em] text-slate-400/80 md:text-[9px]">UKONNECT GROWTH ENGINE</p>
+                        <p className="font-mono text-[8px] tracking-[0.28em] text-slate-400/80 md:text-[9px]">{journeyChrome.consoleLabel}</p>
                         <p className="font-mono text-[9px] tabular-nums text-primary/70">0{index + 1}</p>
                     </div>
 
@@ -1403,7 +1436,7 @@ function JourneyAluminumFrame({
                                 >
                                     <StoryImage
                                         image={step.image}
-                                        alt={`Ukonnect team, ${step.title}: ${step.team}`}
+                                        alt={`${journeyChrome.imageAltPrefix}, ${step.title}: ${step.team}`}
                                         focal={step.focal}
                                         zoom
                                         className="h-full w-full object-cover"
@@ -1418,7 +1451,7 @@ function JourneyAluminumFrame({
                                     <p className="font-mono text-[8px] tracking-[0.24em] text-white/88">{step.tag}</p>
                                 </span>
                                 <span className="hidden rounded-full border border-primary/25 bg-primary/15 px-2 py-0.5 sm:inline-block">
-                                    <p className="font-mono text-[7px] tracking-[0.2em] text-primary/90">LIVE NODE</p>
+                                    <p className="font-mono text-[7px] tracking-[0.2em] text-primary/90">{journeyChrome.liveNode}</p>
                                 </span>
                             </div>
 
@@ -1428,7 +1461,7 @@ function JourneyAluminumFrame({
                                     <p className="mt-0.5 text-[11px] text-white/65">{step.micro}</p>
                                 </div>
                                 <div className="hidden rounded-lg border border-white/10 bg-white/[0.04] px-2 py-1.5 font-mono text-[8px] tracking-[0.18em] text-slate-300/70 sm:block">
-                                    16:10 AI RENDER
+                                    {journeyChrome.aiRender}
                                 </div>
                             </div>
 
@@ -1448,6 +1481,7 @@ function JourneyAluminumFrame({
 }
 
 function WorkAIPlatform({ steps }: { steps: JourneyStep[] }) {
+    const { journeyChrome } = useCompanyStoryCopy();
     const sectionRef = useRef<HTMLDivElement>(null);
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
     const isInView = useInView(sectionRef, { amount: 0.38, margin: '-8% 0px' });
@@ -1555,14 +1589,16 @@ function WorkAIPlatform({ steps }: { steps: JourneyStep[] }) {
                                 exit={{ opacity: 0, x: -10, filter: 'blur(5px)' }}
                                 transition={{ duration: 0.58, ease: EASE }}
                             >
-                                <p className="font-mono text-[9px] tracking-[0.32em] text-primary/55">PHASE 0{active + 1}</p>
+                                <p className="font-mono text-[9px] tracking-[0.32em] text-primary/55">
+                                    {journeyChrome.phaseLabelTemplate.replace('{index}', `0${active + 1}`)}
+                                </p>
                                 <h4 className="mt-2 text-[22px] font-semibold leading-[1.05] tracking-[-0.03em] text-slate-900 md:text-[26px]">
                                     {current.title}
                                 </h4>
                                 <p className="mt-3 text-[14px] leading-[1.7] text-slate-600 md:text-[15px]">{current.micro}</p>
-                                <p className="mt-2 text-[12px] font-medium tracking-[0.06em] text-primary/70 uppercase">Team {current.team}</p>
+                                <p className="mt-2 text-[12px] font-medium tracking-[0.06em] text-primary/70 uppercase">{journeyChrome.teamPrefix} {current.team}</p>
                                 <p className="mt-3 text-[12.5px] leading-[1.68] text-slate-400">
-                                    Each phase connects Marketing, AI Systems, and Web Development inside one growth engine.
+                                    {journeyChrome.eachPhaseNote}
                                 </p>
                             </motion.div>
                         </AnimatePresence>
@@ -1573,7 +1609,7 @@ function WorkAIPlatform({ steps }: { steps: JourneyStep[] }) {
                                     key={step.title}
                                     type="button"
                                     onClick={() => selectPhase(idx)}
-                                    aria-label={`View ${step.title}`}
+                                    aria-label={`${journeyChrome.viewAriaPrefix} ${step.title}`}
                                     className={`relative h-14 w-[4.5rem] shrink-0 overflow-hidden rounded-[0.7rem] border transition-all duration-500 md:h-16 md:w-20 ${
                                         idx === active
                                             ? 'border-primary/40 shadow-[0_8px_24px_-12px_rgba(86,0,227,0.5)]'
@@ -1582,7 +1618,12 @@ function WorkAIPlatform({ steps }: { steps: JourneyStep[] }) {
                                     whileHover={{ y: -2 }}
                                     whileTap={{ scale: 0.98 }}
                                 >
-                                    <StoryImage image={step.image} alt={`${step.title}, ${step.team}`} focal={step.focal} className="h-full w-full object-cover" />
+                                    <StoryImage
+                                        image={step.image}
+                                        alt={`${journeyChrome.imageAltPrefix}, ${step.title}: ${step.team}`}
+                                        focal={step.focal}
+                                        className="h-full w-full object-cover"
+                                    />
                                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/55 to-transparent" />
                                     <span className="absolute bottom-1 left-1.5 font-mono text-[8px] text-white/90">0{idx + 1}</span>
                                     {idx === active ? (
@@ -1603,6 +1644,7 @@ function WorkAIPlatform({ steps }: { steps: JourneyStep[] }) {
 }
 
 function CultureMosaicCard({ item, index, spanClass }: { item: CultureItem; index: number; spanClass: string }) {
+    const { cultureChrome } = useCompanyStoryCopy();
     const feature = index === 0;
 
     return (
@@ -1615,7 +1657,7 @@ function CultureMosaicCard({ item, index, spanClass }: { item: CultureItem; inde
         >
             <StoryImage
                 image={item.image}
-                alt={`Ukonnect culture, ${item.title}`}
+                alt={`${cultureChrome.imageAltPrefix}, ${item.title}`}
                 focal={item.focal}
                 zoom
                 className="absolute inset-0 h-full w-full object-cover"
@@ -1652,6 +1694,7 @@ function CultureMosaicCard({ item, index, spanClass }: { item: CultureItem; inde
 }
 
 function CultureMosaic({ items }: { items: CultureItem[] }) {
+    const { cultureChrome } = useCompanyStoryCopy();
     const spans = [
         'sm:col-span-2 lg:col-span-6 lg:row-span-2 min-h-[300px] sm:min-h-[360px] lg:min-h-0',
         'lg:col-span-3 min-h-[220px]',
@@ -1674,10 +1717,10 @@ function CultureMosaic({ items }: { items: CultureItem[] }) {
             </div>
 
             <div className="mb-5 flex flex-wrap items-center gap-x-3 gap-y-2 md:mb-6">
-                <span className="font-mono text-[9px] tracking-[0.34em] text-primary/55">THE UKONNECT WAY</span>
+                <span className="font-mono text-[9px] tracking-[0.34em] text-primary/55">{cultureChrome.wayLabel}</span>
                 <span className="h-px flex-1 bg-gradient-to-r from-slate-300/70 to-transparent" aria-hidden />
                 <p className="text-[12.5px] leading-[1.5] text-slate-500 md:text-[13px]">
-                    Not a poster on the wall. This is how the studio actually operates, every day.
+                    {cultureChrome.wayNote}
                 </p>
             </div>
 
@@ -1691,23 +1734,11 @@ function CultureMosaic({ items }: { items: CultureItem[] }) {
 }
 
 function LeadershipStatement({ image }: { image: string }) {
-    const pillars = [
-        {
-            kicker: '01',
-            title: 'Marketing',
-            body: 'Paid advertising, conversion funnels, and lead generation strategy that fills the pipeline with high-intent prospects.',
-        },
-        {
-            kicker: '02',
-            title: 'AI Systems',
-            body: 'AI automation, CRM integrations, and agent workflows that qualify leads and nurture prospects around the clock.',
-        },
-        {
-            kicker: '03',
-            title: 'Web Development',
-            body: 'Conversion websites, landing pages, and tracking setup that turn traffic into measurable leads and attribution.',
-        },
-    ];
+    const { leadership } = useCompanyStoryCopy();
+    const pillars = leadership.pillars.map((pillar, idx) => ({
+        kicker: `0${idx + 1}`,
+        ...pillar,
+    }));
 
     return (
         <motion.div
@@ -1748,7 +1779,7 @@ function LeadershipStatement({ image }: { image: string }) {
                                     <div className="relative m-[2px] aspect-[4/5] overflow-hidden rounded-[1.4rem] bg-slate-900 md:rounded-[1.75rem]">
                                         <StoryImage
                                             image={image}
-                                            alt="Raffy, Ukonnect leadership"
+                                            alt={leadership.portraitAlt}
                                             focal="center 28%"
                                             eager
                                             zoom
@@ -1774,12 +1805,12 @@ function LeadershipStatement({ image }: { image: string }) {
                                 >
                                     <div className="flex items-center justify-between gap-3">
                                         <div>
-                                            <p className="font-mono text-[8px] tracking-[0.3em] text-primary/55">FOUNDER</p>
-                                            <p className="mt-1 text-[19px] font-bold tracking-[-0.03em] text-slate-900 md:text-[22px]">Raffy</p>
+                                            <p className="font-mono text-[8px] tracking-[0.3em] text-primary/55">{leadership.founderLabel}</p>
+                                            <p className="mt-1 text-[19px] font-bold tracking-[-0.03em] text-slate-900 md:text-[22px]">{leadership.founderName}</p>
                                         </div>
                                         <div className="text-right">
-                                            <p className="font-mono text-[8px] tracking-[0.22em] text-slate-400">UKONNECT</p>
-                                            <p className="mt-1 text-[11px] text-slate-500">Marketing, AI Systems, Web</p>
+                                            <p className="font-mono text-[8px] tracking-[0.22em] text-slate-400">{leadership.companyLabel}</p>
+                                            <p className="mt-1 text-[11px] text-slate-500">{leadership.companyLine}</p>
                                         </div>
                                     </div>
                                 </motion.div>
@@ -1788,12 +1819,12 @@ function LeadershipStatement({ image }: { image: string }) {
                     </div>
 
                     <div className="flex flex-col justify-center p-6 md:p-8 lg:p-10 xl:p-12">
-                        <p className="font-mono text-[9px] tracking-[0.34em] text-primary/55 md:text-[10px]">FOUNDER STATEMENT</p>
+                        <p className="font-mono text-[9px] tracking-[0.34em] text-primary/55 md:text-[10px]">{leadership.statementLabel}</p>
 
                         <h3 className="mt-5 max-w-[13ch] text-[34px] font-bold leading-[0.95] tracking-[-0.04em] text-slate-900 sm:text-[42px] md:mt-6 md:text-[50px] lg:text-[56px]">
-                            We build long-term systems,
+                            {leadership.headlinePre}
                             <span className="mt-1 block text-transparent bg-clip-text bg-gradient-to-r from-[#5600e3] via-[#7c3aed] to-[#9b4dff]">
-                                not short-term hype.
+                                {leadership.headlineHighlight}
                             </span>
                         </h3>
 
@@ -1802,7 +1833,7 @@ function LeadershipStatement({ image }: { image: string }) {
                                 &ldquo;
                             </span>
                             <blockquote className="relative z-10 max-w-[30ch] text-[18px] font-medium leading-[1.45] tracking-[-0.02em] text-slate-600 sm:text-[20px] md:text-[24px] lg:text-[26px]">
-                                Turn AI into a reliable growth advantage for real businesses, with clarity, craftsmanship, and accountability.
+                                {leadership.quote}
                             </blockquote>
                             <div className="mt-5 h-px w-16 bg-gradient-to-r from-primary/60 to-transparent" aria-hidden />
                         </div>
@@ -1831,7 +1862,8 @@ function LeadershipStatement({ image }: { image: string }) {
 }
 
 export function CompanyStoryExperience() {
-    const { t } = useLanguage();
+    const { lang, t } = useLanguage();
+    const copy = useMemo(() => getCompanyStoryCopy(lang), [lang]);
     const [modalOpen, setModalOpen] = useState(false);
 
     const assets = useMemo(
@@ -1876,13 +1908,7 @@ export function CompanyStoryExperience() {
     const scenes: DocumentaryScene[] = useMemo(
         () => [
             {
-                title: 'Desk-side build review',
-                label: 'AI Systems',
-                detail:
-                    'Integrations, CRM syncs, and agent workflows reviewed at the desk before automation goes live in a client environment.',
-                note: 'The same AI Systems capability from Our services: validating logic, routing edge cases, and tuning workflows while dashboards show live signal.',
-                tagline: 'AI SYSTEMS, WORKFLOWS, CRM',
-                alt: 'Ukonnect team reviewing AI integrations and automation workflows at a desk',
+                ...copy.scenes[0],
                 mediaType: 'video',
                 src: assets.collabLoop,
                 poster: assets.collabLoopPoster,
@@ -1890,170 +1916,134 @@ export function CompanyStoryExperience() {
                 frame: 'panoramic',
             },
             {
-                title: 'Direction gets aligned in the room',
-                label: 'Marketing',
-                detail:
-                    'Google Ads, Meta campaigns, and funnel strategy aligned in one room before creative, budget, and targeting move forward.',
-                note: 'Marketing delivery in practice: paid advertising, conversion funnels, and lead generation strategy decided together, not in silos.',
-                tagline: 'MARKETING, PAID ADS, FUNNELS',
-                alt: 'Ukonnect marketing team reviewing campaign direction around a boardroom table',
+                ...copy.scenes[1],
                 mediaType: 'image',
                 src: assets.meeting,
                 focal: 'center 34%',
                 frame: 'landscape',
             },
             {
-                title: 'The sprint takes shape before the sprint starts',
-                label: 'Funnel planning',
-                detail:
-                    'Landing page structure, conversion paths, and campaign priorities locked before web build and paid media launch together.',
-                note: 'Where Marketing and Web Development meet: funnels, messaging, and page architecture planned as one connected system.',
-                tagline: 'FUNNELS, LANDING PAGES, STRATEGY',
-                alt: 'Ukonnect team planning conversion funnels and landing pages around a laptop and whiteboard',
+                ...copy.scenes[2],
                 mediaType: 'image',
                 src: assets.planning,
                 focal: 'center 34%',
                 frame: 'landscape',
             },
             {
-                title: 'Questions are resolved in front of the system',
-                label: 'Web delivery',
-                detail:
-                    'Conversion websites, tracking setup, and landing page performance reviewed live with the client before launch.',
-                note: 'Web Development in the room: sites, analytics, and conversion decisions resolved in front of the actual build, not a slide deck.',
-                tagline: 'WEB, TRACKING, CONVERSION',
-                alt: 'Ukonnect web team presenting a conversion site and tracking setup in a workshop',
+                ...copy.scenes[3],
                 mediaType: 'image',
                 src: assets.workshop,
                 focal: 'center 38%',
                 frame: 'panoramic',
             },
         ],
-        [assets],
+        [assets, copy],
     );
 
     const journey: JourneyStep[] = useMemo(
         () => [
-            { title: 'Discover', image: assets.journeyDiscover, micro: 'Lead gen audit + growth strategy mapping', focal: 'center 32%', tag: 'SCAN', team: 'Sander & Kirsten' },
-            { title: 'Design', image: assets.journeyDesign, micro: 'AI system architecture + conversion UX blueprint', focal: 'center 28%', tag: 'BLUEPRINT', team: 'Bram' },
-            { title: 'Build', image: assets.journeyBuild, micro: 'Sites, automations, CRM integrations + QA', focal: 'center 30%', tag: 'COMPILE', team: 'Marco & Firman' },
-            { title: 'Launch', image: assets.journeyLaunch, micro: 'Campaign rollout, site launch + tracking live', focal: 'center 32%', tag: 'DEPLOY', team: 'Edmerd & Paul' },
-            { title: 'Scale', image: assets.journeyScale, micro: 'Performance optimization + pipeline growth loops', focal: 'center 30%', tag: 'MULTIPLY', team: 'Afifah & Thiago' },
+            { title: copy.journey[0].title, image: assets.journeyDiscover, micro: copy.journey[0].micro, focal: 'center 32%', tag: copy.journey[0].tag, team: 'Sander & Kirsten' },
+            { title: copy.journey[1].title, image: assets.journeyDesign, micro: copy.journey[1].micro, focal: 'center 28%', tag: copy.journey[1].tag, team: 'Bram' },
+            { title: copy.journey[2].title, image: assets.journeyBuild, micro: copy.journey[2].micro, focal: 'center 30%', tag: copy.journey[2].tag, team: 'Marco & Firman' },
+            { title: copy.journey[3].title, image: assets.journeyLaunch, micro: copy.journey[3].micro, focal: 'center 32%', tag: copy.journey[3].tag, team: 'Edmerd & Paul' },
+            { title: copy.journey[4].title, image: assets.journeyScale, micro: copy.journey[4].micro, focal: 'center 30%', tag: copy.journey[4].tag, team: 'Afifah & Thiago' },
         ],
-        [assets],
+        [assets, copy],
     );
 
     const officeRooms: RoomCard[] = useMemo(
         () => [
-            { title: 'AI Lab', image: assets.officeAiLab, blurb: 'AI Systems: automation, agents, and CRM workflows.', pos: { top: '18%', left: '22%' }, focal: 'center 30%', team: 'Bram' },
-            { title: 'Strategy Room', image: assets.officeStrategy, blurb: 'Marketing: paid ads, funnels, and lead gen strategy.', pos: { top: '24%', left: '68%' }, focal: 'center 32%', team: 'Sander & Kirsten' },
-            { title: 'Creative Studio', image: assets.officeCreative, blurb: 'Web Development: conversion sites and landing pages.', pos: { top: '58%', left: '18%' }, focal: 'center 30%', team: 'Rima & Tanisha' },
-            { title: 'Automation Hub', image: assets.officeAutomation, blurb: 'AI Integrations & Workflows monitored in production.', pos: { top: '52%', left: '72%' }, focal: 'center 28%', team: 'Marco & Widhi' },
-            { title: 'Client Success', image: assets.officeClient, blurb: 'Performance optimization and pipeline growth reviews.', pos: { top: '78%', left: '48%' }, focal: 'center 32%', team: 'Edmerd & Paul' },
+            { title: copy.rooms[0].title, image: assets.officeAiLab, blurb: copy.rooms[0].blurb, pos: { top: '18%', left: '22%' }, focal: 'center 30%', team: 'Bram' },
+            { title: copy.rooms[1].title, image: assets.officeStrategy, blurb: copy.rooms[1].blurb, pos: { top: '24%', left: '68%' }, focal: 'center 32%', team: 'Sander & Kirsten' },
+            { title: copy.rooms[2].title, image: assets.officeCreative, blurb: copy.rooms[2].blurb, pos: { top: '58%', left: '18%' }, focal: 'center 30%', team: 'Rima & Tanisha' },
+            { title: copy.rooms[3].title, image: assets.officeAutomation, blurb: copy.rooms[3].blurb, pos: { top: '52%', left: '72%' }, focal: 'center 28%', team: 'Marco & Widhi' },
+            { title: copy.rooms[4].title, image: assets.officeClient, blurb: copy.rooms[4].blurb, pos: { top: '78%', left: '48%' }, focal: 'center 32%', team: 'Edmerd & Paul' },
         ],
-        [assets],
+        [assets, copy],
     );
 
     const culture: CultureItem[] = useMemo(
         () => [
             {
-                title: 'Ownership',
+                title: copy.culture[0].title,
                 image: assets.cultureFocus,
                 focal: 'center 22%',
-                label: 'Deep work',
-                detail: 'Everyone owns outcomes end-to-end, not tickets waiting in a queue.',
-                note: 'Accountability visible in the room during focused build sessions, not on a slide.',
+                label: copy.culture[0].label,
+                detail: copy.culture[0].detail,
+                note: copy.culture[0].note,
             },
             {
-                title: 'Innovation',
+                title: copy.culture[1].title,
                 image: assets.cultureEnergy,
                 focal: 'center 40%',
-                label: 'Momentum',
-                detail: 'New ideas get tested against production standards, not pitch decks.',
-                note: 'The energy in the studio when experiments move fast, but still survive real operations.',
+                label: copy.culture[1].label,
+                detail: copy.culture[1].detail,
+                note: copy.culture[1].note,
             },
             {
-                title: 'Execution',
+                title: copy.culture[2].title,
                 image: assets.cultureMeeting,
                 focal: 'center 38%',
-                label: 'Alignment',
-                detail: 'Direction is resolved in the room before execution starts to fragment.',
-                note: 'A working meeting with proximity and eye contact that feels candid, not performative.',
+                label: copy.culture[2].label,
+                detail: copy.culture[2].detail,
+                note: copy.culture[2].note,
             },
             {
-                title: 'Curiosity',
+                title: copy.culture[3].title,
                 image: assets.cultureMentoring,
                 focal: 'center 32%',
-                label: 'Mentorship',
-                detail: 'Knowledge moves sideways across the team, not only top-down.',
-                note: 'Side-by-side review moments where questions are welcomed in front of the system.',
+                label: copy.culture[3].label,
+                detail: copy.culture[3].detail,
+                note: copy.culture[3].note,
             },
             {
-                title: 'Growth',
+                title: copy.culture[4].title,
                 image: assets.cultureTeam,
                 focal: 'center 34%',
-                label: 'Together',
-                detail: 'Progress is a team rhythm: strategy, build, and delivery in one operating cadence.',
-                note: 'A company portrait that reads as culture evidence from a real team in motion.',
+                label: copy.culture[4].label,
+                detail: copy.culture[4].detail,
+                note: copy.culture[4].note,
             },
         ],
-        [assets],
+        [assets, copy],
     );
 
-    const peoplePanels = [
-        {
-            title: 'Marketing',
-            tag: 'GOOGLE, META, FUNNELS',
-            body: 'Paid advertising on Meta and Google, conversion funnels, and lead generation strategy that attract high-intent prospects.',
-        },
-        {
-            title: 'AI Systems',
-            tag: 'AUTOMATION, CRM, AGENTS',
-            body: 'AI lead generation, sales automation, marketing automation, and integrations that connect CRM, ads, and analytics into one system.',
-        },
-        {
-            title: 'Web Development',
-            tag: 'SITES, LANDING, TRACKING',
-            body: 'Conversion websites, high-performance landing pages, and tracking infrastructure that turn traffic into measurable leads.',
-        },
-    ];
+    const peoplePanels = useMemo(() => copy.peoplePanels, [copy]);
 
     return (
         <section id="company-story" className="relative overflow-hidden py-[60px] md:py-[72px] lg:py-[80px] px-6">
-            <div className="pointer-events-none absolute inset-0" aria-hidden>
-                <div className="absolute left-1/2 top-0 -translate-x-1/2 h-[520px] w-[980px] rounded-full bg-[#5600e3]/[0.055] blur-[100px]" />
-                <div className="absolute -left-44 top-[18%] h-[560px] w-[560px] rounded-full bg-[#9b4dff]/[0.05] blur-[110px]" />
-                <div className="absolute -right-44 bottom-0 h-[560px] w-[560px] rounded-full bg-[#5600e3]/[0.045] blur-[110px]" />
-            </div>
+            <CompanyStoryCopyContext.Provider value={copy}>
+                <div className="pointer-events-none absolute inset-0" aria-hidden>
+                    <div className="absolute left-1/2 top-0 -translate-x-1/2 h-[520px] w-[980px] rounded-full bg-[#5600e3]/[0.055] blur-[100px]" />
+                    <div className="absolute -left-44 top-[18%] h-[560px] w-[560px] rounded-full bg-[#9b4dff]/[0.05] blur-[110px]" />
+                    <div className="absolute -right-44 bottom-0 h-[560px] w-[560px] rounded-full bg-[#5600e3]/[0.045] blur-[110px]" />
+                </div>
 
-            <div className="relative mx-auto max-w-[1300px]">
+                <div className="relative mx-auto max-w-[1300px]">
                 {/* SECTION 1 */}
                 <SectionStage variant="editorial" className="lg:max-h-[min(100vh-5.5rem,900px)]">
                     <div className="lg:grid lg:grid-cols-12 lg:items-center lg:gap-x-8 xl:gap-x-10">
                         <Reveal className="lg:col-span-4 xl:col-span-4" variant="editorial">
-                            <StoryLiveEyebrow index="00" label="Built by People. Powered by AI." />
+                            <StoryLiveEyebrow index="00" label={copy.opening.liveEyebrow} />
                             <h2 className="mt-4 max-w-[12ch] text-[40px] leading-[0.92] tracking-[-0.052em] font-semibold text-slate-900 sm:text-[48px] md:mt-5 md:text-[56px] lg:text-[52px] xl:text-[58px] xl:leading-[0.92]">
-                                The people behind{' '}
+                                {copy.opening.titlePre}{' '}
                                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#5600e3] via-[#7c3aed] to-[#9b4dff]">
-                                    the systems.
+                                    {copy.opening.titleHighlight}
                                 </span>
                             </h2>
                             <p className="mt-4 max-w-[38ch] text-[14px] leading-[1.75] text-slate-500/95 sm:text-[14.5px] md:text-[15px] lg:mt-3.5 lg:text-[14.5px] lg:leading-[1.72]">
-                                The in-house team behind your <StoryTextAccent gradient>AI Growth System</StoryTextAccent>.{' '}
-                                <StoryTextAccent>Marketing</StoryTextAccent>,{' '}
-                                <StoryTextAccent gradient>AI Systems</StoryTextAccent>, and{' '}
-                                <StoryTextAccent>Web Development</StoryTextAccent> delivered under one roof, from strategy through automation to measurable pipeline growth.
+                                <StoryRichBody parts={copy.opening.bodyParts} />
                             </p>
                             <div className="mt-4 flex flex-wrap gap-2 lg:mt-3">
-                                {['MARKETING', 'AI SYSTEMS', 'WEB'].map((pill) => (
-                                    <StoryTagPill key={pill} active={pill === 'AI SYSTEMS'}>
+                                {copy.opening.pills.map((pill) => (
+                                    <StoryTagPill key={pill} active={pill === copy.opening.bodyParts.aiSystems.toUpperCase()}>
                                         {pill}
                                     </StoryTagPill>
                                 ))}
                             </div>
                             <p className="mt-4 hidden text-[12px] leading-[1.7] text-slate-500/90 lg:block lg:max-w-[34ch]">
-                                <StoryTagPill active className="!mr-2 !inline-flex">AMSTERDAM</StoryTagPill>
-                                Shot during live build cycles on the studio floor. Proof of how Ukonnect ships, not how we pitch.
+                                <StoryTagPill active className="!mr-2 !inline-flex">{copy.opening.amsterdamBadge}</StoryTagPill>
+                                {copy.opening.amsterdamNote}
                             </p>
                         </Reveal>
 
@@ -2069,7 +2059,7 @@ export function CompanyStoryExperience() {
                                     <div className="absolute inset-0">
                                         <HeroFramedImage
                                             image={assets.teamHero}
-                                            alt="The Ukonnect team, together"
+                                            alt={copy.opening.teamAlt}
                                             focal="center 10%"
                                             imageOffsetY={14}
                                         />
@@ -2077,7 +2067,7 @@ export function CompanyStoryExperience() {
                                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/28 via-transparent to-white/10" />
                                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-[#5600e3]/5" />
                                     <div className="absolute left-4 top-4 sm:left-5 sm:top-5">
-                                        <DocumentaryCapsuleLabel>DOCUMENTARY OPENING</DocumentaryCapsuleLabel>
+                                        <DocumentaryCapsuleLabel>{copy.opening.documentaryOpening}</DocumentaryCapsuleLabel>
                                     </div>
                                     <OpeningImageCaptionOverlay />
                                 </div>
@@ -2103,12 +2093,12 @@ export function CompanyStoryExperience() {
 
                     <div className="mt-6 rounded-[1rem] border border-slate-200/70 bg-white/50 p-4 lg:hidden">
                         <div className="flex items-center gap-2">
-                            <StoryTagPill active>AMSTERDAM</StoryTagPill>
+                            <StoryTagPill active>{copy.opening.amsterdamBadge}</StoryTagPill>
                             <span className="font-mono text-[9px] tracking-[0.22em] text-slate-300">/</span>
-                            <StoryTagPill>STUDIO FLOOR</StoryTagPill>
+                            <StoryTagPill>{copy.opening.studioFloor}</StoryTagPill>
                         </div>
                         <p className="mt-3 text-[12.5px] leading-[1.76] text-slate-500/88">
-                            Shot on the studio floor during <StoryTextAccent>live build cycles</StoryTextAccent>. Proof of how Ukonnect ships, not how we pitch.
+                            {copy.opening.liveBuildCyclesNote}
                         </p>
                     </div>
                 </SectionStage>
@@ -2122,9 +2112,9 @@ export function CompanyStoryExperience() {
                 <SectionStage variant="tech" className="mt-24 md:mt-32 lg:mt-40">
                     <SectionHeading
                         index="02 / 05"
-                        eyebrow="How We Work"
-                        title="An interactive journey, not a static timeline."
-                        subtitle="Five delivery phases across Marketing, AI Systems, and Web Development in one console."
+                        eyebrow={copy.journeyHeading.eyebrow}
+                        title={copy.journeyHeading.title}
+                        subtitle={copy.journeyHeading.subtitle}
                     />
                     <WorkAIPlatform steps={journey} />
                 </SectionStage>
@@ -2133,9 +2123,9 @@ export function CompanyStoryExperience() {
                 <SectionStage variant="immersive" className="mt-24 md:mt-32 lg:mt-40">
                     <SectionHeading
                         index="03 / 05"
-                        eyebrow="Office Experience"
-                        title="An editorial view of where systems get built."
-                        subtitle="Five studio rooms mapped to Marketing, AI Systems, and Web Development delivery."
+                        eyebrow={copy.officeHeading.eyebrow}
+                        title={copy.officeHeading.title}
+                        subtitle={copy.officeHeading.subtitle}
                     />
                     <OfficeConfigurator panoramic={assets.officePanorama} rooms={officeRooms} />
                 </SectionStage>
@@ -2144,9 +2134,9 @@ export function CompanyStoryExperience() {
                 <SectionStage variant="editorial" className="mt-24 md:mt-32 lg:mt-40">
                     <SectionHeading
                         index="04 / 05"
-                        eyebrow="Culture"
-                        title="Ownership, innovation, execution, curiosity, growth."
-                        subtitle="Five values, one editorial wall. Hover any frame to read how it shows up in the work."
+                        eyebrow={copy.cultureHeading.eyebrow}
+                        title={copy.cultureHeading.title}
+                        subtitle={copy.cultureHeading.subtitle}
                     />
                     <CultureMosaic items={culture} />
                 </SectionStage>
@@ -2155,9 +2145,9 @@ export function CompanyStoryExperience() {
                 <SectionStage variant="editorial" className="mt-24 md:mt-32 lg:mt-40">
                     <SectionHeading
                         index="05 / 05"
-                        eyebrow="Leadership"
-                        title="Built to outlast trends."
-                        subtitle="A founder manifest inside one editorial panel: portrait, conviction, and operating pillars."
+                        eyebrow={copy.leadershipHeading.eyebrow}
+                        title={copy.leadershipHeading.title}
+                        subtitle={copy.leadershipHeading.subtitle}
                     />
                     <LeadershipStatement image={assets.founder} />
                 </SectionStage>
@@ -2187,11 +2177,11 @@ export function CompanyStoryExperience() {
 
                             <div className="relative grid grid-cols-1 md:grid-cols-[1.2fr_0.8fr] gap-8 items-center">
                                 <div>
-                                    <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.2em] text-[#c9b2ff]">Strategy session</p>
+                                    <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.2em] text-[#c9b2ff]">{copy.cta.eyebrow}</p>
                                     <h3 className="mt-3 text-[30px] md:text-[52px] leading-[1.02] font-bold tracking-tight text-white">
-                                        Let’s build your next
+                                        {copy.cta.titlePre}
                                         <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#b98cff] to-[#8f5bff]">
-                                            AI Growth System.
+                                            {copy.cta.titleHighlight}
                                         </span>
                                     </h3>
                                 </div>
@@ -2199,7 +2189,7 @@ export function CompanyStoryExperience() {
                                 <div className="flex justify-start md:justify-end">
                                     <motion.button
                                         type="button"
-                                        aria-label="Open strategy call form"
+                                        aria-label={copy.leadership.openFormAria}
                                         onClick={() => setModalOpen(true)}
                                         whileHover={{ y: -2, scale: 1.015 }}
                                         whileTap={{ scale: 0.985 }}
@@ -2219,6 +2209,7 @@ export function CompanyStoryExperience() {
             <Suspense fallback={null}>
                 <ContactFormModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
             </Suspense>
+            </CompanyStoryCopyContext.Provider>
         </section>
     );
 }

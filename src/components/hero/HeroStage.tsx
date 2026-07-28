@@ -9,6 +9,7 @@ import { HeroWorkflowBack, HeroWorkflowFront, HeroWorkflowNodes } from './HeroWo
 import { WORKFLOW_NODES } from './heroDesign';
 
 function DesktopStage({ animate }: { animate: boolean }) {
+    const { t } = useLanguage();
     const pointerX = useMotionValue(0);
     const pointerY = useMotionValue(0);
     const smoothX = useSpring(pointerX, { stiffness: 48, damping: 20, mass: 0.9 });
@@ -55,7 +56,7 @@ function DesktopStage({ animate }: { animate: boolean }) {
                 <span className="cinematic-stage-spark cinematic-stage-spark--d" aria-hidden />
 
                 <div className="cinematic-film-mark absolute left-[1.5%] top-[22%] z-[6]" aria-hidden>
-                    <span>Human origin</span>
+                    <span>{t('hero.filmMark')}</span>
                     <i />
                     <small>AMSTERDAM, NL</small>
                 </div>

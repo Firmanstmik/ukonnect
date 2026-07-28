@@ -16,14 +16,23 @@ const EMAILJS_SERVICE_ID = 'service_ecmrpa5';
 const EMAILJS_TEMPLATE_ID = 'template_2ce63ql';
 const EMAILJS_PUBLIC_KEY = 'sItgs7yAONr4cjriF';
 
-const SERVICES: { label: string; icon?: string; IconComp?: React.ComponentType<{ className?: string }> }[] = [
-    { label: 'AI Leadgen', IconComp: Target },
-    { label: 'Google Ads', icon: googleAdsIcon },
-    { label: 'SEO', icon: googleIcon },
-    { label: 'Webdesign', icon: wordpressIcon },
-    { label: 'SEO AI', icon: aiIcon },
-    { label: 'Social Media', icon: metaIcon },
+const SERVICE_DEFS: { id: 'aiLeadgen' | 'googleAds' | 'seo' | 'webdesign' | 'seoAi' | 'socialMedia'; icon?: string; IconComp?: React.ComponentType<{ className?: string }> }[] = [
+    { id: 'aiLeadgen', IconComp: Target },
+    { id: 'googleAds', icon: googleAdsIcon },
+    { id: 'seo', icon: googleIcon },
+    { id: 'webdesign', icon: wordpressIcon },
+    { id: 'seoAi', icon: aiIcon },
+    { id: 'socialMedia', icon: metaIcon },
 ];
+
+const SERVICE_LABEL_KEYS = {
+    aiLeadgen: 'contact.form.service.aiLeadgen',
+    googleAds: 'contact.form.service.googleAds',
+    seo: 'contact.form.service.seo',
+    webdesign: 'contact.form.service.webdesign',
+    seoAi: 'contact.form.service.seoAi',
+    socialMedia: 'contact.form.service.socialMedia',
+} as const;
 
 const INPUT_CLS =
     'w-full px-4 py-3 rounded-xl border border-slate-200 bg-[#ecedf1] text-slate-900 placeholder-slate-400 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#5600e3]/30 focus:border-[#5600e3]/50 transition-all shadow-[inset_0_2px_4px_rgba(0,0,0,0.06)]';
@@ -42,7 +51,7 @@ interface Props {
 export const ContactFormModal = ({ isOpen, onClose }: Props) => {
     const { t } = useLanguage();
     const [form, setForm] = useState({ name: '', email: '', company: '', phone: '', website: '' });
-    const [selected, setSelected] = useState<string[]>(['AI Leadgen']);
+    const [selected, setSelected] = useState<string[]>(['aiLeadgen']);
     const [view, setView] = useState<'form' | 'calendar' | 'success'>('form');
     const [direction, setDirection] = useState(1);
     const [sending, setSending] = useState(false);
@@ -54,8 +63,10 @@ export const ContactFormModal = ({ isOpen, onClose }: Props) => {
         setView(v);
     };
 
-    const toggle = (label: string) =>
-        setSelected(s => s.includes(label) ? s.filter(x => x !== label) : [...s, label]);
+    const toggle = (id: string) =>
+        setSelected(s => s.includes(id) ? s.filter(x => x !== id) : [...s, id]);
+
+    const serviceLabel = (id: keyof typeof SERVICE_LABEL_KEYS) => t(SERVICE_LABEL_KEYS[id]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -68,17 +79,19 @@ export const ContactFormModal = ({ isOpen, onClose }: Props) => {
                 {
                     from_name: form.name,
                     from_email: form.email,
-                    company: form.company || '—',
-                    phone: form.phone || '—',
-                    website: form.website || '—',
-                    services: selected.length > 0 ? selected.join(', ') : '—',
+                    company: form.company || '-',
+                    phone: form.phone || '-',
+                    website: form.website || '-',
+                    services: selected.length > 0
+                        ? selected.map((id) => serviceLabel(id as keyof typeof SERVICE_LABEL_KEYS)).join(', ')
+                        : '-',
                     to_email: 'info@ukonnect.nl',
                 },
                 EMAILJS_PUBLIC_KEY,
             );
             goTo('success', 1);
         } catch {
-            setSendError('Something went wrong. Please try again or email us directly.');
+            setSendError(t('contact.form.error'));
         } finally {
             setSending(false);
         }
@@ -106,7 +119,7 @@ export const ContactFormModal = ({ isOpen, onClose }: Props) => {
     useEffect(() => {
         if (isOpen) {
             setForm({ name: '', email: '', company: '', phone: '', website: '' });
-            setSelected(['AI Leadgen']);
+            setSelected(['aiLeadgen']);
             setView('form');
             setDirection(1);
             setSendError(null);
@@ -218,26 +231,26 @@ export const ContactFormModal = ({ isOpen, onClose }: Props) => {
                                         <div className="grid sm:grid-cols-2 gap-4">
                                             <div className="flex flex-col gap-1.5">
                                                 <label className="text-sm font-medium text-slate-700">{t('contact.form.name')}</label>
-                                                <input required type="text" placeholder="Jane Smith" value={form.name}
+                                                <input required type="text" placeholder={t('contact.form.ph.name')} value={form.name}
                                                     onChange={e => setForm(s => ({ ...s, name: e.target.value }))} className={INPUT_CLS} />
                                             </div>
                                             <div className="flex flex-col gap-1.5">
                                                 <label className="text-sm font-medium text-slate-700">{t('contact.form.email')}</label>
-                                                <input required type="email" placeholder="jane@company.com" value={form.email}
+                                                <input required type="email" placeholder={t('contact.form.ph.email')} value={form.email}
                                                     onChange={e => setForm(s => ({ ...s, email: e.target.value }))} className={INPUT_CLS} />
                                             </div>
                                         </div>
                                         <div className="grid sm:grid-cols-2 gap-4">
                                             <div className="flex flex-col gap-1.5">
                                                 <label className="text-sm font-medium text-slate-700">{t('contact.form.company')}</label>
-                                                <input required type="text" placeholder="Acme Inc." value={form.company}
+                                                <input required type="text" placeholder={t('contact.form.ph.company')} value={form.company}
                                                     onChange={e => setForm(s => ({ ...s, company: e.target.value }))} className={INPUT_CLS} />
                                             </div>
                                             <div className="flex flex-col gap-1.5">
                                                 <label className="text-sm font-medium text-slate-700">{t('contact.form.phone')}</label>
                                                 <div className="relative">
                                                     <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
-                                                    <input required type="tel" placeholder="+1 555 000 0000" value={form.phone}
+                                                    <input required type="tel" placeholder={t('contact.form.ph.phone')} value={form.phone}
                                                         onChange={e => setForm(s => ({ ...s, phone: e.target.value }))} className={INPUT_CLS + ' pl-10'} />
                                                 </div>
                                             </div>
@@ -246,7 +259,7 @@ export const ContactFormModal = ({ isOpen, onClose }: Props) => {
                                             <label className="text-sm font-medium text-slate-700">{t('contact.form.website')}</label>
                                             <div className="relative">
                                                 <Globe className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
-                                                <input required type="url" placeholder="https://yoursite.com" value={form.website}
+                                                <input required type="url" placeholder={t('contact.form.ph.website')} value={form.website}
                                                     onChange={e => setForm(s => ({ ...s, website: e.target.value }))}
                                                     onBlur={e => {
                                                         const v = e.target.value.trim();
@@ -260,20 +273,21 @@ export const ContactFormModal = ({ isOpen, onClose }: Props) => {
                                         <div className="flex flex-col gap-3">
                                             <label className="text-sm font-medium text-slate-700">{t('contact.form.services')}</label>
                                             <div className="grid grid-cols-3 gap-3">
-                                                {SERVICES.map(({ label, icon, IconComp }) => {
-                                                    const isSelected = selected.includes(label);
+                                                {SERVICE_DEFS.map(({ id, icon, IconComp }) => {
+                                                    const label = serviceLabel(id);
+                                                    const isSelected = selected.includes(id);
                                                     return (
-                                                        <motion.button key={label} type="button" onClick={() => toggle(label)} whileTap={{ scale: 0.94 }}
+                                                        <motion.button key={id} type="button" onClick={() => toggle(id)} whileTap={{ scale: 0.94 }}
                                                             className={`relative flex flex-col items-center gap-2 px-2 py-3 rounded-2xl border text-sm font-medium transition-all duration-200 cursor-pointer overflow-hidden
                                                                 ${isSelected
                                                                     ? 'bg-[#5600e3] border-[#5600e3] text-white shadow-lg shadow-[#5600e3]/30 scale-[1.02]'
                                                                     : 'bg-[#ecedf1] border-slate-200 text-slate-600 shadow-[inset_0_2px_4px_rgba(0,0,0,0.06)] hover:border-[#5600e3]/40 hover:text-slate-900'}`}>
                                                             {IconComp
                                                                 ? <IconComp className={`w-8 h-8 ${isSelected ? 'text-[#5ce1e6]' : 'text-[#5600e3]'}`} />
-                                                                : <img src={icon} alt={label} className={`w-8 h-8 object-contain${label === 'SEO AI' && isSelected ? ' drop-shadow-[0_0_8px_rgba(255,255,255,0.9)] brightness-150' : ''}`} />}
+                                                                : <img src={icon} alt={label} className={`w-8 h-8 object-contain${id === 'seoAi' && isSelected ? ' drop-shadow-[0_0_8px_rgba(255,255,255,0.9)] brightness-150' : ''}`} />}
                                                             <span className="leading-tight text-center font-bold text-xs">{label}</span>
                                                             {isSelected && (
-                                                                <motion.div layoutId={`modal-check-${label}`} initial={{ scale: 0 }} animate={{ scale: 1 }}
+                                                                <motion.div layoutId={`modal-check-${id}`} initial={{ scale: 0 }} animate={{ scale: 1 }}
                                                                     className="absolute top-2 right-2 w-4 h-4 rounded-full bg-white/30 flex items-center justify-center">
                                                                     <svg className="w-2.5 h-2.5 text-white" fill="none" viewBox="0 0 12 12" stroke="currentColor" strokeWidth={2.5}>
                                                                         <path strokeLinecap="round" strokeLinejoin="round" d="M2 6l3 3 5-5" />
