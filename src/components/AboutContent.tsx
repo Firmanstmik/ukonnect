@@ -33,7 +33,7 @@ import teamThiago  from '../assets/Team/Thiago.webp';
 const ContactFormModal = lazy(() => import('./ContactFormModal').then(m => ({ default: m.ContactFormModal })));
 
 // ── Animated number counter ────────────────────────────────────────────────
-function AnimatedCounter({ to, suffix = '' }: { to: number; suffix?: string }) {
+function AnimatedCounter({ to, suffix = '', decimals = 0 }: { to: number; suffix?: string; decimals?: number }) {
     const ref = useRef<HTMLSpanElement>(null);
     const inView = useInView(ref, { once: true, margin: '-60px' });
     const [count, setCount] = useState(0);
@@ -42,16 +42,25 @@ function AnimatedCounter({ to, suffix = '' }: { to: number; suffix?: string }) {
         if (!inView) return;
         const duration = 1800;
         const startTime = performance.now();
+        const factor = Math.pow(10, decimals);
         const tick = (now: number) => {
             const progress = Math.min((now - startTime) / duration, 1);
             const eased = 1 - Math.pow(1 - progress, 3);
-            setCount(Math.round(eased * to));
+            setCount(Math.round(eased * to * factor) / factor);
             if (progress < 1) requestAnimationFrame(tick);
         };
         requestAnimationFrame(tick);
-    }, [inView, to]);
+    }, [inView, to, decimals]);
 
-    return <span ref={ref}>{count}{suffix}</span>;
+    return (
+        <span ref={ref}>
+            {count.toLocaleString('en-US', {
+                minimumFractionDigits: decimals,
+                maximumFractionDigits: decimals,
+            })}
+            {suffix}
+        </span>
+    );
 }
 
 // ── Team members ───────────────────────────────────────────────────────────
