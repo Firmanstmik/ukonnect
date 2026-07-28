@@ -12,6 +12,7 @@ import { CaseStudyCompactCard } from './case-studies/CaseStudyCompactCard';
 import { CaseStudyExpandOverlay } from './case-studies/CaseStudyExpandOverlay';
 import { CaseStudyExperienceModalHost } from './case-studies/CaseStudyExperienceModal';
 import { DemoBadge } from './case-studies/CaseStudyPrimitives';
+import { SectionTitle } from './SectionHeadingAccent';
 
 const headerVariants = {
     hidden: { opacity: 0, y: 24 },
@@ -78,20 +79,14 @@ export const CaseStudies = () => {
                         <DemoBadge>Documentary Archive</DemoBadge>
                     </motion.div>
 
-                    <motion.h2
-                        custom={1}
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true }}
-                        variants={headerVariants}
-                        className="mb-5 text-balance text-3xl font-bold leading-[1.08] tracking-tight text-slate-900 md:text-4xl lg:text-[3.35rem]"
-                    >
-                        {t('caseStudies.headingPre')}
-                        <span className="bg-gradient-to-r from-[#5600e3] to-[#9b4dff] bg-clip-text text-transparent">
-                            {t('caseStudies.headingHighlight')}
-                        </span>
-                        {t('caseStudies.headingPost')}
-                    </motion.h2>
+                    <motion.div custom={1} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={headerVariants}>
+                        <SectionTitle
+                            pre={t('caseStudies.headingPre')}
+                            highlight={t('caseStudies.headingHighlight')}
+                            post={t('caseStudies.headingPost')}
+                            className="mb-5"
+                        />
+                    </motion.div>
 
                     <motion.p
                         custom={2}
@@ -106,7 +101,7 @@ export const CaseStudies = () => {
                 </div>
 
                 <LayoutGroup>
-                    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
                         {CASE_STUDY_EXPERIENCES.map((study, index) =>
                             expandedId === study.id ? (
                                 <div

@@ -1,12 +1,15 @@
 /**
  * Case Study Experience — structured demo data.
- * Visual covers use real UKONNECT photography (documentary stills).
+ * Visual covers: AI-enhanced client project heroes (desktop + mobile).
  * Metrics/copy remain illustrative until founder verification.
  */
 
-import coverEstate from '../../assets/Culture/Large left.jpg';
-import coverConsulting from '../../assets/Culture/Top bento row (upper).jpg';
-import coverLuxury from '../../assets/Culture/bottom row (center).jpg';
+import coverJouwdroom from '../../assets/case-studies/case-study-jouwdroom-cover.webp';
+import mobileJouwdroom from '../../assets/case-studies/case-study-jouwdroom-mobile.webp';
+import coverAyat from '../../assets/case-studies/case-study-ayatfood-cover.webp';
+import mobileAyat from '../../assets/case-studies/case-study-ayatfood-mobile.webp';
+import coverKeuken from '../../assets/case-studies/case-study-keuken-cover.webp';
+import mobileKeuken from '../../assets/case-studies/case-study-keuken-mobile.webp';
 
 export const CASE_STUDY_DATA_PENDING_VERIFICATION = true;
 
@@ -62,7 +65,9 @@ export type CaseStudyExperience = {
     before: string;
     after: string;
     coverImage: string;
+    mobileCoverImage: string;
     coverAlt: string;
+    clientName: string;
     technologies: string[];
     futureImprovements: string[];
     theme: CaseStudyTheme;
@@ -75,13 +80,14 @@ export type CaseStudyExperience = {
 export const CASE_STUDY_EXPERIENCES: CaseStudyExperience[] = [
     {
         id: 'demo-luxury-estate',
-        industry: 'Real Estate',
-        title: 'AI Lead Pipeline for Premium Property Sales',
-        summary: 'Paid acquisition, AI qualification, and CRM follow-up — rebuilt as one growth system.',
-        documentaryLabel: 'DOCUMENTED SYSTEM',
-        businessType: 'Luxury residential brokerage · Demo',
+        industry: 'Home Services',
+        clientName: 'Jouwdroomoverkapping',
+        title: 'Premium Web & Lead System for Outdoor Living',
+        summary: 'Cinematic configurator experience, lead capture, and conversion architecture for a high-end pergola brand.',
+        documentaryLabel: 'LIVE CLIENT',
+        businessType: 'Outdoor living & veranda brand · Demo',
         duration: '14 weeks · Illustrative',
-        services: ['Marketing', 'AI Systems', 'Web Development'],
+        services: ['Web Development', 'Marketing', 'AI Systems'],
         challenge:
             'Inbound demand was inconsistent. High-intent buyers waited too long for follow-up, and the sales team lacked visibility into which channels produced qualified viewings.',
         solution:
@@ -94,8 +100,9 @@ export const CASE_STUDY_EXPERIENCES: CaseStudyExperience[] = [
         results: 'More qualified viewings, faster response, clearer path from click to appointment.',
         before: 'Fragmented lead flow, manual qualification, slow response.',
         after: 'Unified pipeline with automated nurture and live attribution.',
-        coverImage: coverEstate,
-        coverAlt: 'UKONNECT real estate growth system documentary still',
+        coverImage: coverJouwdroom,
+        mobileCoverImage: mobileJouwdroom,
+        coverAlt: 'Jouwdroomoverkapping premium outdoor living website — desktop and mobile',
         technologies: ['HubSpot', 'Meta Ads', 'Google Ads', 'n8n', 'Custom AI Agents', 'GA4'],
         futureImprovements: [
             'Predictive lead scoring based on historical close patterns',
@@ -103,11 +110,11 @@ export const CASE_STUDY_EXPERIENCES: CaseStudyExperience[] = [
             'WhatsApp nurture sequences for international buyers',
         ],
         theme: {
-            from: '#059669',
-            to: '#34d399',
-            glow: 'rgba(5,150,105,0.24)',
-            mesh: 'from-[#059669]/35 via-[#10b981]/18 to-[#0f172a]',
-            label: 'Emerald System',
+            from: '#ef7a17',
+            to: '#ff9a44',
+            glow: 'rgba(239,122,23,0.28)',
+            mesh: 'from-[#ef7a17]/35 via-[#032038]/20 to-[#0f172a]',
+            label: 'Warm Craft',
         },
         metrics: [
             { value: '+184%', label: 'Qualified Leads' },
@@ -160,13 +167,14 @@ export const CASE_STUDY_EXPERIENCES: CaseStudyExperience[] = [
     },
     {
         id: 'demo-b2b-growth',
-        industry: 'Consulting',
-        title: 'Automated B2B Growth Engine for Consultancies',
-        summary: 'A meeting-generation system for firms that need qualified conversations — not form spam.',
+        industry: 'Food & B2B',
+        clientName: 'Ayat Food',
+        title: 'Premium B2B Growth Engine for Halal Wholesale',
+        summary: 'Dark editorial brand world, product storytelling, and lead qualification for a premium meat wholesaler.',
         documentaryLabel: 'CLIENT STORY',
-        businessType: 'B2B advisory firm · Demo',
+        businessType: 'Premium halal wholesale · Demo',
         duration: '11 weeks · Illustrative',
-        services: ['Marketing', 'AI Systems', 'Web Development'],
+        services: ['Web Development', 'Marketing', 'Branding'],
         challenge:
             'Outbound and paid acquisition were disconnected from CRM reality. The team could not see which campaigns produced revenue-ready conversations.',
         solution:
@@ -179,8 +187,9 @@ export const CASE_STUDY_EXPERIENCES: CaseStudyExperience[] = [
         results: 'Stronger meeting volume, lower cost per conversation, clearer attribution.',
         before: 'Manual outreach, inconsistent CRM, opaque campaign quality.',
         after: 'Integrated engine with AI scoring and live pipeline intelligence.',
-        coverImage: coverConsulting,
-        coverAlt: 'UKONNECT consulting growth system documentary still',
+        coverImage: coverAyat,
+        mobileCoverImage: mobileAyat,
+        coverAlt: 'Ayat Food premium halal wholesale website — desktop and mobile',
         technologies: ['LinkedIn Ads', 'Google Ads', 'HubSpot', 'Slack', 'Custom AI Agents', 'Zapier'],
         futureImprovements: [
             'Account-based nurture for enterprise targets',
@@ -188,11 +197,11 @@ export const CASE_STUDY_EXPERIENCES: CaseStudyExperience[] = [
             'Revenue forecasting from pipeline velocity',
         ],
         theme: {
-            from: '#2563eb',
-            to: '#60a5fa',
-            glow: 'rgba(37,99,235,0.22)',
-            mesh: 'from-[#2563eb]/32 via-[#3b82f6]/16 to-[#0f172a]',
-            label: 'Blue Engine',
+            from: '#b91c1c',
+            to: '#f59e0b',
+            glow: 'rgba(185,28,28,0.24)',
+            mesh: 'from-[#b91c1c]/32 via-[#7f1d1d]/18 to-[#0f172a]',
+            label: 'Crimson Editorial',
         },
         metrics: [
             { value: '+142%', label: 'Meetings Booked' },
@@ -245,13 +254,14 @@ export const CASE_STUDY_EXPERIENCES: CaseStudyExperience[] = [
     },
     {
         id: 'demo-property-dev',
-        industry: 'Luxury',
-        title: 'Conversion System for Off-Plan Development Launches',
-        summary: 'Cinematic launch storytelling with AI qualification — demand validated from day one.',
+        industry: 'Retail & Showroom',
+        clientName: 'Keuken Centrum',
+        title: 'Showroom Conversion System for Premium Kitchens',
+        summary: 'Cinematic showroom storytelling, video-led hero, and quote funnel for a premium kitchen destination.',
         documentaryLabel: 'LIVE PROJECT',
-        businessType: 'Residential development studio · Demo',
+        businessType: 'Premium kitchen showroom · Demo',
         duration: '16 weeks · Illustrative',
-        services: ['Marketing', 'AI Systems', 'Web Development'],
+        services: ['Web Development', 'Marketing', 'Videography'],
         challenge:
             'Launch campaigns generated interest but weak qualification. Sales teams spent too much time on low-intent inquiries while high-value buyers slipped through.',
         solution:
@@ -264,8 +274,9 @@ export const CASE_STUDY_EXPERIENCES: CaseStudyExperience[] = [
         results: 'Higher-quality inquiries, improved launch conversion, sharper sales focus.',
         before: 'High traffic, low clarity, manual qualification slowing launches.',
         after: 'Premium launch experience with AI qualification and live demand signal.',
-        coverImage: coverLuxury,
-        coverAlt: 'UKONNECT luxury development launch documentary still',
+        coverImage: coverKeuken,
+        mobileCoverImage: mobileKeuken,
+        coverAlt: 'Keuken Centrum premium kitchen showroom website — desktop and mobile',
         technologies: ['Meta Ads', 'Google Ads', 'Cal.com', 'HubSpot', 'GA4', 'Custom CMS'],
         futureImprovements: [
             'Buyer intent scoring by unit type preference',
@@ -273,11 +284,11 @@ export const CASE_STUDY_EXPERIENCES: CaseStudyExperience[] = [
             'Dynamic inventory-led ad creative',
         ],
         theme: {
-            from: '#B45309',
-            to: '#F59E0B',
-            glow: 'rgba(180,83,9,0.22)',
-            mesh: 'from-[#B45309]/30 via-[#D97706]/16 to-[#0f172a]',
-            label: 'Gold Launch',
+            from: '#84cc16',
+            to: '#22d3ee',
+            glow: 'rgba(132,204,22,0.22)',
+            mesh: 'from-[#84cc16]/28 via-[#0f172a]/40 to-[#0f172a]',
+            label: 'Lime Showroom',
         },
         metrics: [
             { value: '+210%', label: 'Qualified Inquiries' },

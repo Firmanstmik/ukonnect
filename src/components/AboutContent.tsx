@@ -3,6 +3,7 @@ import { motion, useInView } from 'framer-motion';
 import { Zap, Eye, Heart, Rocket, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../i18n/LanguageContext';
+import { SectionHeadingAccent } from './SectionHeadingAccent';
 
 import type { TranslationKey } from '../i18n/translations';
 import teamPhoto from '../assets/Ukonnect Team Portugal.webp';
@@ -161,12 +162,10 @@ export const AboutContent = ({ mode = 'full' }: { mode?: 'full' | 'supplement' }
                                 initial={{ opacity: 0, y: 24 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.12, duration: 0.65 }}
-                                className="text-5xl md:text-6xl lg:text-[4.25rem] font-bold text-slate-900 leading-[1.06] mb-6"
+                                className="section-title-cinematic mb-6 text-5xl font-bold leading-[1.06] text-slate-900 md:text-6xl lg:text-[4.25rem]"
                             >
                                 {t('aboutPage.heroHeadingPre')}{' '}
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#5600e3] to-[#9b4dff]">
-                                    {t('aboutPage.heroHeadingHighlight')}
-                                </span>
+                                <SectionHeadingAccent block>{t('aboutPage.heroHeadingHighlight')}</SectionHeadingAccent>
                             </motion.h1>
 
                             <motion.p

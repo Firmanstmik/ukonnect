@@ -15,6 +15,7 @@ import { ArrowRight, Sparkles } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
 import { EASE_OUT } from './motion';
 import { CTAGrowthVisual } from './CTAGrowthVisual';
+import { SectionHeadingAccent } from './SectionHeadingAccent';
 
 const ContactFormModal = lazy(() =>
     import('./ContactFormModal').then((m) => ({ default: m.ContactFormModal })),
@@ -77,15 +78,11 @@ export const CTA = () => {
                                 </span>
                             </motion.div>
 
-                            <h2 className="text-[30px] font-bold leading-[1.08] tracking-tight text-white md:text-[42px] lg:text-[46px] xl:text-[52px]">
+                            <h2 className="section-title-cinematic text-[30px] font-bold leading-[1.08] tracking-tight text-white md:text-[42px] lg:text-[46px] xl:text-[52px]">
                                 {t('cta.headingPre')}
-                                <span className="bg-gradient-to-r from-[#c4b1ff] to-[#e9d5ff] bg-clip-text text-transparent">
-                                    {t('cta.headingHighlight1')}
-                                </span>
+                                <SectionHeadingAccent tone="on-dark">{t('cta.headingHighlight1')}</SectionHeadingAccent>
                                 {t('cta.headingMid')}
-                                <span className="bg-gradient-to-r from-[#a78bfa] to-[#7dd3fc] bg-clip-text text-transparent">
-                                    {t('cta.headingHighlight2')}
-                                </span>
+                                <SectionHeadingAccent tone="on-dark">{t('cta.headingHighlight2')}</SectionHeadingAccent>
                                 {t('cta.headingPost')}
                             </h2>
 

@@ -3,6 +3,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, X } from 'lucide-react';
 import type { CaseStudyExperience } from './caseStudyExperienceData';
 import { CaseStudyMetricGrid } from './CaseStudyMetricGrid';
+import { CaseStudyVisual } from './CaseStudyVisual';
 import { CursorLight } from './CursorLight';
 import { EASE_OUT } from '../motion';
 
@@ -81,38 +82,23 @@ export function CaseStudyExpandOverlay({ study, index, onClose, onDeepOpen }: Pr
                             />
 
                             <div className="relative grid lg:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)]">
-                                <div className="relative min-h-[240px] overflow-hidden sm:min-h-[320px] lg:min-h-[520px]">
-                                    <motion.img
-                                        layoutId={`cs-image-${study.id}`}
-                                        src={study.coverImage}
-                                        alt={study.coverAlt}
-                                        transition={SPRING}
-                                        className="absolute inset-0 h-full w-full object-cover"
-                                    />
-                                    <div
-                                        className={`absolute inset-0 bg-gradient-to-br ${study.theme.mesh} opacity-50 mix-blend-multiply`}
-                                        aria-hidden
-                                    />
-                                    <div
-                                        className="absolute inset-0"
-                                        style={{
-                                            background:
-                                                'linear-gradient(180deg, rgba(8,13,25,0.12) 0%, transparent 38%, rgba(8,13,25,0.58) 100%)',
-                                        }}
-                                        aria-hidden
-                                    />
+                                <div className="relative overflow-hidden">
+                                    <CaseStudyVisual study={study} variant="hero" layoutImageId={`cs-image-${study.id}`} />
 
                                     <motion.div
                                         initial={reduce ? false : { opacity: 0, y: 10 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: 0.18, duration: 0.4 }}
-                                        className="absolute left-5 top-5 flex flex-wrap gap-2 sm:left-6 sm:top-6"
+                                        className="absolute left-5 top-5 z-[4] flex flex-wrap gap-2 sm:left-6 sm:top-6"
                                     >
                                         <span className="rounded-full border border-white/25 bg-black/25 px-3 py-1.5 font-mono text-[9px] font-semibold uppercase tracking-[0.2em] text-white/90 backdrop-blur-md">
                                             {study.documentaryLabel}
                                         </span>
-                                        <span className="rounded-full border border-white/15 bg-white/10 px-3 py-1.5 font-mono text-[9px] font-semibold uppercase tracking-[0.18em] text-white/70 backdrop-blur-md">
-                                            Case Study
+                                        <span
+                                            className="rounded-full border border-white/15 px-3 py-1.5 font-mono text-[9px] font-semibold uppercase tracking-[0.18em] text-white/75 backdrop-blur-md"
+                                            style={{ background: `${study.theme.from}40` }}
+                                        >
+                                            {study.clientName}
                                         </span>
                                     </motion.div>
 
@@ -120,7 +106,7 @@ export function CaseStudyExpandOverlay({ study, index, onClose, onDeepOpen }: Pr
                                         initial={reduce ? false : { opacity: 0, y: 8 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: 0.22, duration: 0.4 }}
-                                        className="absolute bottom-5 left-5 font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-white/60 sm:bottom-6 sm:left-6"
+                                        className="absolute bottom-5 left-5 z-[4] font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-white/60 sm:bottom-6 sm:left-6"
                                     >
                                         0{index + 1} · {study.industry}
                                     </motion.p>

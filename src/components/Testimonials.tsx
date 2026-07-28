@@ -10,6 +10,7 @@ import { Check, MapPin, Quote, ThumbsUp, TriangleAlert, Users } from 'lucide-rea
 import { useLanguage } from '../i18n/LanguageContext';
 import type { Translate } from '../i18n/translations';
 import { EASE_OUT } from './motion';
+import { SectionTitle } from './SectionHeadingAccent';
 import { AnimatedCounter } from './AnimatedCounter';
 import { GoogleG, GoogleStars } from './CaseStudyWidgets';
 import {
@@ -388,23 +389,14 @@ export const Testimonials = () => {
                         </span>
                     </motion.div>
 
-                    <motion.h2
-                        custom={1}
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true }}
-                        variants={headerVariants}
-                        className="mb-4 text-balance text-[clamp(1.875rem,4vw,3rem)] font-extrabold leading-[1.15] tracking-tight text-slate-900"
-                    >
-                        <span className="relative inline-block bg-gradient-to-r from-[#5600e3] to-[#00d4e8] bg-clip-text text-transparent">
-                            {t('testimonials.headingHighlight')}
-                            <span
-                                className="pointer-events-none absolute bottom-1.5 left-0 -z-10 h-3 w-full -skew-x-6 rounded-md bg-gradient-to-r from-[#5600e3]/20 to-[#00d4e8]/10"
-                                aria-hidden
-                            />
-                        </span>{' '}
-                        <span className="text-slate-900">{t('testimonials.headingPost')}</span>
-                    </motion.h2>
+                    <motion.div custom={1} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={headerVariants}>
+                        <SectionTitle
+                            highlight={t('testimonials.headingHighlight')}
+                            post={t('testimonials.headingPost')}
+                            className="mb-4"
+                            highlightBlock
+                        />
+                    </motion.div>
 
                     <motion.p
                         custom={2}

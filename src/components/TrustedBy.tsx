@@ -19,6 +19,7 @@ import { EASE_OUT } from './motion';
 import { PARTNERS, TRUST_METRICS, type Partner, type TrustMetric } from './partnersData';
 import { useLanguage } from '../i18n/LanguageContext';
 import type { Translate } from '../i18n/translations';
+import { SectionHeadingAccent } from './SectionHeadingAccent';
 
 const fadeUp = (delay = 0) => ({
     initial: { opacity: 0, y: 22 },
@@ -122,11 +123,9 @@ export function TrustedBy() {
                     <motion.p {...fadeUp(0)} className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-primary">
                         {t('trust.eyebrow')}
                     </motion.p>
-                    <motion.h2 {...fadeUp(0.06)} className="text-3xl font-bold leading-tight text-slate-900 md:text-4xl lg:text-5xl">
+                    <motion.h2 {...fadeUp(0.06)} className="section-title-cinematic text-3xl font-bold leading-tight text-slate-900 md:text-4xl lg:text-5xl">
                         {t('trust.headline')}{' '}
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#5600e3] to-[#9b4dff]">
-                            {t('trust.headlineHighlight')}
-                        </span>
+                        <SectionHeadingAccent block>{t('trust.headlineHighlight')}</SectionHeadingAccent>
                     </motion.h2>
                     <motion.p {...fadeUp(0.12)} className="mt-6 text-lg leading-relaxed text-slate-500">
                         {t('trust.sub')}

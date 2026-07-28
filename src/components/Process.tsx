@@ -4,6 +4,7 @@ import { AIAuditTool } from './AIAuditTool';
 import { BuildIntegrateTerminal } from './BuildIntegrateTerminal';
 import { LaunchOptimizeEngine } from './LaunchOptimizeEngine';
 import { useLanguage } from '../i18n/LanguageContext';
+import { SectionHeadingAccent } from './SectionHeadingAccent';
 
 const TAB_SUFFIX_KEY: Record<string, 'process.annotation.websiteSuffix' | 'process.annotation.marketingSuffix'> = {
     website:   'process.annotation.websiteSuffix',
@@ -56,8 +57,10 @@ export const Process = () => {
         <section id="process" className="scroll-mt-28 py-[60px] md:py-[80px] lg:py-[120px] max-w-[1300px] mx-auto px-6">
             <div className="text-center max-w-2xl mx-auto mb-16 md:mb-24">
                 <p className="text-primary font-semibold tracking-wide uppercase text-sm mb-3">{t('process.label')}</p>
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
-                    {t('process.headingPre')}<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#5600e3] to-[#9b4dff]">{t('process.headingHighlight')}</span>{t('process.headingPost')}
+                <h2 className="section-title-cinematic mb-6 text-3xl font-bold text-slate-900 md:text-4xl lg:text-5xl">
+                    {t('process.headingPre')}
+                    <SectionHeadingAccent>{t('process.headingHighlight')}</SectionHeadingAccent>
+                    {t('process.headingPost')}
                 </h2>
                 <p className="text-slate-500 text-lg">
                     {t('process.sub')}

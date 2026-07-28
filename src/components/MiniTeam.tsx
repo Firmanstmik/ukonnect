@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
+import { SectionHeadingAccent } from './SectionHeadingAccent';
 import teamPhoto from '../assets/Ukonnect Team Portugal.webp';
 
 /**
@@ -42,9 +43,9 @@ export function MiniTeam() {
                         <p className="text-sm font-semibold uppercase tracking-wide text-primary">
                             {t('miniTeam.label')}
                         </p>
-                        <h2 className="text-3xl font-bold leading-tight text-slate-900 md:text-4xl">
+                        <h2 className="section-title-cinematic text-3xl font-bold leading-tight text-slate-900 md:text-4xl">
                             {t('miniTeam.headingPre')}
-                            <span className="text-[#5600e3]">{t('miniTeam.headingHighlight')}</span>
+                            <SectionHeadingAccent block>{t('miniTeam.headingHighlight')}</SectionHeadingAccent>
                             {t('miniTeam.headingPost')}
                         </h2>
                         <p className="max-w-xl text-lg font-medium leading-relaxed text-slate-600 whitespace-pre-line">

@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { motion } from 'framer-motion';
+import { SectionHeadingAccent } from './SectionHeadingAccent';
 import {
     Bot,
     Megaphone,
@@ -40,11 +41,9 @@ export function WhatWeDo() {
                     <p className="mb-3 text-sm font-semibold uppercase tracking-wide text-primary">
                         {t('whatWeDo.label')}
                     </p>
-                    <h2 className="mb-6 text-3xl font-bold text-slate-900 md:text-4xl lg:text-5xl">
+                    <h2 className="section-title-cinematic mb-6 text-3xl font-bold text-slate-900 md:text-4xl lg:text-5xl">
                         {t('whatWeDo.headingPre')}
-                        <span className="bg-gradient-to-r from-[#5600e3] to-[#9b4dff] bg-clip-text text-transparent">
-                            {t('whatWeDo.headingHighlight')}
-                        </span>
+                        <SectionHeadingAccent>{t('whatWeDo.headingHighlight')}</SectionHeadingAccent>
                         {t('whatWeDo.headingPost')}
                     </h2>
                     <p className="text-lg text-slate-500">{t('whatWeDo.sub')}</p>

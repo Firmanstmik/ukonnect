@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
 import type { TranslationKey } from '../i18n/translations';
+import { SectionHeadingAccent } from './SectionHeadingAccent';
 
 const ContactFormModal = lazy(() =>
     import('./ContactFormModal').then((m) => ({ default: m.ContactFormModal })),
@@ -109,11 +110,9 @@ export function GrowthScore() {
                     <p className="mb-3 text-sm font-semibold uppercase tracking-wide text-primary">
                         {t('growthScore.label')}
                     </p>
-                    <h2 className="mb-4 font-display text-3xl font-bold text-slate-900 md:text-4xl lg:text-5xl">
+                    <h2 className="section-title-cinematic mb-4 text-3xl font-bold text-slate-900 md:text-4xl lg:text-5xl">
                         {t('growthScore.headingPre')}
-                        <span className="bg-gradient-to-r from-[#5600e3] to-[#9b4dff] bg-clip-text text-transparent">
-                            {t('growthScore.headingHighlight')}
-                        </span>
+                        <SectionHeadingAccent>{t('growthScore.headingHighlight')}</SectionHeadingAccent>
                         {t('growthScore.headingPost')}
                     </h2>
                     <p className="text-lg text-slate-500">{t('growthScore.sub')}</p>

@@ -2253,6 +2253,65 @@ body {
   padding-bottom: 0.04em;
 }
 
+/* Static section accent — same voice as hero rotator, no animation loop */
+.cinematic-headline-accent-static {
+  display: inline;
+  margin-top: 0;
+  padding-block: 0.06em 0.1em;
+  font-size: 1.08em;
+}
+
+.cinematic-headline-accent-static--block {
+  display: block;
+  margin-top: 0.08em;
+  font-size: 1.12em;
+}
+
+.cinematic-headline-accent-static-rail i {
+  transform: scaleX(1);
+  opacity: 1;
+}
+
+.section-title-cinematic {
+  overflow: visible;
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+}
+
+.section-title-cinematic-pre {
+  display: inline;
+  font-family: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  color: #0f172a;
+}
+
+.section-title-cinematic-post {
+  display: inline;
+  color: #0f172a;
+  font-family: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+}
+
+.section-title-cinematic .cinematic-headline-accent-static--inline {
+  margin-inline: 0.06em;
+}
+
+.cinematic-headline-accent-static--on-dark {
+  color: #ddd6fe;
+}
+
+.cinematic-headline-accent-static--on-dark .cinematic-headline-rotator-rail i {
+  background: linear-gradient(
+    90deg,
+    rgba(125, 211, 252, 0.9) 0%,
+    rgba(196, 181, 255, 0.95) 48%,
+    rgba(233, 213, 255, 0.85) 100%
+  );
+}
+
 .cinematic-headline-accent {
   display: block;
   position: relative;
