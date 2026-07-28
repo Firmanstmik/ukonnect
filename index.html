@@ -1,16 +1,6 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4NTSNK7L05"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-4NTSNK7L05');
-    </script>
-
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -19,27 +9,32 @@
     <link rel="apple-touch-icon" href="/favicon.png" />
 
     <!-- Primary Meta -->
-    <title>Ukonnect — Human-Led Growth Partner</title>
+    <title>Ukonnect | Human-Led Growth Partner</title>
     <meta name="description" content="A hands-on growth team building strategy, advertising, websites, CRM and automation into one connected system that turns attention into revenue." />
     <meta name="keywords" content="growth partner, growth strategy, performance marketing, marketing automation, CRM, conversion websites, digital advertising, Ukonnect" />
     <meta name="author" content="Ukonnect" />
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://ukonnect.pt" />
+    <link rel="canonical" href="https://ukonnect.pt/en" />
 
-    <!-- Open Graph (Facebook, LinkedIn, WhatsApp) -->
+    <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://ukonnect.pt" />
-    <meta property="og:title" content="Ukonnect — Human-Led Growth Partner" />
+    <meta property="og:url" content="https://ukonnect.pt/en" />
+    <meta property="og:title" content="Ukonnect | Human-Led Growth Partner" />
     <meta property="og:description" content="Real people building connected growth systems across strategy, advertising, websites, CRM and automation." />
-    <meta property="og:image" content="https://ukonnect.pt/favicon.png" />
+    <meta property="og:image" content="https://ukonnect.pt/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:site_name" content="Ukonnect" />
     <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="nl_NL" />
+    <meta property="og:locale:alternate" content="pt_PT" />
+    <meta property="og:locale:alternate" content="id_ID" />
 
     <!-- Twitter / X Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Ukonnect — Human-Led Growth Partner" />
+    <meta name="twitter:title" content="Ukonnect | Human-Led Growth Partner" />
     <meta name="twitter:description" content="Real people building connected growth systems that turn attention into revenue." />
-    <meta name="twitter:image" content="https://ukonnect.pt/favicon.png" />
+    <meta name="twitter:image" content="https://ukonnect.pt/og-image.png" />
 
     <!-- Schema.org Organisation (JSON-LD) -->
     <script type="application/ld+json">
@@ -49,8 +44,23 @@
       "name": "Ukonnect",
       "url": "https://ukonnect.pt",
       "logo": "https://ukonnect.pt/favicon.png",
+      "email": "info@ukonnect.nl",
       "description": "Human-led growth partner building strategy, advertising, websites, CRM and automation into one connected growth system.",
-      "sameAs": []
+      "sameAs": [
+        "https://www.linkedin.com/company/ukonnect",
+        "https://www.instagram.com/ukonnect.nl/",
+        "https://www.instagram.com/ukonnect.pt/",
+        "https://web.facebook.com/ukonnect.nl",
+        "https://web.facebook.com/ukonnect.pt",
+        "https://www.tiktok.com/@ukonnect.ai"
+      ],
+      "contactPoint": [{
+        "@type": "ContactPoint",
+        "telephone": "+31-85-333-1000",
+        "contactType": "sales",
+        "areaServed": ["NL", "PT", "BE", "ID"],
+        "availableLanguage": ["English", "Dutch", "Portuguese", "Indonesian"]
+      }]
     }
     </script>
 
@@ -59,45 +69,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap" rel="stylesheet">
 
-    <!-- Preconnect for scripts loaded immediately -->
-    <link rel="preconnect" href="https://www.googletagmanager.com">
-    <link rel="preconnect" href="https://connect.facebook.net">
-    <link rel="preconnect" href="https://scripts.clarity.ms">
-    <!-- DNS prefetch for services loaded on interaction -->
+    <!-- DNS prefetch for on-demand services (analytics load after cookie consent) -->
     <link rel="dns-prefetch" href="https://app.cal.com">
     <link rel="dns-prefetch" href="https://api.emailjs.com">
-    <link rel="dns-prefetch" href="https://www.clarity.ms">
-
-    <!-- Microsoft Clarity -->
-    <script type="text/javascript">
-        (function(c,l,a,r,i,t,y){
-            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-        })(window, document, "clarity", "script", "w28tloclcm");
-    </script>
-
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://scripts.clarity.ms">
+    <link rel="dns-prefetch" href="https://connect.facebook.net">
   </head>
   <body class="font-sans antialiased text-slate-800 bg-[#FAFAFC] selection:bg-indigo-500/30">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-
-    <!-- Meta Pixel Code (placed after page render to avoid blocking) -->
-    <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1406094341550548');
-    fbq('track', 'PageView');
-    </script>
-    <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=1406094341550548&ev=PageView&noscript=1"
-    /></noscript>
-    <!-- End Meta Pixel Code -->
   </body>
 </html>

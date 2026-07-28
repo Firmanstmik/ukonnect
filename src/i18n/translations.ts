@@ -7,7 +7,7 @@ const translations = {
     'topbar.item2': 'Análise de Marketing com IA Grátis',
     'topbar.item3': 'Scan de Performance Gratuito',
     'topbar.item4': 'Resposta em 3 horas',
-    'topbar.phone': '085 333 1000',
+    'topbar.phone': '+351 927 497 086',
 
     // ── Navbar ──
     'nav.howItWorks': 'Como funciona',

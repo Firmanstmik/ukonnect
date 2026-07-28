@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Calendar, ArrowRight, Phone, Globe, ChevronLeft, Loader2, X, Target } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
 import emailjs from '@emailjs/browser';
+import { COMPANY_EMAIL_ADDRESS } from '../lib/contactInfo';
 
 import googleAdsIcon from '../assets/Ukonnect Google Ads.webp';
 import googleIcon from '../assets/google ukonnect.svg';
@@ -85,7 +86,7 @@ export const ContactFormModal = ({ isOpen, onClose }: Props) => {
                     services: selected.length > 0
                         ? selected.map((id) => serviceLabel(id as keyof typeof SERVICE_LABEL_KEYS)).join(', ')
                         : '-',
-                    to_email: 'info@ukonnect.nl',
+                    to_email: COMPANY_EMAIL_ADDRESS,
                 },
                 EMAILJS_PUBLIC_KEY,
             );

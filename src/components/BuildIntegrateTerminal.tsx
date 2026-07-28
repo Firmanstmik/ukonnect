@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
 import type { TranslationKey } from '../i18n/translations';
+import { getContactChannel } from '../lib/contactInfo';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const WhatsAppIcon = () => (
     <svg viewBox="0 0 24 24" width="11" height="11" fill="white" className="flex-shrink-0">
@@ -8,7 +10,6 @@ const WhatsAppIcon = () => (
         <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.534 5.857L.054 23.25a.75.75 0 00.917.899l5.562-1.463A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.9 0-3.681-.502-5.223-1.381l-.374-.213-3.303.87.882-3.22-.232-.381A9.956 9.956 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
     </svg>
 );
-import { motion, AnimatePresence } from 'framer-motion';
 
 const CODE_BLOCKS = [
     { type: 'comment', text: '// Initialize CRM connection' },
@@ -55,10 +56,9 @@ const getLineColor = (type: string) => {
 const N_PLACEHOLDERS = 4;
 const N_SUGGESTIONS  = 5;
 
-const WHATSAPP_NUMBER = '351927497086';
-
 export const BuildIntegrateTerminal = () => {
-    const { t } = useLanguage();
+    const { t, lang } = useLanguage();
+    const whatsappHref = getContactChannel(lang).whatsappHref;
 
     const ROTATING_PLACEHOLDERS = Array.from({ length: N_PLACEHOLDERS }, (_, i) =>
         t(`process.step2.placeholder.${i}` as TranslationKey)
@@ -215,7 +215,7 @@ export const BuildIntegrateTerminal = () => {
         if (!promptValue.trim()) return;
         const message = `Hi Ukonnect,\n\nI came from your website.\n\nI'd like to improve:\n${promptValue.trim()}`;
         const encoded = encodeURIComponent(message);
-        window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encoded}`, '_blank');
+        window.open(`${whatsappHref}?text=${encoded}`, '_blank', 'noopener,noreferrer');
     };
 
     const handleKeyDown = (e: React.KeyboardEvent) => {

@@ -9,6 +9,7 @@ import { MobileMenuToggle } from './MobileMenuToggle';
 import { MegaMenu } from './MegaMenu';
 import { MegaMenuMobile } from './MegaMenuMobile';
 import type { MegaTarget } from './megaMenuData';
+import { getContactChannel } from '../lib/contactInfo';
 
 const ContactFormModal = lazy(() =>
     import('./ContactFormModal').then(m => ({ default: m.ContactFormModal }))
@@ -171,7 +172,7 @@ export const Navbar = () => {
                     <span className="text-[13px] font-normal text-slate-500">Google</span>
                 </span>
                 <span className="text-[#5600e3] text-[11px] leading-none font-semibold">|</span>
-                <a href="tel:0853331000" className="text-[13px] font-normal text-slate-700 hover:text-[#5600e3] transition-colors">
+                <a href={getContactChannel(lang).telHref} className="text-[13px] font-normal text-slate-700 hover:text-[#5600e3] transition-colors">
                     {t('topbar.phone')}
                 </a>
 

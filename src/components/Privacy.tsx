@@ -44,7 +44,7 @@ export const Privacy = () => {
                         },
                         {
                             title: '7. Cookies',
-                            body: 'Our website uses cookies to improve your experience and analyse traffic. You can control cookie settings through your browser preferences.',
+                            body: 'Our website uses essential cookies for basic functionality. Non-essential analytics and marketing cookies (Google Analytics, Microsoft Clarity, Meta Pixel) load only after you accept them via our cookie banner. You can decline non-essential cookies or control cookies through your browser preferences.',
                         },
                         {
                             title: '8. Contact',

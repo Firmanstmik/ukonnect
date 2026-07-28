@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <!-- Home -->
+  <url>
+    <loc>https://ukonnect.pt/en</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ukonnect.pt/en"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://ukonnect.pt/nl"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://ukonnect.pt/pt"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://ukonnect.pt/id"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ukonnect.pt/en"/>
+  </url>
+  <url>
+    <loc>https://ukonnect.pt/nl</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ukonnect.pt/en"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://ukonnect.pt/nl"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://ukonnect.pt/pt"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://ukonnect.pt/id"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ukonnect.pt/en"/>
+  </url>
+  <url>
+    <loc>https://ukonnect.pt/pt</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ukonnect.pt/en"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://ukonnect.pt/nl"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://ukonnect.pt/pt"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://ukonnect.pt/id"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ukonnect.pt/en"/>
+  </url>
+  <url>
+    <loc>https://ukonnect.pt/id</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ukonnect.pt/en"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://ukonnect.pt/nl"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://ukonnect.pt/pt"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://ukonnect.pt/id"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ukonnect.pt/en"/>
+  </url>
+
+  <!-- About -->
+  <url><loc>https://ukonnect.pt/en/about</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ukonnect.pt/nl/about</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ukonnect.pt/pt/about</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ukonnect.pt/id/about</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- Contact -->
+  <url><loc>https://ukonnect.pt/en/contact</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ukonnect.pt/nl/contact</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ukonnect.pt/pt/contact</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ukonnect.pt/id/contact</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- Careers -->
+  <url><loc>https://ukonnect.pt/en/careers</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ukonnect.pt/nl/careers</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ukonnect.pt/pt/careers</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ukonnect.pt/id/careers</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+
+  <!-- Legal -->
+  <url><loc>https://ukonnect.pt/en/privacy</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://ukonnect.pt/nl/privacy</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://ukonnect.pt/pt/privacy</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://ukonnect.pt/id/privacy</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://ukonnect.pt/en/terms</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://ukonnect.pt/nl/terms</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://ukonnect.pt/pt/terms</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://ukonnect.pt/id/terms</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+</urlset>

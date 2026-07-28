@@ -1,7 +1,7 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { motion, useMotionValue, useTransform, animate, AnimatePresence } from 'framer-motion';
-import { BrainCircuit, Edit3, Target, TrendingUp, Crosshair, Zap, Globe, Mail, Music, Settings } from 'lucide-react';
+import { BrainCircuit, Edit3, Target, TrendingUp, Crosshair, Zap, Globe, Mail, Linkedin, Settings } from 'lucide-react';
 import { AILeadGenerationEngine } from './AILeadGenerationEngine';
 import { AISalesChat } from './AISalesChat';
 import { AIMarketingAutomation } from './AIMarketingAutomation';
@@ -11,8 +11,9 @@ import { ConversionFunnelAnimation } from './ConversionFunnelAnimation';
 import { PerformanceAnimation } from './PerformanceAnimation';
 import { LeadRadarAnimation } from './LeadRadarAnimation';
 import { useLanguage } from '../i18n/LanguageContext';
-import type { TranslationKey } from '../i18n/translations';
+import type { Language, TranslationKey } from '../i18n/translations';
 import { SectionHeadingAccent } from './SectionHeadingAccent';
+import { COMPANY_EMAIL, getContactChannel, LINKEDIN_URL } from '../lib/contactInfo';
 
 const TABS = ['Marketing', 'AI Systems', 'Web Development'] as const;
 const DEFAULT_TAB = 1; // AI Systems active by default
@@ -177,15 +178,20 @@ const WhatsAppIcon = () => (
 );
 
 type DockApp = { icon: React.ReactNode; bg: string; onClick?: () => void; isBrowser?: boolean };
-const DOCK_APPS: DockApp[] = [
-    { icon: <WhatsAppIcon />, bg: 'linear-gradient(145deg,#25d366,#128c7e)', onClick: () => window.open('https://wa.me/351927497086', '_blank') },
-    { icon: <Mail     size={14} />, bg: 'linear-gradient(145deg,#64d2ff,#2c7be5)', onClick: () => window.open('mailto:info@ukonnect.nl') },
-    { icon: <Globe    size={14} />, bg: 'linear-gradient(145deg,#34aadc,#0a84ff)', isBrowser: true },
-    { icon: <Music    size={14} />, bg: 'linear-gradient(145deg,#ff6b81,#fc3c58)', onClick: () => window.open('https://open.spotify.com', '_blank') },
-    { icon: <Settings size={13} />, bg: 'linear-gradient(145deg,#aeaeb2,#636366)' },
-];
+const getDockApps = (lang: Language): DockApp[] => {
+    const channel = getContactChannel(lang);
+    return [
+        { icon: <WhatsAppIcon />, bg: 'linear-gradient(145deg,#25d366,#128c7e)', onClick: () => window.open(channel.whatsappHref, '_blank', 'noopener,noreferrer') },
+        { icon: <Mail size={14} />, bg: 'linear-gradient(145deg,#64d2ff,#2c7be5)', onClick: () => window.open(COMPANY_EMAIL) },
+        { icon: <Globe size={14} />, bg: 'linear-gradient(145deg,#34aadc,#0a84ff)', isBrowser: true },
+        { icon: <Linkedin size={14} />, bg: 'linear-gradient(145deg,#0a66c2,#004182)', onClick: () => window.open(LINKEDIN_URL, '_blank', 'noopener,noreferrer') },
+        { icon: <Settings size={13} />, bg: 'linear-gradient(145deg,#aeaeb2,#636366)' },
+    ];
+};
 
 const IllBrowser = () => {
+    const { lang } = useLanguage();
+    const DOCK_APPS = getDockApps(lang);
     const [showing,   setShowing]   = useState(true);
     const [maximized, setMaximized] = useState(false);
     const lastActionRef = useRef<'close' | 'minimize'>('close');

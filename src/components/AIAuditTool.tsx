@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../i18n/LanguageContext';
 import type { TranslationKey } from '../i18n/translations';
 import emailjs from '@emailjs/browser';
+import { COMPANY_EMAIL_ADDRESS } from '../lib/contactInfo';
 import googleAdsIcon from '../assets/Ukonnect Google Ads.webp';
 import wordpressIcon from '../assets/Wordpress.webp';
 
@@ -184,7 +185,7 @@ export const AIAuditTool = ({ onTabChange }: { onTabChange?: (tab: Tab) => void 
                     phone: marketingPhone.trim() || '—',
                     website: marketingWebsite.trim() || '—',
                     services: `[Marketing Audit] Channels: ${selectedChannels.join(', ')} | Focus: ${selectedFocus.join(', ') || 'Not specified'}`,
-                    to_email: 'info@ukonnect.nl',
+                    to_email: COMPANY_EMAIL_ADDRESS,
                 },
                 EMAILJS_PUBLIC_KEY,
             );

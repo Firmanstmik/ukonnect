@@ -4,6 +4,12 @@ import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
 import Cal, { getCalApi } from '@calcom/embed-react';
 import emailjs from '@emailjs/browser';
+import {
+    COMPANY_EMAIL,
+    COMPANY_EMAIL_ADDRESS,
+    CONTACT_STATS_PENDING_VERIFICATION,
+    getContactChannel,
+} from '../lib/contactInfo';
 
 import teamPhoto from '../assets/Ukonnect Team Portugal.webp';
 import officePhoto from '../assets/Ukonnect Marketing.webp';
@@ -61,16 +67,19 @@ const slideVariants = {
 
 export const Contact = () => {
     const { t, lang } = useLanguage();
+    const channel = getContactChannel(lang);
     const mapSrc = lang === 'pt'
         ? 'https://maps.google.com/maps?q=Rua+Almirante+Reis+2,+2950-270+Palmela,+Portugal&t=&z=15&ie=UTF8&iwloc=&output=embed'
         : lang === 'id'
         ? 'https://maps.google.com/maps?q=Jalan+Prof.+Moh.+Yamin+No.7,+Renon,+East+Denpasar,+Denpasar+City,+Bali+80226&t=&z=11&ie=UTF8&iwloc=&output=embed'
         : 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d40000!2d5.2585316!3d52.4064411!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c61784ef713eff%3A0xdfb5fa9f5b017ac8!2sMAC%C2%B3PARK%20Creative%20Campus!5e0!3m2!1sen!2snl!4v1';
-    const STATS = [
-        { value: STAT_VALUES[0], label: t('contact.stat0') },
-        { value: STAT_VALUES[1], label: t('contact.stat1') },
-        { value: STAT_VALUES[2], label: t('contact.stat2') },
-    ];
+    const STATS = CONTACT_STATS_PENDING_VERIFICATION
+        ? []
+        : [
+            { value: STAT_VALUES[0], label: t('contact.stat0') },
+            { value: STAT_VALUES[1], label: t('contact.stat1') },
+            { value: STAT_VALUES[2], label: t('contact.stat2') },
+        ];
     const [form, setForm] = useState({ name: '', email: '', company: '', phone: '', website: '' });
     const [selected, setSelected] = useState<ServiceId[]>(['aiLeadgen']);
     const [view, setView] = useState<'form' | 'calendar' | 'success'>('form');
@@ -105,7 +114,7 @@ export const Contact = () => {
                     services: selected.length > 0
                         ? selected.map((id) => serviceLabel(id)).join(', ')
                         : '-',
-                    to_email: 'info@ukonnect.nl',
+                    to_email: COMPANY_EMAIL_ADDRESS,
                 },
                 EMAILJS_PUBLIC_KEY,
             );
@@ -152,6 +161,7 @@ export const Contact = () => {
                     className="text-slate-500 text-lg leading-relaxed max-w-xl mx-auto mb-12">
                     {t('contact.sub')}
                 </motion.p>
+                {STATS.length > 0 && (
                 <div className="flex flex-wrap items-center justify-center gap-3">
                     {STATS.map(({ value, label }, i) => (
                         <motion.div key={label} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
@@ -162,6 +172,7 @@ export const Contact = () => {
                         </motion.div>
                     ))}
                 </div>
+                )}
             </section>
 
             {/* ── Main Section ── */}
@@ -183,7 +194,7 @@ export const Contact = () => {
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent pointer-events-none" />
                             <div className="absolute bottom-0 left-0 right-0 p-6 z-10">
                                 <div className="grid grid-cols-3 gap-3">
-                                    <motion.a href={lang === 'pt' ? 'https://wa.me/351927497086' : 'https://wa.me/31853331000'} target="_blank" rel="noopener noreferrer"
+                                    <motion.a href={channel.whatsappHref} target="_blank" rel="noopener noreferrer"
                                         whileHover={{ scale: 1.06, backgroundColor: 'rgba(37,211,102,0.25)' }} whileTap={{ scale: 0.94 }}
                                         transition={{ type: 'spring', stiffness: 400, damping: 20 }}
                                         className="flex flex-col items-center gap-1.5 bg-white/10 backdrop-blur-md rounded-2xl px-3 py-3 text-center border border-white/20 cursor-pointer">
@@ -192,14 +203,14 @@ export const Contact = () => {
                                         </svg>
                                         <p className="text-white font-bold text-xs">{t('contact.whatsapp')}</p>
                                     </motion.a>
-                                    <motion.a href="mailto:info@ukonnect.nl"
+                                    <motion.a href={COMPANY_EMAIL}
                                         whileHover={{ scale: 1.06, backgroundColor: 'rgba(86,0,227,0.35)' }} whileTap={{ scale: 0.94 }}
                                         transition={{ type: 'spring', stiffness: 400, damping: 20 }}
                                         className="flex flex-col items-center gap-1.5 bg-white/10 backdrop-blur-md rounded-2xl px-3 py-3 text-center border border-white/20 cursor-pointer">
                                         <Mail className="w-5 h-5 text-white" />
                                         <p className="text-white font-bold text-xs">{t('contact.email')}</p>
                                     </motion.a>
-                                    <motion.a href={lang === 'pt' ? 'tel:+351927497086' : 'tel:+31853331000'}
+                                    <motion.a href={channel.telHref}
                                         whileHover={{ scale: 1.06, backgroundColor: 'rgba(255,255,255,0.2)' }} whileTap={{ scale: 0.94 }}
                                         transition={{ type: 'spring', stiffness: 400, damping: 20 }}
                                         className="flex flex-col items-center gap-1.5 bg-white/10 backdrop-blur-md rounded-2xl px-3 py-3 text-center border border-white/20 cursor-pointer">

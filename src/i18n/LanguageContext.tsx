@@ -1,6 +1,8 @@
 import { createContext, useContext } from 'react';
 import { Outlet, useParams, useNavigate, useLocation } from 'react-router-dom';
 import { type Language, type TranslationKey, getTranslation } from './translations';
+import { DocumentMeta } from '../components/DocumentMeta';
+import { CookieConsent } from '../components/CookieConsent';
 
 export const VALID_LANGS: Language[] = ['en', 'pt', 'nl', 'id'];
 
@@ -28,7 +30,9 @@ export const LanguageProvider = () => {
 
     return (
         <LanguageContext.Provider value={{ lang, setLang, t }}>
+            <DocumentMeta />
             <Outlet />
+            <CookieConsent />
         </LanguageContext.Provider>
     );
 };

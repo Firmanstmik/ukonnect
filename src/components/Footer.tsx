@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Linkedin } from 'lucide-react';
 import logo from '../assets/Ukonnect Marketing logo.webp';
 import { useLanguage } from '../i18n/LanguageContext';
+import { getContactChannel, LINKEDIN_URL } from '../lib/contactInfo';
 
 const ContactFormModal = lazy(() =>
     import('./ContactFormModal').then(m => ({ default: m.ContactFormModal }))
@@ -45,7 +46,7 @@ export const Footer = () => {
 
     const instagram = isPT ? 'https://www.instagram.com/ukonnect.pt/' : 'https://www.instagram.com/ukonnect.nl/';
     const facebook  = isPT ? 'https://web.facebook.com/ukonnect.pt'   : 'https://web.facebook.com/ukonnect.nl';
-    const whatsapp  = isPT ? 'https://wa.me/351927497086'              : 'https://wa.me/31853331000';
+    const whatsapp  = getContactChannel(lang).whatsappHref;
 
     const handleHelpCenter = (e: React.MouseEvent) => {
         e.preventDefault();
@@ -75,7 +76,7 @@ export const Footer = () => {
                                 <a href={instagram} target="_blank" rel="noopener noreferrer" className={iconClass}><InstagramIcon /></a>
                                 <a href={facebook}  target="_blank" rel="noopener noreferrer" className={iconClass}><FacebookIcon /></a>
                                 <a href="https://www.tiktok.com/@ukonnect.ai" target="_blank" rel="noopener noreferrer" className={iconClass}><TikTokIcon /></a>
-                                <a href="https://www.linkedin.com/company/ukonnect" target="_blank" rel="noopener noreferrer" className={iconClass}><Linkedin className="w-4 h-4" /></a>
+                                <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" className={iconClass}><Linkedin className="w-4 h-4" /></a>
                                 <a href={whatsapp} target="_blank" rel="noopener noreferrer" className={iconClass}><WhatsAppIcon /></a>
                             </div>
                         </div>
