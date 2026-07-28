@@ -1,16 +1,19 @@
 import { useCallback, useEffect, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { ArrowLeft2, ArrowRight2, Chart21, Mobile, MonitorMobbile, PresentionChart } from 'iconsax-react';
+import { useLanguage } from '../../i18n/LanguageContext';
+import type { TranslationKey } from '../../i18n/translations';
 import type { CaseStudyExperience } from './caseStudyExperienceData';
 import { GalleryFrame } from './CaseStudyPrimitives';
 import { EASE_LUXURY } from '../motion';
 
 export function CaseStudyGallery({ study }: { study: CaseStudyExperience }) {
-    // Skip the intro hero already shown above — start on the next visual beat.
+    const { t } = useLanguage();
+    // Skip the intro hero already shown above, start on the next visual beat.
     const initialIndex = study.gallery.length > 1 ? 1 : 0;
     const [activeIndex, setActiveIndex] = useState(initialIndex);
     const active = study.gallery[activeIndex] ?? study.gallery[0];
-    const detail = getGalleryDetail(active.type);
+    const detail = getGalleryDetail(active.type, t);
     const reduce = useReducedMotion();
     const total = study.gallery.length;
 
@@ -42,19 +45,19 @@ export function CaseStudyGallery({ study }: { study: CaseStudyExperience }) {
         <div>
             <div className="mb-10 flex items-end justify-between gap-6 md:mb-12">
                 <div>
-                    <p className="font-mono text-[10px] tracking-[0.28em] text-white/32">MOMENTS</p>
+                    <p className="font-mono text-[10px] tracking-[0.28em] text-white/32">{t('caseStudies.section.moments.eyebrow')}</p>
                     <h4 className="mt-4 text-[1.7rem] font-semibold leading-[1.12] tracking-[-0.02em] text-white md:text-[2rem]">
-                        Scenes from the work
+                        {t('caseStudies.section.moments.title')}
                     </h4>
                     <p className="mt-4 max-w-[36ch] text-[14px] leading-[1.7] text-white/40">
-                        Client project surfaces — ready to swap when additional screens are approved.
+                        {t('caseStudies.section.moments.sub')}
                     </p>
                 </div>
                 <div className="flex items-center gap-2">
                     <button
                         type="button"
                         onClick={() => go(-1)}
-                        aria-label="Previous gallery item"
+                        aria-label={t('caseStudies.gallery.prev')}
                         className="cs-lux-btn inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.03] text-white/65 hover:border-white/16 hover:bg-white/[0.07] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/35"
                     >
                         <ArrowLeft2 size={18} variant="Outline" color="currentColor" />
@@ -62,7 +65,7 @@ export function CaseStudyGallery({ study }: { study: CaseStudyExperience }) {
                     <button
                         type="button"
                         onClick={() => go(1)}
-                        aria-label="Next gallery item"
+                        aria-label={t('caseStudies.gallery.next')}
                         className="cs-lux-btn inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.03] text-white/65 hover:border-white/16 hover:bg-white/[0.07] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/35"
                     >
                         <ArrowRight2 size={18} variant="Outline" color="currentColor" />
@@ -106,7 +109,7 @@ export function CaseStudyGallery({ study }: { study: CaseStudyExperience }) {
 
                     <p className="mt-6 text-[14.5px] leading-[1.75] text-white/52">{detail.description}</p>
 
-                    <nav className="mt-10 space-y-1" aria-label="Gallery items">
+                    <nav className="mt-10 space-y-1" aria-label={t('caseStudies.gallery.nav')}>
                         {study.gallery.map((item, index) => (
                             <button
                                 key={item.id}
@@ -135,52 +138,47 @@ export function CaseStudyGallery({ study }: { study: CaseStudyExperience }) {
     );
 }
 
-function getGalleryDetail(type: CaseStudyExperience['gallery'][number]['type']) {
+function getGalleryDetail(
+    type: CaseStudyExperience['gallery'][number]['type'],
+    t: (key: TranslationKey) => string,
+) {
     switch (type) {
         case 'hero':
             return {
-                kicker: 'Opening',
-                description:
-                    'The first breath of the brand — where a stranger decides whether this feels like the right place to begin.',
+                kicker: t('caseStudies.gallery.kicker.hero'),
+                description: t('caseStudies.gallery.desc.hero'),
                 icon: <MonitorMobbile size={20} variant="Bulk" color="#c4b5fd" />,
             };
         case 'desktop':
             return {
-                kicker: 'The longer look',
-                description:
-                    'Where the story unfolds: proof, atmosphere, and the quiet confidence that makes someone stay.',
-                icon: <MonitorMobbile size={20} variant="Bulk" color="#93c5fd" />,
+                kicker: t('caseStudies.gallery.kicker.desktop'),
+                description: t('caseStudies.gallery.desc.desktop'),
+                icon: <MonitorMobbile size={20} variant="Bulk" color="#c4b5fd" />,
             };
         case 'mobile':
             return {
-                kicker: 'On the move',
-                description:
-                    'The same promise in a smaller frame — clear enough that a serious buyer can take the next step from their phone.',
-                icon: <Mobile size={20} variant="Bulk" color="#f9a8d4" />,
+                kicker: t('caseStudies.gallery.kicker.mobile'),
+                description: t('caseStudies.gallery.desc.mobile'),
+                icon: <Mobile size={20} variant="Bulk" color="#c4b5fd" />,
             };
         case 'dashboard':
             return {
-                kicker: 'Behind the scenes',
-                description: 'Where the team sees demand clearly — prepared for when real operational screens replace this preview.',
-                icon: <Chart21 size={20} variant="Bulk" color="#86efac" />,
+                kicker: t('caseStudies.gallery.kicker.dashboard'),
+                description: t('caseStudies.gallery.desc.dashboard'),
+                icon: <PresentionChart size={20} variant="Bulk" color="#c4b5fd" />,
             };
         case 'analytics':
             return {
-                kicker: 'What was working',
-                description: 'A quieter look at which paths earned real conversations — ready for verified client data.',
-                icon: <PresentionChart size={20} variant="Bulk" color="#fdba74" />,
+                kicker: t('caseStudies.gallery.kicker.analytics'),
+                description: t('caseStudies.gallery.desc.analytics'),
+                icon: <Chart21 size={20} variant="Bulk" color="#c4b5fd" />,
             };
         case 'workflow':
-            return {
-                kicker: 'The handoff',
-                description: 'How interest moves from a form to a human — without getting lost overnight.',
-                icon: <Chart21 size={20} variant="Bulk" color="#67e8f9" />,
-            };
         default:
             return {
-                kicker: 'Moment',
-                description: 'A frame from the client story.',
-                icon: <MonitorMobbile size={20} variant="Bulk" color="#cbd5e1" />,
+                kicker: t('caseStudies.gallery.kicker.workflow'),
+                description: t('caseStudies.gallery.desc.workflow'),
+                icon: <Chart21 size={20} variant="Bulk" color="#c4b5fd" />,
             };
     }
 }

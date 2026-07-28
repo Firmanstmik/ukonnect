@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight2, CloseCircle } from 'iconsax-react';
+import { useLanguage } from '../../i18n/LanguageContext';
 import type { CaseStudyExperience } from './caseStudyExperienceData';
 import { CASE_STUDY_DATA_PENDING_VERIFICATION } from './caseStudyExperienceData';
 import { CaseStudyMetricGrid } from './CaseStudyMetricGrid';
@@ -23,6 +24,7 @@ const SPRING = { type: 'spring' as const, stiffness: 260, damping: 34, mass: 0.9
  * Expanded documentary project — morphs from compact card via layoutId.
  */
 export function CaseStudyExpandOverlay({ study, index, onClose, onDeepOpen, locked = false }: Props) {
+    const { t } = useLanguage();
     const reduce = useReducedMotion();
     const closeRef = useRef<HTMLButtonElement>(null);
     const layerRef = useRef<HTMLDivElement>(null);
@@ -79,7 +81,7 @@ export function CaseStudyExpandOverlay({ study, index, onClose, onDeepOpen, lock
                 >
                     <motion.button
                         type="button"
-                        aria-label="Close case study"
+                        aria-label={t('caseStudies.closeAria')}
                         tabIndex={locked ? -1 : 0}
                         className="absolute inset-0 bg-slate-950/45 backdrop-blur-[6px]"
                         initial={{ opacity: 0 }}
@@ -99,7 +101,7 @@ export function CaseStudyExpandOverlay({ study, index, onClose, onDeepOpen, lock
                         exit={{ opacity: 0 }}
                         transition={{ delay: 0.1, duration: 0.4, ease: EASE_LUXURY }}
                         className="absolute left-1/2 top-4 z-[95] flex h-11 w-11 -translate-x-1/2 items-center justify-center rounded-full bg-slate-950 text-white shadow-[0_12px_40px_rgba(0,0,0,0.35)] transition-[background-color] duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 sm:top-6"
-                        aria-label="Close"
+                        aria-label={t('caseStudies.close')}
                     >
                         <CloseCircle size={22} variant="Outline" color="#ffffff" />
                     </motion.button>
@@ -142,7 +144,7 @@ export function CaseStudyExpandOverlay({ study, index, onClose, onDeepOpen, lock
                                         transition={{ delay: 0.2, duration: 0.45, ease: EASE_LUXURY }}
                                         className="absolute bottom-5 left-5 z-[4] font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-white/55 sm:bottom-6 sm:left-6"
                                     >
-                                        0{index + 1} · {study.industry}
+                                        0{index + 1} {study.industry}
                                     </motion.p>
                                 </div>
 
@@ -171,7 +173,7 @@ export function CaseStudyExpandOverlay({ study, index, onClose, onDeepOpen, lock
                                         transition={{ delay: 0.26, duration: 0.55, ease: EASE_LUXURY }}
                                         className="mt-10 space-y-0"
                                     >
-                                        <NarrativeBeat label="Then" text={study.before} accent="rgba(148,163,184,0.9)" />
+                                        <NarrativeBeat label={t('caseStudies.beat.then')} text={study.before} accent="rgba(148,163,184,0.9)" />
                                         <div className="flex items-center gap-3 py-2 pl-1" aria-hidden>
                                             <span
                                                 className="h-6 w-px"
@@ -183,7 +185,7 @@ export function CaseStudyExpandOverlay({ study, index, onClose, onDeepOpen, lock
                                                 className="font-mono text-[9px] font-bold uppercase tracking-[0.2em]"
                                                 style={{ color: study.theme.from }}
                                             >
-                                                The shift
+                                                {t('caseStudies.beat.shift')}
                                             </span>
                                         </div>
                                         <p className="pl-1 text-[13px] font-medium leading-[1.65] text-slate-700">
@@ -197,7 +199,7 @@ export function CaseStudyExpandOverlay({ study, index, onClose, onDeepOpen, lock
                                                 }}
                                             />
                                         </div>
-                                        <NarrativeBeat label="Now" text={study.after} accent={study.theme.from} />
+                                        <NarrativeBeat label={t('caseStudies.beat.now')} text={study.after} accent={study.theme.from} />
                                     </motion.div>
 
                                     {!CASE_STUDY_DATA_PENDING_VERIFICATION ? (
@@ -229,7 +231,7 @@ export function CaseStudyExpandOverlay({ study, index, onClose, onDeepOpen, lock
                                             boxShadow: `0 18px 40px -16px ${study.theme.glow}`,
                                         }}
                                     >
-                                        <span>Read the story</span>
+                                        <span>{t('caseStudies.readTheStory')}</span>
                                         <ArrowRight2
                                             size={18}
                                             variant="Outline"

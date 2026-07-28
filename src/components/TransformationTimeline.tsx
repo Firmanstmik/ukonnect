@@ -151,7 +151,7 @@ export function TransformationTimeline({ study, t }: { study: CaseStudy; t: Tran
                             accentFrom={accentFrom}
                             accentTo={accentTo}
                             delta={study.metrics[0].delta}
-                            caption={`${t('caseStudies.growth.title')} · ${t(study.seriesUnitKey)}`}
+                            caption={`${t('caseStudies.growth.title')}, ${t(study.seriesUnitKey)}`}
                         />
                     </div>
                     <div className="rounded-2xl border border-slate-200/70 bg-white p-5">

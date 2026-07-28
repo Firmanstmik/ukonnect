@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { LayoutGroup, motion } from 'framer-motion';
 import { TriangleAlert } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
@@ -8,6 +8,7 @@ import {
     CASE_STUDY_EXPERIENCES,
     type CaseStudyExperience,
 } from './case-studies/caseStudyExperienceData';
+import { localizeCaseStudies } from './case-studies/caseStudyLocales';
 import { CaseStudyCompactCard } from './case-studies/CaseStudyCompactCard';
 import { CaseStudyExpandOverlay } from './case-studies/CaseStudyExpandOverlay';
 import { CaseStudyExperienceModalHost } from './case-studies/CaseStudyExperienceModal';
@@ -23,14 +24,15 @@ const headerVariants = {
 };
 
 export const CaseStudies = () => {
-    const { t } = useLanguage();
+    const { t, lang } = useLanguage();
+    const studies = useMemo(() => localizeCaseStudies(CASE_STUDY_EXPERIENCES, lang), [lang]);
     const [expandedId, setExpandedId] = useState<string | null>(null);
     const [deepId, setDeepId] = useState<string | null>(null);
 
-    const expandedStudy = CASE_STUDY_EXPERIENCES.find((s) => s.id === expandedId) ?? null;
+    const expandedStudy = studies.find((s) => s.id === expandedId) ?? null;
     const expandedIndex = Math.max(
         0,
-        CASE_STUDY_EXPERIENCES.findIndex((s) => s.id === expandedId),
+        studies.findIndex((s) => s.id === expandedId),
     );
 
     const expandStudy = useCallback((study: CaseStudyExperience) => setExpandedId(study.id), []);
@@ -116,7 +118,7 @@ export const CaseStudies = () => {
 
                 <LayoutGroup>
                     <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3 lg:gap-9">
-                        {CASE_STUDY_EXPERIENCES.map((study, index) =>
+                        {studies.map((study, index) =>
                             expandedId === study.id ? (
                                 <div
                                     key={study.id}
@@ -151,13 +153,13 @@ export const CaseStudies = () => {
                     className="mx-auto mt-16 flex max-w-md flex-col items-center gap-5 text-center md:mt-20"
                 >
                     <p className="text-sm leading-relaxed text-slate-500">
-                        Choose a project — and follow how the business changed.
+                        {t('caseStudies.prompt')}
                     </p>
                     <a
                         href="#cta"
                         className="group inline-flex items-center gap-2 text-sm font-semibold text-primary transition-colors hover:text-[#4500b6] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/35 focus-visible:ring-offset-2"
                     >
-                        Book a strategy call
+                        {t('cta.button')}
                         <span className="transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1" aria-hidden>
                             →
                         </span>
@@ -169,7 +171,7 @@ export const CaseStudies = () => {
                 activeId={deepId}
                 onClose={closeDeep}
                 onNavigate={navigateDeep}
-                studies={CASE_STUDY_EXPERIENCES}
+                studies={studies}
             />
         </section>
     );

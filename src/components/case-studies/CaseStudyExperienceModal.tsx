@@ -9,9 +9,9 @@ import {
     MagicStar,
     PresentionChart,
 } from 'iconsax-react';
+import { useLanguage } from '../../i18n/LanguageContext';
 import {
     CASE_STUDY_DATA_PENDING_VERIFICATION,
-    getAdjacentCaseStudies,
     type CaseStudyExperience,
 } from './caseStudyExperienceData';
 import { CaseStudyGallery } from './CaseStudyGallery';
@@ -23,6 +23,7 @@ import { EASE_LUXURY } from '../motion';
 
 type CaseStudyExperienceModalProps = {
     study: CaseStudyExperience;
+    studies: CaseStudyExperience[];
     onClose: () => void;
     onNavigate: (study: CaseStudyExperience) => void;
 };
@@ -53,8 +54,11 @@ function SectionBlock({
 const focusRing =
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/35 focus-visible:ring-offset-2 focus-visible:ring-offset-[#060d19]';
 
-export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStudyExperienceModalProps) {
-    const { prev, next } = getAdjacentCaseStudies(study.id);
+export function CaseStudyExperienceModal({ study, studies, onClose, onNavigate }: CaseStudyExperienceModalProps) {
+    const { t } = useLanguage();
+    const index = studies.findIndex((item) => item.id === study.id);
+    const prev = index > 0 ? studies[index - 1] : null;
+    const next = index >= 0 && index < studies.length - 1 ? studies[index + 1] : null;
     const hero = study.gallery.find((item) => item.type === 'hero') ?? study.gallery[0];
     const reduce = useReducedMotion();
     const closeRef = useRef<HTMLButtonElement>(null);
@@ -110,7 +114,7 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
         >
             <motion.button
                 type="button"
-                aria-label="Close case study"
+                aria-label={t('caseStudies.closeAria')}
                 className="absolute inset-0 bg-[#030812]/96 backdrop-blur-[10px]"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -149,7 +153,7 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                         ref={closeRef}
                         type="button"
                         onClick={onClose}
-                        aria-label="Close"
+                        aria-label={t('caseStudies.close')}
                         className={`cs-lux-btn inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.03] text-white/65 hover:border-white/16 hover:bg-white/[0.07] hover:text-white ${focusRing}`}
                     >
                         <CloseCircle size={20} variant="Outline" color="currentColor" />
@@ -175,12 +179,12 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
 
                                 <div className="mt-12 flex flex-wrap gap-x-10 gap-y-5 border-t border-white/[0.06] pt-8 text-sm">
                                     <div>
-                                        <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/28">Time together</p>
+                                        <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/28">{t('caseStudies.meta.time')}</p>
                                         <p className="mt-2 text-white/70">{study.duration}</p>
                                     </div>
                                     <div>
-                                        <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/28">The work</p>
-                                        <p className="mt-2 max-w-[28ch] text-white/70">{study.services.join(' · ')}</p>
+                                        <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/28">{t('caseStudies.meta.work')}</p>
+                                        <p className="mt-2 max-w-[28ch] text-white/70">{study.services.join(', ')}</p>
                                     </div>
                                 </div>
                             </div>
@@ -201,38 +205,38 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                     </section>
 
                     <div className="mx-auto max-w-[1040px] px-5 pb-24 pt-4 md:px-8 lg:px-12 lg:pb-32">
-                        {/* Quiet arc — human impact → decision → change */}
-                        <SectionBlock eyebrow="THE TURNING POINT" title="What it felt like before, and after">
+                        {/* Quiet arc, human impact → decision → change */}
+                        <SectionBlock eyebrow={t('caseStudies.section.turning.eyebrow')} title={t('caseStudies.section.turning.title')}>
                             <div className="grid gap-10 lg:grid-cols-3 lg:gap-12">
-                                <JourneyCard tone="muted" label="Then" text={study.before} />
-                                <JourneyCard tone="accent" label="The shift" text={study.transform} color={study.theme.from} />
-                                <JourneyCard tone="success" label="Now" text={study.after} />
+                                <JourneyCard tone="muted" label={t('caseStudies.beat.then')} text={study.before} />
+                                <JourneyCard tone="accent" label={t('caseStudies.beat.shift')} text={study.transform} color={study.theme.from} />
+                                <JourneyCard tone="success" label={t('caseStudies.beat.now')} text={study.after} />
                             </div>
                         </SectionBlock>
 
-                        {/* Challenge + decision — denser emotional weight */}
+                        {/* Challenge + decision, denser emotional weight */}
                         <section className="relative mt-24 md:mt-28">
                             <div className="cs-lux-divider mb-14 md:mb-16" aria-hidden />
-                            <p className="font-mono text-[10px] tracking-[0.28em] text-white/32">THE STORY</p>
+                            <p className="font-mono text-[10px] tracking-[0.28em] text-white/32">{t('caseStudies.section.story.eyebrow')}</p>
                             <h4 className="mt-4 max-w-[20ch] text-[1.7rem] font-semibold leading-[1.12] tracking-[-0.02em] text-white md:text-[2rem]">
-                                Why it mattered — and what changed
+                                {t('caseStudies.section.story.title')}
                             </h4>
                             <div className="mt-12 grid gap-12 lg:grid-cols-2 lg:gap-16">
                                 <NarrativePanel
                                     icon={<PresentionChart size={20} variant="Outline" color={study.theme.to} />}
-                                    title="What was at stake"
+                                    title={t('caseStudies.panel.stake')}
                                     body={study.challenge}
                                 />
                                 <NarrativePanel
                                     icon={<Chart21 size={20} variant="Outline" color={study.theme.to} />}
-                                    title="The decision"
+                                    title={t('caseStudies.panel.decision')}
                                     body={study.solution}
                                 />
                             </div>
                             <div className="mt-16 max-w-3xl border-t border-white/[0.06] pt-14">
                                 <NarrativePanel
                                     icon={<MagicStar size={20} variant="Outline" color={study.theme.to} />}
-                                    title="How it landed"
+                                    title={t('caseStudies.panel.landed')}
                                     body={study.implementation}
                                 />
                             </div>
@@ -242,9 +246,9 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                         <div className="mt-24 grid gap-16 md:mt-28 xl:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] xl:gap-20">
                             <div className="cs-lux-divider xl:hidden" aria-hidden />
                             <section className="pt-16 xl:pt-20">
-                                <p className="font-mono text-[10px] tracking-[0.28em] text-white/32">WHAT CHANGED</p>
+                                <p className="font-mono text-[10px] tracking-[0.28em] text-white/32">{t('caseStudies.section.changed.eyebrow')}</p>
                                 <h4 className="mt-4 text-[1.7rem] font-semibold leading-[1.12] tracking-[-0.02em] text-white md:text-[2rem]">
-                                    The difference it made
+                                    {t('caseStudies.section.changed.title')}
                                 </h4>
                                 {!CASE_STUDY_DATA_PENDING_VERIFICATION ? (
                                     <div className="mt-10">
@@ -261,16 +265,16 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                             </section>
                         </div>
 
-                        {/* Visual moments — quieter chapter weight */}
+                        {/* Visual moments, quieter chapter weight */}
                         <div className="mt-24 md:mt-28">
                             <div className="cs-lux-divider mb-14 md:mb-16" aria-hidden />
                             <CaseStudyGallery key={study.id} study={study} />
                         </div>
 
-                        {/* Soft pause — supporting tools */}
+                        {/* Soft pause, supporting tools */}
                         <SectionBlock
-                            eyebrow="IN THE BACKGROUND"
-                            title="What quietly made it possible"
+                            eyebrow={t('caseStudies.section.bg.eyebrow')}
+                            title={t('caseStudies.section.bg.title')}
                             className="opacity-95"
                         >
                             <ul className="flex flex-wrap gap-x-5 gap-y-3">
@@ -285,10 +289,10 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                             </ul>
                         </SectionBlock>
 
-                        {/* Reflection — powerful pause */}
+                        {/* Reflection, powerful pause */}
                         <section className="mt-24 md:mt-32">
                             <div className="cs-lux-divider mb-14 md:mb-16" aria-hidden />
-                            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/32">Reflection</p>
+                            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/32">{t('caseStudies.section.reflect')}</p>
                             <blockquote className="mt-10 max-w-[28ch] text-[1.85rem] font-medium leading-[1.32] tracking-[-0.02em] text-white/92 md:max-w-[22ch] md:text-[2.35rem]">
                                 &ldquo;{study.testimonial.quote}&rdquo;
                             </blockquote>
@@ -317,8 +321,8 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                             </div>
                         </section>
 
-                        {/* Client's next chapter — quiet */}
-                        <SectionBlock eyebrow="STILL AHEAD" title="Where the story can go next">
+                        {/* Client's next chapter, quiet */}
+                        <SectionBlock eyebrow={t('caseStudies.section.ahead.eyebrow')} title={t('caseStudies.section.ahead.title')}>
                             <ul className="grid gap-8 md:grid-cols-3 md:gap-10">
                                 {study.futureImprovements.map((item) => (
                                     <li
@@ -334,13 +338,13 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                         {/* Visitor's next journey */}
                         <div className="mt-24 flex flex-col gap-6 border-t border-white/[0.05] pt-12 md:mt-28 md:flex-row md:items-end md:justify-between">
                             <div className="max-w-sm">
-                                <p className="font-mono text-[10px] tracking-[0.22em] text-white/28">CONTINUE</p>
+                                <p className="font-mono text-[10px] tracking-[0.22em] text-white/28">{t('caseStudies.continue')}</p>
                                 <p className="mt-3 text-[15px] leading-relaxed text-white/48">
                                     {next
-                                        ? `Next: how ${next.clientName} found a clearer way forward.`
+                                        ? t('caseStudies.continue.next').replace('{name}', next.clientName)
                                         : prev
-                                          ? `Return to ${prev.clientName}, or close when you are ready.`
-                                          : 'Close when you are ready — or explore another project from the gallery.'}
+                                          ? t('caseStudies.continue.return').replace('{name}', prev.clientName)
+                                          : t('caseStudies.continue.close')}
                                 </p>
                             </div>
                             <div className="flex flex-wrap gap-2.5">
@@ -351,7 +355,7 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                                     className={`cs-lux-btn inline-flex items-center gap-2 rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 text-sm font-semibold text-white/70 enabled:hover:border-white/16 enabled:hover:bg-white/[0.06] enabled:hover:text-white disabled:opacity-28 ${focusRing}`}
                                 >
                                     <ArrowLeft2 size={18} variant="Outline" color="currentColor" />
-                                    {prev ? prev.clientName : 'Previous story'}
+                                    {prev ? prev.clientName : t('caseStudies.prevStory')}
                                 </button>
                                 <button
                                     type="button"
@@ -359,7 +363,7 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                                     onClick={() => next && onNavigate(next)}
                                     className={`cs-lux-btn inline-flex items-center gap-2 rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 text-sm font-semibold text-white/70 enabled:hover:border-white/16 enabled:hover:bg-white/[0.06] enabled:hover:text-white disabled:opacity-28 ${focusRing}`}
                                 >
-                                    {next ? next.clientName : 'Next story'}
+                                    {next ? next.clientName : t('caseStudies.nextStory')}
                                     <ArrowRight2 size={18} variant="Outline" color="currentColor" />
                                 </button>
                             </div>
@@ -443,6 +447,7 @@ export function CaseStudyExperienceModalHost({
                 <CaseStudyExperienceModal
                     key={active.id}
                     study={active}
+                    studies={studies}
                     onClose={onClose}
                     onNavigate={onNavigate}
                 />

@@ -1,5 +1,5 @@
 /**
- * Case Study Experience — narrative demo data.
+ * Case Study Experience, narrative demo data.
  * Visual covers: client project heroes (desktop + mobile).
  * Metrics, quotes, and some chapter details remain illustrative until founder verification.
  */
@@ -27,7 +27,7 @@ export type CaseStudyGalleryItem = {
     objectPosition?: string;
 };
 
-/** Three intentional moments only — real assets, no decorative crop repetition. */
+/** Three intentional moments only, real assets, no decorative crop repetition. */
 function buildStoryGallery(
     cover: string,
     mobile: string,
@@ -126,17 +126,17 @@ export const CASE_STUDY_EXPERIENCES: CaseStudyExperience[] = [
         duration: 'About 14 weeks',
         services: ['Website', 'Marketing', 'Lead systems'],
         challenge:
-            'People arrived interested — then waited. Follow-up depended on who was free that day. The team could feel demand, but not trust which inquiries were serious, or which campaigns were wasting money.',
+            'People arrived interested, then waited. Follow-up depended on who was free that day. The team could feel demand, but not trust which inquiries were serious, or which campaigns were wasting money.',
         solution:
             'Instead of adding more ads, the decision was to rebuild the path itself: one clear website story, faster first response, and a single place where every inquiry could be seen and followed.',
         transform: 'From scattered follow-ups to one calm path from interest to conversation.',
         implementation:
-            'The new site carried the brand the way a showroom should. Inquiries were answered quickly, routed to the right person, and connected to the tools the team already used — so nothing important sat unanswered overnight.',
+            'The new site carried the brand the way a showroom should. Inquiries were answered quickly, routed to the right person, and connected to the tools the team already used, so nothing important sat unanswered overnight.',
         businessOutcome:
             'The team spent less time chasing cold leads, and more time speaking with people who were ready to talk about a real project.',
         results: 'Clearer demand. Faster replies. Less guessing about what was working.',
         before:
-            'Strong craft online, but buyers often left without a reply — and the team never knew which interest was worth their evening.',
+            'Strong craft online, but buyers often left without a reply, and the team never knew which interest was worth their evening.',
         after:
             'Every serious inquiry had a place to land, a person to meet it, and a story the brand could stand behind.',
         coverImage: coverJouwdroom,
@@ -144,7 +144,7 @@ export const CASE_STUDY_EXPERIENCES: CaseStudyExperience[] = [
         coverAlt: 'Jouwdroomoverkapping outdoor living website on desktop and mobile',
         technologies: ['HubSpot', 'Meta Ads', 'Google Ads', 'n8n', 'Custom AI Agents', 'GA4'],
         futureImprovements: [
-            'Learn which project types close fastest — and greet those buyers first',
+            'Learn which project types close fastest, and greet those buyers first',
             'Show seasonal collections without rebuilding the whole site',
             'Keep international buyers warm between the first message and the visit',
         ],
@@ -164,7 +164,7 @@ export const CASE_STUDY_EXPERIENCES: CaseStudyExperience[] = [
             {
                 phase: 'Listen',
                 title: 'Where buyers were getting stuck',
-                description: 'We sat with the team and followed real inquiries — from the first click to the moment someone finally answered.',
+                description: 'We sat with the team and followed real inquiries, from the first click to the moment someone finally answered.',
             },
             {
                 phase: 'Decide',
@@ -179,7 +179,7 @@ export const CASE_STUDY_EXPERIENCES: CaseStudyExperience[] = [
             {
                 phase: 'Launch',
                 title: 'Going live with the team',
-                description: 'Campaigns and the new workflow went live together — with the sales floor ready, not surprised.',
+                description: 'Campaigns and the new workflow went live together, with the sales floor ready, not surprised.',
             },
             {
                 phase: 'Refine',
@@ -205,7 +205,7 @@ export const CASE_STUDY_EXPERIENCES: CaseStudyExperience[] = [
         id: 'demo-b2b-growth',
         industry: 'Food & B2B',
         clientName: 'Ayat Food',
-        title: 'When growth felt busy — but not bankable',
+        title: 'When growth felt busy, but not bankable',
         summary:
             'A premium halal wholesaler was generating attention. The harder question was which conversations were worth the sales team’s week.',
         documentaryLabel: 'CLIENT STORY',
@@ -223,7 +223,7 @@ export const CASE_STUDY_EXPERIENCES: CaseStudyExperience[] = [
             'Fewer empty meetings, clearer handoffs, and a leadership view that finally connected spend to real commercial conversations.',
         results: 'Better meetings. Less noise. A shared picture of what was working.',
         before:
-            'The team worked hard every week — yet still argued about whether the next meeting would be worth showing up for.',
+            'The team worked hard every week, yet still argued about whether the next meeting would be worth showing up for.',
         after:
             'Sales walked into conversations already knowing why the buyer was there, and what they cared about.',
         coverImage: coverAyat,
@@ -251,7 +251,7 @@ export const CASE_STUDY_EXPERIENCES: CaseStudyExperience[] = [
             {
                 phase: 'Listen',
                 title: 'What “a good lead” really meant',
-                description: 'We listened to sales — not dashboards first — to learn which conversations were worth protecting.',
+                description: 'We listened to sales, not dashboards first, to learn which conversations were worth protecting.',
             },
             {
                 phase: 'Decide',
@@ -266,7 +266,7 @@ export const CASE_STUDY_EXPERIENCES: CaseStudyExperience[] = [
             {
                 phase: 'Launch',
                 title: 'Turning attention into meetings',
-                description: 'Channels went live with a shared view — so marketing and sales argued less about “what worked.”',
+                description: 'Channels went live with a shared view, so marketing and sales argued less about “what worked.”',
             },
             {
                 phase: 'Refine',
@@ -281,7 +281,7 @@ export const CASE_STUDY_EXPERIENCES: CaseStudyExperience[] = [
         }),
         testimonial: {
             quote:
-                'We finally stopped treating every inquiry as equal. The week got quieter — and the conversations got better.',
+                'We finally stopped treating every inquiry as equal. The week got quieter, and the conversations got better.',
             name: 'Client perspective',
             role: 'Commercial perspective',
             company: 'Ayat Food',
@@ -300,19 +300,19 @@ export const CASE_STUDY_EXPERIENCES: CaseStudyExperience[] = [
         duration: 'About 16 weeks',
         services: ['Website', 'Marketing', 'Film'],
         challenge:
-            'Interest was not the problem. Intent was. High-value buyers needed to feel the space before they booked — while low-intent forms still consumed the sales team’s mornings.',
+            'Interest was not the problem. Intent was. High-value buyers needed to feel the space before they booked, while low-intent forms still consumed the sales team’s mornings.',
         solution:
             'The work became a showroom experience on screen: cinematic storytelling, a clearer reason to visit, and a calmer way to separate curiosity from commitment.',
         transform: 'From brochure traffic to visitors who arrived ready to talk.',
         implementation:
-            'Film, photography, and a guided inquiry path were built together — so the website felt like walking the floor, and the team only spent time on people who were close to choosing.',
+            'Film, photography, and a guided inquiry path were built together, so the website felt like walking the floor, and the team only spent time on people who were close to choosing.',
         businessOutcome:
-            'Stronger visit quality, a clearer sense of buyer readiness before the appointment, and a launch that felt like an opening — not a form campaign.',
+            'Stronger visit quality, a clearer sense of buyer readiness before the appointment, and a launch that felt like an opening, not a form campaign.',
         results: 'Better visits. Sharper focus for sales. A brand presence that matched the floor.',
         before:
-            'Beautiful kitchens in person — and an online journey that asked for a quote before it earned trust.',
+            'Beautiful kitchens in person, and an online journey that asked for a quote before it earned trust.',
         after:
-            'People arrived already imagining their kitchen in the space — and sales could meet them there.',
+            'People arrived already imagining their kitchen in the space, and sales could meet them there.',
         coverImage: coverKeuken,
         mobileCoverImage: mobileKeuken,
         coverAlt: 'Keuken Centrum kitchen showroom website on desktop and mobile',
@@ -338,12 +338,12 @@ export const CASE_STUDY_EXPERIENCES: CaseStudyExperience[] = [
             {
                 phase: 'Listen',
                 title: 'Why people left before visiting',
-                description: 'We watched how buyers moved — and where the feeling of the showroom disappeared online.',
+                description: 'We watched how buyers moved, and where the feeling of the showroom disappeared online.',
             },
             {
                 phase: 'Decide',
                 title: 'Earn the visit first',
-                description: 'The priority became trust and desire — then a clean path to book time on the floor.',
+                description: 'The priority became trust and desire, then a clean path to book time on the floor.',
             },
             {
                 phase: 'Build',
@@ -353,7 +353,7 @@ export const CASE_STUDY_EXPERIENCES: CaseStudyExperience[] = [
             {
                 phase: 'Launch',
                 title: 'Opening the new chapter',
-                description: 'Campaigns and the new site went live as a single moment — with the team ready for better conversations.',
+                description: 'Campaigns and the new site went live as a single moment, with the team ready for better conversations.',
             },
             {
                 phase: 'Refine',
@@ -368,7 +368,7 @@ export const CASE_STUDY_EXPERIENCES: CaseStudyExperience[] = [
         }),
         testimonial: {
             quote:
-                'Online finally felt like us. People arrived warmer — and we stopped spending mornings on forms that were never going to visit.',
+                'Online finally felt like us. People arrived warmer, and we stopped spending mornings on forms that were never going to visit.',
             name: 'Client perspective',
             role: 'Showroom perspective',
             company: 'Keuken Centrum',

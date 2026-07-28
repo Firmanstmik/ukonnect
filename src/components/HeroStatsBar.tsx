@@ -55,7 +55,7 @@ export function HeroStatsBar() {
                         whileHover={{ scale: 1.03 }}
                         whileTap={{ scale: 0.98 }}
                         className="hero-stats-video group flex shrink-0 items-center gap-3 rounded-2xl border border-white/90 bg-white/85 px-4 py-2.5 xl:px-5 xl:py-3 backdrop-blur-md transition-shadow hover:shadow-lg hover:shadow-[#6C30FF]/12"
-                        aria-label="Watch how we work — 90 second overview"
+                        aria-label="Watch how we work, 90 second overview"
                     >
                         <span className="relative flex h-11 w-[3.25rem] xl:h-12 xl:w-[3.75rem] items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-[#EDE9FE] to-[#F5F3FF]">
                             <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white shadow-sm">

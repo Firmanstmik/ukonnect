@@ -57,7 +57,7 @@ function DesktopStage({ animate }: { animate: boolean }) {
                 <div className="cinematic-film-mark absolute left-[1.5%] top-[22%] z-[6]" aria-hidden>
                     <span>Human origin</span>
                     <i />
-                    <small>AMSTERDAM · NL</small>
+                    <small>AMSTERDAM, NL</small>
                 </div>
 
                 {/* Layer 3 — workflow energy (behind team) */}

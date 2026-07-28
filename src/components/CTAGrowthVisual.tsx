@@ -1,6 +1,6 @@
 /**
- * CTAGrowthVisual — capability overview beside the closing CTA.
- * No fabricated client KPIs — qualitative system story only.
+ * CTAGrowthVisual, capability overview beside the closing CTA.
+ * No fabricated client KPIs, qualitative system story only.
  */
 import { motion, type Variants } from 'framer-motion';
 import type { ReactElement } from 'react';

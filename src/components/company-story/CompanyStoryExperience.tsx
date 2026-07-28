@@ -1,6 +1,7 @@
 import React, { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion, useInView, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight2 } from 'iconsax-react';
+import { useLanguage } from '../../i18n/LanguageContext';
 import { EASE_OUT } from '../motion';
 
 const ContactFormModal = lazy(() => import('../ContactFormModal').then(m => ({ default: m.ContactFormModal })));
@@ -440,7 +441,7 @@ function DocumentarySceneHeroCaption({ scene }: { scene: DocumentaryScene }) {
     const titleWords = scene.title.split(' ');
     const titleLead = titleWords.length > 2 ? titleWords.slice(0, 2).join(' ') : scene.title;
     const titleAccent = titleWords.length > 2 ? titleWords.slice(2).join(' ') : '';
-    const taglineParts = scene.tagline?.split('·').map((part) => part.trim()).filter(Boolean) ?? [];
+    const taglineParts = scene.tagline?.split(',').map((part) => part.trim()).filter(Boolean) ?? [];
 
     return (
         <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center p-4 sm:p-6 md:p-8">
@@ -562,7 +563,7 @@ function OpeningTrustBand({ className }: { className?: string }) {
     const items = [
         { label: 'Based in', value: 'Amsterdam', signal: 'NL HQ' },
         { label: 'Delivery', value: 'In-house team', signal: 'NO OUTSOURCE' },
-        { label: 'Focus', value: 'AI Growth System', signal: 'MKT · AI · WEB' },
+        { label: 'Focus', value: 'AI Growth System', signal: 'MKT, AI, WEB' },
     ];
 
     return (
@@ -1026,7 +1027,7 @@ function OpeningTrustStrip() {
     const items = [
         { label: 'Based in', value: 'Amsterdam', signal: 'NL HQ' },
         { label: 'Delivery', value: 'In-house team', signal: 'NO OUTSOURCE' },
-        { label: 'Focus', value: 'AI Growth System', signal: 'MKT · AI · WEB' },
+        { label: 'Focus', value: 'AI Growth System', signal: 'MKT, AI, WEB' },
     ];
 
     return (
@@ -1166,7 +1167,7 @@ function OfficeFloatingRoomCard({ room, index, pos }: { room: RoomCard; index: n
                 <div className="border-t border-white/10 px-4 py-3.5">
                     <p className="text-[15px] font-semibold tracking-[-0.02em] text-white">{room.title}</p>
                     <p className="mt-1 text-[12px] leading-[1.6] text-white/72">{room.blurb}</p>
-                    <p className="mt-2 font-mono text-[8px] tracking-[0.2em] text-primary/80">TEAM · {room.team.toUpperCase()}</p>
+                    <p className="mt-2 font-mono text-[8px] tracking-[0.2em] text-primary/80">TEAM {room.team.toUpperCase()}</p>
                 </div>
             </div>
 
@@ -1206,7 +1207,7 @@ function OfficeConfigurator({ panoramic, rooms }: { panoramic: string; rooms: Ro
                         </span>
                         <div>
                             <p className="font-mono text-[8px] tracking-[0.3em] text-primary/65 md:text-[9px]">STUDIO CONFIGURATOR</p>
-                            <p className="text-[12px] font-medium text-white/55 md:text-[13px]">Amsterdam · Live floor map</p>
+                            <p className="text-[12px] font-medium text-white/55 md:text-[13px]">Amsterdam, Live floor map</p>
                         </div>
                     </div>
                     <div className="rounded-full border border-white/12 bg-white/[0.04] px-3 py-1.5 backdrop-blur-sm">
@@ -1374,7 +1375,7 @@ function JourneyAluminumFrame({
                             <span className="h-2 w-2 rounded-full bg-slate-400/70 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)]" />
                             <span className="h-2 w-2 rounded-full bg-primary/70 shadow-[0_0_8px_rgba(155,77,255,0.55)]" />
                         </div>
-                        <p className="font-mono text-[8px] tracking-[0.28em] text-slate-400/80 md:text-[9px]">UKONNECT · GROWTH ENGINE</p>
+                        <p className="font-mono text-[8px] tracking-[0.28em] text-slate-400/80 md:text-[9px]">UKONNECT GROWTH ENGINE</p>
                         <p className="font-mono text-[9px] tabular-nums text-primary/70">0{index + 1}</p>
                     </div>
 
@@ -1427,7 +1428,7 @@ function JourneyAluminumFrame({
                                     <p className="mt-0.5 text-[11px] text-white/65">{step.micro}</p>
                                 </div>
                                 <div className="hidden rounded-lg border border-white/10 bg-white/[0.04] px-2 py-1.5 font-mono text-[8px] tracking-[0.18em] text-slate-300/70 sm:block">
-                                    16:10 · AI RENDER
+                                    16:10 AI RENDER
                                 </div>
                             </div>
 
@@ -1554,12 +1555,12 @@ function WorkAIPlatform({ steps }: { steps: JourneyStep[] }) {
                                 exit={{ opacity: 0, x: -10, filter: 'blur(5px)' }}
                                 transition={{ duration: 0.58, ease: EASE }}
                             >
-                                <p className="font-mono text-[9px] tracking-[0.32em] text-primary/55">PHASE · 0{active + 1}</p>
+                                <p className="font-mono text-[9px] tracking-[0.32em] text-primary/55">PHASE 0{active + 1}</p>
                                 <h4 className="mt-2 text-[22px] font-semibold leading-[1.05] tracking-[-0.03em] text-slate-900 md:text-[26px]">
                                     {current.title}
                                 </h4>
                                 <p className="mt-3 text-[14px] leading-[1.7] text-slate-600 md:text-[15px]">{current.micro}</p>
-                                <p className="mt-2 text-[12px] font-medium tracking-[0.06em] text-primary/70 uppercase">Team · {current.team}</p>
+                                <p className="mt-2 text-[12px] font-medium tracking-[0.06em] text-primary/70 uppercase">Team {current.team}</p>
                                 <p className="mt-3 text-[12.5px] leading-[1.68] text-slate-400">
                                     Each phase connects Marketing, AI Systems, and Web Development inside one growth engine.
                                 </p>
@@ -1778,7 +1779,7 @@ function LeadershipStatement({ image }: { image: string }) {
                                         </div>
                                         <div className="text-right">
                                             <p className="font-mono text-[8px] tracking-[0.22em] text-slate-400">UKONNECT</p>
-                                            <p className="mt-1 text-[11px] text-slate-500">Marketing · AI Systems · Web</p>
+                                            <p className="mt-1 text-[11px] text-slate-500">Marketing, AI Systems, Web</p>
                                         </div>
                                     </div>
                                 </motion.div>
@@ -1830,6 +1831,7 @@ function LeadershipStatement({ image }: { image: string }) {
 }
 
 export function CompanyStoryExperience() {
+    const { t } = useLanguage();
     const [modalOpen, setModalOpen] = useState(false);
 
     const assets = useMemo(
@@ -1879,7 +1881,7 @@ export function CompanyStoryExperience() {
                 detail:
                     'Integrations, CRM syncs, and agent workflows reviewed at the desk before automation goes live in a client environment.',
                 note: 'The same AI Systems capability from Our services: validating logic, routing edge cases, and tuning workflows while dashboards show live signal.',
-                tagline: 'AI SYSTEMS · WORKFLOWS · CRM',
+                tagline: 'AI SYSTEMS, WORKFLOWS, CRM',
                 alt: 'Ukonnect team reviewing AI integrations and automation workflows at a desk',
                 mediaType: 'video',
                 src: assets.collabLoop,
@@ -1893,7 +1895,7 @@ export function CompanyStoryExperience() {
                 detail:
                     'Google Ads, Meta campaigns, and funnel strategy aligned in one room before creative, budget, and targeting move forward.',
                 note: 'Marketing delivery in practice: paid advertising, conversion funnels, and lead generation strategy decided together, not in silos.',
-                tagline: 'MARKETING · PAID ADS · FUNNELS',
+                tagline: 'MARKETING, PAID ADS, FUNNELS',
                 alt: 'Ukonnect marketing team reviewing campaign direction around a boardroom table',
                 mediaType: 'image',
                 src: assets.meeting,
@@ -1906,7 +1908,7 @@ export function CompanyStoryExperience() {
                 detail:
                     'Landing page structure, conversion paths, and campaign priorities locked before web build and paid media launch together.',
                 note: 'Where Marketing and Web Development meet: funnels, messaging, and page architecture planned as one connected system.',
-                tagline: 'FUNNELS · LANDING PAGES · STRATEGY',
+                tagline: 'FUNNELS, LANDING PAGES, STRATEGY',
                 alt: 'Ukonnect team planning conversion funnels and landing pages around a laptop and whiteboard',
                 mediaType: 'image',
                 src: assets.planning,
@@ -1919,7 +1921,7 @@ export function CompanyStoryExperience() {
                 detail:
                     'Conversion websites, tracking setup, and landing page performance reviewed live with the client before launch.',
                 note: 'Web Development in the room: sites, analytics, and conversion decisions resolved in front of the actual build, not a slide deck.',
-                tagline: 'WEB · TRACKING · CONVERSION',
+                tagline: 'WEB, TRACKING, CONVERSION',
                 alt: 'Ukonnect web team presenting a conversion site and tracking setup in a workshop',
                 mediaType: 'image',
                 src: assets.workshop,
@@ -2001,17 +2003,17 @@ export function CompanyStoryExperience() {
     const peoplePanels = [
         {
             title: 'Marketing',
-            tag: 'GOOGLE · META · FUNNELS',
+            tag: 'GOOGLE, META, FUNNELS',
             body: 'Paid advertising on Meta and Google, conversion funnels, and lead generation strategy that attract high-intent prospects.',
         },
         {
             title: 'AI Systems',
-            tag: 'AUTOMATION · CRM · AGENTS',
+            tag: 'AUTOMATION, CRM, AGENTS',
             body: 'AI lead generation, sales automation, marketing automation, and integrations that connect CRM, ads, and analytics into one system.',
         },
         {
             title: 'Web Development',
-            tag: 'SITES · LANDING · TRACKING',
+            tag: 'SITES, LANDING, TRACKING',
             body: 'Conversion websites, high-performance landing pages, and tracking infrastructure that turn traffic into measurable leads.',
         },
     ];
@@ -2204,7 +2206,7 @@ export function CompanyStoryExperience() {
                                         transition={{ duration: 0.45, ease: EASE_OUT }}
                                         className="group inline-flex items-center justify-center gap-2 rounded-2xl bg-primary px-8 py-4 md:px-10 md:py-5 text-white font-semibold shadow-[0_18px_45px_rgba(86,0,227,0.38)] hover:bg-primary-hover transition-all"
                                     >
-                                        Book a strategy call
+                                        {t('cta.button')}
                                         <ArrowRight2 size={17} color="#ffffff" variant="Bulk" />
                                     </motion.button>
                                 </div>

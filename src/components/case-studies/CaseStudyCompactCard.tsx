@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight2 } from 'iconsax-react';
+import { useLanguage } from '../../i18n/LanguageContext';
 import type { CaseStudyExperience } from './caseStudyExperienceData';
 import { CASE_STUDY_DATA_PENDING_VERIFICATION } from './caseStudyExperienceData';
 import { CaseStudyVisual } from './CaseStudyVisual';
@@ -17,6 +18,7 @@ type Props = {
  * Click expands into the full documentary project view.
  */
 export function CaseStudyCompactCard({ study, index, onExpand }: Props) {
+    const { t } = useLanguage();
     const reduce = useReducedMotion();
     const [hovered, setHovered] = useState(false);
     const primaryMetric = !CASE_STUDY_DATA_PENDING_VERIFICATION ? study.metrics[0] : undefined;
@@ -67,7 +69,7 @@ export function CaseStudyCompactCard({ study, index, onExpand }: Props) {
 
             <div className="relative flex flex-1 flex-col px-5 pb-5 pt-5 sm:px-6 sm:pb-6 sm:pt-6">
                 <p className="font-mono text-[9px] font-semibold uppercase tracking-[0.18em] text-slate-400/90">
-                    0{index + 1} · {study.industry}
+                    0{index + 1} {study.industry}
                 </p>
 
                 <motion.h3
@@ -100,13 +102,13 @@ export function CaseStudyCompactCard({ study, index, onExpand }: Props) {
                             </p>
                         </div>
                         <span className="text-[11px] font-semibold text-slate-400 transition-colors duration-500 group-hover:text-slate-700">
-                            Read story
+                            {t('caseStudies.readStory')}
                         </span>
                     </div>
                 ) : (
                     <div className="mt-7 flex items-end justify-end border-t border-slate-100/80 pt-5">
                         <span className="text-[11px] font-semibold text-slate-400 transition-colors duration-500 group-hover:text-slate-700">
-                            Read story
+                            {t('caseStudies.readStory')}
                         </span>
                     </div>
                 )}
