@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight2, CloseCircle } from 'iconsax-react';
 import type { CaseStudyExperience } from './caseStudyExperienceData';
+import { CASE_STUDY_DATA_PENDING_VERIFICATION } from './caseStudyExperienceData';
 import { CaseStudyMetricGrid } from './CaseStudyMetricGrid';
 import { CaseStudyVisual } from './CaseStudyVisual';
 import { CursorLight } from './CursorLight';
@@ -170,7 +171,7 @@ export function CaseStudyExpandOverlay({ study, index, onClose, onDeepOpen, lock
                                         transition={{ delay: 0.26, duration: 0.55, ease: EASE_LUXURY }}
                                         className="mt-10 space-y-0"
                                     >
-                                        <NarrativeBeat label="Before" text={study.before} accent="rgba(148,163,184,0.9)" />
+                                        <NarrativeBeat label="Then" text={study.before} accent="rgba(148,163,184,0.9)" />
                                         <div className="flex items-center gap-3 py-2 pl-1" aria-hidden>
                                             <span
                                                 className="h-6 w-px"
@@ -182,7 +183,7 @@ export function CaseStudyExpandOverlay({ study, index, onClose, onDeepOpen, lock
                                                 className="font-mono text-[9px] font-bold uppercase tracking-[0.2em]"
                                                 style={{ color: study.theme.from }}
                                             >
-                                                Transform
+                                                The shift
                                             </span>
                                         </div>
                                         <p className="pl-1 text-[13px] font-medium leading-[1.65] text-slate-700">
@@ -196,21 +197,23 @@ export function CaseStudyExpandOverlay({ study, index, onClose, onDeepOpen, lock
                                                 }}
                                             />
                                         </div>
-                                        <NarrativeBeat label="Result" text={study.after} accent={study.theme.from} />
+                                        <NarrativeBeat label="Now" text={study.after} accent={study.theme.from} />
                                     </motion.div>
 
-                                    <motion.div
-                                        initial={reduce ? false : { opacity: 0, y: 10 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ delay: 0.32, duration: 0.5, ease: EASE_LUXURY }}
-                                        className="mt-10"
-                                    >
-                                        <CaseStudyMetricGrid
-                                            metrics={study.metrics}
-                                            theme={study.theme}
-                                            editorial
-                                        />
-                                    </motion.div>
+                                    {!CASE_STUDY_DATA_PENDING_VERIFICATION ? (
+                                        <motion.div
+                                            initial={reduce ? false : { opacity: 0, y: 10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{ delay: 0.32, duration: 0.5, ease: EASE_LUXURY }}
+                                            className="mt-10"
+                                        >
+                                            <CaseStudyMetricGrid
+                                                metrics={study.metrics}
+                                                theme={study.theme}
+                                                editorial
+                                            />
+                                        </motion.div>
+                                    ) : null}
 
                                     <motion.button
                                         type="button"
@@ -226,7 +229,7 @@ export function CaseStudyExpandOverlay({ study, index, onClose, onDeepOpen, lock
                                             boxShadow: `0 18px 40px -16px ${study.theme.glow}`,
                                         }}
                                     >
-                                        <span>Open Case Study</span>
+                                        <span>Read the story</span>
                                         <ArrowRight2
                                             size={18}
                                             variant="Outline"

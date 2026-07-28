@@ -2185,7 +2185,7 @@ export function CompanyStoryExperience() {
 
                             <div className="relative grid grid-cols-1 md:grid-cols-[1.2fr_0.8fr] gap-8 items-center">
                                 <div>
-                                    <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.2em] text-[#c9b2ff]">Exclusive Strategy Session</p>
+                                    <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.2em] text-[#c9b2ff]">Strategy session</p>
                                     <h3 className="mt-3 text-[30px] md:text-[52px] leading-[1.02] font-bold tracking-tight text-white">
                                         Let’s build your next
                                         <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#b98cff] to-[#8f5bff]">
@@ -2204,7 +2204,7 @@ export function CompanyStoryExperience() {
                                         transition={{ duration: 0.45, ease: EASE_OUT }}
                                         className="group inline-flex items-center justify-center gap-2 rounded-2xl bg-primary px-8 py-4 md:px-10 md:py-5 text-white font-semibold shadow-[0_18px_45px_rgba(86,0,227,0.38)] hover:bg-primary-hover transition-all"
                                     >
-                                        Start Private Session
+                                        Book a strategy call
                                         <ArrowRight2 size={17} color="#ffffff" variant="Bulk" />
                                     </motion.button>
                                 </div>

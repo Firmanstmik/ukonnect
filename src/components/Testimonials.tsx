@@ -143,9 +143,11 @@ function ReviewCard({ review, t }: { review: ProofCard; t: Translate }) {
                     </p>
                 </div>
                 <div className="flex flex-col items-end gap-1.5">
-                    <span className="bg-gradient-to-r from-[#5600e3] to-[#00d4e8] bg-clip-text text-xs font-bold tabular-nums text-transparent">
-                        {review.resultValue}
-                    </span>
+                    {!TESTIMONIAL_METRICS_PENDING_VERIFICATION ? (
+                        <span className="bg-gradient-to-r from-[#5600e3] to-[#00d4e8] bg-clip-text text-xs font-bold tabular-nums text-transparent">
+                            {review.resultValue}
+                        </span>
+                    ) : null}
                     <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-gradient-to-br from-emerald-500 to-emerald-400 text-white shadow-sm">
                         <Check className="h-3.5 w-3.5" strokeWidth={3} />
                     </span>
@@ -268,7 +270,7 @@ function TrustPillar({ t }: { t: Translate }) {
                             </div>
                             <div>
                                 <p className="text-lg font-extrabold leading-none tabular-nums">
-                                    <AnimatedCounter to={150} suffix="+" duration={1.5} />
+                                    <AnimatedCounter to={84} suffix="+" duration={1.5} />
                                 </p>
                                 <p className="mt-1 text-[11px] font-semibold uppercase tracking-wide text-white/45">
                                     {t('testimonials.pillar.reviews')}
@@ -314,7 +316,7 @@ function MobileStats({ t }: { t: Translate }) {
             </div>
             <div className="inline-flex items-center gap-2 rounded-full border border-slate-200/80 bg-white px-4 py-2.5 shadow-[0_4px_20px_rgba(0,0,0,0.06)]">
                 <Users className="h-4 w-4 text-[#5600e3]" />
-                <span className="text-sm font-extrabold text-slate-900">150+</span>
+                <span className="text-sm font-extrabold text-slate-900">84+</span>
                 <span className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">
                     {t('testimonials.pillar.reviews')}
                 </span>

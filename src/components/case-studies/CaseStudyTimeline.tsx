@@ -19,14 +19,14 @@ export function CaseStudyTimeline({
             <div className="mb-8 flex items-end justify-between gap-3">
                 <div>
                     <p className={`font-mono text-[10px] tracking-[0.28em] ${isDark ? 'text-white/32' : 'text-primary/55'}`}>
-                        PROJECT TIMELINE
+                        HOW IT UNFOLDED
                     </p>
                     <h4
                         className={`mt-4 text-[1.7rem] font-semibold leading-[1.12] tracking-[-0.02em] md:text-[2rem] ${
                             isDark ? 'text-white' : 'text-slate-900'
                         }`}
                     >
-                        Execution rhythm
+                        From listening to launch
                     </h4>
                 </div>
             </div>

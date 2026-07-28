@@ -8,7 +8,7 @@
  * Copy (relationship labels) lives in `translations.ts`; only keys are held
  * here so the section stays fully localized across nl / pt / en / id.
  */
-import { Buildings, Code, Cpu, Data, EmojiHappy, Facebook, Global, MoneyRecive, Send2, UserTick } from 'iconsax-react';
+import { Buildings, Code, Cpu, Data, EmojiHappy, Facebook, Global, Send2 } from 'iconsax-react';
 import type { Icon } from 'iconsax-react';
 import logoDutchBroker from '../assets/Partners/DUTCHBROKER.png';
 import logoHuurwoningen from '../assets/Partners/HUURWONINGEN.png';
@@ -42,6 +42,7 @@ export interface TrustMetric {
     to: number;
     prefix?: string;
     suffix?: string;
+    decimals?: number;
     labelKey: TranslationKey;
     /** Icon anchoring the card — gives each figure an immediate, legible context. */
     icon: Icon;
@@ -51,12 +52,9 @@ export interface TrustMetric {
     soft: string;
 }
 
-// Enterprise trust metrics. Numbers are founder-supplied headline figures —
-// treated as editable content, not derived data. See MEMORY: case-study metrics
-// are intentional placeholders pending verification.
+// Enterprise trust metrics — only figures we will stand behind publicly.
+// Additional KPIs stay out of production until founder-verified.
 export const TRUST_METRICS: TrustMetric[] = [
     { to: 84, suffix: '+', labelKey: 'trust.metricBusinesses', icon: Buildings, accent: '#5600e3', soft: 'rgba(86,0,227,0.08)' },
-    { to: 250, suffix: 'K+', labelKey: 'trust.metricLeads', icon: UserTick, accent: '#9b4dff', soft: 'rgba(155,77,255,0.08)' },
-    { to: 98, suffix: '%', labelKey: 'trust.metricSatisfaction', icon: EmojiHappy, accent: '#10b981', soft: 'rgba(16,185,129,0.08)' },
-    { to: 12, prefix: '€', suffix: 'M+', labelKey: 'trust.metricRevenue', icon: MoneyRecive, accent: '#e6a700', soft: 'rgba(230,167,0,0.1)' },
+    { to: 4.9, suffix: '/5', decimals: 1, labelKey: 'trust.metricSatisfaction', icon: EmojiHappy, accent: '#10b981', soft: 'rgba(16,185,129,0.08)' },
 ];

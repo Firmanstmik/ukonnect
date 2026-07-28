@@ -89,6 +89,7 @@ function MetricCard({ metric, t, delay }: { metric: TrustMetric; t: Translate; d
                 to={metric.to}
                 prefix={metric.prefix}
                 suffix={metric.suffix}
+                decimals={metric.decimals}
                 duration={2.2}
                 className="relative text-transparent bg-clip-text bg-gradient-to-r from-[#5600e3] to-[#9b4dff] text-3xl font-bold tracking-tight md:text-4xl lg:text-[2.75rem]"
             />
@@ -152,7 +153,7 @@ export function TrustedBy() {
                 </motion.div>
 
                 {/* ── Enterprise trust metrics ── */}
-                <div className="mt-16 grid grid-cols-2 gap-3 md:mt-24 md:grid-cols-4 md:gap-5">
+                <div className="mx-auto mt-16 grid max-w-2xl grid-cols-2 gap-3 md:mt-24 md:gap-5">
                     {TRUST_METRICS.map((metric, idx) => (
                         <MetricCard key={metric.labelKey} metric={metric} t={t} delay={0.16 + idx * 0.06} />
                     ))}

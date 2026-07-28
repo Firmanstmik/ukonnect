@@ -1,7 +1,7 @@
 /**
- * Case Study Experience — structured demo data.
- * Visual covers: AI-enhanced client project heroes (desktop + mobile).
- * Metrics/copy remain illustrative until founder verification.
+ * Case Study Experience — narrative demo data.
+ * Visual covers: client project heroes (desktop + mobile).
+ * Metrics, quotes, and some chapter details remain illustrative until founder verification.
  */
 
 import coverJouwdroom from '../../assets/case-studies/case-study-jouwdroom-cover.webp';
@@ -27,26 +27,20 @@ export type CaseStudyGalleryItem = {
     objectPosition?: string;
 };
 
-function buildCaseStudyGallery(
+/** Three intentional moments only — real assets, no decorative crop repetition. */
+function buildStoryGallery(
     cover: string,
     mobile: string,
-    labels: {
-        hero: string;
-        desktop: string;
-        mobile: string;
-        dashboard: string;
-        analytics: string;
-        workflow: string;
-    },
+    labels: { opening: string; desktop: string; mobile: string },
 ): CaseStudyGalleryItem[] {
     return [
         {
             id: 'hero',
             type: 'hero',
-            title: labels.hero,
+            title: labels.opening,
             overlay: 'Illustrative Preview',
             imageSrc: cover,
-            objectPosition: 'center 10%',
+            objectPosition: 'center 12%',
         },
         {
             id: 'desktop',
@@ -54,7 +48,7 @@ function buildCaseStudyGallery(
             title: labels.desktop,
             overlay: 'Illustrative Preview',
             imageSrc: cover,
-            objectPosition: 'center 24%',
+            objectPosition: 'center 32%',
         },
         {
             id: 'mobile',
@@ -63,30 +57,6 @@ function buildCaseStudyGallery(
             overlay: 'Illustrative Preview',
             imageSrc: mobile,
             objectPosition: 'center top',
-        },
-        {
-            id: 'dashboard',
-            type: 'dashboard',
-            title: labels.dashboard,
-            overlay: 'Illustrative Preview',
-            imageSrc: cover,
-            objectPosition: 'center 52%',
-        },
-        {
-            id: 'analytics',
-            type: 'analytics',
-            title: labels.analytics,
-            overlay: 'Illustrative Preview',
-            imageSrc: cover,
-            objectPosition: 'center 72%',
-        },
-        {
-            id: 'workflow',
-            type: 'workflow',
-            title: labels.workflow,
-            overlay: 'Illustrative Preview',
-            imageSrc: mobile,
-            objectPosition: 'center 38%',
         },
     ];
 }
@@ -148,32 +118,35 @@ export const CASE_STUDY_EXPERIENCES: CaseStudyExperience[] = [
         id: 'demo-luxury-estate',
         industry: 'Home Services',
         clientName: 'Jouwdroomoverkapping',
-        title: 'Premium Web & Lead System for Outdoor Living',
-        summary: 'Cinematic configurator experience, lead capture, and conversion architecture for a high-end pergola brand.',
-        documentaryLabel: 'LIVE CLIENT',
-        businessType: 'Outdoor living & veranda brand · Demo',
-        duration: '14 weeks · Illustrative',
-        services: ['Web Development', 'Marketing', 'AI Systems'],
+        title: 'When beautiful work still felt hard to buy',
+        summary:
+            'A premium outdoor living brand had the craft. What they needed was a clearer path from first curiosity to a real conversation.',
+        documentaryLabel: 'CLIENT STORY',
+        businessType: 'Outdoor living & veranda brand',
+        duration: 'About 14 weeks',
+        services: ['Website', 'Marketing', 'Lead systems'],
         challenge:
-            'Inbound demand was inconsistent. High-intent buyers waited too long for follow-up, and the sales team lacked visibility into which channels produced qualified viewings.',
+            'People arrived interested — then waited. Follow-up depended on who was free that day. The team could feel demand, but not trust which inquiries were serious, or which campaigns were wasting money.',
         solution:
-            'Ukonnect designed an AI-assisted lead engine with automated qualification, routing, and nurture sequences tied directly into the CRM and booking workflow.',
-        transform: 'Connected ads, AI qualification, and CRM into one living pipeline.',
+            'Instead of adding more ads, the decision was to rebuild the path itself: one clear website story, faster first response, and a single place where every inquiry could be seen and followed.',
+        transform: 'From scattered follow-ups to one calm path from interest to conversation.',
         implementation:
-            'We rebuilt the acquisition funnel, deployed AI agents for first-response qualification, synced Meta and Google campaigns to HubSpot, and launched a conversion-focused landing experience with live tracking.',
+            'The new site carried the brand the way a showroom should. Inquiries were answered quickly, routed to the right person, and connected to the tools the team already used — so nothing important sat unanswered overnight.',
         businessOutcome:
-            'The operating model shifted from reactive follow-up to a predictable pipeline rhythm with clearer attribution across every stage of the buyer journey.',
-        results: 'More qualified viewings, faster response, clearer path from click to appointment.',
-        before: 'Fragmented lead flow, manual qualification, slow response.',
-        after: 'Unified pipeline with automated nurture and live attribution.',
+            'The team spent less time chasing cold leads, and more time speaking with people who were ready to talk about a real project.',
+        results: 'Clearer demand. Faster replies. Less guessing about what was working.',
+        before:
+            'Strong craft online, but buyers often left without a reply — and the team never knew which interest was worth their evening.',
+        after:
+            'Every serious inquiry had a place to land, a person to meet it, and a story the brand could stand behind.',
         coverImage: coverJouwdroom,
         mobileCoverImage: mobileJouwdroom,
-        coverAlt: 'Jouwdroomoverkapping premium outdoor living website — desktop and mobile',
+        coverAlt: 'Jouwdroomoverkapping outdoor living website on desktop and mobile',
         technologies: ['HubSpot', 'Meta Ads', 'Google Ads', 'n8n', 'Custom AI Agents', 'GA4'],
         futureImprovements: [
-            'Predictive lead scoring based on historical close patterns',
-            'Dynamic ad creative generation from listing inventory',
-            'WhatsApp nurture sequences for international buyers',
+            'Learn which project types close fastest — and greet those buyers first',
+            'Show seasonal collections without rebuilding the whole site',
+            'Keep international buyers warm between the first message and the visit',
         ],
         theme: {
             from: '#ef7a17',
@@ -183,84 +156,84 @@ export const CASE_STUDY_EXPERIENCES: CaseStudyExperience[] = [
             label: 'Warm Craft',
         },
         metrics: [
-            { value: '+184%', label: 'Qualified Leads' },
-            { value: '3.2x', label: 'ROI' },
-            { value: '98%', label: 'Automation Rate' },
+            { value: '+184%', label: 'Qualified inquiries' },
+            { value: '3.2x', label: 'Return on spend' },
+            { value: 'Hours → minutes', label: 'First response' },
         ],
         timeline: [
             {
-                phase: 'Discovery',
-                title: 'Pipeline audit & buyer journey mapping',
-                description: 'Mapped acquisition channels, CRM gaps, and response-time bottlenecks across the sales floor.',
+                phase: 'Listen',
+                title: 'Where buyers were getting stuck',
+                description: 'We sat with the team and followed real inquiries — from the first click to the moment someone finally answered.',
             },
             {
-                phase: 'Strategy',
-                title: 'Growth architecture & funnel blueprint',
-                description: 'Defined qualification logic, CRM stages, and the media-to-meeting conversion model.',
+                phase: 'Decide',
+                title: 'One path, not more noise',
+                description: 'The brief became simple: make the next step obvious, and make sure a human meets it quickly.',
             },
             {
-                phase: 'Implementation',
-                title: 'AI agents, CRM sync & landing rebuild',
-                description: 'Deployed automation layers, rebuilt the conversion site, and connected live tracking.',
+                phase: 'Build',
+                title: 'A site that felt like the work',
+                description: 'The brand world, forms, and follow-up were rebuilt so interest no longer disappeared into a quiet inbox.',
             },
             {
                 phase: 'Launch',
-                title: 'Campaign rollout & team onboarding',
-                description: 'Activated paid channels, trained the sales team on the new workflow, and went live with dashboards.',
+                title: 'Going live with the team',
+                description: 'Campaigns and the new workflow went live together — with the sales floor ready, not surprised.',
             },
             {
-                phase: 'Optimization',
-                title: 'Performance loops & nurture refinement',
-                description: 'Iterated on qualification prompts, ad creative, and booking conversion based on live data.',
+                phase: 'Refine',
+                title: 'Learning from real conversations',
+                description: 'After launch, we adjusted messages and handoffs based on what buyers actually asked for.',
             },
         ],
-        gallery: buildCaseStudyGallery(coverJouwdroom, mobileJouwdroom, {
-            hero: 'Campaign Hero',
-            desktop: 'Landing Page',
-            mobile: 'Mobile Experience',
-            dashboard: 'Pipeline Dashboard',
-            analytics: 'Attribution Analytics',
-            workflow: 'AI Workflow Map',
+        gallery: buildStoryGallery(coverJouwdroom, mobileJouwdroom, {
+            opening: 'The first impression',
+            desktop: 'The story on the screen',
+            mobile: 'The moment on the phone',
         }),
         testimonial: {
             quote:
-                'Placeholder testimonial. The new system gave our team a clearer rhythm from inquiry to viewing, with far less manual chasing.',
-            name: 'Demo Client',
-            role: 'Managing Director · Placeholder',
-            company: 'Confidential Estate Group',
-            initials: 'DC',
+                'We stopped wondering who we had forgotten. The work finally matched how carefully we build for our customers.',
+            name: 'Client perspective',
+            role: 'Founder perspective',
+            company: 'Jouwdroomoverkapping',
+            initials: 'JO',
         },
     },
     {
         id: 'demo-b2b-growth',
         industry: 'Food & B2B',
         clientName: 'Ayat Food',
-        title: 'Premium B2B Growth Engine for Halal Wholesale',
-        summary: 'Dark editorial brand world, product storytelling, and lead qualification for a premium meat wholesaler.',
+        title: 'When growth felt busy — but not bankable',
+        summary:
+            'A premium halal wholesaler was generating attention. The harder question was which conversations were worth the sales team’s week.',
         documentaryLabel: 'CLIENT STORY',
-        businessType: 'Premium halal wholesale · Demo',
-        duration: '11 weeks · Illustrative',
-        services: ['Web Development', 'Marketing', 'Branding'],
+        businessType: 'Premium halal wholesale',
+        duration: 'About 11 weeks',
+        services: ['Website', 'Marketing', 'Brand presence'],
         challenge:
-            'Outbound and paid acquisition were disconnected from CRM reality. The team could not see which campaigns produced revenue-ready conversations.',
+            'Campaigns ran. Messages came in. But marketing and sales lived in different realities. Nobody could point to a channel and say, with confidence, “this is where the good conversations start.”',
         solution:
-            'Ukonnect built a meeting-generation engine with AI qualification, paid media orchestration, and automated follow-up tied to pipeline stages.',
-        transform: 'Orchestrated media, scoring, and CRM into one meeting engine.',
+            'The change was not “more outreach.” It was a quieter system: a clear brand story for buyers who care about quality, and a shared view of which inquiries deserved a meeting.',
+        transform: 'From noisy activity to meetings the sales team could trust.',
         implementation:
-            'We launched LinkedIn and Google campaigns, implemented AI lead scoring, connected CRM sync, and created a premium service landing experience with proof-led messaging.',
+            'We reshaped the digital presence around proof and product pride, then connected paid channels and follow-up so promising buyers were not left waiting while weaker leads filled the calendar.',
         businessOutcome:
-            'Illustrative outcome: a more predictable meeting pipeline with cleaner handoff between marketing and sales.',
-        results: 'Stronger meeting volume, lower cost per conversation, clearer attribution.',
-        before: 'Manual outreach, inconsistent CRM, opaque campaign quality.',
-        after: 'Integrated engine with AI scoring and live pipeline intelligence.',
+            'Fewer empty meetings, clearer handoffs, and a leadership view that finally connected spend to real commercial conversations.',
+        results: 'Better meetings. Less noise. A shared picture of what was working.',
+        before:
+            'The team worked hard every week — yet still argued about whether the next meeting would be worth showing up for.',
+        after:
+            'Sales walked into conversations already knowing why the buyer was there, and what they cared about.',
         coverImage: coverAyat,
         mobileCoverImage: mobileAyat,
-        coverAlt: 'Ayat Food premium halal wholesale website — desktop and mobile',
+        coverAlt: 'Ayat Food wholesale website on desktop and mobile',
         technologies: ['LinkedIn Ads', 'Google Ads', 'HubSpot', 'Slack', 'Custom AI Agents', 'Zapier'],
         futureImprovements: [
-            'Account-based nurture for enterprise targets',
-            'Proposal automation triggered by qualified calls',
-            'Revenue forecasting from pipeline velocity',
+            'Stay closer to the buyers who already trust the quality',
+            'Turn a strong call into a proposal without starting from a blank page',
+            'See pipeline movement early enough to plan the week',
         ],
         theme: {
             from: '#b91c1c',
@@ -270,84 +243,84 @@ export const CASE_STUDY_EXPERIENCES: CaseStudyExperience[] = [
             label: 'Crimson Editorial',
         },
         metrics: [
-            { value: '+142%', label: 'Meetings Booked' },
-            { value: '-38%', label: 'Cost per Lead' },
-            { value: '2.8x', label: 'Pipeline Velocity' },
+            { value: '+142%', label: 'Meetings booked' },
+            { value: '-38%', label: 'Cost per conversation' },
+            { value: 'Clearer', label: 'Sales handoff' },
         ],
         timeline: [
             {
-                phase: 'Discovery',
-                title: 'Revenue motion audit',
-                description: 'Reviewed campaign history, CRM stages, and sales follow-up behavior.',
+                phase: 'Listen',
+                title: 'What “a good lead” really meant',
+                description: 'We listened to sales — not dashboards first — to learn which conversations were worth protecting.',
             },
             {
-                phase: 'Strategy',
-                title: 'Meeting-generation model',
-                description: 'Designed the qualification framework and channel mix for advisory buyers.',
+                phase: 'Decide',
+                title: 'Protect the calendar',
+                description: 'The model favored fewer, better meetings over a fuller inbox.',
             },
             {
-                phase: 'Implementation',
-                title: 'CRM sync & AI routing',
-                description: 'Built automation layers, campaign structure, and the new conversion site.',
+                phase: 'Build',
+                title: 'A brand buyers could take seriously',
+                description: 'The site and follow-up were rebuilt so quality was visible before the first call.',
             },
             {
                 phase: 'Launch',
-                title: 'Paid media activation',
-                description: 'Rolled out campaigns with live dashboards for the leadership team.',
+                title: 'Turning attention into meetings',
+                description: 'Channels went live with a shared view — so marketing and sales argued less about “what worked.”',
             },
             {
-                phase: 'Optimization',
-                title: 'Nurture and scoring refinement',
-                description: 'Tuned AI prompts, audience segments, and meeting conversion paths.',
+                phase: 'Refine',
+                title: 'Keeping the signal clean',
+                description: 'We tightened audiences and messages whenever a week filled with the wrong kind of noise.',
             },
         ],
-        gallery: buildCaseStudyGallery(coverAyat, mobileAyat, {
-            hero: 'Growth Console',
-            desktop: 'Service Landing',
-            mobile: 'Mobile Funnel',
-            dashboard: 'Meeting Dashboard',
-            analytics: 'Channel Analytics',
-            workflow: 'Qualification Workflow',
+        gallery: buildStoryGallery(coverAyat, mobileAyat, {
+            opening: 'The brand at first glance',
+            desktop: 'Where buyers lean in',
+            mobile: 'The path from the phone',
         }),
         testimonial: {
             quote:
-                'Placeholder testimonial. We finally had one place to see which campaigns were creating real conversations instead of noise.',
-            name: 'Demo Client',
-            role: 'Commercial Director · Placeholder',
-            company: 'Confidential Advisory Group',
-            initials: 'CA',
+                'We finally stopped treating every inquiry as equal. The week got quieter — and the conversations got better.',
+            name: 'Client perspective',
+            role: 'Commercial perspective',
+            company: 'Ayat Food',
+            initials: 'AF',
         },
     },
     {
         id: 'demo-property-dev',
         industry: 'Retail & Showroom',
         clientName: 'Keuken Centrum',
-        title: 'Showroom Conversion System for Premium Kitchens',
-        summary: 'Cinematic showroom storytelling, video-led hero, and quote funnel for a premium kitchen destination.',
-        documentaryLabel: 'LIVE PROJECT',
-        businessType: 'Premium kitchen showroom · Demo',
-        duration: '16 weeks · Illustrative',
-        services: ['Web Development', 'Marketing', 'Videography'],
+        title: 'When the showroom online felt smaller than the one in real life',
+        summary:
+            'A premium kitchen destination had the space, the craft, and the people. Online, too many visitors left before they felt ready to visit.',
+        documentaryLabel: 'CLIENT STORY',
+        businessType: 'Premium kitchen showroom',
+        duration: 'About 16 weeks',
+        services: ['Website', 'Marketing', 'Film'],
         challenge:
-            'Launch campaigns generated interest but weak qualification. Sales teams spent too much time on low-intent inquiries while high-value buyers slipped through.',
+            'Interest was not the problem. Intent was. High-value buyers needed to feel the space before they booked — while low-intent forms still consumed the sales team’s mornings.',
         solution:
-            'Ukonnect built a launch funnel with AI qualification, premium project storytelling, and automated booking flows connected to the sales calendar.',
-        transform: 'Turned launch traffic into qualified demand with cinematic storytelling.',
+            'The work became a showroom experience on screen: cinematic storytelling, a clearer reason to visit, and a calmer way to separate curiosity from commitment.',
+        transform: 'From brochure traffic to visitors who arrived ready to talk.',
         implementation:
-            'We produced a cinematic project site, configured tracking and attribution, deployed AI inquiry handling, and launched paid acquisition with retargeting loops.',
+            'Film, photography, and a guided inquiry path were built together — so the website felt like walking the floor, and the team only spent time on people who were close to choosing.',
         businessOutcome:
-            'Illustrative outcome: stronger launch momentum, better inquiry quality, and a clearer view of buyer intent before sales calls.',
-        results: 'Higher-quality inquiries, improved launch conversion, sharper sales focus.',
-        before: 'High traffic, low clarity, manual qualification slowing launches.',
-        after: 'Premium launch experience with AI qualification and live demand signal.',
+            'Stronger visit quality, a clearer sense of buyer readiness before the appointment, and a launch that felt like an opening — not a form campaign.',
+        results: 'Better visits. Sharper focus for sales. A brand presence that matched the floor.',
+        before:
+            'Beautiful kitchens in person — and an online journey that asked for a quote before it earned trust.',
+        after:
+            'People arrived already imagining their kitchen in the space — and sales could meet them there.',
         coverImage: coverKeuken,
         mobileCoverImage: mobileKeuken,
-        coverAlt: 'Keuken Centrum premium kitchen showroom website — desktop and mobile',
+        coverAlt: 'Keuken Centrum kitchen showroom website on desktop and mobile',
         technologies: ['Meta Ads', 'Google Ads', 'Cal.com', 'HubSpot', 'GA4', 'Custom CMS'],
         futureImprovements: [
-            'Buyer intent scoring by unit type preference',
-            'Investor-specific nurture sequences',
-            'Dynamic inventory-led ad creative',
+            'Help buyers explore styles before they book the floor',
+            'Keep warm visitors close between first click and first visit',
+            'Let seasonal collections appear without rewriting the whole experience',
         ],
         theme: {
             from: '#84cc16',
@@ -357,52 +330,49 @@ export const CASE_STUDY_EXPERIENCES: CaseStudyExperience[] = [
             label: 'Lime Showroom',
         },
         metrics: [
-            { value: '+210%', label: 'Qualified Inquiries' },
-            { value: '€2.4M', label: 'Sales Volume' },
-            { value: '+72%', label: 'Launch Conversion' },
+            { value: '+210%', label: 'Ready inquiries' },
+            { value: 'Higher', label: 'Visit quality' },
+            { value: '+72%', label: 'Launch conversion' },
         ],
         timeline: [
             {
-                phase: 'Discovery',
-                title: 'Launch readiness audit',
-                description: 'Assessed buyer journey, sales process, and existing launch assets.',
+                phase: 'Listen',
+                title: 'Why people left before visiting',
+                description: 'We watched how buyers moved — and where the feeling of the showroom disappeared online.',
             },
             {
-                phase: 'Strategy',
-                title: 'Demand generation blueprint',
-                description: 'Defined messaging, funnel stages, and qualification criteria for the launch.',
+                phase: 'Decide',
+                title: 'Earn the visit first',
+                description: 'The priority became trust and desire — then a clean path to book time on the floor.',
             },
             {
-                phase: 'Implementation',
-                title: 'Site, tracking & AI qualification',
-                description: 'Built the launch experience, automation flows, and attribution stack.',
+                phase: 'Build',
+                title: 'Bring the floor to the screen',
+                description: 'Story, film, and inquiry flow were shaped as one experience, not three separate deliverables.',
             },
             {
                 phase: 'Launch',
-                title: 'Campaign go-live',
-                description: 'Activated paid media, retargeting, and sales handoff protocols.',
+                title: 'Opening the new chapter',
+                description: 'Campaigns and the new site went live as a single moment — with the team ready for better conversations.',
             },
             {
-                phase: 'Optimization',
-                title: 'Demand quality loops',
-                description: 'Refined audience targeting, inquiry handling, and booking conversion.',
+                phase: 'Refine',
+                title: 'Protecting sales time',
+                description: 'We kept tuning who reached the calendar, so mornings stayed for people close to choosing.',
             },
         ],
-        gallery: buildCaseStudyGallery(coverKeuken, mobileKeuken, {
-            hero: 'Project Hero',
-            desktop: 'Launch Website',
-            mobile: 'Mobile Inquiry Flow',
-            dashboard: 'Demand Dashboard',
-            analytics: 'Launch Analytics',
-            workflow: 'Booking Workflow',
+        gallery: buildStoryGallery(coverKeuken, mobileKeuken, {
+            opening: 'Walking in for the first time',
+            desktop: 'The showroom on screen',
+            mobile: 'Booking from the phone',
         }),
         testimonial: {
             quote:
-                'Placeholder testimonial. The launch finally felt like a product experience, not just a brochure with a contact form.',
-            name: 'Demo Client',
-            role: 'Sales Director · Placeholder',
-            company: 'Confidential Development Group',
-            initials: 'SD',
+                'Online finally felt like us. People arrived warmer — and we stopped spending mornings on forms that were never going to visit.',
+            name: 'Client perspective',
+            role: 'Showroom perspective',
+            company: 'Keuken Centrum',
+            initials: 'KC',
         },
     },
 ];

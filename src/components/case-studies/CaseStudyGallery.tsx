@@ -42,10 +42,13 @@ export function CaseStudyGallery({ study }: { study: CaseStudyExperience }) {
         <div>
             <div className="mb-10 flex items-end justify-between gap-6 md:mb-12">
                 <div>
-                    <p className="font-mono text-[10px] tracking-[0.28em] text-white/32">GALLERY</p>
+                    <p className="font-mono text-[10px] tracking-[0.28em] text-white/32">MOMENTS</p>
                     <h4 className="mt-4 text-[1.7rem] font-semibold leading-[1.12] tracking-[-0.02em] text-white md:text-[2rem]">
-                        Project visuals
+                        Scenes from the work
                     </h4>
+                    <p className="mt-4 max-w-[36ch] text-[14px] leading-[1.7] text-white/40">
+                        Client project surfaces — ready to swap when additional screens are approved.
+                    </p>
                 </div>
                 <div className="flex items-center gap-2">
                     <button
@@ -136,50 +139,47 @@ function getGalleryDetail(type: CaseStudyExperience['gallery'][number]['type']) 
     switch (type) {
         case 'hero':
             return {
-                kicker: 'Campaign Entry',
+                kicker: 'Opening',
                 description:
-                    'The first impression layer: brand world, conversion headline, and emotional hook that turns cold traffic into warm interest.',
+                    'The first breath of the brand — where a stranger decides whether this feels like the right place to begin.',
                 icon: <MonitorMobbile size={20} variant="Bulk" color="#c4b5fd" />,
             };
         case 'desktop':
             return {
-                kicker: 'Desktop Conversion',
+                kicker: 'The longer look',
                 description:
-                    'The primary storytelling arc, sales proof, and CTA structure for high-intent visitors making a considered decision.',
+                    'Where the story unfolds: proof, atmosphere, and the quiet confidence that makes someone stay.',
                 icon: <MonitorMobbile size={20} variant="Bulk" color="#93c5fd" />,
             };
         case 'mobile':
             return {
-                kicker: 'Mobile Journey',
+                kicker: 'On the move',
                 description:
-                    'A focused path for paid and direct traffic, optimized for clarity and low-friction inquiry capture.',
+                    'The same promise in a smaller frame — clear enough that a serious buyer can take the next step from their phone.',
                 icon: <Mobile size={20} variant="Bulk" color="#f9a8d4" />,
             };
         case 'dashboard':
             return {
-                kicker: 'Pipeline Visibility',
-                description:
-                    'Operational clarity for the team: qualified leads, deal stages, and handoff status in one view.',
+                kicker: 'Behind the scenes',
+                description: 'Where the team sees demand clearly — prepared for when real operational screens replace this preview.',
                 icon: <Chart21 size={20} variant="Bulk" color="#86efac" />,
             };
         case 'analytics':
             return {
-                kicker: 'Attribution Layer',
-                description:
-                    'Which campaigns and channels drive stronger conversations and clearer downstream outcomes.',
+                kicker: 'What was working',
+                description: 'A quieter look at which paths earned real conversations — ready for verified client data.',
                 icon: <PresentionChart size={20} variant="Bulk" color="#fdba74" />,
             };
         case 'workflow':
             return {
-                kicker: 'Automation Flow',
-                description:
-                    'Forms, qualification logic, CRM updates, and follow-up actions moving without manual lag.',
+                kicker: 'The handoff',
+                description: 'How interest moves from a form to a human — without getting lost overnight.',
                 icon: <Chart21 size={20} variant="Bulk" color="#67e8f9" />,
             };
         default:
             return {
-                kicker: 'Visual',
-                description: 'Curated project visual.',
+                kicker: 'Moment',
+                description: 'A frame from the client story.',
                 icon: <MonitorMobbile size={20} variant="Bulk" color="#cbd5e1" />,
             };
     }

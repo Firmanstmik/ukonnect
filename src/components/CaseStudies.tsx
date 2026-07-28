@@ -77,7 +77,7 @@ export const CaseStudies = () => {
                 {import.meta.env.DEV && CASE_STUDY_DATA_PENDING_VERIFICATION && (
                     <div className="mx-auto mb-10 flex max-w-3xl flex-wrap items-center justify-center gap-2 rounded-2xl border border-amber-300/60 bg-amber-50/90 px-4 py-3 text-center text-xs font-semibold text-amber-700">
                         <TriangleAlert className="h-4 w-4 shrink-0" aria-hidden />
-                        Demo case study framework only. All metrics, quotes, and visuals are illustrative and pending founder verification.
+                        Narrative framework only. Outcome metrics stay hidden until client-verified.
                     </div>
                 )}
 
@@ -151,13 +151,13 @@ export const CaseStudies = () => {
                     className="mx-auto mt-16 flex max-w-md flex-col items-center gap-5 text-center md:mt-20"
                 >
                     <p className="text-sm leading-relaxed text-slate-500">
-                        Select a project to explore the full case study.
+                        Choose a project — and follow how the business changed.
                     </p>
                     <a
                         href="#cta"
                         className="group inline-flex items-center gap-2 text-sm font-semibold text-primary transition-colors hover:text-[#4500b6] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/35 focus-visible:ring-offset-2"
                     >
-                        Start a project
+                        Book a strategy call
                         <span className="transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1" aria-hidden>
                             →
                         </span>

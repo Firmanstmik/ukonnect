@@ -9,8 +9,11 @@ import {
     MagicStar,
     PresentionChart,
 } from 'iconsax-react';
-import type { CaseStudyExperience } from './caseStudyExperienceData';
-import { getAdjacentCaseStudies } from './caseStudyExperienceData';
+import {
+    CASE_STUDY_DATA_PENDING_VERIFICATION,
+    getAdjacentCaseStudies,
+    type CaseStudyExperience,
+} from './caseStudyExperienceData';
 import { CaseStudyGallery } from './CaseStudyGallery';
 import { CaseStudyMetricGrid } from './CaseStudyMetricGrid';
 import { CaseStudyTimeline } from './CaseStudyTimeline';
@@ -172,11 +175,11 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
 
                                 <div className="mt-12 flex flex-wrap gap-x-10 gap-y-5 border-t border-white/[0.06] pt-8 text-sm">
                                     <div>
-                                        <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/28">Duration</p>
+                                        <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/28">Time together</p>
                                         <p className="mt-2 text-white/70">{study.duration}</p>
                                     </div>
                                     <div>
-                                        <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/28">Services</p>
+                                        <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/28">The work</p>
                                         <p className="mt-2 max-w-[28ch] text-white/70">{study.services.join(' · ')}</p>
                                     </div>
                                 </div>
@@ -198,55 +201,57 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                     </section>
 
                     <div className="mx-auto max-w-[1040px] px-5 pb-24 pt-4 md:px-8 lg:px-12 lg:pb-32">
-                        {/* Chapter: quiet editorial journey */}
-                        <SectionBlock eyebrow="THE JOURNEY" title="Where the brand stood, and where it moved">
+                        {/* Quiet arc — human impact → decision → change */}
+                        <SectionBlock eyebrow="THE TURNING POINT" title="What it felt like before, and after">
                             <div className="grid gap-10 lg:grid-cols-3 lg:gap-12">
-                                <JourneyCard tone="muted" label="Before" text={study.before} />
-                                <JourneyCard tone="accent" label="Transform" text={study.transform} color={study.theme.from} />
-                                <JourneyCard tone="success" label="Result" text={study.after} />
+                                <JourneyCard tone="muted" label="Then" text={study.before} />
+                                <JourneyCard tone="accent" label="The shift" text={study.transform} color={study.theme.from} />
+                                <JourneyCard tone="success" label="Now" text={study.after} />
                             </div>
                         </SectionBlock>
 
-                        {/* Chapter: soft ambient strategy — less boxed, more editorial wash */}
-                        <section className="relative mt-20 md:mt-24">
+                        {/* Challenge + decision — denser emotional weight */}
+                        <section className="relative mt-24 md:mt-28">
                             <div className="cs-lux-divider mb-14 md:mb-16" aria-hidden />
-                            <p className="font-mono text-[10px] tracking-[0.28em] text-white/32">STRATEGY</p>
-                            <h4 className="mt-4 max-w-[18ch] text-[1.7rem] font-semibold leading-[1.12] tracking-[-0.02em] text-white md:text-[2rem]">
-                                What changed under the hood
+                            <p className="font-mono text-[10px] tracking-[0.28em] text-white/32">THE STORY</p>
+                            <h4 className="mt-4 max-w-[20ch] text-[1.7rem] font-semibold leading-[1.12] tracking-[-0.02em] text-white md:text-[2rem]">
+                                Why it mattered — and what changed
                             </h4>
                             <div className="mt-12 grid gap-12 lg:grid-cols-2 lg:gap-16">
                                 <NarrativePanel
                                     icon={<PresentionChart size={20} variant="Outline" color={study.theme.to} />}
-                                    title="Challenge"
+                                    title="What was at stake"
                                     body={study.challenge}
                                 />
                                 <NarrativePanel
                                     icon={<Chart21 size={20} variant="Outline" color={study.theme.to} />}
-                                    title="Solution"
+                                    title="The decision"
                                     body={study.solution}
                                 />
                             </div>
-                            <div className="mt-14 max-w-3xl border-t border-white/[0.06] pt-12">
+                            <div className="mt-16 max-w-3xl border-t border-white/[0.06] pt-14">
                                 <NarrativePanel
                                     icon={<MagicStar size={20} variant="Outline" color={study.theme.to} />}
-                                    title="Implementation"
+                                    title="How it landed"
                                     body={study.implementation}
                                 />
                             </div>
                         </section>
 
-                        {/* Chapter: metrics + timeline — asymmetric breathing */}
-                        <div className="mt-20 grid gap-16 md:mt-24 xl:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)] xl:gap-20">
+                        {/* Outcome breathes; timeline quieter beside it */}
+                        <div className="mt-24 grid gap-16 md:mt-28 xl:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] xl:gap-20">
                             <div className="cs-lux-divider xl:hidden" aria-hidden />
                             <section className="pt-16 xl:pt-20">
-                                <p className="font-mono text-[10px] tracking-[0.28em] text-white/32">OUTCOMES</p>
+                                <p className="font-mono text-[10px] tracking-[0.28em] text-white/32">WHAT CHANGED</p>
                                 <h4 className="mt-4 text-[1.7rem] font-semibold leading-[1.12] tracking-[-0.02em] text-white md:text-[2rem]">
-                                    Performance snapshot
+                                    The difference it made
                                 </h4>
-                                <div className="mt-10">
-                                    <CaseStudyMetricGrid metrics={study.metrics} theme={study.theme} editorial tone="dark" />
-                                </div>
-                                <p className="mt-9 max-w-[40ch] text-[15.5px] leading-[1.75] text-white/52">
+                                {!CASE_STUDY_DATA_PENDING_VERIFICATION ? (
+                                    <div className="mt-10">
+                                        <CaseStudyMetricGrid metrics={study.metrics} theme={study.theme} editorial tone="dark" />
+                                    </div>
+                                ) : null}
+                                <p className={`${CASE_STUDY_DATA_PENDING_VERIFICATION ? 'mt-10' : 'mt-9'} max-w-[40ch] text-[15.5px] leading-[1.75] text-white/52`}>
                                     {study.businessOutcome}
                                 </p>
                             </section>
@@ -256,19 +261,23 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                             </section>
                         </div>
 
-                        {/* Chapter: immersive gallery */}
-                        <div className="mt-20 md:mt-24">
+                        {/* Visual moments — quieter chapter weight */}
+                        <div className="mt-24 md:mt-28">
                             <div className="cs-lux-divider mb-14 md:mb-16" aria-hidden />
                             <CaseStudyGallery key={study.id} study={study} />
                         </div>
 
-                        {/* Chapter: quiet tools */}
-                        <SectionBlock eyebrow="TOOLS USED" title="Technology stack">
+                        {/* Soft pause — supporting tools */}
+                        <SectionBlock
+                            eyebrow="IN THE BACKGROUND"
+                            title="What quietly made it possible"
+                            className="opacity-95"
+                        >
                             <ul className="flex flex-wrap gap-x-5 gap-y-3">
                                 {study.technologies.map((tool) => (
                                     <li
                                         key={tool}
-                                        className="border-b border-white/[0.08] pb-1 text-[13px] font-medium tracking-wide text-white/55"
+                                        className="border-b border-white/[0.08] pb-1 text-[13px] font-medium tracking-wide text-white/48"
                                     >
                                         {tool}
                                     </li>
@@ -276,10 +285,10 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                             </ul>
                         </SectionBlock>
 
-                        {/* Chapter: quote exhibition */}
-                        <section className="mt-20 md:mt-28">
+                        {/* Reflection — powerful pause */}
+                        <section className="mt-24 md:mt-32">
                             <div className="cs-lux-divider mb-14 md:mb-16" aria-hidden />
-                            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/32">Client voice</p>
+                            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/32">Reflection</p>
                             <blockquote className="mt-10 max-w-[28ch] text-[1.85rem] font-medium leading-[1.32] tracking-[-0.02em] text-white/92 md:max-w-[22ch] md:text-[2.35rem]">
                                 &ldquo;{study.testimonial.quote}&rdquo;
                             </blockquote>
@@ -297,15 +306,19 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                                         <p className="mt-1 text-sm text-white/42">{study.testimonial.role}</p>
                                     </div>
                                 </div>
-                                <div className="inline-flex items-center gap-2 opacity-50" aria-hidden>
-                                    <GoogleG />
-                                    <GoogleStars delay={0.2} />
+                                <div className="inline-flex items-center gap-2 opacity-40" aria-hidden>
+                                    {!CASE_STUDY_DATA_PENDING_VERIFICATION ? (
+                                        <>
+                                            <GoogleG />
+                                            <GoogleStars delay={0.2} />
+                                        </>
+                                    ) : null}
                                 </div>
                             </div>
                         </section>
 
-                        {/* Chapter: sparse future */}
-                        <SectionBlock eyebrow="WHAT COMES NEXT" title="Future opportunities">
+                        {/* Client's next chapter — quiet */}
+                        <SectionBlock eyebrow="STILL AHEAD" title="Where the story can go next">
                             <ul className="grid gap-8 md:grid-cols-3 md:gap-10">
                                 {study.futureImprovements.map((item) => (
                                     <li
@@ -318,26 +331,38 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                             </ul>
                         </SectionBlock>
 
-                        {/* Closing nav — no unfinished CTAs */}
-                        <div className="mt-20 flex flex-wrap items-center gap-2.5 border-t border-white/[0.05] pt-12 md:mt-24">
-                            <button
-                                type="button"
-                                disabled={!prev}
-                                onClick={() => prev && onNavigate(prev)}
-                                className={`cs-lux-btn inline-flex items-center gap-2 rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 text-sm font-semibold text-white/70 enabled:hover:border-white/16 enabled:hover:bg-white/[0.06] enabled:hover:text-white disabled:opacity-28 ${focusRing}`}
-                            >
-                                <ArrowLeft2 size={18} variant="Outline" color="currentColor" />
-                                Previous
-                            </button>
-                            <button
-                                type="button"
-                                disabled={!next}
-                                onClick={() => next && onNavigate(next)}
-                                className={`cs-lux-btn inline-flex items-center gap-2 rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 text-sm font-semibold text-white/70 enabled:hover:border-white/16 enabled:hover:bg-white/[0.06] enabled:hover:text-white disabled:opacity-28 ${focusRing}`}
-                            >
-                                Next
-                                <ArrowRight2 size={18} variant="Outline" color="currentColor" />
-                            </button>
+                        {/* Visitor's next journey */}
+                        <div className="mt-24 flex flex-col gap-6 border-t border-white/[0.05] pt-12 md:mt-28 md:flex-row md:items-end md:justify-between">
+                            <div className="max-w-sm">
+                                <p className="font-mono text-[10px] tracking-[0.22em] text-white/28">CONTINUE</p>
+                                <p className="mt-3 text-[15px] leading-relaxed text-white/48">
+                                    {next
+                                        ? `Next: how ${next.clientName} found a clearer way forward.`
+                                        : prev
+                                          ? `Return to ${prev.clientName}, or close when you are ready.`
+                                          : 'Close when you are ready — or explore another project from the gallery.'}
+                                </p>
+                            </div>
+                            <div className="flex flex-wrap gap-2.5">
+                                <button
+                                    type="button"
+                                    disabled={!prev}
+                                    onClick={() => prev && onNavigate(prev)}
+                                    className={`cs-lux-btn inline-flex items-center gap-2 rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 text-sm font-semibold text-white/70 enabled:hover:border-white/16 enabled:hover:bg-white/[0.06] enabled:hover:text-white disabled:opacity-28 ${focusRing}`}
+                                >
+                                    <ArrowLeft2 size={18} variant="Outline" color="currentColor" />
+                                    {prev ? prev.clientName : 'Previous story'}
+                                </button>
+                                <button
+                                    type="button"
+                                    disabled={!next}
+                                    onClick={() => next && onNavigate(next)}
+                                    className={`cs-lux-btn inline-flex items-center gap-2 rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 text-sm font-semibold text-white/70 enabled:hover:border-white/16 enabled:hover:bg-white/[0.06] enabled:hover:text-white disabled:opacity-28 ${focusRing}`}
+                                >
+                                    {next ? next.clientName : 'Next story'}
+                                    <ArrowRight2 size={18} variant="Outline" color="currentColor" />
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

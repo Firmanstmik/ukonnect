@@ -253,13 +253,13 @@ const IllBrowser = () => {
                     >
                         {/* Chrome bar */}
                         <div className="flex-shrink-0 flex items-center gap-1.5 px-4 py-2.5 border-b border-[#d8d9de]">
-                            <button onClick={handleRed}    className="w-2.5 h-2.5 rounded-full focus:outline-none group relative" style={{ backgroundColor: '#FF5F57' }}>
+                            <button onClick={handleRed}    className="w-2.5 h-2.5 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/60 group relative" style={{ backgroundColor: '#FF5F57' }}>
                                 <span className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 flex items-center justify-center text-[7px] font-bold text-[#820005]">✕</span>
                             </button>
-                            <button onClick={handleYellow} className="w-2.5 h-2.5 rounded-full focus:outline-none group relative" style={{ backgroundColor: '#FEBC2E' }}>
+                            <button onClick={handleYellow} className="w-2.5 h-2.5 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/60 group relative" style={{ backgroundColor: '#FEBC2E' }}>
                                 <span className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 flex items-center justify-center text-[7px] font-bold text-[#6b4100]">−</span>
                             </button>
-                            <button onClick={handleGreen}  className="w-2.5 h-2.5 rounded-full focus:outline-none group relative" style={{ backgroundColor: '#28C840' }}>
+                            <button onClick={handleGreen}  className="w-2.5 h-2.5 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/60 group relative" style={{ backgroundColor: '#28C840' }}>
                                 <span className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 flex items-center justify-center text-[7px] font-bold text-[#004d10]">{maximized ? '⊡' : '⊞'}</span>
                             </button>
                             <div className="h-[16px] bg-slate-100 rounded-md ml-2 flex-1 max-w-[110px]" />

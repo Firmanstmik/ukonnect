@@ -110,10 +110,9 @@ export const AboutContent = ({ mode = 'full' }: { mode?: 'full' | 'supplement' }
     const [modalOpen, setModalOpen] = useState(false);
 
     const STATS = [
-        { value: 178, suffix: '',  labelKey: 'aboutPage.stat0.label' as TranslationKey },
-        { value: 492, suffix: '',  labelKey: 'aboutPage.stat1.label' as TranslationKey },
-        { value: 98,  suffix: '%', labelKey: 'aboutPage.stat2.label' as TranslationKey },
-        { value: 8,   suffix: '+', labelKey: 'aboutPage.stat3.label' as TranslationKey },
+        { value: 84, suffix: '+', decimals: 0, labelKey: 'aboutPage.stat0.label' as TranslationKey },
+        { value: 4.9, suffix: '', decimals: 1, labelKey: 'aboutPage.stat2.label' as TranslationKey },
+        { value: 8,   suffix: '+', decimals: 0, labelKey: 'aboutPage.stat3.label' as TranslationKey },
     ];
 
     return (
@@ -221,18 +220,18 @@ export const AboutContent = ({ mode = 'full' }: { mode?: 'full' | 'supplement' }
                                 transition={{ delay: 0.7, type: 'spring', stiffness: 200 }}
                                 className="absolute -bottom-5 -left-5 bg-white rounded-2xl px-5 py-4 shadow-xl shadow-slate-200/80 border border-slate-100"
                             >
-                                <p className="text-2xl font-bold text-[#5600e3] leading-none mb-0.5">178</p>
+                                <p className="text-2xl font-bold text-[#5600e3] leading-none mb-0.5">84+</p>
                                 <p className="text-slate-500 text-xs font-medium">{t('aboutPage.stat0.label')}</p>
                             </motion.div>
 
-                            {/* Floating badge: retention */}
+                            {/* Floating badge: Google rating */}
                             <motion.div
                                 initial={{ opacity: 0, scale: 0.8, y: -10 }}
                                 animate={{ opacity: 1, scale: 1, y: 0 }}
                                 transition={{ delay: 0.85, type: 'spring', stiffness: 200 }}
                                 className="absolute -top-5 -right-5 bg-[#5600e3] rounded-2xl px-5 py-4 shadow-xl shadow-[#5600e3]/30"
                             >
-                                <p className="text-2xl font-bold text-white leading-none mb-0.5">98%</p>
+                                <p className="text-2xl font-bold text-white leading-none mb-0.5">4.9</p>
                                 <p className="text-white/70 text-xs font-medium">{t('aboutPage.stat2.label')}</p>
                             </motion.div>
                         </motion.div>
@@ -298,7 +297,7 @@ export const AboutContent = ({ mode = 'full' }: { mode?: 'full' | 'supplement' }
                 </div>
 
                 {/* Animated stats row */}
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
+                <div className="mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-4 sm:grid-cols-3">
                     {STATS.map((stat, i) => (
                         <motion.div
                             key={i}
@@ -309,7 +308,7 @@ export const AboutContent = ({ mode = 'full' }: { mode?: 'full' | 'supplement' }
                             className="bg-white rounded-[1.5rem] p-7 border border-slate-200 shadow-sm text-center"
                         >
                             <div className="text-4xl md:text-5xl font-bold text-[#5600e3] mb-1.5 tabular-nums">
-                                <AnimatedCounter to={stat.value} suffix={stat.suffix} />
+                                <AnimatedCounter to={stat.value} suffix={stat.suffix} decimals={stat.decimals} />
                             </div>
                             <p className="text-slate-500 text-sm font-medium">{t(stat.labelKey)}</p>
                         </motion.div>

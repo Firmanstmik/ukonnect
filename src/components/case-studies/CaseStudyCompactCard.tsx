@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight2 } from 'iconsax-react';
 import type { CaseStudyExperience } from './caseStudyExperienceData';
+import { CASE_STUDY_DATA_PENDING_VERIFICATION } from './caseStudyExperienceData';
 import { CaseStudyVisual } from './CaseStudyVisual';
 import { EASE_LUXURY } from '../motion';
 
@@ -18,7 +19,7 @@ type Props = {
 export function CaseStudyCompactCard({ study, index, onExpand }: Props) {
     const reduce = useReducedMotion();
     const [hovered, setHovered] = useState(false);
-    const primaryMetric = study.metrics[0];
+    const primaryMetric = !CASE_STUDY_DATA_PENDING_VERIFICATION ? study.metrics[0] : undefined;
 
     return (
         <motion.button
@@ -99,10 +100,16 @@ export function CaseStudyCompactCard({ study, index, onExpand }: Props) {
                             </p>
                         </div>
                         <span className="text-[11px] font-semibold text-slate-400 transition-colors duration-500 group-hover:text-slate-700">
-                            View project
+                            Read story
                         </span>
                     </div>
-                ) : null}
+                ) : (
+                    <div className="mt-7 flex items-end justify-end border-t border-slate-100/80 pt-5">
+                        <span className="text-[11px] font-semibold text-slate-400 transition-colors duration-500 group-hover:text-slate-700">
+                            Read story
+                        </span>
+                    </div>
+                )}
             </div>
         </motion.button>
     );
