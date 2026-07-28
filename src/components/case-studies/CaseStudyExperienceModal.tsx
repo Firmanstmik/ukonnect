@@ -2,12 +2,18 @@ import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
-    ArrowLeft,
-    ArrowRight,
-    Download,
-    Sparkles,
-    X,
-} from 'lucide-react';
+    ArrowLeft2,
+    ArrowRight2,
+    Chart21,
+    CloseCircle,
+    DocumentDownload,
+    MagicStar,
+    Mobile,
+    MonitorMobbile,
+    PresentionChart,
+    Profile2User,
+    Timer1,
+} from 'iconsax-react';
 import type { CaseStudyExperience } from './caseStudyExperienceData';
 import { getAdjacentCaseStudies } from './caseStudyExperienceData';
 import { CaseStudyGallery } from './CaseStudyGallery';
@@ -33,9 +39,9 @@ function SectionBlock({
     children: ReactNode;
 }) {
     return (
-        <section className="border-t border-slate-200/70 pt-10">
-            <p className="font-mono text-[10px] tracking-[0.28em] text-primary/55">{eyebrow}</p>
-            <h4 className="mt-2 text-2xl font-semibold tracking-tight text-slate-900">{title}</h4>
+        <section className="border-t border-white/10 pt-10">
+            <p className="font-mono text-[10px] tracking-[0.28em] text-white/40">{eyebrow}</p>
+            <h4 className="mt-2 text-2xl font-semibold tracking-tight text-white">{title}</h4>
             <div className="mt-5">{children}</div>
         </section>
     );
@@ -60,7 +66,7 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
             <motion.button
                 type="button"
                 aria-label="Close case study"
-                className="absolute inset-0 bg-slate-950/75 backdrop-blur-md"
+                className="absolute inset-0 bg-[#040915]/95 backdrop-blur-md"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -71,128 +77,226 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                 role="dialog"
                 aria-modal="true"
                 aria-label={`${study.title} case study`}
-                className="relative flex h-full w-full max-w-[1180px] flex-col overflow-hidden bg-[#f8fafc] shadow-[0_40px_120px_rgba(15,23,42,0.45)] md:my-6 md:h-[calc(100%-3rem)] md:rounded-[2rem]"
-                initial={{ opacity: 0, y: 28, scale: 0.98 }}
+                className="relative flex h-full w-full flex-col overflow-hidden bg-[#060d19] text-white"
+                initial={{ opacity: 0, y: 18, scale: 0.995 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 20, scale: 0.985 }}
+                exit={{ opacity: 0, y: 10, scale: 0.99 }}
                 transition={{ duration: 0.55, ease: EASE_OUT }}
             >
-                <div className="sticky top-0 z-20 flex items-center justify-between gap-4 border-b border-slate-200/70 bg-white/85 px-5 py-4 backdrop-blur-xl md:px-8">
+                <div className="pointer-events-none absolute inset-0 overflow-hidden">
+                    <div
+                        className="absolute left-[8%] top-0 h-[420px] w-[420px] rounded-full blur-[130px]"
+                        style={{ background: `${study.theme.from}1f` }}
+                    />
+                    <div
+                        className="absolute bottom-[12%] right-[6%] h-[380px] w-[380px] rounded-full blur-[140px]"
+                        style={{ background: `${study.theme.to}1c` }}
+                    />
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_35%),linear-gradient(180deg,rgba(255,255,255,0.02),transparent_26%,rgba(255,255,255,0.03)_100%)]" />
+                </div>
+
+                <div className="sticky top-0 z-20 flex items-center justify-between gap-4 border-b border-white/10 bg-[#07111f]/78 px-5 py-4 backdrop-blur-xl md:px-8 lg:px-12">
                     <div className="min-w-0">
                         <div className="flex flex-wrap items-center gap-2">
-                            <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/15 bg-primary/[0.06] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-primary/75">
-                                <Sparkles className="h-3.5 w-3.5" />
+                            <span className="inline-flex items-center gap-1.5 rounded-full border border-white/12 bg-white/6 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-white/78">
+                                <MagicStar size={14} variant="Bulk" color={study.theme.to} />
                                 Case Study Experience
                             </span>
-                            <DemoBadge>Placeholder Content</DemoBadge>
+                            <DemoBadge className="border-white/12 bg-white/6 text-white/58">Illustrative Content</DemoBadge>
                             <IllustrativeBadge />
                         </div>
-                        <p className="mt-2 truncate text-sm font-semibold text-slate-900">{study.title}</p>
+                        <p className="mt-2 truncate text-sm font-semibold text-white">{study.title}</p>
                     </div>
                     <button
                         type="button"
                         onClick={onClose}
                         aria-label="Close"
-                        className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-slate-200/80 bg-white text-slate-500 transition hover:bg-slate-100 hover:text-slate-900"
+                        className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/70 transition hover:border-white/20 hover:bg-white/10 hover:text-white"
                     >
-                        <X className="h-4 w-4" />
+                        <CloseCircle size={22} variant="Linear" />
                     </button>
                 </div>
 
                 <div className="flex-1 overflow-y-auto">
-                    <div className="relative">
-                        <GalleryFrame
-                            item={hero}
-                            theme={study.theme}
-                            alt={study.coverAlt}
-                            className="min-h-[280px] rounded-none md:min-h-[420px]"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#f8fafc] via-transparent to-slate-950/20" />
-                        <div className="absolute inset-x-0 bottom-0 p-6 md:p-10">
-                            <span
-                                className="inline-flex rounded-full border px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-white/90 backdrop-blur-md"
-                                style={{ borderColor: `${study.theme.from}55`, background: `${study.theme.from}33` }}
-                            >
-                                {study.industry}
-                            </span>
-                            <h2 className="mt-4 max-w-[16ch] text-3xl font-bold tracking-tight text-white md:text-5xl">
-                                {study.title}
-                            </h2>
-                            <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/78 md:text-base">
-                                {study.summary}
-                            </p>
-                        </div>
-                    </div>
-
-                    <div className="mx-auto max-w-[920px] px-5 py-10 md:px-8 md:py-14">
-                        <div className="grid gap-4 md:grid-cols-3">
-                            {[
-                                { label: 'Business Type', value: study.businessType },
-                                { label: 'Duration', value: study.duration },
-                                { label: 'Services Delivered', value: study.services.join(' · ') },
-                            ].map((item) => (
-                                <div
-                                    key={item.label}
-                                    className="rounded-[1.25rem] border border-slate-200/70 bg-white p-5 shadow-[0_16px_40px_-30px_rgba(15,23,42,0.16)]"
-                                >
-                                    <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-400">
-                                        {item.label}
-                                    </p>
-                                    <p className="mt-2 text-sm font-medium leading-relaxed text-slate-700">{item.value}</p>
-                                </div>
-                            ))}
-                        </div>
-
-                        <SectionBlock eyebrow="THE JOURNEY" title="Before → Transform → Result">
-                            <div className="grid gap-5 md:grid-cols-3">
-                                <div className="rounded-[1.25rem] border border-slate-200/80 bg-slate-50/60 p-5">
-                                    <p className="font-mono text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400">Before</p>
-                                    <p className="mt-3 text-sm leading-relaxed text-slate-600">{study.before}</p>
-                                </div>
-                                <div
-                                    className="rounded-[1.25rem] border p-5"
-                                    style={{
-                                        borderColor: `${study.theme.from}28`,
-                                        background: `${study.theme.from}08`,
-                                    }}
-                                >
-                                    <p
-                                        className="font-mono text-[9px] font-bold uppercase tracking-[0.2em]"
-                                        style={{ color: study.theme.from }}
+                    <section className="relative">
+                        <div className="mx-auto grid max-w-[1440px] gap-10 px-5 py-8 md:px-8 lg:min-h-[calc(100vh-76px)] lg:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)] lg:items-center lg:px-12 lg:py-14">
+                            <div className="relative z-[2]">
+                                <div className="flex flex-wrap items-center gap-2">
+                                    <span
+                                        className="inline-flex rounded-full border px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-white/92 backdrop-blur-md"
+                                        style={{ borderColor: `${study.theme.from}55`, background: `${study.theme.from}1f` }}
                                     >
-                                        Transform
-                                    </p>
-                                    <p className="mt-3 text-sm font-medium leading-relaxed text-slate-700">{study.transform}</p>
+                                        {study.industry}
+                                    </span>
+                                    <span className="inline-flex rounded-full border border-white/12 bg-white/6 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-white/58">
+                                        {study.clientName}
+                                    </span>
                                 </div>
-                                <div className="rounded-[1.25rem] border border-emerald-100/80 bg-emerald-50/35 p-5">
-                                    <p className="font-mono text-[9px] font-bold uppercase tracking-[0.2em] text-emerald-600/80">Result</p>
-                                    <p className="mt-3 text-sm leading-relaxed text-slate-600">{study.after}</p>
+
+                                <h2 className="mt-5 max-w-[13ch] text-4xl font-bold leading-[0.96] tracking-[-0.04em] text-white md:text-6xl lg:text-[4.75rem]">
+                                    {study.title}
+                                </h2>
+                                <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/70 md:text-lg">
+                                    {study.summary}
+                                </p>
+
+                                <div className="mt-8 grid gap-3 sm:grid-cols-3">
+                                    <HeroMetaTile
+                                        icon={<MonitorMobbile size={20} variant="Bulk" color={study.theme.to} />}
+                                        label="Business Type"
+                                        value={study.businessType}
+                                    />
+                                    <HeroMetaTile
+                                        icon={<Timer1 size={20} variant="Bulk" color={study.theme.to} />}
+                                        label="Duration"
+                                        value={study.duration}
+                                    />
+                                    <HeroMetaTile
+                                        icon={<Profile2User size={20} variant="Bulk" color={study.theme.to} />}
+                                        label="Services"
+                                        value={study.services.join(' · ')}
+                                    />
                                 </div>
+
+                                <div className="mt-8 flex flex-wrap gap-3">
+                                    {study.metrics.map((metric) => (
+                                        <div
+                                            key={metric.label}
+                                            className="min-w-[128px] rounded-[1.35rem] border border-white/10 bg-white/6 px-4 py-3 backdrop-blur-md"
+                                        >
+                                            <p
+                                                className="text-2xl font-bold tracking-tight"
+                                                style={{
+                                                    backgroundImage: `linear-gradient(135deg, ${study.theme.from}, ${study.theme.to})`,
+                                                    WebkitBackgroundClip: 'text',
+                                                    backgroundClip: 'text',
+                                                    color: 'transparent',
+                                                }}
+                                            >
+                                                {metric.value}
+                                            </p>
+                                            <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-white/45">
+                                                {metric.label}
+                                            </p>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <div className="mt-8 flex flex-wrap gap-3">
+                                    <button
+                                        type="button"
+                                        disabled={!prev}
+                                        onClick={() => prev && onNavigate(prev)}
+                                        className="inline-flex items-center gap-2 rounded-2xl border border-white/12 bg-white/6 px-4 py-3 text-sm font-semibold text-white/80 transition enabled:hover:border-white/22 enabled:hover:bg-white/10 disabled:opacity-35"
+                                    >
+                                        <ArrowLeft2 size={18} variant="Linear" />
+                                        Previous
+                                    </button>
+                                    <button
+                                        type="button"
+                                        disabled={!next}
+                                        onClick={() => next && onNavigate(next)}
+                                        className="inline-flex items-center gap-2 rounded-2xl border border-white/12 bg-white/6 px-4 py-3 text-sm font-semibold text-white/80 transition enabled:hover:border-white/22 enabled:hover:bg-white/10 disabled:opacity-35"
+                                    >
+                                        Next
+                                        <ArrowRight2 size={18} variant="Linear" />
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div className="relative">
+                                <div className="relative overflow-hidden rounded-[2rem] border border-white/12 bg-white/6 p-3 shadow-[0_50px_120px_-40px_rgba(0,0,0,0.7)] backdrop-blur-md">
+                                    <GalleryFrame
+                                        item={hero}
+                                        theme={study.theme}
+                                        alt={study.coverAlt}
+                                        className="min-h-[320px] rounded-[1.6rem] md:min-h-[520px]"
+                                    />
+
+                                    <div className="pointer-events-none absolute inset-x-8 bottom-8 top-auto flex flex-wrap gap-3">
+                                        <FloatingInsight
+                                            icon={<PresentionChart size={18} variant="Bulk" color={study.theme.to} />}
+                                            label="Outcome"
+                                            value={study.results}
+                                        />
+                                        <FloatingInsight
+                                            icon={<Chart21 size={18} variant="Bulk" color={study.theme.to} />}
+                                            label="Transformation"
+                                            value={study.transform}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="mt-4 grid gap-3 sm:grid-cols-3">
+                                    {study.gallery.slice(1, 4).map((item) => (
+                                        <GalleryFrame
+                                            key={item.id}
+                                            item={item}
+                                            theme={study.theme}
+                                            alt={item.title}
+                                            compact
+                                            className="!aspect-[4/3] !rounded-[1.25rem] border-white/12 bg-white/5 !shadow-[0_16px_40px_-26px_rgba(0,0,0,0.55)]"
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <div className="mx-auto max-w-[1440px] px-5 py-14 md:px-8 lg:px-12 lg:py-18">
+                        <SectionBlock eyebrow="THE JOURNEY" title="Before → Transform → Result">
+                            <div className="grid gap-4 lg:grid-cols-3">
+                                <JourneyCard tone="muted" label="Before" text={study.before} />
+                                <JourneyCard tone="accent" label="Transform" text={study.transform} color={study.theme.from} />
+                                <JourneyCard tone="success" label="Result" text={study.after} />
                             </div>
                         </SectionBlock>
 
-                        <SectionBlock eyebrow="CONTEXT" title="What we set out to solve">
-                            <p className="text-base leading-relaxed text-slate-600">{study.challenge}</p>
+                        <SectionBlock eyebrow="STRATEGY" title="What changed under the hood">
+                            <div className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
+                                <NarrativePanel
+                                    icon={<PresentionChart size={20} variant="Bulk" color={study.theme.to} />}
+                                    title="Challenge"
+                                    body={study.challenge}
+                                />
+                                <NarrativePanel
+                                    icon={<Chart21 size={20} variant="Bulk" color={study.theme.to} />}
+                                    title="Solution"
+                                    body={study.solution}
+                                />
+                            </div>
+                            <div className="mt-4">
+                                <NarrativePanel
+                                    icon={<MagicStar size={20} variant="Bulk" color={study.theme.to} />}
+                                    title="Implementation"
+                                    body={study.implementation}
+                                />
+                            </div>
                         </SectionBlock>
 
-                        <SectionBlock eyebrow="SYSTEM DESIGN" title="How we built it">
-                            <p className="text-base leading-relaxed text-slate-600">{study.solution}</p>
-                        </SectionBlock>
+                        <div className="mt-10 grid gap-6 xl:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
+                            <section className="rounded-[2rem] border border-white/10 bg-white/6 p-6 backdrop-blur-md md:p-8">
+                                <div className="flex items-center gap-3">
+                                    <span className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/6">
+                                        <Chart21 size={22} variant="Bulk" color={study.theme.to} />
+                                    </span>
+                                    <div>
+                                        <p className="font-mono text-[10px] tracking-[0.2em] text-white/40">OUTCOMES</p>
+                                        <h4 className="text-2xl font-semibold tracking-tight text-white">Performance snapshot</h4>
+                                    </div>
+                                </div>
+                                <div className="mt-6">
+                                    <CaseStudyMetricGrid metrics={study.metrics} theme={study.theme} editorial tone="dark" />
+                                </div>
+                                <p className="mt-5 text-sm leading-relaxed text-white/58">{study.businessOutcome}</p>
+                            </section>
 
-                        <SectionBlock eyebrow="EXECUTION" title="How the build came together">
-                            <p className="text-base leading-relaxed text-slate-600">{study.implementation}</p>
-                        </SectionBlock>
-
-                        <section className="mt-10 rounded-[1.5rem] border border-slate-200/70 bg-white p-6 md:p-8">
-                            <CaseStudyMetricGrid metrics={study.metrics} theme={study.theme} editorial />
-                            <p className="mt-5 text-sm leading-relaxed text-slate-500">{study.businessOutcome}</p>
-                        </section>
-
-                        <div className="mt-10">
-                            <CaseStudyTimeline steps={study.timeline} theme={study.theme} />
+                            <section className="rounded-[2rem] border border-white/10 bg-[#0a1322]/92 p-6 shadow-[0_24px_60px_-34px_rgba(0,0,0,0.55)] md:p-8">
+                                <CaseStudyTimeline steps={study.timeline} theme={study.theme} tone="dark" />
+                            </section>
                         </div>
 
-                        <div className="mt-12">
+                        <div className="mt-12 rounded-[2rem] border border-white/10 bg-[#091221]/88 p-6 md:p-8">
                             <CaseStudyGallery key={gallerySeed} study={study} />
                         </div>
 
@@ -201,7 +305,7 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                                 {study.technologies.map((tool) => (
                                     <span
                                         key={tool}
-                                        className="rounded-full border border-slate-200/80 bg-white px-3 py-1.5 text-xs font-semibold text-slate-600"
+                                        className="rounded-full border border-white/10 bg-white/6 px-3 py-1.5 text-xs font-semibold text-white/72"
                                     >
                                         {tool}
                                     </span>
@@ -209,25 +313,29 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                             </div>
                         </SectionBlock>
 
-                        <SectionBlock eyebrow="INTERFACES" title="Delivered project surfaces">
-                            <div className="grid gap-4 md:grid-cols-2">
-                                {study.gallery
-                                    .filter((item) => item.type !== 'hero')
-                                    .map((item) => (
-                                        <GalleryFrame key={item.id} item={item} theme={study.theme} alt={study.coverAlt} />
-                                    ))}
+                        <SectionBlock eyebrow="DELIVERABLES" title="Project surfaces and interfaces">
+                            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                                {study.gallery.map((item) => (
+                                    <GalleryFrame
+                                        key={item.id}
+                                        item={item}
+                                        theme={study.theme}
+                                        alt={study.coverAlt}
+                                        className="border-white/10 bg-white/5"
+                                    />
+                                ))}
                             </div>
                         </SectionBlock>
 
-                        <section className="mt-10 overflow-hidden rounded-[1.6rem] border border-slate-200/70 bg-white p-6 shadow-[0_24px_60px_-34px_rgba(15,23,42,0.18)] md:p-8">
+                        <section className="mt-10 overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.07),rgba(255,255,255,0.03))] p-6 shadow-[0_24px_60px_-34px_rgba(0,0,0,0.45)] md:p-8">
                             <div className="flex flex-wrap items-center gap-2">
-                                <DemoBadge>Placeholder testimonial</DemoBadge>
+                                <DemoBadge className="border-white/12 bg-white/6 text-white/58">Placeholder testimonial</DemoBadge>
                                 <IllustrativeBadge />
                             </div>
-                            <blockquote className="mt-6 text-xl font-medium leading-relaxed tracking-tight text-slate-800 md:text-2xl">
+                            <blockquote className="mt-6 max-w-4xl text-xl font-medium leading-relaxed tracking-tight text-white/92 md:text-3xl">
                                 &ldquo;{study.testimonial.quote}&rdquo;
                             </blockquote>
-                            <div className="mt-8 flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+                            <div className="mt-8 flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
                                 <div className="flex items-center gap-4">
                                     <div
                                         className="flex h-14 w-14 items-center justify-center rounded-2xl text-sm font-bold text-white"
@@ -236,27 +344,27 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                                         {study.testimonial.initials}
                                     </div>
                                     <div>
-                                        <p className="font-semibold text-slate-900">{study.testimonial.name}</p>
-                                        <p className="text-sm text-slate-500">{study.testimonial.role}</p>
-                                        <p className="text-sm font-medium text-slate-600">{study.testimonial.company}</p>
+                                        <p className="font-semibold text-white">{study.testimonial.name}</p>
+                                        <p className="text-sm text-white/52">{study.testimonial.role}</p>
+                                        <p className="text-sm font-medium text-white/70">{study.testimonial.company}</p>
                                     </div>
                                 </div>
-                                <div className="inline-flex items-center gap-2 rounded-full border border-slate-200/80 bg-slate-50 px-4 py-2.5">
+                                <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/6 px-4 py-2.5">
                                     <GoogleG />
                                     <GoogleStars delay={0.2} />
-                                    <span className="text-[11px] font-bold uppercase tracking-wide text-slate-600">
+                                    <span className="text-[11px] font-bold uppercase tracking-wide text-white/58">
                                         Demo verification badge
                                     </span>
                                 </div>
                             </div>
                         </section>
 
-                        <SectionBlock eyebrow="FUTURE IMPROVEMENTS" title="What comes next">
-                            <ul className="space-y-3">
+                        <SectionBlock eyebrow="WHAT COMES NEXT" title="Future optimization opportunities">
+                            <ul className="grid gap-3 md:grid-cols-3">
                                 {study.futureImprovements.map((item) => (
                                     <li
                                         key={item}
-                                        className="rounded-2xl border border-slate-200/70 bg-white px-4 py-3 text-sm leading-relaxed text-slate-600"
+                                        className="rounded-[1.4rem] border border-white/10 bg-white/6 px-4 py-4 text-sm leading-relaxed text-white/65"
                                     >
                                         {item}
                                     </li>
@@ -264,47 +372,120 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                             </ul>
                         </SectionBlock>
 
-                        <div className="mt-10 flex flex-wrap items-center justify-between gap-4 rounded-[1.25rem] border border-dashed border-slate-300/80 bg-white/70 px-5 py-4">
+                        <div className="mt-10 flex flex-wrap items-center justify-between gap-4 rounded-[1.5rem] border border-dashed border-white/14 bg-white/[0.04] px-5 py-4">
                             <div>
-                                <p className="text-sm font-semibold text-slate-800">Download Case Study PDF</p>
-                                <p className="mt-1 text-xs text-slate-500">
+                                <p className="text-sm font-semibold text-white">Download Case Study PDF</p>
+                                <p className="mt-1 text-xs text-white/48">
                                     Demo control only. PDF export will be enabled once verified case studies are approved.
                                 </p>
                             </div>
                             <button
                                 type="button"
                                 disabled
-                                className="inline-flex items-center gap-2 rounded-2xl border border-slate-200/80 bg-slate-100 px-4 py-3 text-sm font-semibold text-slate-400"
+                                className="inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/8 px-4 py-3 text-sm font-semibold text-white/36"
                             >
-                                <Download className="h-4 w-4" />
+                                <DocumentDownload size={18} variant="Linear" />
                                 Coming Soon
-                            </button>
-                        </div>
-
-                        <div className="mt-12 flex flex-col gap-3 border-t border-slate-200/70 pt-8 md:flex-row md:items-center md:justify-between">
-                            <button
-                                type="button"
-                                disabled={!prev}
-                                onClick={() => prev && onNavigate(prev)}
-                                className="inline-flex items-center gap-2 rounded-2xl border border-slate-200/80 bg-white px-4 py-3 text-sm font-semibold text-slate-700 transition enabled:hover:border-primary/25 enabled:hover:text-primary disabled:opacity-40"
-                            >
-                                <ArrowLeft className="h-4 w-4" />
-                                Previous Case Study
-                            </button>
-                            <button
-                                type="button"
-                                disabled={!next}
-                                onClick={() => next && onNavigate(next)}
-                                className="inline-flex items-center gap-2 rounded-2xl border border-slate-200/80 bg-white px-4 py-3 text-sm font-semibold text-slate-700 transition enabled:hover:border-primary/25 enabled:hover:text-primary disabled:opacity-40"
-                            >
-                                Next Case Study
-                                <ArrowRight className="h-4 w-4" />
                             </button>
                         </div>
                     </div>
                 </div>
             </motion.div>
         </motion.div>
+    );
+}
+
+function HeroMetaTile({
+    icon,
+    label,
+    value,
+}: {
+    icon: ReactNode;
+    label: string;
+    value: string;
+}) {
+    return (
+        <div className="rounded-[1.35rem] border border-white/10 bg-white/6 p-4 backdrop-blur-md">
+            <div className="flex items-center gap-2 text-white/72">{icon}</div>
+            <p className="mt-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/38">{label}</p>
+            <p className="mt-2 text-sm leading-relaxed text-white/78">{value}</p>
+        </div>
+    );
+}
+
+function FloatingInsight({
+    icon,
+    label,
+    value,
+}: {
+    icon: ReactNode;
+    label: string;
+    value: string;
+}) {
+    return (
+        <div className="max-w-[280px] rounded-[1.2rem] border border-white/12 bg-[#08111fd9] px-4 py-3 backdrop-blur-md">
+            <div className="flex items-center gap-2 text-white/74">
+                {icon}
+                <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/44">{label}</span>
+            </div>
+            <p className="mt-2 text-sm leading-relaxed text-white/82">{value}</p>
+        </div>
+    );
+}
+
+function JourneyCard({
+    label,
+    text,
+    tone,
+    color,
+}: {
+    label: string;
+    text: string;
+    tone: 'muted' | 'accent' | 'success';
+    color?: string;
+}) {
+    const toneClass =
+        tone === 'accent'
+            ? 'border-white/14 bg-white/8 text-white/86'
+            : tone === 'success'
+              ? 'border-emerald-400/20 bg-emerald-400/[0.08] text-white/82'
+              : 'border-white/10 bg-white/5 text-white/76';
+
+    return (
+        <div className={`rounded-[1.6rem] border p-5 ${toneClass}`}>
+            <p
+                className="font-mono text-[9px] font-bold uppercase tracking-[0.2em]"
+                style={{ color: tone === 'accent' && color ? color : undefined }}
+            >
+                {label}
+            </p>
+            <p className="mt-3 text-sm leading-relaxed">{text}</p>
+        </div>
+    );
+}
+
+function NarrativePanel({
+    icon,
+    title,
+    body,
+}: {
+    icon: ReactNode;
+    title: string;
+    body: string;
+}) {
+    return (
+        <div className="rounded-[1.65rem] border border-white/10 bg-white/6 p-5 backdrop-blur-md md:p-6">
+            <div className="flex items-center gap-3">
+                <span className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/7">
+                    {icon}
+                </span>
+                <div>
+                    <p className="font-mono text-[10px] tracking-[0.2em] text-white/38">DETAIL</p>
+                    <h5 className="text-lg font-semibold tracking-tight text-white">{title}</h5>
+                </div>
+            </div>
+            <p className="mt-5 text-sm leading-relaxed text-white/66 md:text-[15px]">{body}</p>
+        </div>
     );
 }
 

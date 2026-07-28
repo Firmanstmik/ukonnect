@@ -5,18 +5,22 @@ import { EASE_OUT } from '../motion';
 export function CaseStudyTimeline({
     steps,
     theme,
+    tone = 'light',
 }: {
     steps: CaseStudyTimelineStep[];
     theme: CaseStudyTheme;
+    tone?: 'light' | 'dark';
 }) {
+    const isDark = tone === 'dark';
+
     return (
         <div className="relative">
             <div className="mb-6 flex items-center justify-between gap-3">
                 <div>
-                    <p className="font-mono text-[10px] tracking-[0.28em] text-primary/55">PROJECT TIMELINE</p>
-                    <h4 className="mt-2 text-2xl font-semibold tracking-tight text-slate-900">Execution rhythm</h4>
+                    <p className={`font-mono text-[10px] tracking-[0.28em] ${isDark ? 'text-white/40' : 'text-primary/55'}`}>PROJECT TIMELINE</p>
+                    <h4 className={`mt-2 text-2xl font-semibold tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>Execution rhythm</h4>
                 </div>
-                <span className="rounded-full border border-slate-200/80 bg-white px-3 py-1 font-mono text-[9px] tracking-[0.16em] text-slate-500">
+                <span className={`rounded-full border px-3 py-1 font-mono text-[9px] tracking-[0.16em] ${isDark ? 'border-white/10 bg-white/6 text-white/46' : 'border-slate-200/80 bg-white text-slate-500'}`}>
                     DEMO TIMELINE
                 </span>
             </div>
@@ -46,10 +50,10 @@ export function CaseStudyTimeline({
                             {String(index + 1).padStart(2, '0')}
                         </div>
 
-                        <div className="rounded-[1.25rem] border border-slate-200/70 bg-white/85 p-5 shadow-[0_16px_40px_-28px_rgba(15,23,42,0.18)]">
-                            <p className="font-mono text-[10px] tracking-[0.22em] text-primary/60">{step.phase}</p>
-                            <h5 className="mt-2 text-lg font-semibold tracking-tight text-slate-900">{step.title}</h5>
-                            <p className="mt-2 text-sm leading-relaxed text-slate-500">{step.description}</p>
+                        <div className={`rounded-[1.25rem] border p-5 shadow-[0_16px_40px_-28px_rgba(15,23,42,0.18)] ${isDark ? 'border-white/10 bg-white/6' : 'border-slate-200/70 bg-white/85'}`}>
+                            <p className={`font-mono text-[10px] tracking-[0.22em] ${isDark ? 'text-white/44' : 'text-primary/60'}`}>{step.phase}</p>
+                            <h5 className={`mt-2 text-lg font-semibold tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>{step.title}</h5>
+                            <p className={`mt-2 text-sm leading-relaxed ${isDark ? 'text-white/62' : 'text-slate-500'}`}>{step.description}</p>
                         </div>
                     </motion.div>
                 ))}

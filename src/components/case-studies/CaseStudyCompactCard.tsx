@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowRight2 } from 'iconsax-react';
 import type { CaseStudyExperience } from './caseStudyExperienceData';
 import { CaseStudyVisual } from './CaseStudyVisual';
 import { EASE_OUT } from '../motion';
@@ -68,7 +68,7 @@ export function CaseStudyCompactCard({ study, index, onExpand }: Props) {
                         className="grid h-9 w-9 place-items-center rounded-full border border-white/30 bg-white/15 text-white backdrop-blur-md transition-all duration-300 group-hover:scale-110 group-hover:bg-white/25"
                         aria-hidden
                     >
-                        <ArrowUpRight className="h-4 w-4" />
+                        <ArrowRight2 size={16} variant="Linear" />
                     </span>
                 </div>
             </div>

@@ -8,6 +8,7 @@ export function CaseStudyMetricGrid({
     animateOnHover = false,
     hovered = false,
     editorial = false,
+    tone = 'light',
 }: {
     metrics: CaseStudyMetric[];
     theme: CaseStudyTheme;
@@ -15,15 +16,18 @@ export function CaseStudyMetricGrid({
     hovered?: boolean;
     /** Slim documentary metrics — no SaaS “Result Metrics” chrome */
     editorial?: boolean;
+    tone?: 'light' | 'dark';
 }) {
+    const isDark = tone === 'dark';
+
     return (
         <div className={editorial ? 'space-y-3' : 'space-y-3'}>
             {!editorial ? (
-                <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">
+                <p className={`text-[10px] font-bold uppercase tracking-[0.18em] ${isDark ? 'text-white/48' : 'text-slate-500'}`}>
                     Result Metrics
                 </p>
             ) : (
-                <p className="font-mono text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400">
+                <p className={`font-mono text-[9px] font-bold uppercase tracking-[0.2em] ${isDark ? 'text-white/42' : 'text-slate-400'}`}>
                     Verified Results
                 </p>
             )}
@@ -42,8 +46,8 @@ export function CaseStudyMetricGrid({
                         }
                         className={
                             editorial
-                                ? 'border-b border-slate-200/80 pb-3 pt-1'
-                                : 'rounded-2xl border border-slate-200/70 bg-white/90 p-3 shadow-[0_10px_30px_-20px_rgba(15,23,42,0.25)]'
+                                ? `${isDark ? 'border-b border-white/10' : 'border-b border-slate-200/80'} pb-3 pt-1`
+                                : `${isDark ? 'border-white/10 bg-white/6' : 'border-slate-200/70 bg-white/90'} rounded-2xl border p-3 shadow-[0_10px_30px_-20px_rgba(15,23,42,0.25)]`
                         }
                     >
                         <p
@@ -62,7 +66,7 @@ export function CaseStudyMetricGrid({
                                 editorial
                                     ? 'text-[9px] tracking-[0.14em]'
                                     : 'text-[10px] tracking-[0.12em]'
-                            }`}
+                            } ${isDark ? '!text-white/46' : ''}`}
                         >
                             {metric.label}
                         </p>

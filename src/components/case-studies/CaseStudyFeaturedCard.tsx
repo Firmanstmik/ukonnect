@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight2 } from 'iconsax-react';
 import type { CaseStudyExperience } from './caseStudyExperienceData';
 import { CaseStudyMetricGrid } from './CaseStudyMetricGrid';
 import { CursorLight } from './CursorLight';
@@ -188,7 +188,7 @@ export function CaseStudyFeaturedCard({ study, index, onOpen }: CaseStudyFeature
                                 }}
                             >
                                 <span>Open Case Study</span>
-                                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/btn:translate-x-1.5" />
+                                <ArrowRight2 size={18} variant="Linear" className="transition-transform duration-300 group-hover/btn:translate-x-1.5" />
                             </motion.button>
                         </div>
                     </div>

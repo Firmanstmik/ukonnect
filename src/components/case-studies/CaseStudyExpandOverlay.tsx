@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { ArrowRight, X } from 'lucide-react';
+import { ArrowRight2, CloseCircle } from 'iconsax-react';
 import type { CaseStudyExperience } from './caseStudyExperienceData';
 import { CaseStudyMetricGrid } from './CaseStudyMetricGrid';
 import { CaseStudyVisual } from './CaseStudyVisual';
@@ -61,7 +61,7 @@ export function CaseStudyExpandOverlay({ study, index, onClose, onDeepOpen }: Pr
                         className="absolute left-1/2 top-4 z-[95] flex h-11 w-11 -translate-x-1/2 items-center justify-center rounded-full bg-slate-950 text-white shadow-[0_12px_40px_rgba(0,0,0,0.35)] transition hover:scale-105 hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 sm:top-6"
                         aria-label="Close"
                     >
-                        <X className="h-5 w-5" />
+                        <CloseCircle size={22} variant="Linear" />
                     </motion.button>
 
                     <CursorLight glow={study.theme.glow} className="relative z-[92] w-full max-w-[1180px]">
@@ -208,7 +208,7 @@ export function CaseStudyExpandOverlay({ study, index, onClose, onDeepOpen }: Pr
                                         }}
                                     >
                                         <span>Open Case Study</span>
-                                        <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/btn:translate-x-1.5" />
+                                        <ArrowRight2 size={18} variant="Linear" className="transition-transform duration-300 group-hover/btn:translate-x-1.5" />
                                     </motion.button>
                                 </div>
                             </div>
