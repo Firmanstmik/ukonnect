@@ -31,13 +31,13 @@ export function CaseStudyCompactCard({ study, index, onExpand }: Props) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-40px' }}
             transition={{ duration: 0.75, delay: index * 0.08, ease: EASE_LUXURY }}
-            whileHover={reduce ? undefined : { y: -6 }}
-            whileTap={reduce ? undefined : { scale: 0.99 }}
+            whileHover={reduce ? undefined : { y: -4 }}
+            whileTap={reduce ? undefined : { scale: 0.995 }}
             className="group relative flex w-full flex-col overflow-hidden rounded-[1.7rem] border border-white/70 bg-white text-left outline-none transition-[box-shadow,border-color] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] focus-visible:ring-2 focus-visible:ring-primary/35 focus-visible:ring-offset-2"
             style={{
                 boxShadow: hovered
-                    ? `0 36px 80px -36px rgba(15,23,42,0.42), 0 0 0 1px ${study.theme.from}28, 0 0 48px ${study.theme.glow}`
-                    : '0 22px 56px -34px rgba(15,23,42,0.32)',
+                    ? `0 32px 72px -36px rgba(15,23,42,0.38), 0 0 0 1px ${study.theme.from}18`
+                    : '0 22px 56px -34px rgba(15,23,42,0.28)',
             }}
         >
             <div className="relative">
@@ -56,7 +56,7 @@ export function CaseStudyCompactCard({ study, index, onExpand }: Props) {
 
                 <div className="absolute bottom-3.5 right-3.5 z-[3] sm:bottom-4 sm:right-4">
                     <span
-                        className="grid h-9 w-9 place-items-center rounded-full border border-white/25 bg-white/12 text-white backdrop-blur-md transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105 group-hover:bg-white/22"
+                        className="grid h-9 w-9 place-items-center rounded-full border border-white/25 bg-white/12 text-white backdrop-blur-md transition-[background-color,transform] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:bg-white/22"
                         aria-hidden
                     >
                         <ArrowRight2 size={16} variant="Outline" color="#ffffff" />

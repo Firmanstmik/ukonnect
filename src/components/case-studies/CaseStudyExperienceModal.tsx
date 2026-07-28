@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import type { ReactNode } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import {
@@ -6,7 +6,6 @@ import {
     ArrowRight2,
     Chart21,
     CloseCircle,
-    DocumentDownload,
     MagicStar,
     PresentionChart,
 } from 'iconsax-react';
@@ -40,7 +39,7 @@ function SectionBlock({
         <section className={`pt-20 md:pt-24 ${className}`}>
             <div className="cs-lux-divider mb-14 md:mb-16" aria-hidden />
             <p className="font-mono text-[10px] tracking-[0.28em] text-white/32">{eyebrow}</p>
-            <h4 className="mt-4 max-w-[16ch] text-[1.7rem] font-semibold leading-[1.12] tracking-[-0.02em] text-white md:text-[2rem]">
+            <h4 className="mt-4 max-w-[18ch] text-[1.7rem] font-semibold leading-[1.12] tracking-[-0.02em] text-white md:text-[2rem]">
                 {title}
             </h4>
             <div className="mt-10 md:mt-12">{children}</div>
@@ -48,14 +47,54 @@ function SectionBlock({
     );
 }
 
+const focusRing =
+    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/35 focus-visible:ring-offset-2 focus-visible:ring-offset-[#060d19]';
+
 export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStudyExperienceModalProps) {
     const { prev, next } = getAdjacentCaseStudies(study.id);
     const hero = study.gallery.find((item) => item.type === 'hero') ?? study.gallery[0];
-    const [gallerySeed, setGallerySeed] = useState(study.id);
     const reduce = useReducedMotion();
+    const closeRef = useRef<HTMLButtonElement>(null);
+    const scrollRef = useRef<HTMLDivElement>(null);
+    const dialogRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        setGallerySeed(study.id);
+        const previouslyFocused = document.activeElement as HTMLElement | null;
+        closeRef.current?.focus();
+        scrollRef.current?.scrollTo({ top: 0 });
+        return () => {
+            previouslyFocused?.focus?.();
+        };
+    }, [study.id]);
+
+    useEffect(() => {
+        const root = dialogRef.current;
+        if (!root) return;
+
+        const getFocusable = () =>
+            Array.from(
+                root.querySelectorAll<HTMLElement>(
+                    'button:not([disabled]), a[href], input:not([disabled]), [tabindex]:not([tabindex="-1"])',
+                ),
+            ).filter((el) => !el.closest('[aria-hidden="true"]'));
+
+        const onKey = (e: KeyboardEvent) => {
+            if (e.key !== 'Tab') return;
+            const items = getFocusable();
+            if (items.length === 0) return;
+            const first = items[0];
+            const last = items[items.length - 1];
+            if (e.shiftKey && document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+            } else if (!e.shiftKey && document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+            }
+        };
+
+        window.addEventListener('keydown', onKey);
+        return () => window.removeEventListener('keydown', onKey);
     }, [study.id]);
 
     return (
@@ -77,6 +116,7 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
             />
 
             <motion.div
+                ref={dialogRef}
                 role="dialog"
                 aria-modal="true"
                 aria-label={`${study.title} case study`}
@@ -86,7 +126,7 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                 exit={reduce ? undefined : { opacity: 0, y: 8 }}
                 transition={{ duration: 0.65, ease: EASE_LUXURY }}
             >
-                <div className="pointer-events-none absolute inset-0 overflow-hidden">
+                <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
                     <div
                         className="absolute left-[6%] top-[-8%] h-[520px] w-[520px] rounded-full blur-[150px]"
                         style={{ background: `${study.theme.from}12` }}
@@ -95,7 +135,7 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                         className="absolute bottom-[8%] right-[4%] h-[460px] w-[460px] rounded-full blur-[160px]"
                         style={{ background: `${study.theme.to}10` }}
                     />
-                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.035),transparent_42%)]" />
+                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.03),transparent_42%)]" />
                 </div>
 
                 <div className="sticky top-0 z-20 flex items-center justify-between gap-4 border-b border-white/[0.045] bg-[#07111f]/65 px-5 py-3.5 backdrop-blur-2xl md:px-8 lg:px-12">
@@ -103,16 +143,17 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                         {study.clientName}
                     </p>
                     <button
+                        ref={closeRef}
                         type="button"
                         onClick={onClose}
                         aria-label="Close"
-                        className="cs-lux-btn inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.03] text-white/65 hover:border-white/16 hover:bg-white/[0.07] hover:text-white"
+                        className={`cs-lux-btn inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.03] text-white/65 hover:border-white/16 hover:bg-white/[0.07] hover:text-white ${focusRing}`}
                     >
                         <CloseCircle size={20} variant="Outline" color="currentColor" />
                     </button>
                 </div>
 
-                <div className="cs-lux-scroll flex-1 overflow-y-auto">
+                <div ref={scrollRef} className="cs-lux-scroll flex-1 overflow-y-auto">
                     {/* Chapter: full-bleed visual + editorial intro */}
                     <section className="relative">
                         <div className="mx-auto grid max-w-[1340px] gap-14 px-5 py-12 md:px-8 lg:min-h-[calc(100vh-68px)] lg:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)] lg:items-center lg:gap-20 lg:px-12 lg:py-20">
@@ -147,7 +188,9 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                                         item={hero}
                                         theme={study.theme}
                                         alt={study.coverAlt}
-                                        className="min-h-[360px] rounded-[1.85rem] md:min-h-[580px]"
+                                        stage
+                                        showCaption={false}
+                                        className="min-h-[360px] rounded-[1.85rem] md:min-h-[560px]"
                                     />
                                 </div>
                             </div>
@@ -156,7 +199,7 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
 
                     <div className="mx-auto max-w-[1040px] px-5 pb-24 pt-4 md:px-8 lg:px-12 lg:pb-32">
                         {/* Chapter: quiet editorial journey */}
-                        <SectionBlock eyebrow="THE JOURNEY" title="Before → Transform → Result">
+                        <SectionBlock eyebrow="THE JOURNEY" title="Where the brand stood, and where it moved">
                             <div className="grid gap-10 lg:grid-cols-3 lg:gap-12">
                                 <JourneyCard tone="muted" label="Before" text={study.before} />
                                 <JourneyCard tone="accent" label="Transform" text={study.transform} color={study.theme.from} />
@@ -164,27 +207,28 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                             </div>
                         </SectionBlock>
 
-                        {/* Chapter: soft ambient strategy panel */}
-                        <section className="mt-20 overflow-hidden rounded-[2rem] border border-white/[0.05] bg-white/[0.025] px-6 py-12 md:mt-24 md:px-10 md:py-16">
+                        {/* Chapter: soft ambient strategy — less boxed, more editorial wash */}
+                        <section className="relative mt-20 md:mt-24">
+                            <div className="cs-lux-divider mb-14 md:mb-16" aria-hidden />
                             <p className="font-mono text-[10px] tracking-[0.28em] text-white/32">STRATEGY</p>
-                            <h4 className="mt-4 max-w-[16ch] text-[1.7rem] font-semibold leading-[1.12] tracking-[-0.02em] text-white md:text-[2rem]">
+                            <h4 className="mt-4 max-w-[18ch] text-[1.7rem] font-semibold leading-[1.12] tracking-[-0.02em] text-white md:text-[2rem]">
                                 What changed under the hood
                             </h4>
                             <div className="mt-12 grid gap-12 lg:grid-cols-2 lg:gap-16">
                                 <NarrativePanel
-                                    icon={<PresentionChart size={20} variant="Bulk" color={study.theme.to} />}
+                                    icon={<PresentionChart size={20} variant="Outline" color={study.theme.to} />}
                                     title="Challenge"
                                     body={study.challenge}
                                 />
                                 <NarrativePanel
-                                    icon={<Chart21 size={20} variant="Bulk" color={study.theme.to} />}
+                                    icon={<Chart21 size={20} variant="Outline" color={study.theme.to} />}
                                     title="Solution"
                                     body={study.solution}
                                 />
                             </div>
                             <div className="mt-14 max-w-3xl border-t border-white/[0.06] pt-12">
                                 <NarrativePanel
-                                    icon={<MagicStar size={20} variant="Bulk" color={study.theme.to} />}
+                                    icon={<MagicStar size={20} variant="Outline" color={study.theme.to} />}
                                     title="Implementation"
                                     body={study.implementation}
                                 />
@@ -192,7 +236,7 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                         </section>
 
                         {/* Chapter: metrics + timeline — asymmetric breathing */}
-                        <div className="mt-20 grid gap-16 border-t border-transparent pt-0 md:mt-24 xl:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)] xl:gap-20">
+                        <div className="mt-20 grid gap-16 md:mt-24 xl:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)] xl:gap-20">
                             <div className="cs-lux-divider xl:hidden" aria-hidden />
                             <section className="pt-16 xl:pt-20">
                                 <p className="font-mono text-[10px] tracking-[0.28em] text-white/32">OUTCOMES</p>
@@ -215,21 +259,21 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                         {/* Chapter: immersive gallery */}
                         <div className="mt-20 md:mt-24">
                             <div className="cs-lux-divider mb-14 md:mb-16" aria-hidden />
-                            <CaseStudyGallery key={gallerySeed} study={study} />
+                            <CaseStudyGallery key={study.id} study={study} />
                         </div>
 
                         {/* Chapter: quiet tools */}
                         <SectionBlock eyebrow="TOOLS USED" title="Technology stack">
-                            <div className="flex flex-wrap gap-2.5">
+                            <ul className="flex flex-wrap gap-x-5 gap-y-3">
                                 {study.technologies.map((tool) => (
-                                    <span
+                                    <li
                                         key={tool}
-                                        className="rounded-full border border-white/[0.07] bg-transparent px-3.5 py-1.5 text-xs font-medium tracking-wide text-white/58"
+                                        className="border-b border-white/[0.08] pb-1 text-[13px] font-medium tracking-wide text-white/55"
                                     >
                                         {tool}
-                                    </span>
+                                    </li>
                                 ))}
-                            </div>
+                            </ul>
                         </SectionBlock>
 
                         {/* Chapter: quote exhibition */}
@@ -242,8 +286,9 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                             <div className="mt-12 flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
                                 <div className="flex items-center gap-4">
                                     <div
-                                        className="flex h-12 w-12 items-center justify-center rounded-2xl text-sm font-bold text-white shadow-[0_12px_30px_-12px_rgba(0,0,0,0.45)]"
+                                        className="flex h-12 w-12 items-center justify-center rounded-2xl text-sm font-bold text-white"
                                         style={{ background: `linear-gradient(145deg, ${study.theme.from}, ${study.theme.to})` }}
+                                        aria-hidden
                                     >
                                         {study.testimonial.initials}
                                     </div>
@@ -252,7 +297,7 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                                         <p className="mt-1 text-sm text-white/42">{study.testimonial.role}</p>
                                     </div>
                                 </div>
-                                <div className="inline-flex items-center gap-2 opacity-55">
+                                <div className="inline-flex items-center gap-2 opacity-50" aria-hidden>
                                     <GoogleG />
                                     <GoogleStars delay={0.2} />
                                 </div>
@@ -273,36 +318,25 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                             </ul>
                         </SectionBlock>
 
-                        {/* Closing CTA rhythm */}
-                        <div className="mt-20 flex flex-wrap items-center justify-between gap-5 border-t border-white/[0.05] pt-12 md:mt-24">
-                            <div className="flex flex-wrap gap-2.5">
-                                <button
-                                    type="button"
-                                    disabled={!prev}
-                                    onClick={() => prev && onNavigate(prev)}
-                                    className="cs-lux-btn inline-flex items-center gap-2 rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 text-sm font-semibold text-white/70 enabled:hover:border-white/16 enabled:hover:bg-white/[0.06] enabled:hover:text-white disabled:opacity-28"
-                                >
-                                    <ArrowLeft2 size={18} variant="Outline" color="currentColor" />
-                                    Previous
-                                </button>
-                                <button
-                                    type="button"
-                                    disabled={!next}
-                                    onClick={() => next && onNavigate(next)}
-                                    className="cs-lux-btn inline-flex items-center gap-2 rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 text-sm font-semibold text-white/70 enabled:hover:border-white/16 enabled:hover:bg-white/[0.06] enabled:hover:text-white disabled:opacity-28"
-                                >
-                                    Next
-                                    <ArrowRight2 size={18} variant="Outline" color="currentColor" />
-                                </button>
-                            </div>
-
+                        {/* Closing nav — no unfinished CTAs */}
+                        <div className="mt-20 flex flex-wrap items-center gap-2.5 border-t border-white/[0.05] pt-12 md:mt-24">
                             <button
                                 type="button"
-                                disabled
-                                className="inline-flex items-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold text-white/28"
+                                disabled={!prev}
+                                onClick={() => prev && onNavigate(prev)}
+                                className={`cs-lux-btn inline-flex items-center gap-2 rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 text-sm font-semibold text-white/70 enabled:hover:border-white/16 enabled:hover:bg-white/[0.06] enabled:hover:text-white disabled:opacity-28 ${focusRing}`}
                             >
-                                <DocumentDownload size={18} variant="Outline" color="currentColor" />
-                                PDF coming soon
+                                <ArrowLeft2 size={18} variant="Outline" color="currentColor" />
+                                Previous
+                            </button>
+                            <button
+                                type="button"
+                                disabled={!next}
+                                onClick={() => next && onNavigate(next)}
+                                className={`cs-lux-btn inline-flex items-center gap-2 rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 text-sm font-semibold text-white/70 enabled:hover:border-white/16 enabled:hover:bg-white/[0.06] enabled:hover:text-white disabled:opacity-28 ${focusRing}`}
+                            >
+                                Next
+                                <ArrowRight2 size={18} variant="Outline" color="currentColor" />
                             </button>
                         </div>
                     </div>
@@ -355,7 +389,7 @@ function NarrativePanel({
     return (
         <div>
             <div className="flex items-center gap-3.5">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/[0.07] bg-white/[0.03]">
+                <span className="flex h-9 w-9 items-center justify-center text-white/70" aria-hidden>
                     {icon}
                 </span>
                 <h5 className="text-lg font-semibold tracking-tight text-white">{title}</h5>

@@ -50,6 +50,22 @@ export const CaseStudies = () => {
         };
     }, [expandedId, deepId]);
 
+    // Escape hierarchy: deep modal first, then expand overlay
+    useEffect(() => {
+        if (!expandedId && !deepId) return;
+        const onKey = (e: KeyboardEvent) => {
+            if (e.key !== 'Escape') return;
+            e.preventDefault();
+            if (deepId) {
+                closeDeep();
+                return;
+            }
+            if (expandedId) closeExpand();
+        };
+        window.addEventListener('keydown', onKey);
+        return () => window.removeEventListener('keydown', onKey);
+    }, [expandedId, deepId, closeDeep, closeExpand]);
+
     return (
         <section id="case-studies" className="relative overflow-hidden py-[72px] md:py-[96px] lg:py-[132px]">
             <div className="pointer-events-none absolute inset-0 case-studies-dot-grid opacity-[0.16]" />
@@ -123,6 +139,7 @@ export const CaseStudies = () => {
                         index={expandedIndex}
                         onClose={closeExpand}
                         onDeepOpen={openDeep}
+                        locked={Boolean(deepId)}
                     />
                 </LayoutGroup>
 
@@ -138,10 +155,12 @@ export const CaseStudies = () => {
                     </p>
                     <a
                         href="#cta"
-                        className="group inline-flex items-center gap-2 text-sm font-semibold text-primary transition-colors hover:text-[#4500b6]"
+                        className="group inline-flex items-center gap-2 text-sm font-semibold text-primary transition-colors hover:text-[#4500b6] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/35 focus-visible:ring-offset-2"
                     >
-                        View all projects
-                        <span className="transition-transform group-hover:translate-x-1" aria-hidden>→</span>
+                        Start a project
+                        <span className="transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1" aria-hidden>
+                            →
+                        </span>
                     </a>
                 </motion.div>
             </div>

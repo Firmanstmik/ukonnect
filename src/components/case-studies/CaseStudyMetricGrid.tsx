@@ -1,6 +1,6 @@
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import type { CaseStudyMetric, CaseStudyTheme } from './caseStudyExperienceData';
-import { EASE_OUT } from '../motion';
+import { EASE_LUXURY } from '../motion';
 
 export function CaseStudyMetricGrid({
     metrics,
@@ -19,6 +19,7 @@ export function CaseStudyMetricGrid({
     tone?: 'light' | 'dark';
 }) {
     const isDark = tone === 'dark';
+    const reduce = useReducedMotion();
 
     return (
         <div className="space-y-3">
@@ -31,18 +32,18 @@ export function CaseStudyMetricGrid({
                 {metrics.map((metric, index) => (
                     <motion.div
                         key={metric.label}
-                        initial={{ opacity: 0, y: 12 }}
+                        initial={reduce ? false : { opacity: 0, y: 10 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.45, delay: index * 0.08, ease: EASE_OUT }}
+                        transition={{ duration: 0.5, delay: reduce ? 0 : index * 0.07, ease: EASE_LUXURY }}
                         animate={
-                            animateOnHover && hovered
-                                ? { y: -3, scale: 1.02 }
+                            !reduce && animateOnHover && hovered
+                                ? { y: -2, scale: 1.01 }
                                 : { y: 0, scale: 1 }
                         }
                         className={
                             editorial
-                                ? `${isDark ? 'border-b border-white/10' : 'border-b border-slate-200/80'} pb-4 pt-1`
+                                ? `${isDark ? 'border-b border-white/[0.08]' : 'border-b border-slate-200/80'} pb-4 pt-1`
                                 : `${isDark ? 'border-white/10 bg-white/6' : 'border-slate-200/70 bg-white/90'} rounded-2xl border p-3 shadow-[0_10px_30px_-20px_rgba(15,23,42,0.25)]`
                         }
                     >
@@ -58,11 +59,11 @@ export function CaseStudyMetricGrid({
                             {metric.value}
                         </p>
                         <p
-                            className={`mt-1.5 font-semibold uppercase text-slate-500 ${
+                            className={`mt-1.5 font-semibold uppercase ${
                                 editorial
                                     ? 'text-[9px] tracking-[0.14em]'
                                     : 'text-[10px] tracking-[0.12em]'
-                            } ${isDark ? '!text-white/46' : ''}`}
+                            } ${isDark ? 'text-white/46' : 'text-slate-500'}`}
                         >
                             {metric.label}
                         </p>
