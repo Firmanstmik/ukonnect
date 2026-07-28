@@ -36,7 +36,7 @@ export function CaseStudyGallery({ study }: { study: CaseStudyExperience }) {
                         aria-label="Previous gallery item"
                         className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/12 bg-white/6 text-white/72 shadow-sm transition hover:border-white/22 hover:bg-white/10 hover:text-white"
                     >
-                        <ArrowLeft2 size={18} variant="Linear" />
+                        <ArrowLeft2 size={18} variant="Outline" color="currentColor" />
                     </button>
                     <button
                         type="button"
@@ -44,7 +44,7 @@ export function CaseStudyGallery({ study }: { study: CaseStudyExperience }) {
                         aria-label="Next gallery item"
                         className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/12 bg-white/6 text-white/72 shadow-sm transition hover:border-white/22 hover:bg-white/10 hover:text-white"
                     >
-                        <ArrowRight2 size={18} variant="Linear" />
+                        <ArrowRight2 size={18} variant="Outline" color="currentColor" />
                     </button>
                 </div>
             </div>

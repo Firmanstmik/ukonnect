@@ -61,7 +61,7 @@ export function CaseStudyExpandOverlay({ study, index, onClose, onDeepOpen }: Pr
                         className="absolute left-1/2 top-4 z-[95] flex h-11 w-11 -translate-x-1/2 items-center justify-center rounded-full bg-slate-950 text-white shadow-[0_12px_40px_rgba(0,0,0,0.35)] transition hover:scale-105 hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 sm:top-6"
                         aria-label="Close"
                     >
-                        <CloseCircle size={22} variant="Linear" />
+                        <CloseCircle size={22} variant="Outline" color="#ffffff" />
                     </motion.button>
 
                     <CursorLight glow={study.theme.glow} className="relative z-[92] w-full max-w-[1180px]">
@@ -208,7 +208,7 @@ export function CaseStudyExpandOverlay({ study, index, onClose, onDeepOpen }: Pr
                                         }}
                                     >
                                         <span>Open Case Study</span>
-                                        <ArrowRight2 size={18} variant="Linear" className="transition-transform duration-300 group-hover/btn:translate-x-1.5" />
+                                        <ArrowRight2 size={18} variant="Outline" color="#ffffff" className="transition-transform duration-300 group-hover/btn:translate-x-1.5" />
                                     </motion.button>
                                 </div>
                             </div>

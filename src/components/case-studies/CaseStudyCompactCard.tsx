@@ -68,7 +68,7 @@ export function CaseStudyCompactCard({ study, index, onExpand }: Props) {
                         className="grid h-9 w-9 place-items-center rounded-full border border-white/30 bg-white/15 text-white backdrop-blur-md transition-all duration-300 group-hover:scale-110 group-hover:bg-white/25"
                         aria-hidden
                     >
-                        <ArrowRight2 size={16} variant="Linear" />
+                        <ArrowRight2 size={16} variant="Outline" color="#ffffff" />
                     </span>
                 </div>
             </div>

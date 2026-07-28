@@ -188,7 +188,7 @@ export function CaseStudyFeaturedCard({ study, index, onOpen }: CaseStudyFeature
                                 }}
                             >
                                 <span>Open Case Study</span>
-                                <ArrowRight2 size={18} variant="Linear" className="transition-transform duration-300 group-hover/btn:translate-x-1.5" />
+                                <ArrowRight2 size={18} variant="Outline" color="#ffffff" className="transition-transform duration-300 group-hover/btn:translate-x-1.5" />
                             </motion.button>
                         </div>
                     </div>

@@ -113,7 +113,7 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                         aria-label="Close"
                         className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/70 transition hover:border-white/20 hover:bg-white/10 hover:text-white"
                     >
-                        <CloseCircle size={22} variant="Linear" />
+                        <CloseCircle size={22} variant="Outline" color="currentColor" />
                     </button>
                 </div>
 
@@ -189,7 +189,7 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                                         onClick={() => prev && onNavigate(prev)}
                                         className="inline-flex items-center gap-2 rounded-2xl border border-white/12 bg-white/6 px-4 py-3 text-sm font-semibold text-white/80 transition enabled:hover:border-white/22 enabled:hover:bg-white/10 disabled:opacity-35"
                                     >
-                                        <ArrowLeft2 size={18} variant="Linear" />
+                                        <ArrowLeft2 size={18} variant="Outline" color="currentColor" />
                                         Previous
                                     </button>
                                     <button
@@ -199,7 +199,7 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                                         className="inline-flex items-center gap-2 rounded-2xl border border-white/12 bg-white/6 px-4 py-3 text-sm font-semibold text-white/80 transition enabled:hover:border-white/22 enabled:hover:bg-white/10 disabled:opacity-35"
                                     >
                                         Next
-                                        <ArrowRight2 size={18} variant="Linear" />
+                                        <ArrowRight2 size={18} variant="Outline" color="currentColor" />
                                     </button>
                                 </div>
                             </div>
@@ -384,7 +384,7 @@ export function CaseStudyExperienceModal({ study, onClose, onNavigate }: CaseStu
                                 disabled
                                 className="inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/8 px-4 py-3 text-sm font-semibold text-white/36"
                             >
-                                <DocumentDownload size={18} variant="Linear" />
+                                <DocumentDownload size={18} variant="Outline" color="currentColor" />
                                 Coming Soon
                             </button>
                         </div>
